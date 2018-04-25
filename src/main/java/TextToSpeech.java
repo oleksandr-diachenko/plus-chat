@@ -14,6 +14,7 @@ public class TextToSpeech {
     private SynthesiserV2 synthesizer = new SynthesiserV2("AIzaSyBOti4mM-6x9WDnZIjIeyEU21OpBXqWBgw");
 
     public void speak(String text) throws IOException, JavaLayerException {
+        synthesizer.setSpeed(0.4);
         InputStream mp3Data = synthesizer.getMP3Data(text);
 
         Player player = new Player(mp3Data);
