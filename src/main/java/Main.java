@@ -5,7 +5,7 @@ public class Main {
 
 	public static final String BOTNAME = "POSITIV_BOT";
 	public static final String OAUTH = "oauth:1v5qrmxepzzc2q8kgb9bjgvut3uvvv";
-	public static final String CHANNEL = "p0sltlv";
+	public static final String CHANNEL = "greyphan";
 
 	public static PircBotX bot;
 
