@@ -3,16 +3,16 @@ import org.pircbotx.PircBotX;
 
 public class Main {
 
-	public static final String BOTNAME = "yourbotname";
-	public static final String OAUTH = "oauth:abcd";
-	public static final String CHANNEL = "yourchannel";
+	public static final String BOTNAME = "POSITIV_BOT";
+	public static final String OAUTH = "oauth:1v5qrmxepzzc2q8kgb9bjgvut3uvvv";
+	public static final String CHANNEL = "p0sltlv";
 
 	public static PircBotX bot;
 
 	public static void main(String[] args) throws Exception {
 		Configuration config = new Configuration.Builder()
 				.setName(BOTNAME)
-				.setServer("irc.chat.twitch.tv", 6667)
+				.addServer("irc.chat.twitch.tv", 6667)
 				.setServerPassword(OAUTH)
 				.addListener(new Bot())
 				.addAutoJoinChannel("#" + CHANNEL)

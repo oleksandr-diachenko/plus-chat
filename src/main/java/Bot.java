@@ -14,7 +14,7 @@ public class Bot extends ListenerAdapter {
 	private List<String> mods = new ArrayList<>();
 
 	public Bot() {
-		mods.add("yourname");
+		mods.add("p0sltlv");
 	}
 
 	//This will return the response from the command
