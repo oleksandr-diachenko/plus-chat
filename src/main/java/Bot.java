@@ -2,10 +2,9 @@ import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class Bot extends ListenerAdapter {
+
+    private TextToSpeech textToSpeech = new TextToSpeech();
 
     /**
      * PircBotx will return the exact message sent and not the raw line
@@ -40,6 +39,7 @@ public class Bot extends ListenerAdapter {
             if(user.equalsIgnoreCase("grephan")) {
                 return "noob" + user + "send message: " + message;
             } else {
+                textToSpeech.speech(message);
                 return user + " send message: " + message;
             }
         } catch (Exception e) {
