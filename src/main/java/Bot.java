@@ -36,8 +36,8 @@ public class Bot extends ListenerAdapter {
     private String getResponse(GenericMessageEvent event, String message) {
         String user = event.getUser().getNick();
         try {
-            if(user.equalsIgnoreCase("grephan")) {
-                return "noob" + user + "send message: " + message;
+            if(user.equalsIgnoreCase("greyphan")) {
+                return "noob " + user + " send message: " + message;
             } else {
                 textToSpeech.speak(message);
                 return user + " send message: " + message;

@@ -3,9 +3,9 @@ import org.pircbotx.PircBotX;
 
 public class Main {
 
-	public static final String BOTNAME = "POSITIV_BOT";
-	public static final String OAUTH = "oauth:1v5qrmxepzzc2q8kgb9bjgvut3uvvv";
-	public static final String CHANNEL = "greyphan";
+	private static final String BOTNAME = "POSITIV_BOT";
+	private static final String OAUTH = "oauth:1v5qrmxepzzc2q8kgb9bjgvut3uvvv";
+	static final String CHANNEL = "greyphan";
 
 	public static PircBotX bot;
 
