@@ -22,12 +22,18 @@ public class CommandRepositoryImpl implements CommandRepository {
 
 
     public CommandRepositoryImpl() {
-        commands = getCommandList();
+        commands = getCommands();
     }
 
     @Override
     public Set<Command> getCommands() {
-        return commands;
+        try {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./commands.json"), new TypeReference<List<Command>>() {
+            }));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
     }
 
     @Override
@@ -65,16 +71,6 @@ public class CommandRepositoryImpl implements CommandRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        commands = getCommandList();
-    }
-
-    private Set<Command> getCommandList() {
-        try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./commands.json"), new TypeReference<List<Command>>() {
-            }));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new HashSet<>();
+        commands = getCommands();
     }
 }

@@ -111,7 +111,7 @@ public class Bot extends ListenerAdapter {
         Rank currentRank = getCurrentRank(userByName);
         int exp = userByName.getExp() + 1;
         int rankExp = currentRank.getExp();
-        if (rankExp <= exp) {
+        if (rankExp <= exp && userByName.getLevel() < Rank.values().length) {
             user.setLevel(userByName.getLevel() + 1);
         } else {
             user.setLevel(userByName.getLevel());

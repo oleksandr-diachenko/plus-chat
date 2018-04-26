@@ -21,12 +21,18 @@ public class UserRepositoryImpl implements UserRepository {
     private Set<User> users;
 
     public UserRepositoryImpl() {
-        users = getUserList();
+        users = getUsers();
     }
 
     @Override
     public Set<User> getUsers() {
-        return users;
+        try {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./users.json"), new TypeReference<List<User>>() {
+            }));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
     }
 
     @Override
@@ -59,16 +65,6 @@ public class UserRepositoryImpl implements UserRepository {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        users = getUserList();
-    }
-
-    private HashSet<User> getUserList() {
-        try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./users.json"), new TypeReference<List<User>>() {
-            }));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return new HashSet<>();
+        users = getUsers();
     }
 }
