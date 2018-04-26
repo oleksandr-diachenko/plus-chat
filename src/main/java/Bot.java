@@ -1,22 +1,26 @@
-import javafx.fxml.Initializable;
-import model.Rank;
-import model.User;
-import model.UserRepository;
-import model.UserRepositoryImpl;
+import model.entity.Rank;
+import model.entity.User;
+import model.repository.UserRepository;
+import model.repository.UserRepositoryImpl;
+import org.json.JSONArray;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import util.AppProperty;
+import util.JSONParser;
 
-import java.net.URL;
 import java.util.Date;
 import java.util.Properties;
-import java.util.ResourceBundle;
 
-public class Bot extends ListenerAdapter implements Initializable {
+public class Bot extends ListenerAdapter {
 
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
+
+
+    public Bot() {
+        connect = AppProperty.getProperty("connect.properties");
+    }
 
     /**
      * PircBotx will return the exact message sent and not the raw line
@@ -28,7 +32,7 @@ public class Bot extends ListenerAdapter implements Initializable {
         String message = event.getMessage();
         String command = getCommandFromMessage(message);
         if (command != null) {
-            runCommand(command);
+            runCommand(event, command);
         } else {
             String response = getResponseMessage(event, message);
             sendMessage(response);
@@ -50,8 +54,13 @@ public class Bot extends ListenerAdapter implements Initializable {
         }
     }
 
-    private void runCommand(String command) {
-        System.out.println("This was command: " + command);
+    private void runCommand(GenericMessageEvent event, String command) {
+        if(command.equalsIgnoreCase("!rank")) {
+            String nick = event.getUser().getNick();
+            User userByName = userRepository.getUserByName(nick);
+            Rank rank = Rank.values()[userByName.getLevel()];
+            sendMessage(nick + ", твой ранк " + rank);
+        }
     }
 
     private String getResponseMessage(GenericMessageEvent event, String message) {
@@ -71,11 +80,6 @@ public class Bot extends ListenerAdapter implements Initializable {
         Main.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
-    @Override
-    public void initialize(URL location, ResourceBundle resources) {
-        connect = AppProperty.getProperty("connect.properties");
-    }
-
     private void updateUser(String nick) {
         User userByName = userRepository.getUserByName(nick);
         if (userByName == null) {
@@ -92,7 +96,6 @@ public class Bot extends ListenerAdapter implements Initializable {
         int rankExp = currentRank.getExp();
         if (rankExp <= exp) {
             user.setLevel(userByName.getLevel() + 1);
-            System.out.println("new");
         } else {
             user.setLevel(userByName.getLevel());
         }

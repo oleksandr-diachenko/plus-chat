@@ -1,5 +1,6 @@
-package model;
+package model.repository;
 
+import model.entity.User;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;

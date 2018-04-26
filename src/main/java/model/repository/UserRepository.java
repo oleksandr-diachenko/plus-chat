@@ -1,6 +1,7 @@
-package model;
+package model.repository;
 
-import java.io.IOException;
+import model.entity.User;
+
 import java.util.Set;
 
 /**
