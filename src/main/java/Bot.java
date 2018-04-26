@@ -1,10 +1,14 @@
 import javafx.fxml.Initializable;
+import model.User;
+import model.UserRepository;
+import model.UserRepositoryImpl;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import util.AppProperty;
 
 import java.net.URL;
+import java.util.Date;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
@@ -17,6 +21,26 @@ public class Bot extends ListenerAdapter implements Initializable {
      */
     @Override
     public void onGenericMessage(GenericMessageEvent event) {
+        UserRepository userRepository = new UserRepositoryImpl();
+        String nick = event.getUser().getNick();
+        User userByName = userRepository.getUserByName(nick);
+        if (userByName == null) {
+            User user = new User();
+            user.setName(nick);
+            user.setFirstMessage(new Date());
+            user.setLastMessage(new Date());
+            user.setLevel(0);
+            user.setExp(1);
+            userRepository.add(user);
+        } else {
+            User user = new User();
+            user.setName(nick);
+            user.setFirstMessage(userByName.getFirstMessage());
+            user.setLastMessage(new Date());
+            user.setLevel(userByName.getLevel());
+            user.setExp(userByName.getExp() + 1);
+            userRepository.update(user);
+        }
         String message = event.getMessage();
         String command = getCommandFromMessage(message);
         if (command != null) {

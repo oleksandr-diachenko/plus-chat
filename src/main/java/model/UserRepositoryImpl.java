@@ -19,7 +19,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private Set<User> users;
 
-    public UserRepositoryImpl() throws IOException {
+    public UserRepositoryImpl() {
         users = getUserList();
     }
 
@@ -40,24 +40,34 @@ public class UserRepositoryImpl implements UserRepository {
 
 
     @Override
-    public void add(User user) throws IOException {
+    public void add(User user) {
         users.add(user);
         write();
     }
 
     @Override
-    public void update(User user) throws IOException {
+    public void update(User user) {
+        users.remove(user);
         users.add(user);
         write();
     }
 
-    private void write() throws IOException {
-        mapper.writeValue(new FileOutputStream("./users.json"), users);
+    private void write() {
+        try {
+            mapper.writeValue(new FileOutputStream("./users.json"), users);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         users = getUserList();
     }
 
-    private HashSet<User> getUserList() throws IOException {
-        return new HashSet<>(mapper.readValue(JSONParser.readFile("./users.json"), new TypeReference<List<User>>() {
-        }));
+    private HashSet<User> getUserList() {
+        try {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./users.json"), new TypeReference<List<User>>() {
+            }));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new HashSet<>();
     }
 }

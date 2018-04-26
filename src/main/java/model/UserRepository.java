@@ -12,7 +12,7 @@ public interface UserRepository {
 
     User getUserByName(String name);
 
-    void add(User user) throws IOException;
+    void add(User user);
 
-    void update(User user) throws IOException;
+    void update(User user);
 }

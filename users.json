@@ -1,23 +1,9 @@
 [
   {
-    "name": "vasia",
-    "firstMessage": 1524734109782,
-    "lastMessage": 1524734109782,
-    "level": 1,
-    "exp": 10
-  },
-  {
     "name": "p0sltlv",
-    "firstMessage": 1524700800000,
-    "lastMessage": 1524700800000,
+    "firstMessage": 1524739375125,
+    "lastMessage": 1524739619960,
     "level": 0,
-    "exp": 440
-  },
-  {
-    "name": "petia",
-    "firstMessage": 1524734148966,
-    "lastMessage": 1524734148966,
-    "level": 1,
-    "exp": 10
+    "exp": 3
   }
 ]
