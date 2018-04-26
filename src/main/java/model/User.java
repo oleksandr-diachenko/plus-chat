@@ -59,17 +59,13 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return level == user.level &&
-                exp == user.exp &&
-                Objects.equals(name, user.name) &&
-                Objects.equals(firstMessage, user.firstMessage) &&
-                Objects.equals(lastMessage, user.lastMessage);
+        return Objects.equals(name, user.name);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(name, firstMessage, lastMessage, level, exp);
+        return Objects.hash(name);
     }
 
     @Override
