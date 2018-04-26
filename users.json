@@ -1,6 +1,23 @@
-[{"name": "p0sltlv",
-  "firstMessageDate": "2018/04/26 10:03",
-  "lastMessageDate": "2018/04/26 10:04",
-  "level": 0,
-  "exp": 4
-}]
+[
+  {
+    "name": "p0sltlv",
+    "firstMessage": 1524700800000,
+    "lastMessage": 1524700800000,
+    "level": 0,
+    "exp": 4
+  },
+  {
+    "name": "vasia",
+    "firstMessage": 1524734109782,
+    "lastMessage": 1524734109782,
+    "level": 1,
+    "exp": 10
+  },
+  {
+    "name": "petia",
+    "firstMessage": 1524734148966,
+    "lastMessage": 1524734148966,
+    "level": 1,
+    "exp": 10
+  }
+]
