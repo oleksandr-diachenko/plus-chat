@@ -1,10 +1,16 @@
+import javafx.fxml.Initializable;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import util.AppProperty;
 
-public class Bot extends ListenerAdapter {
+import java.net.URL;
+import java.util.Properties;
+import java.util.ResourceBundle;
 
-    private TextToSpeech textToSpeech = new TextToSpeech();
+public class Bot extends ListenerAdapter implements Initializable {
+
+    private Properties connect;
 
     /**
      * PircBotx will return the exact message sent and not the raw line
@@ -13,9 +19,12 @@ public class Bot extends ListenerAdapter {
     public void onGenericMessage(GenericMessageEvent event) {
         String message = event.getMessage();
         String command = getCommandFromMessage(message);
-
-        String response = getResponse(event, message);
-        if (response != null) sendMessage(response);
+        if (command != null) {
+            runCommand(command);
+        } else {
+            String response = getResponseMessage(event, message);
+            sendMessage(response);
+        }
     }
 
     /**
@@ -33,19 +42,13 @@ public class Bot extends ListenerAdapter {
         }
     }
 
-    private String getResponse(GenericMessageEvent event, String message) {
-        String user = event.getUser().getNick();
-        try {
-            if(user.equalsIgnoreCase("greyphan")) {
-                return "noob " + user + " send message: " + message;
-            } else {
-                textToSpeech.speak(message);
-                return user + " send message: " + message;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+    private void runCommand(String command) {
+        System.out.println("This was command: " + command);
+    }
+
+    private String getResponseMessage(GenericMessageEvent event, String message) {
+        System.out.println("This is message: " + message + " from user: " + event.getUser().getNick());
+        return "";
     }
 
     /**
@@ -57,6 +60,11 @@ public class Bot extends ListenerAdapter {
     }
 
     private void sendMessage(String message) {
-        Main.bot.sendIRC().message("#" + Main.CHANNEL, message);
+        Main.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        connect = AppProperty.getProperty("connect.properties");
     }
 }

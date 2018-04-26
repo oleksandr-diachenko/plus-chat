@@ -1,21 +1,21 @@
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
+import util.AppProperty;
+
+import java.util.Properties;
 
 public class Main {
-
-	private static final String BOTNAME = "POSITIV_BOT";
-	private static final String OAUTH = "oauth:1v5qrmxepzzc2q8kgb9bjgvut3uvvv";
-	static final String CHANNEL = "greyphan";
 
 	public static PircBotX bot;
 
 	public static void main(String[] args) throws Exception {
+		Properties connect = AppProperty.getProperty("connect.properties");
 		Configuration config = new Configuration.Builder()
-				.setName(BOTNAME)
+				.setName(connect.getProperty("twitch.botname"))
 				.addServer("irc.chat.twitch.tv", 6667)
-				.setServerPassword(OAUTH)
+				.setServerPassword(connect.getProperty("twitch.oauth"))
 				.addListener(new Bot())
-				.addAutoJoinChannel("#" + CHANNEL)
+				.addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
 				.buildConfiguration();
 
 		bot = new PircBotX(config);
