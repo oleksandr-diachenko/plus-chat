@@ -1,21 +1,22 @@
+import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
+import model.repository.CommandRepository;
+import model.repository.CommandRepositoryImpl;
 import model.repository.UserRepository;
 import model.repository.UserRepositoryImpl;
-import org.json.JSONArray;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import util.AppProperty;
-import util.JSONParser;
 
-import java.util.Date;
-import java.util.Properties;
+import java.util.*;
 
 public class Bot extends ListenerAdapter {
 
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
+    private CommandRepository commandRepository = new CommandRepositoryImpl();
 
 
     public Bot() {
@@ -55,12 +56,28 @@ public class Bot extends ListenerAdapter {
     }
 
     private void runCommand(GenericMessageEvent event, String command) {
-        if(command.equalsIgnoreCase("!rank")) {
-            String nick = event.getUser().getNick();
-            User userByName = userRepository.getUserByName(nick);
-            Rank rank = Rank.values()[userByName.getLevel()];
-            sendMessage(nick + ", твой ранк " + rank);
+        if (command.equalsIgnoreCase("!rank")) {
+            runRankCommand(event);
+        } else {
+            runOtherCommands(command);
         }
+    }
+
+    private void runOtherCommands(String command) {
+        Set<Command> commands = commandRepository.getCommands();
+        for (Command com : commands) {
+            if (com.getName().equalsIgnoreCase(command)) {
+                sendMessage(com.getResponse());
+                break;
+            }
+        }
+    }
+
+    private void runRankCommand(GenericMessageEvent event) {
+        String nick = event.getUser().getNick();
+        User userByName = userRepository.getUserByName(nick);
+        Rank rank = Rank.values()[userByName.getLevel()];
+        sendMessage(nick + ", твой ранк " + rank);
     }
 
     private String getResponseMessage(GenericMessageEvent event, String message) {
