@@ -1,4 +1,5 @@
 import javafx.fxml.Initializable;
+import model.Rank;
 import model.User;
 import model.UserRepository;
 import model.UserRepositoryImpl;
@@ -15,32 +16,15 @@ import java.util.ResourceBundle;
 public class Bot extends ListenerAdapter implements Initializable {
 
     private Properties connect;
+    private UserRepository userRepository = new UserRepositoryImpl();
 
     /**
      * PircBotx will return the exact message sent and not the raw line
      */
     @Override
     public void onGenericMessage(GenericMessageEvent event) {
-        UserRepository userRepository = new UserRepositoryImpl();
         String nick = event.getUser().getNick();
-        User userByName = userRepository.getUserByName(nick);
-        if (userByName == null) {
-            User user = new User();
-            user.setName(nick);
-            user.setFirstMessage(new Date());
-            user.setLastMessage(new Date());
-            user.setLevel(0);
-            user.setExp(1);
-            userRepository.add(user);
-        } else {
-            User user = new User();
-            user.setName(nick);
-            user.setFirstMessage(userByName.getFirstMessage());
-            user.setLastMessage(new Date());
-            user.setLevel(userByName.getLevel());
-            user.setExp(userByName.getExp() + 1);
-            userRepository.update(user);
-        }
+        updateUser(nick);
         String message = event.getMessage();
         String command = getCommandFromMessage(message);
         if (command != null) {
@@ -90,5 +74,46 @@ public class Bot extends ListenerAdapter implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         connect = AppProperty.getProperty("connect.properties");
+    }
+
+    private void updateUser(String nick) {
+        User userByName = userRepository.getUserByName(nick);
+        if (userByName == null) {
+            createNewUser(nick);
+        } else {
+            updateExistingUser(userByName);
+        }
+    }
+
+    private void updateExistingUser(User userByName) {
+        User user = new User();
+        Rank currentRank = getCurrentRank(userByName);
+        int exp = userByName.getExp() + 1;
+        int rankExp = currentRank.getExp();
+        if (rankExp <= exp) {
+            user.setLevel(userByName.getLevel() + 1);
+            System.out.println("new");
+        } else {
+            user.setLevel(userByName.getLevel());
+        }
+        user.setName(userByName.getName());
+        user.setFirstMessage(userByName.getFirstMessage());
+        user.setLastMessage(new Date());
+        user.setExp(exp);
+        userRepository.update(user);
+    }
+
+    private void createNewUser(String nick) {
+        User user = new User();
+        user.setName(nick);
+        user.setFirstMessage(new Date());
+        user.setLastMessage(new Date());
+        user.setLevel(0);
+        user.setExp(1);
+        userRepository.add(user);
+    }
+
+    private Rank getCurrentRank(User userByName) {
+        return Rank.values()[userByName.getLevel()];
     }
 }
