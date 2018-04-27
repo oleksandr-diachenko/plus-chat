@@ -1,0 +1,42 @@
+[
+  {
+    "rank": "ROOKIE",
+    "id": 0,
+    "exp": 10
+  },
+  {
+    "rank": "SQUADDIE",
+    "id": 1,
+    "exp": 20
+  },
+  {
+    "rank": "CORPORAL",
+    "id": 2,
+    "exp": 30
+  },
+  {
+    "rank": "SERGEANT",
+    "id": 3,
+    "exp": 40
+  },
+  {
+    "rank": "LIEUTENANT",
+    "id": 4,
+    "exp": 50
+  },
+  {
+    "rank": "CAPTAIN",
+    "id": 5,
+    "exp": 60
+  },
+  {
+    "rank": "MAJOR",
+    "id": 6,
+    "exp": 70
+  },
+  {
+    "rank": "COLONEL",
+    "id": 7,
+    "exp": 80
+  }
+]
