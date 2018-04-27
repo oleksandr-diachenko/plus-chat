@@ -27,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Set<User> getUsers() {
         try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./users.json"), new TypeReference<List<User>>() {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/users.json"), new TypeReference<List<User>>() {
             }));
         } catch (IOException e) {
             e.printStackTrace();
@@ -61,7 +61,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private void write() {
         try {
-            mapper.writeValue(new FileOutputStream("./users.json"), users);
+            mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
         } catch (IOException e) {
             e.printStackTrace();
         }

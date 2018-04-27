@@ -13,7 +13,7 @@ public class AppProperty {
 
     public static Properties getProperty(String fileName) {
         Properties mainProperties = new Properties();
-        String path = "./" + fileName;
+        String path = "./settings/" + fileName;
         try {
             FileInputStream file = new FileInputStream(path);
             mainProperties.load(file);
@@ -27,7 +27,7 @@ public class AppProperty {
     public static Properties setProperties(Properties properties, String fileName) {
         OutputStream output = null;
         try {
-            output = new FileOutputStream("./" + fileName);
+            output = new FileOutputStream("./settings/" + fileName);
             properties.store(output, null);
         } catch (IOException e) {
             e.printStackTrace();

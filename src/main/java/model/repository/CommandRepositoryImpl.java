@@ -28,7 +28,7 @@ public class CommandRepositoryImpl implements CommandRepository {
     @Override
     public Set<Command> getCommands() {
         try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./commands.json"), new TypeReference<List<Command>>() {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/commands.json"), new TypeReference<List<Command>>() {
             }));
         } catch (IOException e) {
             e.printStackTrace();
@@ -67,7 +67,7 @@ public class CommandRepositoryImpl implements CommandRepository {
 
     private void write() {
         try {
-            mapper.writeValue(new FileOutputStream("./commands.json"), commands);
+            mapper.writeValue(new FileOutputStream("./settings/commands.json"), commands);
         } catch (IOException e) {
             e.printStackTrace();
         }
