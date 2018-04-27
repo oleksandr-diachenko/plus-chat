@@ -1,41 +1,41 @@
 [
   {
-    "rank": "ROOKIE",
+    "name": "ROOKIE",
     "id": 0,
     "exp": 10
   },
   {
-    "rank": "SQUADDIE",
+    "name": "SQUADDIE",
     "id": 1,
     "exp": 20
   },
   {
-    "rank": "CORPORAL",
+    "name": "CORPORAL",
     "id": 2,
     "exp": 30
   },
   {
-    "rank": "SERGEANT",
+    "name": "SERGEANT",
     "id": 3,
     "exp": 40
   },
   {
-    "rank": "LIEUTENANT",
+    "name": "LIEUTENANT",
     "id": 4,
     "exp": 50
   },
   {
-    "rank": "CAPTAIN",
+    "name": "CAPTAIN",
     "id": 5,
     "exp": 60
   },
   {
-    "rank": "MAJOR",
+    "name": "MAJOR",
     "id": 6,
     "exp": 70
   },
   {
-    "rank": "COLONEL",
+    "name": "COLONEL",
     "id": 7,
     "exp": 80
   }

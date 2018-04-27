@@ -1,32 +1,62 @@
 package model.entity;
 
+import java.util.Objects;
+
 /**
  * @author Alexander Diachenko.
  */
-public enum Rank {
+public class Rank {
 
-    ROOKIE(0, 10),
-    SQUADDIE(1, 20),
-    CORPORAL(2, 30),
-    SERGEANT(3, 40),
-    LIEUTENANT(4, 50),
-    CAPTAIN(5, 60),
-    MAJOR(6, 70),
-    COLONEL(7,80);
-
-    private int rank;
+    private String name;
+    private int id;
     private int exp;
 
-    Rank(int rank, int exp) {
-        this.rank = rank;
-        this.exp = exp;
+    public String getName() {
+        return name;
     }
 
-    public int getRank() {
-        return rank;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public int getExp() {
         return exp;
+    }
+
+    public void setExp(int exp) {
+        this.exp = exp;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Rank rank = (Rank) o;
+        return id == rank.id &&
+                exp == rank.exp &&
+                Objects.equals(name, rank.name);
+    }
+
+    @Override
+    public int hashCode() {
+
+        return Objects.hash(name, id, exp);
+    }
+
+    @Override
+    public String toString() {
+        return "Rank{" +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", exp=" + exp +
+                '}';
     }
 }
