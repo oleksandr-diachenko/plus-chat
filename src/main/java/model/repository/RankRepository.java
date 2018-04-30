@@ -16,4 +16,6 @@ public interface RankRepository {
     Rank getRankById(int id);
 
     Rank getTopRank();
+
+    Rank getNext(Rank rank);
 }
