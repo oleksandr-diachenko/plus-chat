@@ -1,10 +1,7 @@
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
-import model.repository.CommandRepository;
-import model.repository.CommandRepositoryImpl;
-import model.repository.UserRepository;
-import model.repository.UserRepositoryImpl;
+import model.repository.*;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -17,6 +14,7 @@ public class Bot extends ListenerAdapter {
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
+    private RankRepository rankRepository = new RankRepositoryImpl();
 
 
     public Bot() {
@@ -76,8 +74,8 @@ public class Bot extends ListenerAdapter {
     private void runRankCommand(GenericMessageEvent event) {
         String nick = event.getUser().getNick();
         User userByName = userRepository.getUserByName(nick);
-        Rank rank = Rank.values()[userByName.getLevel()];
-        sendMessage(nick + ", твой ранк " + rank);
+        Rank rank = rankRepository.getRankById(userByName.getLevel());
+        sendMessage(nick + ", твой ранк " + rank.getName());
     }
 
     private String getResponseMessage(GenericMessageEvent event, String message) {
@@ -108,13 +106,17 @@ public class Bot extends ListenerAdapter {
 
     private void updateExistingUser(User userByName) {
         User user = new User();
-        Rank currentRank = getCurrentRank(userByName);
         int exp = userByName.getExp() + 1;
-        int rankExp = currentRank.getExp();
-        if (rankExp <= exp && userByName.getLevel() < Rank.values().length - 1) {
-            user.setLevel(userByName.getLevel() + 1);
+        int topRank = rankRepository.getTopRank().getId();
+        if(userByName.getLevel() > topRank) {
+            userByName.setLevel(topRank);
+        }
+        Rank currentRank = getCurrentRank(userByName);
+        int level = userByName.getLevel();
+        if (exp > currentRank.getExp() && currentRank.getId() < rankRepository.getTopRank().getId()) {
+            user.setLevel(level + 1);
         } else {
-            user.setLevel(userByName.getLevel());
+            user.setLevel(level);
         }
         user.setName(userByName.getName());
         user.setFirstMessage(userByName.getFirstMessage());
@@ -134,6 +136,6 @@ public class Bot extends ListenerAdapter {
     }
 
     private Rank getCurrentRank(User userByName) {
-        return Rank.values()[userByName.getLevel()];
+        return rankRepository.getRankById(userByName.getLevel());
     }
 }
