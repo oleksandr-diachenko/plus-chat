@@ -53,4 +53,15 @@ public class RankRepositoryImpl implements RankRepository {
         }
         return null;
     }
+
+    @Override
+    public Rank getTopRank() {
+        Rank topRank = new Rank();
+        for (Rank rank : ranks) {
+            if(rank.getId() > topRank.getId()) {
+                topRank = rank;
+            }
+        }
+        return topRank;
+    }
 }
