@@ -72,6 +72,6 @@ public class RankRepositoryImpl implements RankRepository {
                 return rank;
             }
         }
-        return null;
+        return current;
     }
 }
