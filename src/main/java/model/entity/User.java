@@ -11,7 +11,6 @@ public class User {
     private String name;
     private Date firstMessage;
     private Date lastMessage;
-    private int level;
     private int exp;
 
     public String getName() {
@@ -36,14 +35,6 @@ public class User {
 
     public void setLastMessage(Date lastMessage) {
         this.lastMessage = lastMessage;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public int getExp() {
@@ -74,7 +65,6 @@ public class User {
                 "name='" + name + '\'' +
                 ", firstMessage=" + firstMessage +
                 ", lastMessage=" + lastMessage +
-                ", level=" + level +
                 ", exp=" + exp +
                 '}';
     }

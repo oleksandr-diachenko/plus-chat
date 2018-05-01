@@ -1,16 +1,26 @@
 [
   {
+    "name": "kirsovobg",
+    "firstMessage": 1525117639493,
+    "lastMessage": 1525119046790,
+    "exp": 12
+  },
+  {
     "name": "greyphan",
-    "firstMessage": 1525094077575,
-    "lastMessage": 1525094307771,
-    "level": 1,
-    "exp": 16
+    "firstMessage": 1525117660857,
+    "lastMessage": 1525117660857,
+    "exp": 1
   },
   {
     "name": "p0sltlv",
-    "firstMessage": 1525094042458,
-    "lastMessage": 1525094042458,
-    "level": 0,
-    "exp": 1
+    "firstMessage": 1525115234593,
+    "lastMessage": 1525119069096,
+    "exp": 15
+  },
+  {
+    "name": "sofiredds",
+    "firstMessage": 1525117360507,
+    "lastMessage": 1525118291101,
+    "exp": 12
   }
 ]
