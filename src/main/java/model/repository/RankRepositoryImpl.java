@@ -6,9 +6,7 @@ import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -26,12 +24,12 @@ public class RankRepositoryImpl implements RankRepository {
     @Override
     public Set<Rank> getRanks() {
         try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/ranks.json"), new TypeReference<List<Rank>>() {
-            }));
+           return new TreeSet<>(new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/ranks.json"), new TypeReference<List<Rank>>() {
+            })));
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return new HashSet<>();
+        return new TreeSet<>();
     }
 
     @Override
@@ -73,5 +71,10 @@ public class RankRepositoryImpl implements RankRepository {
             }
         }
         return current;
+    }
+
+    @Override
+    public Rank getRankByExp(int exp) {
+        return null;
     }
 }

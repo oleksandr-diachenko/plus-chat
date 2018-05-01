@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * @author Alexander Diachenko.
  */
-public class Rank {
+public class Rank implements Comparable<Rank> {
 
     private String name;
     private int id;
@@ -58,5 +58,10 @@ public class Rank {
                 ", id=" + id +
                 ", exp=" + exp +
                 '}';
+    }
+
+    @Override
+    public int compareTo(Rank rank) {
+        return Integer.compare(this.getId(), rank.getId());
     }
 }

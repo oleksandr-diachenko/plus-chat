@@ -18,4 +18,6 @@ public interface RankRepository {
     Rank getTopRank();
 
     Rank getNext(Rank rank);
+
+    Rank getRankByExp(int exp);
 }
