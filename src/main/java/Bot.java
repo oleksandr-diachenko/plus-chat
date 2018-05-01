@@ -74,7 +74,7 @@ public class Bot extends ListenerAdapter {
     private void runRankCommand(GenericMessageEvent event) {
         String nick = event.getUser().getNick();
         User userByName = userRepository.getUserByName(nick);
-        Rank rank = rankRepository.getRankById(userByName.getLevel());
+        Rank rank = rankRepository.getRankByExp(userByName.getExp());
         sendMessage(nick + ", твой ранк " + rank.getName());
     }
 
@@ -106,22 +106,10 @@ public class Bot extends ListenerAdapter {
 
     private void updateExistingUser(User userByName) {
         User user = new User();
-        int exp = userByName.getExp() + 1;
-        int topRank = rankRepository.getTopRank().getId();
-        if(userByName.getLevel() > topRank) {
-            userByName.setLevel(topRank);
-        }
-        Rank currentRank = getCurrentRank(userByName);
-        int level = userByName.getLevel();
-        if (exp > currentRank.getExp() && currentRank.getId() < rankRepository.getTopRank().getId()) {
-            user.setLevel(rankRepository.getNext(currentRank).getId());
-        } else {
-            user.setLevel(level);
-        }
         user.setName(userByName.getName());
         user.setFirstMessage(userByName.getFirstMessage());
         user.setLastMessage(new Date());
-        user.setExp(exp);
+        user.setExp(userByName.getExp() + 1);
         userRepository.update(user);
     }
 
@@ -130,12 +118,7 @@ public class Bot extends ListenerAdapter {
         user.setName(nick);
         user.setFirstMessage(new Date());
         user.setLastMessage(new Date());
-        user.setLevel(0);
         user.setExp(1);
         userRepository.add(user);
-    }
-
-    private Rank getCurrentRank(User userByName) {
-        return rankRepository.getRankById(userByName.getLevel());
     }
 }
