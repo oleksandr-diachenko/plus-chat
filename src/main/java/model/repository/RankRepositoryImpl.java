@@ -24,7 +24,7 @@ public class RankRepositoryImpl implements RankRepository {
     @Override
     public Set<Rank> getRanks() {
         try {
-           return new TreeSet<>(new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/ranks.json"), new TypeReference<List<Rank>>() {
+            return new TreeSet<>(new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/ranks.json"), new TypeReference<List<Rank>>() {
             })));
         } catch (IOException e) {
             e.printStackTrace();
@@ -75,6 +75,13 @@ public class RankRepositoryImpl implements RankRepository {
 
     @Override
     public Rank getRankByExp(int exp) {
-        return null;
+        Rank nearest = new Rank();
+        for (Rank rank : ranks) {
+            int rankExp = rank.getExp();
+            if (rankExp <= exp) {
+                nearest = rank;
+            }
+        }
+        return nearest;
     }
 }
