@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+ <SplitPane fx:id="splitPane" onMousePressed="#splitOnMousePressed" onMouseDragged="#splitOnMouseDragged" dividerPositions="0.0728643216080402"
+           minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="250.0"
+            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="controller.ChatController">
+    <items>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="29.0" prefWidth="248.0">
+            <children>
+                <Button fx:id="close" onAction="#closeAction" layoutX="203.0" mnemonicParsing="false" text="Close"/>
+                <Button fx:id="hide" onAction="#hideAction" layoutX="155.0" mnemonicParsing="false" text="Hide"/>
+            </children>
+            <opaqueInsets>
+                <Insets bottom="10.0" left="10.0" right="10.0" top="10.0"/>
+            </opaqueInsets>
+        </AnchorPane>
+        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+            <children>
+                <ScrollPane fx:id="scrollPane" prefHeight="366.0" prefWidth="248.0">
+                    <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="245.0"/>
+                    </content>
+                </ScrollPane>
+            </children>
+        </AnchorPane>
+    </items>
+</SplitPane>
