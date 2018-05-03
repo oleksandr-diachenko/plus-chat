@@ -4,11 +4,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import org.pircbotx.PircBotX;
 
 public class Main extends Application {
 
-	public static PircBotX bot;
 	public static Stage stage;
 
     public static void main(String[] args) {
@@ -24,16 +22,5 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Chat");
         primaryStage.show();
-//        Properties connect = AppProperty.getProperty("connect.properties");
-//        Configuration config = new Configuration.Builder()
-//                .setName(connect.getProperty("twitch.botname"))
-//                .addServer("irc.chat.twitch.tv", 6667)
-//                .setServerPassword(connect.getProperty("twitch.oauth"))
-//                .addListener(new Bot())
-//                .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
-//                .buildConfiguration();
-//
-//        bot = new PircBotX(config);
-//        bot.startBot();
     }
 }

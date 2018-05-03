@@ -1,3 +1,7 @@
+package thread;
+
+import controller.ChatController;
+import javafx.fxml.FXMLLoader;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -7,17 +11,27 @@ import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import util.AppProperty;
 
+import java.io.IOException;
 import java.util.*;
 
-public class Bot extends ListenerAdapter {
+public class Bot extends ListenerAdapter implements Subject{
 
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
+    private final Set<Observer> observers = new HashSet<>();
 
 
     public Bot() {
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.load(getClass().getResource("/view/chat.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        ChatController fooController = fxmlLoader.getController();
+        registerObserver(fooController);
         connect = AppProperty.getProperty("connect.properties");
     }
 
@@ -26,6 +40,7 @@ public class Bot extends ListenerAdapter {
      */
     @Override
     public void onGenericMessage(GenericMessageEvent event) {
+        notifyObservers();
         String nick = event.getUser().getNick();
         updateUser(nick);
         String message = event.getMessage();
@@ -88,11 +103,11 @@ public class Bot extends ListenerAdapter {
      */
     @Override
     public void onPing(PingEvent event) {
-        Main.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
+        BotThread.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
     }
 
     private void sendMessage(String message) {
-        Main.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
+        BotThread.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
     private void updateUser(String nick) {
@@ -120,5 +135,22 @@ public class Bot extends ListenerAdapter {
         user.setLastMessage(new Date());
         user.setExp(1);
         userRepository.add(user);
+    }
+
+    @Override
+    public void registerObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update();
+        }
     }
 }
