@@ -23,7 +23,8 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Chat");
         primaryStage.show();
-        BotThread botThread = new BotThread();
-        new Thread(botThread).start();
+        Thread thread = new Thread(new BotThread());
+        thread.setDaemon(true);
+        thread.start();
     }
 }
