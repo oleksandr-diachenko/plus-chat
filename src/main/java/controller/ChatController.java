@@ -44,6 +44,6 @@ public class ChatController implements Observer {
 
     @Override
     public void update(String user, String message) {
-        label.setText(user + " : " + message);
+        Platform.runLater(() -> label.setText(user + " : " + message));
     }
 }
