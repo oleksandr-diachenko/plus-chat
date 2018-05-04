@@ -8,15 +8,12 @@ import thread.BotThread;
 
 public class Main extends Application {
 
-	public static Stage stage;
-
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        stage = primaryStage;
         primaryStage.initStyle(StageStyle.UNDECORATED);
         Parent root = FXMLLoader.load(Main.class.getResource("/view/chat.fxml"));
         Scene scene = new Scene(root);
