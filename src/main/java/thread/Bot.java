@@ -30,8 +30,8 @@ public class Bot extends ListenerAdapter implements Subject{
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ChatController fooController = fxmlLoader.getController();
-        registerObserver(fooController);
+        ChatController chatController = fxmlLoader.getController();
+        registerObserver(chatController);
         connect = AppProperty.getProperty("connect.properties");
     }
 
