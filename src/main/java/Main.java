@@ -4,6 +4,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import thread.BotThread;
 
 public class Main extends Application {
 
@@ -22,5 +23,7 @@ public class Main extends Application {
         primaryStage.setScene(scene);
         primaryStage.setTitle("Chat");
         primaryStage.show();
+        BotThread botThread = new BotThread();
+        new Thread(botThread).start();
     }
 }

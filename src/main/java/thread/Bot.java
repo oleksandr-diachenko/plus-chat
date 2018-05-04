@@ -20,7 +20,7 @@ public class Bot extends ListenerAdapter implements Subject{
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
-    private final Set<Observer> observers = new HashSet<>();
+    private Set<Observer> observers = new HashSet<>();
 
 
     public Bot() {
@@ -40,10 +40,10 @@ public class Bot extends ListenerAdapter implements Subject{
      */
     @Override
     public void onGenericMessage(GenericMessageEvent event) {
-        notifyObservers();
         String nick = event.getUser().getNick();
         updateUser(nick);
         String message = event.getMessage();
+        notifyObservers(nick, message);
         String command = getCommandFromMessage(message);
         if (command != null) {
             runCommand(event, command);
@@ -148,9 +148,9 @@ public class Bot extends ListenerAdapter implements Subject{
     }
 
     @Override
-    public void notifyObservers() {
+    public void notifyObservers(String user, String message) {
         for (Observer observer : observers) {
-            observer.update();
+            observer.update(user, message);
         }
     }
 }

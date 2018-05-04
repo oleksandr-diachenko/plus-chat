@@ -4,5 +4,5 @@ package thread;
  * @author Alexander Diachenko.
  */
 public interface Observer {
-    void update();
+    void update(String user, String message);
 }

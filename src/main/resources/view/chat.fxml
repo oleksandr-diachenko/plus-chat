@@ -5,10 +5,11 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
- <SplitPane fx:id="splitPane" onMousePressed="#splitOnMousePressed" onMouseDragged="#splitOnMouseDragged" dividerPositions="0.0728643216080402"
+<?import javafx.scene.text.Text?>
+<SplitPane fx:id="splitPane" onMousePressed="#splitOnMousePressed" onMouseDragged="#splitOnMouseDragged" dividerPositions="0.0728643216080402"
            minWidth="-Infinity" orientation="VERTICAL" prefHeight="400.0" prefWidth="250.0"
-            xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="controller.ChatController">
+           xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="controller.ChatController">
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="29.0" prefWidth="248.0">
             <children>
@@ -22,9 +23,7 @@
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
             <children>
                 <ScrollPane fx:id="scrollPane" prefHeight="366.0" prefWidth="248.0">
-                    <content>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="362.0" prefWidth="245.0"/>
-                    </content>
+                    <Text fx:id="text" text="test"/>
                 </ScrollPane>
             </children>
         </AnchorPane>

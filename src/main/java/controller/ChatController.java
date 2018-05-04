@@ -4,8 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import thread.BotThread;
 import thread.Observer;
 
 /**
@@ -13,10 +13,8 @@ import thread.Observer;
  */
 public class ChatController implements Observer {
 
-    static {
-        BotThread botThread = new BotThread();
-        new Thread(botThread).start();
-    }
+    @FXML
+    private Text text;
     @FXML
     private ScrollPane scrollPane;
     private static double xOffset = 0;
@@ -25,6 +23,7 @@ public class ChatController implements Observer {
     public ChatController() {
 
     }
+
     public void closeAction() {
         Platform.exit();
     }
@@ -44,11 +43,11 @@ public class ChatController implements Observer {
     }
 
     private Stage getStage() {
-        return (Stage)scrollPane.getScene().getWindow();
+        return (Stage) scrollPane.getScene().getWindow();
     }
 
     @Override
-    public void update() {
-        System.out.println("test");
+    public void update(String user, String message) {
+        text.setText(user + " : " + message);
     }
 }
