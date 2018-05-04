@@ -2,9 +2,9 @@ package controller;
 
 import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import thread.Observer;
 
@@ -14,15 +14,11 @@ import thread.Observer;
 public class ChatController implements Observer {
 
     @FXML
-    private Text text;
+    private Label label;
     @FXML
     private ScrollPane scrollPane;
     private static double xOffset = 0;
     private static double yOffset = 0;
-
-    public ChatController() {
-
-    }
 
     public void closeAction() {
         Platform.exit();
@@ -48,6 +44,6 @@ public class ChatController implements Observer {
 
     @Override
     public void update(String user, String message) {
-        text.setText(user + " : " + message);
+        label.setText(user + " : " + message);
     }
 }
