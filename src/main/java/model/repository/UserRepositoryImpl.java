@@ -1,6 +1,7 @@
 package model.repository;
 
 import model.entity.User;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;
@@ -16,8 +17,8 @@ import java.util.Set;
  */
 public class UserRepositoryImpl implements UserRepository {
 
+    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
     private ObjectMapper mapper = new ObjectMapper();
-
     private Set<User> users;
 
     public UserRepositoryImpl() {
@@ -29,8 +30,8 @@ public class UserRepositoryImpl implements UserRepository {
         try {
             return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/users.json"), new TypeReference<List<User>>() {
             }));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         return new HashSet<>();
     }
@@ -62,8 +63,8 @@ public class UserRepositoryImpl implements UserRepository {
     private void write() {
         try {
             mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         users = getUsers();
     }

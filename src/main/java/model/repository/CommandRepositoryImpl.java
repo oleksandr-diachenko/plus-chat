@@ -1,11 +1,11 @@
 package model.repository;
 
 import model.entity.Command;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -16,61 +16,17 @@ import java.util.Set;
  */
 public class CommandRepositoryImpl implements CommandRepository {
 
+    private final static Logger logger = Logger.getLogger(CommandRepositoryImpl.class);
     private ObjectMapper mapper = new ObjectMapper();
-
-    private Set<Command> commands;
-
-
-    public CommandRepositoryImpl() {
-        commands = getCommands();
-    }
 
     @Override
     public Set<Command> getCommands() {
         try {
             return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/commands.json"), new TypeReference<List<Command>>() {
             }));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         return new HashSet<>();
-    }
-
-    @Override
-    public Command getCommandByName(String name) {
-        for (Command command: commands) {
-            if (command.getName().equalsIgnoreCase(name)) {
-                return command;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public void add(Command command) {
-        commands.add(command);
-        write();
-    }
-
-    @Override
-    public void update(Command command) {
-        commands.remove(command);
-        commands.add(command);
-        write();
-    }
-
-    @Override
-    public void delete(Command command) {
-        commands.remove(command);
-        write();
-    }
-
-    private void write() {
-        try {
-            mapper.writeValue(new FileOutputStream("./settings/commands.json"), commands);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        commands = getCommands();
     }
 }

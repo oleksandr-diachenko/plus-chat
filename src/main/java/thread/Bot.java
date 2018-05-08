@@ -47,9 +47,6 @@ public class Bot extends ListenerAdapter implements Subject{
         String command = getCommandFromMessage(message);
         if (command != null) {
             runCommand(event, command);
-        } else {
-            String response = getResponseMessage(event, message);
-            sendMessage(response);
         }
     }
 
@@ -90,12 +87,7 @@ public class Bot extends ListenerAdapter implements Subject{
         String nick = event.getUser().getNick();
         User userByName = userRepository.getUserByName(nick);
         Rank rank = rankRepository.getRankByExp(userByName.getExp());
-        sendMessage(nick + ", твой ранк " + rank.getName());
-    }
-
-    private String getResponseMessage(GenericMessageEvent event, String message) {
-        System.out.println("This is message: " + message + " from user: " + event.getUser().getNick());
-        return "";
+        sendMessage(nick + ", your rank " + rank.getName() + " (" + userByName.getExp() + " exp)");
     }
 
     /**

@@ -1,17 +1,7 @@
 [
   {
-    "name": "!1",
-    "description": "Тестовая команда 1",
-    "response": "event 1"
-  },
-  {
-    "name": "!2",
-    "description": "Тестовая команда 2",
-    "response": "event 2"
-  },
-  {
-    "name": "!3",
-    "description": "Тестовая команда 3",
-    "response": "event 3"
+    "name": "!info",
+    "description": "Описание канала",
+    "response": "Тут должно быть описание"
   }
 ]
