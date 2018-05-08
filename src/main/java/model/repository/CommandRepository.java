@@ -10,12 +10,4 @@ import java.util.Set;
 public interface CommandRepository {
 
     Set<Command> getCommands();
-
-    Command getCommandByName(String name);
-
-    void add(Command command);
-
-    void update(Command command);
-
-    void delete(Command command);
 }

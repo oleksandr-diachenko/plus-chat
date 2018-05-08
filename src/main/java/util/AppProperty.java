@@ -1,9 +1,7 @@
 package util;
 
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.Properties;
 
 /**
@@ -22,24 +20,5 @@ public class AppProperty {
             e.printStackTrace();
         }
         return mainProperties;
-    }
-
-    public static Properties setProperties(Properties properties, String fileName) {
-        OutputStream output = null;
-        try {
-            output = new FileOutputStream("./settings/" + fileName);
-            properties.store(output, null);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (output != null) {
-                try {
-                    output.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return properties;
     }
 }

@@ -1,18 +1,8 @@
 [
   {
-    "name": "SERGEANT",
-    "id": 3,
-    "exp": 600
-  },
-  {
     "name": "ROOKIE",
     "id": 0,
     "exp": 0
-  },
-  {
-    "name": "CORPORAL",
-    "id": 2,
-    "exp": 300
   },
   {
     "name": "SQUADDIE",
@@ -20,23 +10,33 @@
     "exp": 100
   },
   {
-    "name": "CAPTAIN",
-    "id": 5,
-    "exp": 2400
-   },
+    "name": "CORPORAL",
+    "id": 2,
+    "exp": 300
+  },
+  {
+    "name": "SERGEANT",
+    "id": 3,
+    "exp": 600
+  },
   {
     "name": "LIEUTENANT",
     "id": 4,
     "exp": 1200
   },
   {
-    "name": "COLONEL",
-    "id": 7,
-    "exp": 9600
-  },
+    "name": "CAPTAIN",
+    "id": 5,
+    "exp": 2400
+   },
   {
     "name": "MAJOR",
     "id": 6,
     "exp": 4800
+  },
+  {
+    "name": "COLONEL",
+    "id": 7,
+    "exp": 9600
   }
 ]

@@ -11,13 +11,5 @@ public interface RankRepository {
 
     Set<Rank> getRanks();
 
-    Rank getRankByName(String name);
-
-    Rank getRankById(int id);
-
-    Rank getTopRank();
-
-    Rank getNext(Rank rank);
-
     Rank getRankByExp(int exp);
 }

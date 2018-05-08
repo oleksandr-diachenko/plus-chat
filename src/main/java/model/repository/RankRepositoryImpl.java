@@ -33,47 +33,6 @@ public class RankRepositoryImpl implements RankRepository {
     }
 
     @Override
-    public Rank getRankByName(String name) {
-        for (Rank rank : ranks) {
-            if (rank.getName().equalsIgnoreCase(name)) {
-                return rank;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Rank getRankById(int id) {
-        for (Rank rank : ranks) {
-            if (rank.getId() == id) {
-                return rank;
-            }
-        }
-        return null;
-    }
-
-    @Override
-    public Rank getTopRank() {
-        Rank topRank = new Rank();
-        for (Rank rank : ranks) {
-            if (rank.getId() > topRank.getId()) {
-                topRank = rank;
-            }
-        }
-        return topRank;
-    }
-
-    @Override
-    public Rank getNext(Rank current) {
-        for (Rank rank : ranks) {
-            if (rank.getId() - 1 == current.getId()) {
-                return rank;
-            }
-        }
-        return current;
-    }
-
-    @Override
     public Rank getRankByExp(int exp) {
         Rank nearest = new Rank();
         for (Rank rank : ranks) {
