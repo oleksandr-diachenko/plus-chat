@@ -72,7 +72,7 @@ public class Bot extends ListenerAdapter {
         String nick = event.getUser().getNick();
         User userByName = userRepository.getUserByName(nick);
         Rank rank = rankRepository.getRankByExp(userByName.getExp());
-        sendMessage(nick + ", твой ранг " + rank.getName() + " (" + userByName.getExp() + " exp)");
+        sendMessage(nick + ", your rank " + rank.getName() + " (" + userByName.getExp() + " exp)");
     }
 
     /**
