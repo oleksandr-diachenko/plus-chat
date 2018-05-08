@@ -1,6 +1,7 @@
 package model.repository;
 
 import model.entity.Command;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;
@@ -15,6 +16,7 @@ import java.util.Set;
  */
 public class CommandRepositoryImpl implements CommandRepository {
 
+    private final static Logger logger = Logger.getLogger(CommandRepositoryImpl.class);
     private ObjectMapper mapper = new ObjectMapper();
 
     @Override
@@ -22,8 +24,8 @@ public class CommandRepositoryImpl implements CommandRepository {
         try {
             return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/commands.json"), new TypeReference<List<Command>>() {
             }));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         return new HashSet<>();
     }

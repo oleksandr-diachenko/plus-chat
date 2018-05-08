@@ -1,6 +1,7 @@
 package model.repository;
 
 import model.entity.Rank;
+import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import util.JSONParser;
@@ -13,8 +14,8 @@ import java.util.*;
  */
 public class RankRepositoryImpl implements RankRepository {
 
+    private final static Logger logger = Logger.getLogger(RankRepositoryImpl.class);
     private ObjectMapper mapper = new ObjectMapper();
-
     private Set<Rank> ranks;
 
     public RankRepositoryImpl() {
@@ -26,8 +27,8 @@ public class RankRepositoryImpl implements RankRepository {
         try {
             return new TreeSet<>(new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/ranks.json"), new TypeReference<List<Rank>>() {
             })));
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         return new TreeSet<>();
     }

@@ -1,5 +1,8 @@
 package util;
 
+import model.repository.RankRepositoryImpl;
+import org.apache.log4j.Logger;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -9,6 +12,8 @@ import java.util.Properties;
  */
 public class AppProperty {
 
+    private final static Logger logger = Logger.getLogger(AppProperty.class);
+
     public static Properties getProperty(String fileName) {
         Properties mainProperties = new Properties();
         String path = "./settings/" + fileName;
@@ -16,8 +21,8 @@ public class AppProperty {
             FileInputStream file = new FileInputStream(path);
             mainProperties.load(file);
             file.close();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
         }
         return mainProperties;
     }

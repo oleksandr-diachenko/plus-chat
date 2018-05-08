@@ -2,9 +2,16 @@ import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import util.AppProperty;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Properties;
 
 public class Main {
+
+	static{
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hhmmss");
+		System.setProperty("current.date", dateFormat.format(new Date()));
+	}
 
 	public static PircBotX bot;
 
