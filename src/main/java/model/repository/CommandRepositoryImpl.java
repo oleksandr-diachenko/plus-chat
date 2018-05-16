@@ -29,4 +29,14 @@ public class CommandRepositoryImpl implements CommandRepository {
         }
         return new HashSet<>();
     }
+
+    @Override
+    public Command getCommandByName(String name) {
+        for (Command command : getCommands()) {
+            if (command.getName().equalsIgnoreCase(name)) {
+                return command;
+            }
+        }
+        return new Command();
+    }
 }
