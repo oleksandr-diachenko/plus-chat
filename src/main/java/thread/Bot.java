@@ -74,13 +74,8 @@ public class Bot extends ListenerAdapter implements Subject{
     }
 
     private void runOtherCommands(String command) {
-        Set<Command> commands = commandRepository.getCommands();
-        for (Command com : commands) {
-            if (com.getName().equalsIgnoreCase(command)) {
-                sendMessage(com.getResponse());
-                break;
-            }
-        }
+        Command commandByName = commandRepository.getCommandByName(command);
+        sendMessage(commandByName.getResponse());
     }
 
     private void runRankCommand(GenericMessageEvent event) {

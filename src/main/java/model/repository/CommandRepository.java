@@ -10,4 +10,6 @@ import java.util.Set;
 public interface CommandRepository {
 
     Set<Command> getCommands();
+
+    Command getCommandByName(String name);
 }
