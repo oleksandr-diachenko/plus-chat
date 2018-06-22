@@ -1,6 +1,5 @@
 package util;
 
-import model.repository.RankRepositoryImpl;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
