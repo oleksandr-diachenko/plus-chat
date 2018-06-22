@@ -61,11 +61,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     private void write() {
-        try {
-            mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
-        }
-        users = getUsers();
+        Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }
