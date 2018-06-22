@@ -46,26 +46,29 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
-
     @Override
     public void add(User user) {
         users.add(user);
-        write();
+        flush();
     }
 
     @Override
     public void update(User user) {
         users.remove(user);
         users.add(user);
-        write();
+        flush();
     }
 
-    private void write() {
-        try {
-            mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
-        }
-        users = getUsers();
+    private void flush() {
+        Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    mapper.writeValue(new FileOutputStream("./settings/users.json"), users);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }
