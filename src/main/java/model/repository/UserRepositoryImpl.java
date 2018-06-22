@@ -49,17 +49,17 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public void add(User user) {
         users.add(user);
-        write();
+        flush();
     }
 
     @Override
     public void update(User user) {
         users.remove(user);
         users.add(user);
-        write();
+        flush();
     }
 
-    private void write() {
+    private void flush() {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
