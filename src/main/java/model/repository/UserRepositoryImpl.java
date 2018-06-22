@@ -46,7 +46,6 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
-
     @Override
     public void add(User user) {
         users.add(user);

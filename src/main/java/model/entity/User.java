@@ -1,6 +1,5 @@
 package model.entity;
 
-import java.util.Date;
 import java.util.Objects;
 
 /**
@@ -9,8 +8,8 @@ import java.util.Objects;
 public class User {
 
     private String name;
-    private Date firstMessage;
-    private Date lastMessage;
+    private String firstMessageDate;
+    private String lastMessageDate;
     private int exp;
 
     public String getName() {
@@ -21,20 +20,20 @@ public class User {
         this.name = name;
     }
 
-    public Date getFirstMessage() {
-        return firstMessage;
+    public String getFirstMessageDate() {
+        return firstMessageDate;
     }
 
-    public void setFirstMessage(Date firstMessage) {
-        this.firstMessage = firstMessage;
+    public void setFirstMessageDate(String firstMessageDate) {
+        this.firstMessageDate = firstMessageDate;
     }
 
-    public Date getLastMessage() {
-        return lastMessage;
+    public String getLastMessageDate() {
+        return lastMessageDate;
     }
 
-    public void setLastMessage(Date lastMessage) {
-        this.lastMessage = lastMessage;
+    public void setLastMessageDate(String lastMessageDate) {
+        this.lastMessageDate = lastMessageDate;
     }
 
     public int getExp() {
@@ -63,8 +62,8 @@ public class User {
     public String toString() {
         return "User{" +
                 "name='" + name + '\'' +
-                ", firstMessage=" + firstMessage +
-                ", lastMessage=" + lastMessage +
+                ", firstMessageDate=" + firstMessageDate +
+                ", lastMessageDate=" + lastMessageDate +
                 ", exp=" + exp +
                 '}';
     }

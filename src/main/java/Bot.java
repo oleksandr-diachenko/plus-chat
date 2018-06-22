@@ -6,6 +6,7 @@ import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import util.AppProperty;
+import util.TimeUtil;
 
 import java.util.*;
 
@@ -94,8 +95,8 @@ public class Bot extends ListenerAdapter {
     private void updateExistingUser(User userByName) {
         User user = new User();
         user.setName(userByName.getName());
-        user.setFirstMessage(userByName.getFirstMessage());
-        user.setLastMessage(new Date());
+        user.setFirstMessageDate(userByName.getFirstMessageDate());
+        user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
         user.setExp(userByName.getExp() + 1);
         userRepository.update(user);
     }
@@ -103,8 +104,8 @@ public class Bot extends ListenerAdapter {
     private void createNewUser(String nick) {
         User user = new User();
         user.setName(nick);
-        user.setFirstMessage(new Date());
-        user.setLastMessage(new Date());
+        user.setFirstMessageDate(TimeUtil.getDateToString(new Date()));
+        user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
         user.setExp(1);
         userRepository.add(user);
     }
