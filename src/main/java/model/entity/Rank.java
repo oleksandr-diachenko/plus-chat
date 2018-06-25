@@ -10,6 +10,7 @@ public class Rank implements Comparable<Rank> {
     private String name;
     private int id;
     private int exp;
+    private String imagePath;
 
     public String getName() {
         return name;
@@ -35,6 +36,14 @@ public class Rank implements Comparable<Rank> {
         this.exp = exp;
     }
 
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -42,13 +51,13 @@ public class Rank implements Comparable<Rank> {
         Rank rank = (Rank) o;
         return id == rank.id &&
                 exp == rank.exp &&
-                Objects.equals(name, rank.name);
+                Objects.equals(name, rank.name) &&
+                Objects.equals(imagePath, rank.imagePath);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(name, id, exp);
+        return Objects.hash(name, id, exp, imagePath);
     }
 
     @Override
