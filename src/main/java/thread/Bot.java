@@ -3,11 +3,10 @@ package thread;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollBar;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.Text;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -22,7 +21,7 @@ import util.TimeUtil;
 import java.io.IOException;
 import java.util.*;
 
-public class Bot extends ListenerAdapter{
+public class Bot extends ListenerAdapter {
 
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
@@ -64,10 +63,11 @@ public class Bot extends ListenerAdapter{
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
             Label name = new Label(nick);
+            name.setMinWidth(getWidth(name));
             Label separator = new Label(" : ");
+            separator.setMinWidth(getWidth(separator));
             Label mess = new Label(message);
             mess.setWrapText(true);
-            mess.setTextAlignment(TextAlignment.LEFT);
             HBox hBox = new HBox();
             hBox.getChildren().addAll(name, separator, mess);
             messages.add(hBox);
@@ -75,6 +75,12 @@ public class Bot extends ListenerAdapter{
             scrollPane.setContent(vBox);
             index++;
         });
+    }
+
+    private double getWidth(Label label) {
+        Text theText = new Text(label.getText());
+        theText.setFont(label.getFont());
+        return theText.getBoundsInLocal().getWidth();
     }
 
     /**
