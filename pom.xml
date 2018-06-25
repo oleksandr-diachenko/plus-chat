@@ -34,6 +34,13 @@
             <artifactId>log4j</artifactId>
             <version>1.2.17</version>
         </dependency>
+        <dependency>
+            <groupId>in.sidefx</groupId>
+            <artifactId>undecoratorbis</artifactId>
+            <version>1.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/lib/UndecoratorBis.jar</systemPath>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

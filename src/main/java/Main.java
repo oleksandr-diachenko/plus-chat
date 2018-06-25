@@ -1,31 +1,26 @@
-import org.pircbotx.Configuration;
-import org.pircbotx.PircBotX;
-import util.AppProperty;
+import insidefx.undecorator.UndecoratorScene;
+import javafx.application.Application;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.layout.Region;
+import javafx.stage.Stage;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Properties;
+public class Main extends Application {
 
-public class Main {
+    public static void main(String[] args) {
+        launch(args);
+    }
 
-	static{
-		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hhmmss");
-		System.setProperty("current.date", dateFormat.format(new Date()));
-	}
-
-	public static PircBotX bot;
-
-	public static void main(String[] args) throws Exception {
-		Properties connect = AppProperty.getProperty("connect.properties");
-		Configuration config = new Configuration.Builder()
-				.setName(connect.getProperty("twitch.botname"))
-				.addServer("irc.chat.twitch.tv", 6667)
-				.setServerPassword(connect.getProperty("twitch.oauth"))
-				.addListener(new Bot())
-				.addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
-				.buildConfiguration();
-
-		bot = new PircBotX(config);
-		bot.startBot();
-	}
+    @Override
+    public void start(Stage primaryStage) throws Exception {
+        Region root = (Region) FXMLLoader.load(getClass().getResource("/view/chat.fxml"));
+        UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
+        undecorator.setFadeInTransition();
+        primaryStage.setOnCloseRequest(we -> {
+            we.consume();
+            undecorator.setFadeOutTransition();
+        });
+        primaryStage.setScene(undecorator);
+        primaryStage.setTitle("Chat");
+        primaryStage.show();
+    }
 }
