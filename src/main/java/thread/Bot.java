@@ -4,6 +4,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
@@ -18,6 +20,8 @@ import sevice.ChatService;
 import util.AppProperty;
 import util.TimeUtil;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -62,6 +66,18 @@ public class Bot extends ListenerAdapter {
 
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
+            FileInputStream is = null;
+            try {
+                is = new FileInputStream("./img/ranks/0.png");
+            } catch (FileNotFoundException e) {
+                e.printStackTrace();
+            }
+            Image image = new Image(is);
+            Label img = new Label();
+            ImageView imageView = new ImageView(image);
+            imageView.setFitHeight(20);
+            imageView.setFitWidth(20);
+            img.setGraphic(imageView);
             Label name = new Label(nick);
             name.setMinWidth(getWidth(name));
             Label separator = new Label(" : ");
@@ -69,7 +85,7 @@ public class Bot extends ListenerAdapter {
             Label mess = new Label(message);
             mess.setWrapText(true);
             HBox hBox = new HBox();
-            hBox.getChildren().addAll(name, separator, mess);
+            hBox.getChildren().addAll(img, name, separator, mess);
             messages.add(hBox);
             vBox.getChildren().add(messages.get(index));
             scrollPane.setContent(vBox);
