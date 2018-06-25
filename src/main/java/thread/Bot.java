@@ -66,9 +66,11 @@ public class Bot extends ListenerAdapter {
 
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
+            User user = userRepository.getUserByName(nick);
+            Rank rank = rankRepository.getRankByExp(user.getExp());
             FileInputStream is = null;
             try {
-                is = new FileInputStream("./img/ranks/0.png");
+                is = new FileInputStream(rank.getImagePath());
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             }
