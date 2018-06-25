@@ -2,7 +2,6 @@ package sevice;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import org.pircbotx.Configuration;

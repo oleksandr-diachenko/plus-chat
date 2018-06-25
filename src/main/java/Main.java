@@ -1,9 +1,8 @@
+import insidefx.undecorator.UndecoratorScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
 public class Main extends Application {
 
@@ -13,10 +12,14 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
-        primaryStage.initStyle(StageStyle.UNDECORATED);
-        Parent root = FXMLLoader.load(Main.class.getResource("/view/chat.fxml"));
-        Scene scene = new Scene(root);
-        primaryStage.setScene(scene);
+        Region root = (Region) FXMLLoader.load(getClass().getResource("/view/chat.fxml"));
+        UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
+        undecorator.setFadeInTransition();
+        primaryStage.setOnCloseRequest(we -> {
+            we.consume();
+            undecorator.setFadeOutTransition();
+        });
+        primaryStage.setScene(undecorator);
         primaryStage.setTitle("Chat");
         primaryStage.show();
     }
