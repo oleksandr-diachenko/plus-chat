@@ -5,20 +5,18 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import sevice.ChatService;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * @author Alexander Diachenko.
  */
-public class ChatController{
-
-    private List<String> messages = new LinkedList<>();
-    @FXML
-    private Label label;
+public class ChatController {
+    private List<HBox> messages = new ArrayList<>();
     @FXML
     private ScrollPane scrollPane;
     private static double xOffset = 0;
@@ -46,16 +44,8 @@ public class ChatController{
         return (Stage) scrollPane.getScene().getWindow();
     }
 
-    public List<String> getMessages() {
-        return messages;
-    }
-
-    public Label getLabel() {
-        return label;
-    }
-
     public void startAction() {
-        ChatService service = new ChatService(label);
+        ChatService service = new ChatService(scrollPane, messages);
         service.restart();
     }
 }

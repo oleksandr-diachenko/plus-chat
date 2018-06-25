@@ -21,11 +21,7 @@
             </opaqueInsets>
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-            <children>
-                <ScrollPane fx:id="scrollPane" prefHeight="366.0" prefWidth="248.0">
-                    <Label fx:id="label" text="test"/>
-                </ScrollPane>
-            </children>
+            <ScrollPane fx:id="scrollPane" prefHeight="366.0" prefWidth="248.0"/>
         </AnchorPane>
     </items>
 </SplitPane>

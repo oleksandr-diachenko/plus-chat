@@ -3,6 +3,9 @@ package thread;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -23,12 +26,15 @@ public class Bot extends ListenerAdapter{
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
-    private Label label;
-    private StringBuilder stringBuilder = new StringBuilder();
+    private ScrollPane scrollPane;
+    private List<HBox> messages;
+    private int index = 0;
+    private VBox vBox = new VBox();
 
 
-    public Bot(Label label) {
-        this.label = label;
+    public Bot(ScrollPane scrollPane, List<HBox> messages) {
+        this.scrollPane = scrollPane;
+        this.messages = messages;
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.load(getClass().getResource("/view/chat.fxml").openStream());
@@ -54,10 +60,16 @@ public class Bot extends ListenerAdapter{
     }
 
     private void updateUI(String nick, String message) {
-        String userMessage = nick + " : " + message;
-        stringBuilder.append(userMessage).append(System.getProperty("line.separator"));
         Platform.runLater(() -> {
-            label.setText(stringBuilder.toString());
+            Label name = new Label(nick);
+            Label separator = new Label(" : ");
+            Label mess = new Label(message);
+            HBox hBox = new HBox();
+            hBox.getChildren().addAll(name, separator, mess);
+            messages.add(hBox);
+            vBox.getChildren().add(messages.get(index));
+            scrollPane.setContent(vBox);
+            index++;
         });
     }
 
