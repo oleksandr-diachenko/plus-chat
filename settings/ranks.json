@@ -2,41 +2,49 @@
   {
     "name": "ROOKIE",
     "id": 0,
-    "exp": 0
+    "exp": 0,
+    "imagePath": "./img/ranks/0.png"
   },
   {
     "name": "SQUADDIE",
     "id": 1,
-    "exp": 100
+    "exp": 100,
+    "imagePath": "./img/ranks/1.png"
   },
   {
     "name": "CORPORAL",
     "id": 2,
-    "exp": 300
+    "exp": 300,
+    "imagePath": "./img/ranks/2.png"
   },
   {
     "name": "SERGEANT",
     "id": 3,
-    "exp": 600
+    "exp": 600,
+    "imagePath": "./img/ranks/3.png"
   },
   {
     "name": "LIEUTENANT",
     "id": 4,
-    "exp": 1200
+    "exp": 1200,
+    "imagePath": "./img/ranks/4.png"
   },
   {
     "name": "CAPTAIN",
     "id": 5,
-    "exp": 2400
-   },
+    "exp": 2400,
+    "imagePath": "./img/ranks/5.png"
+  },
   {
     "name": "MAJOR",
     "id": 6,
-    "exp": 4800
+    "exp": 4800,
+    "imagePath": "./img/ranks/6.png"
   },
   {
     "name": "COLONEL",
     "id": 7,
-    "exp": 9600
+    "exp": 9600,
+    "imagePath": "./img/ranks/7.png"
   }
 ]
