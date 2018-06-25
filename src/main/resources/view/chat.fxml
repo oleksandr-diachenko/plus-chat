@@ -12,6 +12,7 @@
     <items>
         <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="29.0" prefWidth="248.0">
             <children>
+                <Button fx:id="start" onAction="#startAction" layoutX="100.0" mnemonicParsing="false" text="Start"/>
                 <Button fx:id="close" onAction="#closeAction" layoutX="203.0" mnemonicParsing="false" text="Close"/>
                 <Button fx:id="hide" onAction="#hideAction" layoutX="155.0" mnemonicParsing="false" text="Hide"/>
             </children>

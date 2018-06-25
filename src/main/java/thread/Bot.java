@@ -1,7 +1,8 @@
 package thread;
 
-import controller.ChatController;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Label;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -9,30 +10,31 @@ import model.repository.*;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import sevice.ChatService;
 import util.AppProperty;
 import util.TimeUtil;
 
 import java.io.IOException;
 import java.util.*;
 
-public class Bot extends ListenerAdapter implements Subject{
+public class Bot extends ListenerAdapter{
 
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
-    private Set<Observer> observers = new HashSet<>();
+    private Label label;
+    private StringBuilder stringBuilder = new StringBuilder();
 
 
-    public Bot() {
+    public Bot(Label label) {
+        this.label = label;
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.load(getClass().getResource("/view/chat.fxml").openStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
-        ChatController chatController = fxmlLoader.getController();
-        registerObserver(chatController);
         connect = AppProperty.getProperty("connect.properties");
     }
 
@@ -44,11 +46,19 @@ public class Bot extends ListenerAdapter implements Subject{
         String nick = event.getUser().getNick();
         updateUser(nick);
         String message = event.getMessage();
-        notifyObservers(nick, message);
+        updateUI(nick, message);
         String command = getCommandFromMessage(message);
         if (command != null) {
             runCommand(event, command);
         }
+    }
+
+    private void updateUI(String nick, String message) {
+        String userMessage = nick + " : " + message;
+        stringBuilder.append(userMessage).append(System.getProperty("line.separator"));
+        Platform.runLater(() -> {
+            label.setText(stringBuilder.toString());
+        });
     }
 
     /**
@@ -91,11 +101,11 @@ public class Bot extends ListenerAdapter implements Subject{
      */
     @Override
     public void onPing(PingEvent event) {
-        BotThread.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
+        ChatService.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
     }
 
     private void sendMessage(String message) {
-        BotThread.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
+        ChatService.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
     private void updateUser(String nick) {
@@ -123,22 +133,5 @@ public class Bot extends ListenerAdapter implements Subject{
         user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
         user.setExp(1);
         userRepository.add(user);
-    }
-
-    @Override
-    public void registerObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObservers(String user, String message) {
-        for (Observer observer : observers) {
-            observer.update(user, message);
-        }
     }
 }

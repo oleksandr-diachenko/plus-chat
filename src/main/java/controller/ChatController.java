@@ -6,13 +6,17 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import thread.Observer;
+import sevice.ChatService;
+
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author Alexander Diachenko.
  */
-public class ChatController implements Observer {
+public class ChatController{
 
+    private List<String> messages = new LinkedList<>();
     @FXML
     private Label label;
     @FXML
@@ -42,8 +46,16 @@ public class ChatController implements Observer {
         return (Stage) scrollPane.getScene().getWindow();
     }
 
-    @Override
-    public void update(String user, String message) {
-        Platform.runLater(() -> label.setText(user + " : " + message));
+    public List<String> getMessages() {
+        return messages;
+    }
+
+    public Label getLabel() {
+        return label;
+    }
+
+    public void startAction() {
+        ChatService service = new ChatService(label);
+        service.restart();
     }
 }
