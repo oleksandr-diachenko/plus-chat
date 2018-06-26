@@ -4,6 +4,7 @@ import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -18,6 +19,8 @@ import java.util.Properties;
  * @author Alexander Diachenko.
  */
 public class ChatService extends Service<Void> {
+
+    private final static Logger logger = Logger.getLogger(ChatService.class);
 
     public static PircBotX bot;
     private Pane container;
@@ -46,8 +49,9 @@ public class ChatService extends Service<Void> {
                 bot = new PircBotX(config);
                 try {
                     bot.startBot();
-                } catch (IOException | IrcException e) {
-                    e.printStackTrace();
+                } catch (IOException | IrcException exception) {
+                    logger.error(exception.getMessage(), exception);
+                    exception.printStackTrace();
                 }
                 return null;
             }

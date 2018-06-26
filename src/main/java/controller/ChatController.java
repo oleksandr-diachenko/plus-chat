@@ -7,6 +7,7 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import org.apache.log4j.Logger;
 import sevice.ChatService;
 
 import java.io.FileInputStream;
@@ -18,6 +19,8 @@ import java.util.List;
  * @author Alexander Diachenko.
  */
 public class ChatController {
+
+    private final static Logger logger = Logger.getLogger(ChatController.class);
 
     @FXML
     private Label start;
@@ -37,8 +40,9 @@ public class ChatController {
             ImageView imageView = new ImageView(new Image(fis));
             imageView.setOpacity(0.4);
             start.setGraphic(imageView);
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
     }
 

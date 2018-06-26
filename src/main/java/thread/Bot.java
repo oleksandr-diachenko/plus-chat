@@ -12,6 +12,7 @@ import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
 import model.repository.*;
+import org.apache.log4j.Logger;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
@@ -27,6 +28,8 @@ import java.util.*;
 
 public class Bot extends ListenerAdapter {
 
+    private final static Logger logger = Logger.getLogger(Bot.class);
+
     private Properties connect;
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
@@ -41,8 +44,9 @@ public class Bot extends ListenerAdapter {
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.load(getClass().getResource("/view/chat.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         connect = AppProperty.getProperty("connect.properties");
     }
@@ -92,8 +96,9 @@ public class Bot extends ListenerAdapter {
                 imageView.setFitHeight(32);
                 imageView.setFitWidth(32);
                 label.setGraphic(imageView);
-            } catch (IOException e) {
-                e.printStackTrace();
+            } catch (IOException exception) {
+                logger.error(exception.getMessage(), exception);
+                exception.printStackTrace();
             }
             label.setText(nick + ": " + message);
             label.setWrapText(true);
