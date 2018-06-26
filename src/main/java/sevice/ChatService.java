@@ -36,7 +36,7 @@ public class ChatService extends Service<Void> {
         return new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                Properties connect = AppProperty.getProperty("connect.properties");
+                Properties connect = AppProperty.getProperty("./settings/connect.properties");
                 Configuration config = new Configuration.Builder()
                         .setName(connect.getProperty("twitch.botname"))
                         .addServer("irc.chat.twitch.tv", 6667)

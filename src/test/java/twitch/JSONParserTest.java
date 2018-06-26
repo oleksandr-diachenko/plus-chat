@@ -12,11 +12,11 @@ public class JSONParserTest {
 
     @Test
     public void jsonToStringTest() {
-        String jsonString = JSONParser.readFile(getResource());
+        String jsonString = JSONParser.readFile(getResource("/json/simpleJsonOneObject"));
         assertEquals("{  \"name\": \"Alex\",  \"nick\": \"POSITIV\",  \"birthday\": 1989}", jsonString);
     }
 
-    private String getResource() {
-        return getClass().getResource("/json/simpleJsonOneObject").getPath();
+    private String getResource(String path) {
+        return getClass().getResource(path).getPath();
     }
 }

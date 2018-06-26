@@ -13,9 +13,8 @@ public class AppProperty {
 
     private final static Logger logger = Logger.getLogger(AppProperty.class);
 
-    public static Properties getProperty(String fileName) {
+    public static Properties getProperty(String path) {
         Properties mainProperties = new Properties();
-        String path = "./settings/" + fileName;
         try {
             FileInputStream file = new FileInputStream(path);
             mainProperties.load(file);

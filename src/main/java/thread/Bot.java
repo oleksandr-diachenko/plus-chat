@@ -40,7 +40,7 @@ public class Bot extends ListenerAdapter {
     public Bot(Pane container, List<Label> messages) {
         this.container = container;
         this.messages = messages;
-        connect = AppProperty.getProperty("connect.properties");
+        connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
     @Override
