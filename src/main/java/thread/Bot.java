@@ -5,7 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import model.entity.Command;
@@ -30,12 +30,12 @@ public class Bot extends ListenerAdapter {
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
-    private VBox vbox;
+    private Pane container;
     private List<Label> messages;
     private int index = 0;
 
-    public Bot(VBox vbox, List<Label> messages) {
-        this.vbox = vbox;
+    public Bot(Pane container, List<Label> messages) {
+        this.container = container;
         this.messages = messages;
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
@@ -52,7 +52,7 @@ public class Bot extends ListenerAdapter {
             Label label = new Label("Connected!");
             label.setTextFill(Color.GREEN);
             messages.add(label);
-            vbox.getChildren().add(messages.get(index));
+            container.getChildren().add(messages.get(index));
             index++;
         });
     }
@@ -89,7 +89,7 @@ public class Bot extends ListenerAdapter {
             label.setWrapText(true);
             label.setTextAlignment(TextAlignment.JUSTIFY);
             messages.add(label);
-            vbox.getChildren().add(messages.get(index));
+            container.getChildren().add(messages.get(index));
             index++;
         });
     }

@@ -11,6 +11,6 @@
         <Label fx:id="start" layoutX="40" layoutY="-1" onMouseClicked="#startAction"/>
     </Pane>
     <ScrollPane fx:id="scrollPane" fitToWidth="true">
-        <VBox fx:id="messagesBox" spacing="5"/>
+        <VBox fx:id="container" spacing="5"/>
     </ScrollPane>
 </VBox>

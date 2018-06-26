@@ -22,7 +22,7 @@ public class ChatController {
     @FXML
     private Label start;
     @FXML
-    private VBox messagesBox;
+    private VBox container;
     @FXML
     private VBox root;
     @FXML
@@ -43,7 +43,7 @@ public class ChatController {
     }
 
     public void startAction() {
-        Service service = new ChatService(messagesBox, messages);
+        Service service = new ChatService(container, messages);
         start.setDisable(true);
         service.restart();
     }
