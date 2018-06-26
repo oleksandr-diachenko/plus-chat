@@ -6,12 +6,14 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
 import javafx.scene.text.TextAlignment;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
 import model.repository.*;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import sevice.ChatService;
@@ -42,6 +44,17 @@ public class Bot extends ListenerAdapter {
             e.printStackTrace();
         }
         connect = AppProperty.getProperty("connect.properties");
+    }
+
+    @Override
+    public void onConnect(ConnectEvent event) {
+        Platform.runLater(()-> {
+            Label label = new Label("Connected!");
+            label.setTextFill(Color.GREEN);
+            messages.add(label);
+            vbox.getChildren().add(messages.get(index));
+            index++;
+        });
     }
 
     /**
