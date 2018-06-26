@@ -2,8 +2,8 @@ package sevice;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
+import javafx.scene.control.Label;
+import javafx.scene.layout.VBox;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -20,11 +20,11 @@ import java.util.Properties;
 public class ChatService extends Service<Void> {
 
     public static PircBotX bot;
-    private ScrollPane scrollPane;
-    private List<HBox> messages;
+    private VBox vbox;
+    private List<Label> messages;
 
-    public ChatService(ScrollPane scrollPane, List<HBox> messages) {
-        this.scrollPane = scrollPane;
+    public ChatService(VBox vbox, List<Label> messages) {
+        this.vbox = vbox;
         this.messages = messages;
     }
 
@@ -38,7 +38,7 @@ public class ChatService extends Service<Void> {
                         .setName(connect.getProperty("twitch.botname"))
                         .addServer("irc.chat.twitch.tv", 6667)
                         .setServerPassword(connect.getProperty("twitch.oauth"))
-                        .addListener(new Bot(scrollPane, messages))
+                        .addListener(new Bot(vbox, messages))
                         .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
                         .buildConfiguration();
 

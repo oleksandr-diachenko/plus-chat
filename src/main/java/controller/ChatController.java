@@ -1,10 +1,8 @@
 package controller;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import sevice.ChatService;
@@ -18,10 +16,10 @@ import java.util.List;
 public class ChatController {
 
     @FXML
-    private Pane pane;
+    private VBox vbox;
     @FXML
     private VBox root;
-    private List<HBox> messages = new ArrayList<>();
+    private List<Label> messages = new ArrayList<>();
     @FXML
     private ScrollPane scrollPane;
     private static double xOffset = 0;
@@ -32,20 +30,13 @@ public class ChatController {
     public void initialize() {
         scrollPane.prefHeightProperty().bind(root.heightProperty());
     }
-    public void closeAction() {
-        Platform.exit();
-    }
-
-    public void hideAction() {
-        getStage().setIconified(true);
-    }
 
     private Stage getStage() {
         return (Stage) scrollPane.getScene().getWindow();
     }
 
     public void startAction() {
-        ChatService service = new ChatService(scrollPane, messages);
+        ChatService service = new ChatService(vbox, messages);
         service.restart();
     }
 }

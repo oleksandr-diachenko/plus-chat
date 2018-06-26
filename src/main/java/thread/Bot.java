@@ -3,12 +3,10 @@ package thread;
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -31,14 +29,12 @@ public class Bot extends ListenerAdapter {
     private UserRepository userRepository = new UserRepositoryImpl();
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
-    private ScrollPane scrollPane;
-    private List<HBox> messages;
+    private VBox vbox;
+    private List<Label> messages;
     private int index = 0;
-    private VBox vBox = new VBox();
 
-
-    public Bot(ScrollPane scrollPane, List<HBox> messages) {
-        this.scrollPane = scrollPane;
+    public Bot(VBox vbox, List<Label> messages) {
+        this.vbox = vbox;
         this.messages = messages;
         FXMLLoader fxmlLoader = new FXMLLoader();
         try {
@@ -75,30 +71,18 @@ public class Bot extends ListenerAdapter {
                 e.printStackTrace();
             }
             Image image = new Image(is);
-            Label img = new Label();
+            Label label = new Label();
             ImageView imageView = new ImageView(image);
             imageView.setFitHeight(20);
             imageView.setFitWidth(20);
-            img.setGraphic(imageView);
-            Label name = new Label(nick);
-            name.setMinWidth(getWidth(name));
-            Label separator = new Label(" : ");
-            separator.setMinWidth(getWidth(separator));
-            Label mess = new Label(message);
-            mess.setWrapText(true);
-            HBox hBox = new HBox();
-            hBox.getChildren().addAll(img, name, separator, mess);
-            messages.add(hBox);
-            vBox.getChildren().add(messages.get(index));
-            scrollPane.setContent(vBox);
+            label.setGraphic(imageView);
+            label.setText(nick + ": " + message);
+            label.setWrapText(true);
+            label.setTextAlignment(TextAlignment.JUSTIFY);
+            messages.add(label);
+            vbox.getChildren().add(messages.get(index));
             index++;
         });
-    }
-
-    private double getWidth(Label label) {
-        Text theText = new Text(label.getText());
-        theText.setFont(label.getFont());
-        return theText.getBoundsInLocal().getWidth();
     }
 
     /**
