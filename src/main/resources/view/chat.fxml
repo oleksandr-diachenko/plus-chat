@@ -5,9 +5,15 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="root" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChatController">
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.HBox?>
+<VBox fx:id="root" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChatController">
     <Pane fx:id="pane" minHeight="35.0" prefHeight="35.0" maxHeight="35.0" prefWidth="136.0">
-        <Button fx:id="start" layoutX="48.0" layoutY="5.0" mnemonicParsing="false" onAction="#startAction" text="Start" />
+        <HBox spacing="10">
+            <Label fx:id="start" layoutX="48.0" layoutY="5.0" onMouseClicked="#startAction" text="Start"/>
+            <Label fx:id="stop" disable="true" layoutX="80.0" layoutY="5.0" onMouseClicked="#stopAction" text="Stop"/>
+        </HBox>
     </Pane>
     <ScrollPane fx:id="scrollPane" fitToWidth="true">
         <VBox fx:id="vbox" spacing="10"/>

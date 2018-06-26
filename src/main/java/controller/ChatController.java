@@ -16,14 +16,17 @@ import java.util.List;
 public class ChatController {
 
     @FXML
+    private Label stop;
+    @FXML
+    private Label start;
+    @FXML
     private VBox vbox;
     @FXML
     private VBox root;
     private List<Label> messages = new ArrayList<>();
     @FXML
     private ScrollPane scrollPane;
-    private static double xOffset = 0;
-    private static double yOffset = 0;
+    private ChatService service;
 
 
     @FXML
@@ -36,7 +39,15 @@ public class ChatController {
     }
 
     public void startAction() {
-        ChatService service = new ChatService(vbox, messages);
+        start.setDisable(true);
+        stop.setDisable(false);
+        service = new ChatService(vbox, messages);
         service.restart();
+    }
+
+    public void stopAction() {
+        start.setDisable(false);
+        stop.setDisable(true);
+        service.cancel();
     }
 }
