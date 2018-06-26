@@ -19,7 +19,6 @@ import util.AppProperty;
 import util.TimeUtil;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -64,18 +63,15 @@ public class Bot extends ListenerAdapter {
         Platform.runLater(() -> {
             User user = userRepository.getUserByName(nick);
             Rank rank = rankRepository.getRankByExp(user.getExp());
-            FileInputStream is = null;
-            try {
-                is = new FileInputStream(rank.getImagePath());
-            } catch (FileNotFoundException e) {
+            Label label = new Label();
+            try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+                ImageView imageView = new ImageView(new Image(fis));
+                imageView.setFitHeight(20);
+                imageView.setFitWidth(20);
+                label.setGraphic(imageView);
+            } catch (IOException e) {
                 e.printStackTrace();
             }
-            Image image = new Image(is);
-            Label label = new Label();
-            ImageView imageView = new ImageView(image);
-            imageView.setFitHeight(20);
-            imageView.setFitWidth(20);
-            label.setGraphic(imageView);
             label.setText(nick + ": " + message);
             label.setWrapText(true);
             label.setTextAlignment(TextAlignment.JUSTIFY);
