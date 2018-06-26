@@ -1,7 +1,6 @@
 package thread;
 
 import javafx.application.Platform;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -41,13 +40,6 @@ public class Bot extends ListenerAdapter {
     public Bot(Pane container, List<Label> messages) {
         this.container = container;
         this.messages = messages;
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        try {
-            fxmlLoader.load(getClass().getResource("/view/chat.fxml").openStream());
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
-        }
         connect = AppProperty.getProperty("connect.properties");
     }
 
@@ -93,8 +85,8 @@ public class Bot extends ListenerAdapter {
             Label label = new Label();
             try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
                 ImageView imageView = new ImageView(new Image(fis));
-                imageView.setFitHeight(32);
-                imageView.setFitWidth(32);
+                imageView.setFitHeight(20);
+                imageView.setFitWidth(20);
                 label.setGraphic(imageView);
             } catch (IOException exception) {
                 logger.error(exception.getMessage(), exception);
