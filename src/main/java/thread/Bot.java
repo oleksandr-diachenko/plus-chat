@@ -14,6 +14,7 @@ import model.entity.User;
 import model.repository.*;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
+import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import sevice.ChatService;
@@ -48,9 +49,18 @@ public class Bot extends ListenerAdapter {
 
     @Override
     public void onConnect(ConnectEvent event) {
-        Platform.runLater(()-> {
-            Label label = new Label("Connected!");
-            label.setTextFill(Color.GREEN);
+        updateUI("Connected!", Color.GREEN);
+    }
+
+    @Override
+    public void onDisconnect(DisconnectEvent event) {
+        updateUI("Disconnected!", Color.RED);
+    }
+
+    private void updateUI(String message, Color color) {
+        Platform.runLater(() -> {
+            Label label = new Label(message);
+            label.setTextFill(color);
             messages.add(label);
             container.getChildren().add(messages.get(index));
             index++;
@@ -79,8 +89,8 @@ public class Bot extends ListenerAdapter {
             Label label = new Label();
             try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
                 ImageView imageView = new ImageView(new Image(fis));
-                imageView.setFitHeight(20);
-                imageView.setFitWidth(20);
+                imageView.setFitHeight(32);
+                imageView.setFitWidth(32);
                 label.setGraphic(imageView);
             } catch (IOException e) {
                 e.printStackTrace();
