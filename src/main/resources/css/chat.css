@@ -1,0 +1,22 @@
+.root {
+    -fx-base: #424242;
+    -fx-background: #212121;
+    -fx-font-family: "Arial";
+}
+
+.label#message {
+    -fx-font-size: 17px;
+    -fx-text-fill: #9E9E9E;;
+}
+
+.label#start {
+    -fx-cursor: hand;
+}
+
+.button {
+    -fx-cursor: hand;
+}
+
+.scroll-pane{
+    -fx-background-color:transparent;
+}

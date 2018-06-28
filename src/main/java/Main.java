@@ -13,7 +13,6 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
         Region root = FXMLLoader.load(getClass().getResource("/view/chat.fxml"));
-        root.setStyle("-fx-background: #212121; -fx-font-family: \"Arial\";");
         UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
         undecorator.setFadeInTransition();
         primaryStage.setOnCloseRequest(we -> {

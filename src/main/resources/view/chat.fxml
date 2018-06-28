@@ -5,6 +5,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import javafx.scene.control.Label?>
+<?import java.net.URL?>
 <VBox fx:id="root" alignment="TOP_CENTER" prefHeight="400.0" prefWidth="279.0" xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.ChatController">
     <Pane minHeight="35.0" prefHeight="35.0" maxHeight="35.0" prefWidth="136.0">
@@ -13,4 +14,7 @@
     <ScrollPane fx:id="scrollPane" fitToWidth="true">
         <VBox fx:id="container" spacing="5"/>
     </ScrollPane>
+    <stylesheets>
+        <URL value="@/css/chat.css"/>
+    </stylesheets>
 </VBox>

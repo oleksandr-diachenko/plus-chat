@@ -84,8 +84,7 @@ public class Bot extends ListenerAdapter {
             User user = userRepository.getUserByName(nick);
             Rank rank = rankRepository.getRankByExp(user.getExp());
             Label label = new Label();
-            label.setFont(new Font(17));
-            label.setStyle("-fx-text-fill: #9E9E9E;");
+            label.setId("message");
             try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
                 ImageView imageView = new ImageView(new Image(fis));
                 imageView.setFitHeight(20);
