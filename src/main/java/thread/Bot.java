@@ -6,6 +6,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import model.entity.Command;
 import model.entity.Rank;
@@ -83,6 +84,8 @@ public class Bot extends ListenerAdapter {
             User user = userRepository.getUserByName(nick);
             Rank rank = rankRepository.getRankByExp(user.getExp());
             Label label = new Label();
+            label.setFont(new Font(17));
+            label.setStyle("-fx-text-fill: #9E9E9E;");
             try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
                 ImageView imageView = new ImageView(new Image(fis));
                 imageView.setFitHeight(20);
