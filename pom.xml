@@ -42,10 +42,8 @@
         </dependency>
         <dependency>
             <groupId>in.sidefx</groupId>
-            <artifactId>undecoratorbis</artifactId>
+            <artifactId>undecorator</artifactId>
             <version>1.0</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/UndecoratorBis.jar</systemPath>
         </dependency>
     </dependencies>
     <build>
