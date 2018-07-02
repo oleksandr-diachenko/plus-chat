@@ -18,15 +18,3 @@
     -fx-font-size: 17px;
     -fx-fill: #9E9E9E;;
 }
-
-.label#start {
-    -fx-cursor: hand;
-}
-
-.button {
-    -fx-cursor: hand;
-}
-
-.scroll-pane{
-    -fx-background-color:transparent;
-}
