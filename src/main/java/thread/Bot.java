@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
 import javafx.scene.text.TextAlignment;
 import model.entity.Command;
 import model.entity.Rank;
@@ -24,6 +23,7 @@ import util.TimeUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.*;
 
 public class Bot extends ListenerAdapter {
@@ -94,7 +94,16 @@ public class Bot extends ListenerAdapter {
                 logger.error(exception.getMessage(), exception);
                 exception.printStackTrace();
             }
-            label.setText(nick + ": " + message);
+            final String stringMessage = nick + ": " + message;
+            byte bytes[] = stringMessage.getBytes();
+            String original = "";
+            try {
+                original = new String(bytes, "UTF-8");
+            } catch (UnsupportedEncodingException exception) {
+                logger.error(exception.getMessage(), exception);
+                exception.printStackTrace();
+            }
+            label.setText(original);
             label.setWrapText(true);
             label.setTextAlignment(TextAlignment.JUSTIFY);
             messages.add(label);
