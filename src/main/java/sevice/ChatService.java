@@ -8,7 +8,6 @@ import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
-import thread.Bot;
 import util.AppProperty;
 
 import java.io.IOException;

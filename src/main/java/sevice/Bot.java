@@ -1,4 +1,4 @@
-package thread;
+package sevice;
 
 import javafx.application.Platform;
 import javafx.scene.control.Label;
@@ -19,7 +19,6 @@ import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import sevice.ChatService;
 import util.AppProperty;
 import util.StringUtil;
 import util.TimeUtil;
@@ -158,6 +157,9 @@ public class Bot extends ListenerAdapter {
     }
 
     private void sendMessage(String message) {
+        String botName = connect.getProperty("twitch.botname");
+        updateUser(botName);
+        updateUI(botName, message);
         ChatService.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
