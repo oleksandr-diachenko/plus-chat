@@ -2,6 +2,7 @@ package model.repository;
 
 import model.entity.Command;
 
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -11,5 +12,5 @@ public interface CommandRepository {
 
     Set<Command> getCommands();
 
-    Command getCommandByName(String name);
+    Optional<Command> getCommandByName(String name);
 }

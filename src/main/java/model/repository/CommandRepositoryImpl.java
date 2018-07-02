@@ -9,6 +9,7 @@ import util.JSONParser;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -31,12 +32,12 @@ public class CommandRepositoryImpl implements CommandRepository {
     }
 
     @Override
-    public Command getCommandByName(String name) {
+    public Optional<Command> getCommandByName(String name) {
         for (Command command : getCommands()) {
             if (command.getName().equalsIgnoreCase(name)) {
-                return command;
+                return Optional.of(command);
             }
         }
-        return new Command();
+        return Optional.empty();
     }
 }
