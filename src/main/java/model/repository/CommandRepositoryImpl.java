@@ -22,7 +22,7 @@ public class CommandRepositoryImpl implements CommandRepository {
     @Override
     public Set<Command> getCommands() {
         try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./settings/commands.json"), new TypeReference<List<Command>>() {
+            return new HashSet<>(mapper.readValue(JSONParser.readFile("./data/commands.json"), new TypeReference<List<Command>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
