@@ -12,9 +12,11 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        primaryStage.setAlwaysOnTop(true);
         Region root = FXMLLoader.load(getClass().getResource("/view/chat.fxml"));
         UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
         undecorator.setFadeInTransition();
+        undecorator.setBackgroundOpacity(0);
         primaryStage.setOnCloseRequest(we -> {
             we.consume();
             undecorator.setFadeOutTransition();
