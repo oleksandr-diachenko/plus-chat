@@ -18,3 +18,11 @@
     -fx-font-size: 17px;
     -fx-fill: #9E9E9E;;
 }
+
+.scroll-pane{
+    -fx-background-color:transparent;
+}
+
+#container {
+    -fx-spacing: 5;
+}
