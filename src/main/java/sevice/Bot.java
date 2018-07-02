@@ -1,5 +1,6 @@
 package sevice;
 
+import controller.ChatController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -85,18 +86,21 @@ public class Bot extends ListenerAdapter {
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
             HBox hBox = new HBox();
-            User user = userRepository.getUserByName(nick);
-            Rank rank = rankRepository.getRankByExp(user.getExp());
+            Optional<User> userByName = userRepository.getUserByName(nick);
             Label image = new Label();
-            image.setId("rank-image");
-            try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-                ImageView imageView = new ImageView(new Image(fis));
-                imageView.setFitHeight(20);
-                imageView.setFitWidth(20);
-                image.setGraphic(imageView);
-            } catch (IOException exception) {
-                logger.error(exception.getMessage(), exception);
-                exception.printStackTrace();
+            if (userByName.isPresent()) {
+                User user = userByName.get();
+                Rank rank = rankRepository.getRankByExp(user.getExp());
+                image.setId("rank-image");
+                try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+                    ImageView imageView = new ImageView(new Image(fis));
+                    imageView.setFitHeight(20);
+                    imageView.setFitWidth(20);
+                    image.setGraphic(imageView);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                    exception.printStackTrace();
+                }
             }
             TextFlow textFlow = new TextFlow();
             Text name = new Text(StringUtil.getUTF8String(nick));
@@ -137,15 +141,21 @@ public class Bot extends ListenerAdapter {
     }
 
     private void runOtherCommands(String command) {
-        Command commandByName = commandRepository.getCommandByName(command);
-        sendMessage(commandByName.getResponse());
+        Optional<Command> commandByName = commandRepository.getCommandByName(command);
+        if (commandByName.isPresent()) {
+            Command comm = commandByName.get();
+            sendMessage(comm.getResponse());
+        }
     }
 
     private void runRankCommand(GenericMessageEvent event) {
         String nick = event.getUser().getNick();
-        User userByName = userRepository.getUserByName(nick);
-        Rank rank = rankRepository.getRankByExp(userByName.getExp());
-        sendMessage(nick + ", your rank " + rank.getName() + " (" + userByName.getExp() + " exp)");
+        Optional<User> userByName = userRepository.getUserByName(nick);
+        if (userByName.isPresent()) {
+            User user = userByName.get();
+            Rank rank = rankRepository.getRankByExp(user.getExp());
+            sendMessage(nick + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)");
+        }
     }
 
     /**
@@ -153,22 +163,22 @@ public class Bot extends ListenerAdapter {
      */
     @Override
     public void onPing(PingEvent event) {
-        ChatService.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
+        ChatController.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
     }
 
     private void sendMessage(String message) {
         String botName = connect.getProperty("twitch.botname");
         updateUser(botName);
         updateUI(botName, message);
-        ChatService.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
+        ChatController.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
     private void updateUser(String nick) {
-        User userByName = userRepository.getUserByName(nick);
-        if (userByName == null) {
-            createNewUser(nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
+        if (userByName.isPresent()) {
+            updateExistingUser(userByName.get());
         } else {
-            updateExistingUser(userByName);
+            createNewUser(nick);
         }
     }
 

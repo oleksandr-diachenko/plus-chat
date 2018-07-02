@@ -1,20 +1,20 @@
 package controller;
 
-import javafx.concurrent.Service;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import org.apache.log4j.Logger;
-import sevice.ChatService;
+import org.pircbotx.Configuration;
+import org.pircbotx.PircBotX;
+import org.pircbotx.exception.IrcException;
+import sevice.Bot;
+import util.AppProperty;
 
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.
@@ -23,8 +23,7 @@ public class ChatController {
 
     private final static Logger logger = Logger.getLogger(ChatController.class);
 
-    @FXML
-    private Label start;
+    public static PircBotX bot;
     @FXML
     private VBox container;
     @FXML
@@ -38,19 +37,27 @@ public class ChatController {
     public void initialize() {
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
-        try (FileInputStream fis = new FileInputStream("./img/icons/play.png")) {
-            ImageView imageView = new ImageView(new Image(fis));
-            imageView.setOpacity(0.4);
-            start.setGraphic(imageView);
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
-        }
+        startBot();
     }
 
-    public void startAction() {
-        Service service = new ChatService(container, messages);
-        start.setDisable(true);
-        service.restart();
+    private void startBot() {
+        Thread thread = new Thread(() -> {
+            Properties connect = AppProperty.getProperty("./settings/connect.properties");
+            Configuration config = new Configuration.Builder()
+                    .setName(connect.getProperty("twitch.botname"))
+                    .addServer("irc.chat.twitch.tv", 6667)
+                    .setServerPassword(connect.getProperty("twitch.oauth"))
+                    .addListener(new Bot(container, messages))
+                    .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
+                    .buildConfiguration();
+            bot = new PircBotX(config);
+            try {
+                bot.startBot();
+            } catch (IOException | IrcException exception) {
+                logger.error(exception.getMessage(), exception);
+                exception.printStackTrace();
+            }
+        });
+        thread.start();
     }
 }
