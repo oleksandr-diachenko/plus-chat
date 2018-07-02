@@ -37,6 +37,7 @@ public class ChatController {
     @FXML
     public void initialize() {
         scrollPane.prefHeightProperty().bind(root.heightProperty());
+        scrollPane.vvalueProperty().bind(container.heightProperty());
         try (FileInputStream fis = new FileInputStream("./img/icons/play.png")) {
             ImageView imageView = new ImageView(new Image(fis));
             imageView.setOpacity(0.4);
