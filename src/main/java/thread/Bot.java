@@ -4,9 +4,11 @@ import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.TextAlignment;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import model.entity.Command;
 import model.entity.Rank;
 import model.entity.User;
@@ -35,10 +37,10 @@ public class Bot extends ListenerAdapter {
     private CommandRepository commandRepository = new CommandRepositoryImpl();
     private RankRepository rankRepository = new RankRepositoryImpl();
     private Pane container;
-    private List<Label> messages;
+    private List<HBox> messages;
     private int index = 0;
 
-    public Bot(Pane container, List<Label> messages) {
+    public Bot(Pane container, List<HBox> messages) {
         this.container = container;
         this.messages = messages;
         connect = AppProperty.getProperty("./settings/connect.properties");
@@ -56,9 +58,11 @@ public class Bot extends ListenerAdapter {
 
     private void updateUI(String message, Color color) {
         Platform.runLater(() -> {
+            HBox hBox = new HBox();
             Label label = new Label(message);
             label.setTextFill(color);
-            messages.add(label);
+            hBox.getChildren().add(label);
+            messages.add(hBox);
             container.getChildren().add(messages.get(index));
             index++;
         });
@@ -81,23 +85,30 @@ public class Bot extends ListenerAdapter {
 
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
+            HBox hBox = new HBox();
             User user = userRepository.getUserByName(nick);
             Rank rank = rankRepository.getRankByExp(user.getExp());
-            Label label = new Label();
-            label.setId("message");
+            Label image = new Label();
+            image.setId("rank-image");
             try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
                 ImageView imageView = new ImageView(new Image(fis));
                 imageView.setFitHeight(20);
                 imageView.setFitWidth(20);
-                label.setGraphic(imageView);
+                image.setGraphic(imageView);
             } catch (IOException exception) {
                 logger.error(exception.getMessage(), exception);
                 exception.printStackTrace();
             }
-            label.setText(StringUtil.getUTF8String(nick + ": " + message));
-            label.setWrapText(true);
-            label.setTextAlignment(TextAlignment.JUSTIFY);
-            messages.add(label);
+            TextFlow textFlow = new TextFlow();
+            Text name = new Text(StringUtil.getUTF8String(nick));
+            name.setId("user-name");
+            Text separator = new Text(StringUtil.getUTF8String(": "));
+            separator.setId("separator");
+            Text mess = new Text(StringUtil.getUTF8String(message));
+            mess.setId("user-message");
+            textFlow.getChildren().addAll(name, separator, mess);
+            hBox.getChildren().addAll(image, textFlow);
+            messages.add(hBox);
             container.getChildren().add(messages.get(index));
             index++;
         });

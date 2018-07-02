@@ -4,9 +4,19 @@
     -fx-font-family: "Arial";
 }
 
-.label#message {
+#user-name {
     -fx-font-size: 17px;
-    -fx-text-fill: #9E9E9E;;
+    -fx-fill: #819FF7;;
+}
+
+#separator {
+    -fx-font-size: 17px;
+    -fx-fill: #819FF7;;
+}
+
+#user-message {
+    -fx-font-size: 17px;
+    -fx-fill: #9E9E9E;;
 }
 
 .label#start {

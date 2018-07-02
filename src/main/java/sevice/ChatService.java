@@ -2,7 +2,7 @@ package sevice;
 
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
-import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
@@ -24,9 +24,9 @@ public class ChatService extends Service<Void> {
 
     public static PircBotX bot;
     private Pane container;
-    private List<Label> messages;
+    private List<HBox> messages;
 
-    public ChatService(Pane container, List<Label> messages) {
+    public ChatService(Pane container, List<HBox> messages) {
         this.container = container;
         this.messages = messages;
     }
