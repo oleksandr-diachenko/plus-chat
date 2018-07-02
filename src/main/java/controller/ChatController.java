@@ -1,6 +1,7 @@
 package controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -24,6 +25,8 @@ public class ChatController {
     private final static Logger logger = Logger.getLogger(ChatController.class);
 
     public static PircBotX bot;
+    @FXML
+    private Button settings;
     @FXML
     private VBox container;
     @FXML
@@ -60,5 +63,9 @@ public class ChatController {
         });
         thread.setDaemon(true);
         thread.start();
+    }
+
+    public void settingsOnAction() {
+
     }
 }
