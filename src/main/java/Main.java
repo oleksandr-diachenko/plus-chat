@@ -24,7 +24,7 @@ public class Main extends Application {
             undecorator.setFadeOutTransition();
         });
         primaryStage.setScene(undecorator);
-        primaryStage.setTitle("Chat");
+        primaryStage.setTitle("(+) chat");
         primaryStage.show();
     }
 }
