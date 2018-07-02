@@ -58,6 +58,7 @@ public class ChatController {
                 exception.printStackTrace();
             }
         });
+        thread.setDaemon(true);
         thread.start();
     }
 }
