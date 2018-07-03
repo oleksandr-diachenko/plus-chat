@@ -1,10 +1,14 @@
 package controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
@@ -25,8 +29,6 @@ public class ChatController {
     private final static Logger logger = Logger.getLogger(ChatController.class);
 
     public static PircBotX bot;
-    @FXML
-    private Button settings;
     @FXML
     private VBox container;
     @FXML
@@ -66,6 +68,28 @@ public class ChatController {
     }
 
     public void settingsOnAction() {
+        openSettingsStage();
+    }
 
+    private Stage getStage() {
+        return (Stage)container.getScene().getWindow();
+    }
+
+    private void openSettingsStage() {
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        FXMLLoader fxmlLoader = new FXMLLoader();
+        Pane root = null;
+        try {
+            root = fxmlLoader.load(getClass().getResource("/view/settings.fxml").openStream());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.setTitle("Settings!");
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(getStage().getScene().getWindow());
+        stage.show();
     }
 }
