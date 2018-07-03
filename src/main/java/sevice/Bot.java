@@ -107,25 +107,24 @@ public class Bot extends ListenerAdapter {
             TextFlow textFlow = new TextFlow();
             Text name = new Text(StringUtil.getUTF8String(nick));
             name.setId("user-name");
-            String nameStyle = " -fx-font-size: " + properties.getProperty("nick.font.size") + "px;" +
-                    "-fx-fill: #" + properties.getProperty("nick.font.color") + ";";
-            name.setStyle(nameStyle);
+            name.setStyle(getStyle("nick.font.size", "nick.font.color"));
             Text separator = new Text(StringUtil.getUTF8String(": "));
             separator.setId("separator");
-            String separatorStyle = " -fx-font-size: " + properties.getProperty("separator.font.size") + "px;" +
-                    "-fx-fill: #" + properties.getProperty("separator.font.color") + ";";
-            separator.setStyle(separatorStyle);
+            separator.setStyle(getStyle("separator.font.size", "separator.font.color"));
             Text mess = new Text(StringUtil.getUTF8String(message));
             mess.setId("user-message");
-            String messageStyle = " -fx-font-size: " + properties.getProperty("message.font.size") + "px;" +
-                    "-fx-fill: #" + properties.getProperty("message.font.color") + ";";
-            mess.setStyle(messageStyle);
+            mess.setStyle(getStyle("message.font.size", "message.font.color"));
             textFlow.getChildren().addAll(name, separator, mess);
             hBox.getChildren().addAll(image, textFlow);
             messages.add(hBox);
             container.getChildren().add(messages.get(index));
             index++;
         });
+    }
+
+    private String getStyle(String size, String color) {
+        return " -fx-font-size: " + properties.getProperty(size) + "px;" +
+                "-fx-fill: #" + properties.getProperty(color) + ";";
     }
 
     /**
