@@ -42,10 +42,7 @@ public class ChatController {
     @FXML
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
-        String style = settings.getProperty("root.base.color") +
-                settings.getProperty("root.background.color") +
-                settings.getProperty("root.font.family");
-        root.setStyle(style);
+        root.setStyle(getRootStyle());
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
@@ -97,5 +94,11 @@ public class ChatController {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(getStage().getScene().getWindow());
         stage.show();
+    }
+
+    private String getRootStyle() {
+        return "-fx-base: #" + settings.getProperty("root.base.color") + ";" +
+                "-fx-background: #" + settings.getProperty("root.background.color") + ";" +
+                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 }
