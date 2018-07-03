@@ -12,13 +12,13 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
-public class RankRepositoryImpl implements RankRepository {
+public class JSONRankRepository implements RankRepository {
 
-    private final static Logger logger = Logger.getLogger(RankRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(JSONRankRepository.class);
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Rank> ranks;
 
-    public RankRepositoryImpl() {
+    public JSONRankRepository() {
         ranks = getRanks();
     }
 

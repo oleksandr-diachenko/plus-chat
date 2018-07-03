@@ -16,13 +16,13 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
-public class UserRepositoryImpl implements UserRepository {
+public class JSONUserRepository implements UserRepository {
 
-    private final static Logger logger = Logger.getLogger(UserRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(JSONUserRepository.class);
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
 
-    public UserRepositoryImpl() {
+    public JSONUserRepository() {
         users = getUsers();
     }
 

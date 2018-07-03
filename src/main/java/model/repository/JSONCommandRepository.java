@@ -15,9 +15,9 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
-public class CommandRepositoryImpl implements CommandRepository {
+public class JSONCommandRepository implements CommandRepository {
 
-    private final static Logger logger = Logger.getLogger(CommandRepositoryImpl.class);
+    private final static Logger logger = Logger.getLogger(JSONCommandRepository.class);
     private ObjectMapper mapper = new ObjectMapper();
 
     @Override

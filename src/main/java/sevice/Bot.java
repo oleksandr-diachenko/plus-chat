@@ -33,9 +33,9 @@ public class Bot extends ListenerAdapter {
     private final static Logger logger = Logger.getLogger(Bot.class);
 
     private Properties connect;
-    private UserRepository userRepository = new UserRepositoryImpl();
-    private CommandRepository commandRepository = new CommandRepositoryImpl();
-    private RankRepository rankRepository = new RankRepositoryImpl();
+    private UserRepository userRepository = new JSONUserRepository();
+    private CommandRepository commandRepository = new JSONCommandRepository();
+    private RankRepository rankRepository = new JSONRankRepository();
     private Pane container;
     private List<HBox> messages;
     private Properties properties;
