@@ -1,24 +1,3 @@
-.root {
-    -fx-base: #424242;
-    -fx-background: #212121;
-    -fx-font-family: "Arial";
-}
-
-#user-name {
-    -fx-font-size: 17px;
-    -fx-fill: #819FF7;;
-}
-
-#separator {
-    -fx-font-size: 17px;
-    -fx-fill: #819FF7;;
-}
-
-#user-message {
-    -fx-font-size: 17px;
-    -fx-fill: #9E9E9E;;
-}
-
 .scroll-pane{
     -fx-background-color:transparent;
 }

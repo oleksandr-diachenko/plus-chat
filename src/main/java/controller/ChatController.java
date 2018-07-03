@@ -36,10 +36,16 @@ public class ChatController {
     @FXML
     private ScrollPane scrollPane;
     private List<HBox> messages = new ArrayList<>();
+    private Properties properties;
 
 
     @FXML
     public void initialize() {
+        properties = AppProperty.getProperty("./settings/settings.properties");
+        String style = properties.getProperty("root.base.color") +
+                properties.getProperty("root.background.color") +
+                properties.getProperty("root.font.family");
+        root.setStyle(style);
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
@@ -52,7 +58,7 @@ public class ChatController {
                     .setName(connect.getProperty("twitch.botname"))
                     .addServer("irc.chat.twitch.tv", 6667)
                     .setServerPassword(connect.getProperty("twitch.oauth"))
-                    .addListener(new Bot(container, messages))
+                    .addListener(new Bot(container, messages, properties))
                     .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
                     .buildConfiguration();
             bot = new PircBotX(config);

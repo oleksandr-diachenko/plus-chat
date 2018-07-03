@@ -38,11 +38,13 @@ public class Bot extends ListenerAdapter {
     private RankRepository rankRepository = new RankRepositoryImpl();
     private Pane container;
     private List<HBox> messages;
+    private Properties properties;
     private int index = 0;
 
-    public Bot(Pane container, List<HBox> messages) {
+    public Bot(Pane container, List<HBox> messages, Properties properties) {
         this.container = container;
         this.messages = messages;
+        this.properties = properties;
         connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
@@ -105,10 +107,19 @@ public class Bot extends ListenerAdapter {
             TextFlow textFlow = new TextFlow();
             Text name = new Text(StringUtil.getUTF8String(nick));
             name.setId("user-name");
+            String nameStyle = properties.getProperty("nick.font.size") +
+                    properties.getProperty("nick.font.color");
+            name.setStyle(nameStyle);
             Text separator = new Text(StringUtil.getUTF8String(": "));
             separator.setId("separator");
+            String separatorStyle = properties.getProperty("separator.font.size") +
+                    properties.getProperty("separator.font.color");
+            separator.setStyle(separatorStyle);
             Text mess = new Text(StringUtil.getUTF8String(message));
             mess.setId("user-message");
+            String messageStyle = properties.getProperty("message.font.size") +
+                    properties.getProperty("message.font.color");
+            mess.setStyle(messageStyle);
             textFlow.getChildren().addAll(name, separator, mess);
             hBox.getChildren().addAll(image, textFlow);
             messages.add(hBox);
