@@ -107,18 +107,18 @@ public class Bot extends ListenerAdapter {
             TextFlow textFlow = new TextFlow();
             Text name = new Text(StringUtil.getUTF8String(nick));
             name.setId("user-name");
-            String nameStyle = properties.getProperty("nick.font.size") +
-                    properties.getProperty("nick.font.color");
+            String nameStyle = " -fx-font-size: " + properties.getProperty("nick.font.size") + "px;" +
+                    "-fx-fill: #" + properties.getProperty("nick.font.color") + ";";
             name.setStyle(nameStyle);
             Text separator = new Text(StringUtil.getUTF8String(": "));
             separator.setId("separator");
-            String separatorStyle = properties.getProperty("separator.font.size") +
-                    properties.getProperty("separator.font.color");
+            String separatorStyle = " -fx-font-size: " + properties.getProperty("separator.font.size") + "px;" +
+                    "-fx-fill: #" + properties.getProperty("separator.font.color") + ";";
             separator.setStyle(separatorStyle);
             Text mess = new Text(StringUtil.getUTF8String(message));
             mess.setId("user-message");
-            String messageStyle = properties.getProperty("message.font.size") +
-                    properties.getProperty("message.font.color");
+            String messageStyle = " -fx-font-size: " + properties.getProperty("message.font.size") + "px;" +
+                    "-fx-fill: #" + properties.getProperty("message.font.color") + ";";
             mess.setStyle(messageStyle);
             textFlow.getChildren().addAll(name, separator, mess);
             hBox.getChildren().addAll(image, textFlow);
