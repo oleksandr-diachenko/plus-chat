@@ -107,13 +107,13 @@ public class Bot extends ListenerAdapter {
             TextFlow textFlow = new TextFlow();
             Text name = new Text(StringUtil.getUTF8String(nick));
             name.setId("user-name");
-            name.setStyle(getStyle("nick.font.size", "nick.font.color"));
+            name.setStyle(getStyle("font.size", "nick.font.color"));
             Text separator = new Text(StringUtil.getUTF8String(": "));
             separator.setId("separator");
-            separator.setStyle(getStyle("separator.font.size", "separator.font.color"));
+            separator.setStyle(getStyle("font.size", "separator.font.color"));
             Text mess = new Text(StringUtil.getUTF8String(message));
             mess.setId("user-message");
-            mess.setStyle(getStyle("message.font.size", "message.font.color"));
+            mess.setStyle(getStyle("font.size", "message.font.color"));
             textFlow.getChildren().addAll(name, separator, mess);
             hBox.getChildren().addAll(image, textFlow);
             messages.add(hBox);
