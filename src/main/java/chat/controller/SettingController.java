@@ -127,8 +127,10 @@ public class SettingController {
     }
 
     public void confirmAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Application need to be reloaded. Continue?", ButtonType.YES, ButtonType.CANCEL);
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Application need to be reloaded. Continue?", ButtonType.YES, ButtonType.CANCEL); //TODO написать кастом диалог
         alert.initOwner(getStage());
+        DialogPane dialogPane = alert.getDialogPane();
+        dialogPane.setStyle(getRootStyle());
         alert.showAndWait();
 
         if (alert.getResult() == ButtonType.YES) {
@@ -177,5 +179,11 @@ public class SettingController {
 
     private String getHexColor(ColorPicker color) {
         return "#" + Integer.toHexString(color.getValue().hashCode()).substring(0, 6).toUpperCase();
+    }
+
+    private String getRootStyle() {
+        return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
+                "-fx-background: " + settings.getProperty("root.background.color") + ";" +
+                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 }
