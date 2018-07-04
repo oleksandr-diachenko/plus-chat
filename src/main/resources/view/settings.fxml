@@ -27,7 +27,7 @@
     <opaqueInsets>
         <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
     </opaqueInsets>
-    <Label contentDisplay="CENTER" prefHeight="15.0" prefWidth="97.0" text="Language" textFill="#819ff7"
+    <Label contentDisplay="CENTER" prefHeight="15.0" prefWidth="97.0" text="%language" textFill="#819ff7"
            GridPane.halignment="LEFT" GridPane.valignment="CENTER">
         <font>
             <Font name="Arial Bold" size="20.0"/>
@@ -36,7 +36,7 @@
             <Insets left="100.0"/>
         </GridPane.margin>
     </Label>
-    <Label text="Theme" textFill="#819ff7" GridPane.rowIndex="1">
+    <Label text="%theme" textFill="#819ff7" GridPane.rowIndex="1">
         <font>
             <Font name="Arial Bold" size="20.0"/>
         </font>
@@ -44,7 +44,7 @@
             <Insets left="100.0"/>
         </GridPane.margin>
     </Label>
-    <Label text="Font" textFill="#819ff7" GridPane.rowIndex="2">
+    <Label text="%font" textFill="#819ff7" GridPane.rowIndex="2">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -52,7 +52,7 @@
             <Font name="Arial Bold" size="20.0"/>
         </font>
     </Label>
-    <Label text="Font size" textFill="#819ff7" GridPane.rowIndex="3">
+    <Label text="%font-size" textFill="#819ff7" GridPane.rowIndex="3">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -60,7 +60,7 @@
             <Font name="Arial Bold" size="20.0"/>
         </font>
     </Label>
-    <Label text="Nick color" textFill="#819ff7" GridPane.rowIndex="6">
+    <Label text="%nick-color" textFill="#819ff7" GridPane.rowIndex="6">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -68,7 +68,7 @@
             <Font name="Arial Bold" size="20.0"/>
         </font>
     </Label>
-    <Label text="Separator color" textFill="#819ff7" GridPane.rowIndex="7">
+    <Label text="%separator-color" textFill="#819ff7" GridPane.rowIndex="7">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -76,7 +76,7 @@
             <Font name="Arial Bold" size="20.0"/>
         </font>
     </Label>
-    <Label text="Message color" textFill="#819ff7" GridPane.rowIndex="8">
+    <Label text="%message-color" textFill="#819ff7" GridPane.rowIndex="8">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -107,7 +107,7 @@
             <Insets left="70.0"/>
         </GridPane.margin>
     </HBox>
-    <Label text="Transperecy" textFill="#819ff7" GridPane.rowIndex="4">
+    <Label text="%transparency" textFill="#819ff7" GridPane.rowIndex="4">
         <GridPane.margin>
             <Insets left="100.0"/>
         </GridPane.margin>
@@ -124,7 +124,7 @@
         </GridPane.margin>
     </HBox>
 
-    <Label text="Background color" textFill="#819ff7" GridPane.rowIndex="5">
+    <Label text="%background-color" textFill="#819ff7" GridPane.rowIndex="5">
         <opaqueInsets>
             <Insets/>
         </opaqueInsets>

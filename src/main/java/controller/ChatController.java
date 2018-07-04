@@ -15,11 +15,10 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 import sevice.Bot;
 import util.AppProperty;
+import util.ResourceBundleControl;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Properties;
+import java.io.*;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -81,10 +80,11 @@ public class ChatController {
     private void openSettingsStage() {
         Stage stage = new Stage();
         stage.setResizable(false);
-        FXMLLoader fxmlLoader = new FXMLLoader();
+        String language = settings.getProperty("root.language");
+        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         Pane root = null;
         try {
-            root = fxmlLoader.load(getClass().getResource("/view/settings.fxml").openStream());
+            root = FXMLLoader.load(getClass().getResource("/view/settings.fxml"), bundle);
         } catch (IOException e) {
             e.printStackTrace();
         }

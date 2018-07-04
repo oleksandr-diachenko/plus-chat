@@ -5,8 +5,11 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import util.AppProperty;
+import util.ResourceBundleControl;
 
+import java.util.Locale;
 import java.util.Properties;
+import java.util.ResourceBundle;
 
 public class Main extends Application {
 
@@ -18,11 +21,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         primaryStage.setAlwaysOnTop(true);
         primaryStage.getIcons().add(new Image("/img/logo.png"));
-        Region root = FXMLLoader.load(getClass().getResource("/view/chat.fxml"));
+        Properties settings = AppProperty.getProperty("./settings/settings.properties");
+        String language = settings.getProperty("root.language");
+        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
+        Region root = FXMLLoader.load(getClass().getResource("/view/chat.fxml"), bundle);
         UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
         undecorator.setFadeInTransition();
         undecorator.setBackgroundOpacity(0);
-        Properties settings = AppProperty.getProperty("./settings/settings.properties");
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/chat.css");
         primaryStage.setOnCloseRequest(we -> {
             we.consume();
