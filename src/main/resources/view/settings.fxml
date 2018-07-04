@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8"
-      fx:controller="controller.SettingController">
-    <Pane minHeight="35.0" prefHeight="35.0" maxHeight="35.0"/>
+<VBox fx:id="root" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.SettingController">
+    <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
     <GridPane prefHeight="365.0" prefWidth="600.0">
         <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
@@ -100,7 +109,7 @@
                 <Insets left="70.0"/>
             </GridPane.margin>
         </ChoiceBox>
-        <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
             <Slider fx:id="fontSizeSlider">
             </Slider>
             <Label fx:id="fontSize"/>
@@ -116,7 +125,7 @@
                 <Font name="Arial Bold" size="20.0"/>
             </font>
         </Label>
-        <HBox GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
             <Slider fx:id="transparencySlider" GridPane.columnIndex="1" GridPane.rowIndex="4">
             </Slider>
             <Label fx:id="transparencyValue"/>
@@ -161,8 +170,8 @@
             <GridPane.margin>
                 <Insets/>
             </GridPane.margin>
-            <Button fx:id="confirm" onAction="#confirmAction" mnemonicParsing="false" text="V"/>
-            <Button fx:id="cancel" onAction="#cancelAction" mnemonicParsing="false" text="X">
+            <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction" text="V"/>
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="X">
                 <HBox.margin>
                     <Insets right="50.0"/>
                 </HBox.margin>

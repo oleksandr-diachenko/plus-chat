@@ -102,7 +102,7 @@ public class SettingController {
     private void initTransparencySlider() {
         String backgroundTransparencyValue = settings.getProperty("background.transparency");
         transparencyValue.setText(backgroundTransparencyValue);
-        transparencySlider.setValue(Double.parseDouble(backgroundTransparencyValue));
+        transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue) * 100);
         transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
             String format = String.format("%.2f", new_val.doubleValue() / 100);
             transparencyValue.setText(format);
