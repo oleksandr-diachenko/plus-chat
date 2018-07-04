@@ -1,4 +1,4 @@
-package util;
+package chat.util;
 
 import org.apache.log4j.Logger;
 

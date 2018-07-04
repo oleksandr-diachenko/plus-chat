@@ -1,6 +1,6 @@
-package model.repository;
+package chat.model.repository;
 
-import model.entity.User;
+import chat.model.entity.User;
 
 import java.util.Optional;
 import java.util.Set;

@@ -1,6 +1,6 @@
-package model.repository;
+package chat.model.repository;
 
-import model.entity.Rank;
+import chat.model.entity.Rank;
 
 import java.util.Set;
 

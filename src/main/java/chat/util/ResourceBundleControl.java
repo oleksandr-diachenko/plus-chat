@@ -1,4 +1,4 @@
-package util;
+package chat.util;
 
 /*
  * This file is part of aion-emu <aion-emu.com>.

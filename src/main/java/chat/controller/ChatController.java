@@ -1,4 +1,4 @@
-package controller;
+package chat.controller;
 
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
-import sevice.Bot;
-import util.AppProperty;
-import util.ResourceBundleControl;
+import chat.sevice.Bot;
+import chat.util.AppProperty;
+import chat.util.ResourceBundleControl;
 
 import java.io.*;
 import java.util.*;

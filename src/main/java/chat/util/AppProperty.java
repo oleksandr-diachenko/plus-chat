@@ -1,4 +1,4 @@
-package util;
+package chat.util;
 
 import org.apache.log4j.Logger;
 
@@ -30,7 +30,7 @@ public class AppProperty {
     public static Properties setProperties(Properties properties) {
         OutputStream output = null;
         try {
-            output = new FileOutputStream(".settings/settings.properties");
+            output = new FileOutputStream("./settings/settings.properties");
             properties.store(output, null);
         } catch (IOException e) {
             logger.error(e.getMessage(), e);

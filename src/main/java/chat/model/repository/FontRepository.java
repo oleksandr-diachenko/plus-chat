@@ -1,6 +1,6 @@
-package model.repository;
+package chat.model.repository;
 
-import model.entity.Font;
+import chat.model.entity.Font;
 
 import java.util.Optional;
 import java.util.Set;

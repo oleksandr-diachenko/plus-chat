@@ -1,10 +1,10 @@
-package model.repository;
+package chat.model.repository;
 
-import model.entity.Rank;
+import chat.model.entity.Rank;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import util.JSONParser;
+import chat.util.JSONParser;
 
 import java.io.IOException;
 import java.util.*;

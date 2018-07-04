@@ -1,6 +1,6 @@
-package sevice;
+package chat.sevice;
 
-import controller.ChatController;
+import chat.controller.ChatController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -10,19 +10,19 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import model.entity.Command;
-import model.entity.Rank;
-import model.entity.User;
-import model.repository.*;
+import chat.model.entity.Command;
+import chat.model.entity.Rank;
+import chat.model.entity.User;
+import chat.model.repository.*;
 import org.apache.log4j.Logger;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import util.AppProperty;
-import util.StringUtil;
-import util.TimeUtil;
+import chat.util.AppProperty;
+import chat.util.StringUtil;
+import chat.util.TimeUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;

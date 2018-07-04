@@ -1,7 +1,7 @@
 package twitch;
 
 import org.junit.Test;
-import util.AppProperty;
+import chat.util.AppProperty;
 
 import java.util.Properties;
 

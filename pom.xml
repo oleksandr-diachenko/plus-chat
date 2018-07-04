@@ -64,7 +64,7 @@
                     </descriptorRefs>
                     <archive>
                         <manifest>
-                            <mainClass>Main</mainClass>
+                            <mainClass>chat.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

@@ -1,16 +1,16 @@
-package controller;
+package chat.controller;
 
+import chat.Main;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
-import model.entity.Font;
-import model.repository.FontRepository;
-import model.repository.JSONFontRepository;
-import util.AppProperty;
+import javafx.stage.Stage;
+import chat.model.entity.Font;
+import chat.model.repository.FontRepository;
+import chat.model.repository.JSONFontRepository;
+import chat.util.AppProperty;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -43,6 +43,7 @@ public class SettingController {
     @FXML
     private ColorPicker messageColorPicker;
     private Properties settings;
+    private Map<String, String> languages;
 
     private FontRepository fontRepository = new JSONFontRepository();
 
@@ -60,7 +61,7 @@ public class SettingController {
     }
 
     private void initLanguage() {
-        Map<String, String> languages = new HashMap<>();
+        languages = new HashMap<>();
         languages.put("en", "English");
         languages.put("ru", "Russian");
         languages.put("ua", "Ukrainian");
@@ -126,8 +127,55 @@ public class SettingController {
     }
 
     public void confirmAction() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Application need to be reloaded. Continue?", ButtonType.YES, ButtonType.CANCEL);
+        alert.initOwner(getStage());
+        alert.showAndWait();
+
+        if (alert.getResult() == ButtonType.YES) {
+            settings.setProperty("background.transparency", transparencyValue.getText());
+            settings.setProperty("font.size", fontSize.getText());
+            settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
+            settings.setProperty("root.theme", themeChoiceBox.getValue());
+            settings.setProperty("root.font.family", fontChoiceBox.getValue().getName());
+
+            settings.setProperty("root.background.color", getHexColor(backgroundColorPicker));
+            settings.setProperty("nick.font.color", getHexColor(nickColorPicker));
+            settings.setProperty("separator.font.color", getHexColor(separatorColorPicker));
+            settings.setProperty("message.font.color", getHexColor(messageColorPicker));
+            AppProperty.setProperties(settings);
+            reload();
+        }
+    }
+
+    private void reload() {
+        Stage primaryStage = (Stage) getStage().getOwner();
+        primaryStage.close();
+        Platform.runLater(() -> {
+            try {
+                new Main().start(new Stage());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
+    private Stage getStage() {
+        return (Stage) transparencyValue.getScene().getWindow();
+    }
+
+    private String getLanguage(String value) {
+        for (String key : languages.keySet()) {
+            if (languages.get(key).equals(value)) {
+                return key;
+            }
+        }
+        return null;
     }
 
     public void cancelAction() {
+    }
+
+    private String getHexColor(ColorPicker color) {
+        return "#" + Integer.toHexString(color.getValue().hashCode()).substring(0, 6).toUpperCase();
     }
 }
