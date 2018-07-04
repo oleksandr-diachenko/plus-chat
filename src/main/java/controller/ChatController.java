@@ -1,11 +1,11 @@
 package controller;
 
+import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -82,15 +82,16 @@ public class ChatController {
         stage.setResizable(false);
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        Pane root = null;
+        Region root = null;
         try {
             root = FXMLLoader.load(getClass().getResource("/view/settings.fxml"), bundle);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.setTitle("Settings!");
+        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
+        root.setStyle(getRootStyle());
+        stage.setScene(undecorator);
+        stage.setTitle("Settings");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(getStage().getScene().getWindow());
         stage.show();
