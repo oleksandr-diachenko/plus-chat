@@ -97,8 +97,7 @@ public class ChatController {
     }
 
     private String getRootStyle() {
-        return "-fx-base: #" + settings.getProperty("root.base.color") + ";" +
-                "-fx-background: #" + settings.getProperty("root.background.color") + ";" +
+        return "-fx-background: " + settings.getProperty("root.background.color") + ";" +
                 "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 }

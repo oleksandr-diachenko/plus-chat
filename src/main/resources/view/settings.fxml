@@ -3,7 +3,6 @@
 <?import javafx.geometry.*?>
 <?import javafx.scene.text.*?>
 <?import javafx.scene.control.*?>
-<?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
 <GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0"
@@ -101,7 +100,7 @@
         </GridPane.margin>
     </ChoiceBox>
     <HBox GridPane.columnIndex="1" GridPane.rowIndex="3">
-        <Slider fx:id="fontSizeSlider" showTickMarks="true">
+        <Slider fx:id="fontSizeSlider">
         </Slider>
         <Label fx:id="fontSize"/>
         <GridPane.margin>

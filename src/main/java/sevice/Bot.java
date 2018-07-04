@@ -124,7 +124,7 @@ public class Bot extends ListenerAdapter {
 
     private String getStyle(String size, String color) {
         return " -fx-font-size: " + properties.getProperty(size) + "px;" +
-                "-fx-fill: #" + properties.getProperty(color) + ";";
+                "-fx-fill: " + properties.getProperty(color) + ";";
     }
 
     /**
