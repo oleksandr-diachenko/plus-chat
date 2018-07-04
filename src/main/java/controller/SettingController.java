@@ -1,14 +1,19 @@
 package controller;
 
+import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
+import model.entity.Font;
+import model.repository.FontRepository;
+import model.repository.JSONFontRepository;
 import util.AppProperty;
 
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Alexander Diachenko.
@@ -23,7 +28,7 @@ public class SettingController {
     @FXML
     private ChoiceBox themeChoiceBox;
     @FXML
-    private ChoiceBox fontChoiceBox;
+    private ChoiceBox<Font> fontChoiceBox;
     @FXML
     private Slider fontSizeSlider;
     @FXML
@@ -38,14 +43,25 @@ public class SettingController {
     private ColorPicker messageColorPicker;
     private Properties settings;
 
+    private FontRepository fontRepository = new JSONFontRepository();
+
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
+        initFontFamily();
         initFontSizeSlider();
         initTransparencySlider();
         initBackGroundColorPicker();
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+    }
+
+    private void initFontFamily() {
+        Set<Font> fonts = fontRepository.getFonts();
+        fontChoiceBox.setItems(FXCollections.observableArrayList(fonts));
+        Font current = new Font();
+        current.setName(settings.getProperty("root.font.family"));
+        fontChoiceBox.setValue(current);
     }
 
     private void initFontSizeSlider() {
