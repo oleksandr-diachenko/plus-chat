@@ -39,9 +39,15 @@ public class SettingController {
 
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
+        String fontSizeValue = settings.getProperty("font.size");
+        fontSize.setText(fontSizeValue);
+        fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
+        String backgroundTransparencyValue = settings.getProperty("background.transparency");
+        transparencyValue.setText(backgroundTransparencyValue);
+        transparencySlider.setValue(Double.parseDouble(backgroundTransparencyValue));
         transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
             String format = String.format("%.2f", new_val.doubleValue() / 100);
             transparencyValue.setText(format);
