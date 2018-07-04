@@ -12,8 +12,9 @@ import model.repository.FontRepository;
 import model.repository.JSONFontRepository;
 import util.AppProperty;
 
-import java.util.Properties;
-import java.util.Set;
+import java.io.File;
+import java.net.URISyntaxException;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -26,7 +27,7 @@ public class SettingController {
     @FXML
     private ChoiceBox languageChoiceBox;
     @FXML
-    private ChoiceBox themeChoiceBox;
+    private ChoiceBox<String> themeChoiceBox;
     @FXML
     private ChoiceBox<Font> fontChoiceBox;
     @FXML
@@ -48,12 +49,27 @@ public class SettingController {
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
         initFontFamily();
+        initTheme();
         initFontSizeSlider();
         initTransparencySlider();
         initBackGroundColorPicker();
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+    }
+
+    private void initTheme() {
+        try {
+            File[] themes = new File(getClass().getResource("/theme").toURI()).listFiles();
+            List<String> list = new ArrayList<>();
+            for (File theme : themes) {
+                list.add(theme.getName());
+            }
+            themeChoiceBox.setItems(FXCollections.observableArrayList(list));
+            themeChoiceBox.setValue(settings.getProperty("root.theme"));
+        } catch (URISyntaxException e) {
+            e.printStackTrace();
+        }
     }
 
     private void initFontFamily() {

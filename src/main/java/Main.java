@@ -4,6 +4,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import util.AppProperty;
+
+import java.util.Properties;
 
 public class Main extends Application {
 
@@ -19,6 +22,8 @@ public class Main extends Application {
         UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
         undecorator.setFadeInTransition();
         undecorator.setBackgroundOpacity(0);
+        Properties settings = AppProperty.getProperty("./settings/settings.properties");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/chat.css");
         primaryStage.setOnCloseRequest(we -> {
             we.consume();
             undecorator.setFadeOutTransition();
