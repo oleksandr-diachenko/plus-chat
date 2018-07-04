@@ -175,6 +175,7 @@ public class SettingController {
     }
 
     public void cancelAction() {
+        getStage().close();
     }
 
     private String getHexColor(ColorPicker color) {
