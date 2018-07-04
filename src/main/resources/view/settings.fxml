@@ -170,8 +170,8 @@
             <GridPane.margin>
                 <Insets/>
             </GridPane.margin>
-            <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction" text="V"/>
-            <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction" text="X">
+            <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction"/>
+            <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction">
                 <HBox.margin>
                     <Insets right="50.0"/>
                 </HBox.margin>

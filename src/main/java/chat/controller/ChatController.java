@@ -89,6 +89,7 @@ public class ChatController {
             e.printStackTrace();
         }
         UndecoratorScene undecorator = new UndecoratorScene(stage, root);
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
         root.setStyle(getRootStyle());
         stage.setScene(undecorator);
         stage.setTitle("Settings");

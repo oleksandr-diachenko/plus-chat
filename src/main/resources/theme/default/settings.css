@@ -1,0 +1,21 @@
+#confirm {
+    -fx-pref-height: 30;
+    -fx-pref-width: 30;
+    -fx-background-image: url("../../img/confirm.png");
+    -fx-background-size: 25 25;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    /*-fx-cursor: hand;*/
+}
+
+#cancel {
+    -fx-pref-height: 30;
+    -fx-pref-width: 30;
+    -fx-background-image: url("../../img/settings.png");
+    -fx-background-size: 25 25;
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-position:center;
+    /*-fx-cursor: hand;*/
+}
