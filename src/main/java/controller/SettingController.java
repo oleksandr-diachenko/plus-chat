@@ -25,7 +25,7 @@ public class SettingController {
     @FXML
     private Label fontSize;
     @FXML
-    private ChoiceBox languageChoiceBox;
+    private ChoiceBox<String> languageChoiceBox;
     @FXML
     private ChoiceBox<String> themeChoiceBox;
     @FXML
@@ -48,6 +48,7 @@ public class SettingController {
 
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
+        initLanguage();
         initFontFamily();
         initTheme();
         initFontSizeSlider();
@@ -56,6 +57,15 @@ public class SettingController {
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+    }
+
+    private void initLanguage() {
+        Map<String, String> languages = new HashMap<>();
+        languages.put("en", "English");
+        languages.put("ru", "Russian");
+        languages.put("ua", "Ukrainian");
+        languageChoiceBox.setItems(FXCollections.observableArrayList(languages.values()));
+        languageChoiceBox.setValue(languages.get(settings.getProperty("root.language")));
     }
 
     private void initTheme() {
