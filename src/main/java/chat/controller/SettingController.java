@@ -1,11 +1,16 @@
 package chat.controller;
 
 import chat.Main;
+import chat.util.ResourceBundleControl;
+import insidefx.undecorator.UndecoratorScene;
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import chat.model.entity.Font;
 import chat.model.repository.FontRepository;
@@ -13,6 +18,7 @@ import chat.model.repository.JSONFontRepository;
 import chat.util.AppProperty;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -127,26 +133,44 @@ public class SettingController {
     }
 
     public void confirmAction() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, "Application need to be reloaded. Continue?", ButtonType.YES, ButtonType.CANCEL); //TODO написать кастом диалог
-        alert.initOwner(getStage());
-        DialogPane dialogPane = alert.getDialogPane();
-        dialogPane.setStyle(getRootStyle());
-        alert.showAndWait();
-
-        if (alert.getResult() == ButtonType.YES) {
-            settings.setProperty("background.transparency", transparencyValue.getText());
-            settings.setProperty("font.size", fontSize.getText());
-            settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
-            settings.setProperty("root.theme", themeChoiceBox.getValue());
-            settings.setProperty("root.font.family", fontChoiceBox.getValue().getName());
-
-            settings.setProperty("root.background.color", getHexColor(backgroundColorPicker));
-            settings.setProperty("nick.font.color", getHexColor(nickColorPicker));
-            settings.setProperty("separator.font.color", getHexColor(separatorColorPicker));
-            settings.setProperty("message.font.color", getHexColor(messageColorPicker));
-            AppProperty.setProperties(settings);
-            reload();
+        Stage stage = new Stage();
+        stage.setResizable(false);
+        String language = settings.getProperty("root.language");
+        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
+        Region root = null;
+            FXMLLoader fxmlLoader = new FXMLLoader();
+        try {
+            fxmlLoader.setResources(bundle);
+            root = fxmlLoader.load(getClass().getResource("/view/dialog.fxml").openStream());
+//            root = FXMLLoader.load(getClass().getResource("/view/dialog.fxml"), bundle);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/dialog.css");
+        root.setStyle(getRootStyle());
+        stage.setScene(undecorator);
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.initOwner(getStage().getScene().getWindow());
+        stage.show();
+
+        stage.setOnCloseRequest(event ->  {
+            DialogController dialogController = fxmlLoader.getController();
+            if(dialogController.isConfirmed()) {
+                settings.setProperty("background.transparency", transparencyValue.getText());
+                settings.setProperty("font.size", fontSize.getText());
+                settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
+                settings.setProperty("root.theme", themeChoiceBox.getValue());
+                settings.setProperty("root.font.family", fontChoiceBox.getValue().getName());
+
+                settings.setProperty("root.background.color", getHexColor(backgroundColorPicker));
+                settings.setProperty("nick.font.color", getHexColor(nickColorPicker));
+                settings.setProperty("separator.font.color", getHexColor(separatorColorPicker));
+                settings.setProperty("message.font.color", getHexColor(messageColorPicker));
+                AppProperty.setProperties(settings);
+                reload();
+            }
+        });
     }
 
     private void reload() {
