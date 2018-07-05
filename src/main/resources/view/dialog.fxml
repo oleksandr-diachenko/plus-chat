@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 
-
-<VBox fx:id="root" prefHeight="170.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="chat.controller.DialogController">
+<VBox fx:id="root" prefHeight="170.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8.0.121"
+      xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.DialogController">
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="285.0"/>
     <GridPane prefHeight="135.0" prefWidth="285.0">
         <columnConstraints>
@@ -19,12 +25,22 @@
         </rowConstraints>
         <HBox alignment="CENTER" prefHeight="45.0" prefWidth="142.5" spacing="20.0" GridPane.columnIndex="1"
               GridPane.rowIndex="2">
-            <Button fx:id="confirm" onAction="#confirmAction" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" prefWidth="40.0"/>
-            <Button fx:id="cancel" onAction="#cancelAction" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" prefWidth="40.0"/>
+            <Button fx:id="confirm" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#confirmAction"
+                    prefWidth="40.0"/>
+            <Button fx:id="cancel" maxWidth="40.0" minWidth="40.0" mnemonicParsing="false" onAction="#cancelAction"
+                    prefWidth="40.0"/>
         </HBox>
         <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="85.0" prefWidth="179.0"
-               text="Приложение будет перезагружено." wrapText="true"/>
-        <Label prefHeight="66.0" prefWidth="236.0" text="Продолжить?" GridPane.rowIndex="1"/>
-        <Label fx:id="question" prefHeight="55.0" prefWidth="118.0" GridPane.columnIndex="1" GridPane.rowIndex="1"/>
+               text="Приложение будет перезагружено." wrapText="true">
+            <GridPane.margin>
+                <Insets left="20.0"/>
+            </GridPane.margin>
+        </Label>
+        <Label prefHeight="66.0" prefWidth="236.0" text="Продолжить?" GridPane.rowIndex="1">
+            <GridPane.margin>
+                <Insets left="20.0"/>
+            </GridPane.margin>
+        </Label>
+        <Label fx:id="question" prefHeight="53.0" prefWidth="176.0" GridPane.columnIndex="1"/>
     </GridPane>
 </VBox>
