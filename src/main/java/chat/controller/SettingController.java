@@ -7,6 +7,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
@@ -138,25 +139,28 @@ public class SettingController {
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         Region root = null;
-            FXMLLoader fxmlLoader = new FXMLLoader();
+        FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.setResources(bundle);
             root = fxmlLoader.load(getClass().getResource("/view/dialog.fxml").openStream());
-//            root = FXMLLoader.load(getClass().getResource("/view/dialog.fxml"), bundle);
         } catch (IOException e) {
             e.printStackTrace();
         }
         UndecoratorScene undecorator = new UndecoratorScene(stage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/dialog.css");
         root.setStyle(getRootStyle());
+        Set<Node> labels = root.lookupAll(".label");
+        for (Node label : labels) {
+            label.setStyle(getLabelStyle());
+        }
         stage.setScene(undecorator);
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(getStage().getScene().getWindow());
         stage.show();
 
-        stage.setOnCloseRequest(event ->  {
+        stage.setOnCloseRequest(event -> {
             DialogController dialogController = fxmlLoader.getController();
-            if(dialogController.isConfirmed()) {
+            if (dialogController.isConfirmed()) {
                 settings.setProperty("background.transparency", transparencyValue.getText());
                 settings.setProperty("font.size", fontSize.getText());
                 settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
@@ -171,6 +175,11 @@ public class SettingController {
                 reload();
             }
         });
+    }
+
+    private String getLabelStyle() {
+        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";" +
+                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 
     private void reload() {

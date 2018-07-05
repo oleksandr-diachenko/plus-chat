@@ -1,3 +1,7 @@
+.label {
+    -fx-font-size: 17px;
+}
+
 #confirm {
     -fx-pref-height: 40;
     -fx-pref-width: 40;
