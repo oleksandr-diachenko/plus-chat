@@ -3,6 +3,7 @@ package chat.controller;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -74,7 +75,7 @@ public class ChatController {
     }
 
     private Stage getStage() {
-        return (Stage)container.getScene().getWindow();
+        return (Stage) container.getScene().getWindow();
     }
 
     private void openSettingsStage() {
@@ -91,11 +92,20 @@ public class ChatController {
         UndecoratorScene undecorator = new UndecoratorScene(stage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
         root.setStyle(getRootStyle());
+        Set<Node> labels = root.lookupAll(".label");
+        for (Node label : labels) {
+            label.setStyle(getLabelStyle());
+        }
         stage.setScene(undecorator);
         stage.setTitle("Settings");
         stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(getStage().getScene().getWindow());
         stage.show();
+    }
+
+    private String getLabelStyle() {
+        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";" +
+                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 
     private String getRootStyle() {
