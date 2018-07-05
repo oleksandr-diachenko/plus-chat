@@ -47,11 +47,6 @@
                 <Insets left="100.0"/>
             </GridPane.margin>
         </Label>
-        <Label text="%font" GridPane.rowIndex="2">
-            <GridPane.margin>
-                <Insets left="100.0"/>
-            </GridPane.margin>
-        </Label>
         <Label text="%font-size" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets left="100.0"/>
@@ -78,11 +73,6 @@
             </GridPane.margin>
         </ChoiceBox>
         <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-            <GridPane.margin>
-                <Insets left="70.0"/>
-            </GridPane.margin>
-        </ChoiceBox>
-        <ChoiceBox fx:id="fontChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets left="70.0"/>
             </GridPane.margin>

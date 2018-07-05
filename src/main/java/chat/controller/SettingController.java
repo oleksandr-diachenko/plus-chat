@@ -10,13 +10,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import chat.model.entity.Font;
-import chat.model.repository.FontRepository;
-import chat.model.repository.JSONFontRepository;
 import chat.util.AppProperty;
 
 import java.io.File;
@@ -30,7 +26,7 @@ import java.util.*;
 public class SettingController {
 
     @FXML
-    private VBox root;
+    private Node root;
     @FXML
     private Label transparencyValue;
     @FXML
@@ -39,8 +35,6 @@ public class SettingController {
     private ChoiceBox<String> languageChoiceBox;
     @FXML
     private ChoiceBox<String> themeChoiceBox;
-    @FXML
-    private ChoiceBox<Font> fontChoiceBox;
     @FXML
     private Slider fontSizeSlider;
     @FXML
@@ -55,13 +49,12 @@ public class SettingController {
     private ColorPicker messageColorPicker;
     private Properties settings;
     private Map<String, String> languages;
-
-    private FontRepository fontRepository = new JSONFontRepository();
+    private Node chatRoot;
 
     public void initialize() {
-        settings = AppProperty.getProperty("./settings/settings.properties");
+        this.settings = AppProperty.getProperty("./settings/settings.properties");
+        this.chatRoot = getChatRoot();
         initLanguage();
-        initFontFamily();
         initTheme();
         initFontSizeSlider();
         initTransparencySlider();
@@ -94,34 +87,13 @@ public class SettingController {
         }
     }
 
-    private void initFontFamily() {
-        Set<Font> fonts = fontRepository.getFonts();
-        fontChoiceBox.setItems(FXCollections.observableArrayList(fonts));
-        Font current = new Font();
-        current.setName(settings.getProperty("root.font.family"));
-        fontChoiceBox.setValue(current);
-    }
-
     private void initFontSizeSlider() {
-        Stage owner = Main.stage;
         String fontSizeValue = settings.getProperty("font.size");
         fontSize.setText(fontSizeValue);
         fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            Node chatRoot = owner.getScene().lookup("#root");
-            Set<Node> names = chatRoot.lookupAll("#user-name");
-            Set<Node> separators = chatRoot.lookupAll("#separator");
-            Set<Node> messages = chatRoot.lookupAll("#user-message");
-            names.iterator().forEachRemaining(node -> {
-                node.setStyle("-fx-font-size: " + new_val + "px;");
-            });
-            separators.iterator().forEachRemaining(node -> {
-                node.setStyle("-fx-font-size: " + new_val + "px;");
-            });
-            messages.iterator().forEachRemaining(node -> {
-                node.setStyle("-fx-font-size: " + new_val + "px;");
-            });
             fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
+            setLabelStyle(String.valueOf(new_val), getHexColor(nickColorPicker), getHexColor(separatorColorPicker), getHexColor(messageColorPicker));
         });
     }
 
@@ -137,18 +109,30 @@ public class SettingController {
 
     private void initBackGroundColorPicker() {
         backgroundColorPicker.setValue(Color.valueOf(settings.getProperty("root.background.color")));
+        backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            setRootStyle("-fx-background: " + getHexColor(new ColorPicker(new_val)) + ";");
+        });
     }
 
     private void initNickColorPicker() {
         nickColorPicker.setValue(Color.valueOf(settings.getProperty("nick.font.color")));
+        nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            setLabelStyle(String.valueOf(new_val), getHexColor(new ColorPicker(new_val)), getHexColor(separatorColorPicker), getHexColor(messageColorPicker));
+        });
     }
 
     private void initSeparatorColorPicker() {
         separatorColorPicker.setValue(Color.valueOf(settings.getProperty("separator.font.color")));
+        separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            setLabelStyle(String.valueOf(new_val), getHexColor(nickColorPicker), getHexColor(new ColorPicker(new_val)), getHexColor(messageColorPicker));
+        });
     }
 
     private void initMessageColorPicker() {
         messageColorPicker.setValue(Color.valueOf(settings.getProperty("message.font.color")));
+        messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            setLabelStyle(String.valueOf(new_val), getHexColor(nickColorPicker), getHexColor(separatorColorPicker), getHexColor(new ColorPicker(new_val)));
+        });
     }
 
     public void confirmAction() {
@@ -169,7 +153,7 @@ public class SettingController {
         root.setStyle(getRootStyle());
         Set<Node> labels = root.lookupAll(".label");
         for (Node label : labels) {
-            label.setStyle(getLabelStyle());
+            label.setStyle(getLabelStyle(fontSize.getText(), getHexColor(nickColorPicker)));
         }
         stage.setScene(undecorator);
         stage.initModality(Modality.WINDOW_MODAL);
@@ -183,7 +167,6 @@ public class SettingController {
                 settings.setProperty("font.size", fontSize.getText());
                 settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
                 settings.setProperty("root.theme", themeChoiceBox.getValue());
-                settings.setProperty("root.font.family", fontChoiceBox.getValue().getName());
 
                 settings.setProperty("root.background.color", getHexColor(backgroundColorPicker));
                 settings.setProperty("nick.font.color", getHexColor(nickColorPicker));
@@ -193,11 +176,6 @@ public class SettingController {
                 reload();
             }
         });
-    }
-
-    private String getLabelStyle() {
-        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";" +
-                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
     }
 
     private void reload() {
@@ -212,8 +190,50 @@ public class SettingController {
         });
     }
 
-    private Stage getStage() {
-        return (Stage) root.getScene().getWindow();
+    public void cancelAction() {
+        setLabelStyle(
+                settings.getProperty("font.size"),
+                settings.getProperty("nick.font.color"),
+                settings.getProperty("separator.font.color"),
+                settings.getProperty("message.font.color")
+        );
+        setRootStyle("-fx-background: " + settings.getProperty("root.background.color") + ";");
+        getStage().close();
+    }
+
+    private void setRootStyle(String backgroundColor) {
+        chatRoot.setStyle(backgroundColor);
+        root.setStyle(backgroundColor);
+    }
+
+    private void setLabelStyle(String fontSize, String nickColor, String separatorColor, String messageColor) {
+        Set<Node> names = chatRoot.lookupAll("#user-name");
+        Set<Node> separators = chatRoot.lookupAll("#separator");
+        Set<Node> messages = chatRoot.lookupAll("#user-message");
+        names.iterator().forEachRemaining(node -> node.setStyle(getLabelStyle(fontSize, nickColor)));
+        separators.iterator().forEachRemaining(node -> node.setStyle(getLabelStyle(fontSize, separatorColor)));
+        messages.iterator().forEachRemaining(node -> node.setStyle(getLabelStyle(fontSize, messageColor)));
+
+        Set<Node> labels = this.chatRoot.lookupAll(".label");
+        labels.iterator().forEachRemaining(node -> node.setStyle(getLabelStyle(nickColor)));
+    }
+
+    private String getRootStyle() {
+        return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
+                "-fx-background: " + settings.getProperty("root.background.color") + ";";
+    }
+
+    private String getLabelStyle(String nickColor) {
+        return "-fx-fill: " + nickColor + ";";
+    }
+
+    private String getLabelStyle(String fontSize, String nickColor) {
+        return "-fx-font-size: " + fontSize + "px;" +
+                "-fx-fill: " + nickColor + ";";
+    }
+
+    private String getHexColor(ColorPicker color) {
+        return "#" + Integer.toHexString(color.getValue().hashCode()).substring(0, 6).toUpperCase();
     }
 
     private String getLanguage(String value) {
@@ -225,17 +245,12 @@ public class SettingController {
         return null;
     }
 
-    public void cancelAction() {
-        getStage().close();
+    private Stage getStage() {
+        return (Stage) root.getScene().getWindow();
     }
 
-    private String getHexColor(ColorPicker color) {
-        return "#" + Integer.toHexString(color.getValue().hashCode()).substring(0, 6).toUpperCase();
-    }
-
-    private String getRootStyle() {
-        return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
-                "-fx-background: " + settings.getProperty("root.background.color") + ";" +
-                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
+    private Node getChatRoot() {
+        Stage owner = Main.stage;
+        return owner.getScene().lookup("#root");
     }
 }

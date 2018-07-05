@@ -103,13 +103,11 @@ public class ChatController {
     }
 
     private String getLabelStyle() {
-        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";" +
-                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
+        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";";
     }
 
     private String getRootStyle() {
         return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
-                "-fx-background: " + settings.getProperty("root.background.color") + ";" +
-                "-fx-font-family: \"" + settings.getProperty("root.font.family") + "\";";
+                "-fx-background: " + settings.getProperty("root.background.color") + ";";
     }
 }
