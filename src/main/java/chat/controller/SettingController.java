@@ -10,6 +10,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -27,6 +28,9 @@ import java.util.*;
  * @author Alexander Diachenko.
  */
 public class SettingController {
+
+    @FXML
+    private VBox root;
     @FXML
     private Label transparencyValue;
     @FXML
@@ -99,10 +103,24 @@ public class SettingController {
     }
 
     private void initFontSizeSlider() {
+        Stage owner = Main.stage;
         String fontSizeValue = settings.getProperty("font.size");
         fontSize.setText(fontSizeValue);
         fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            Node chatRoot = owner.getScene().lookup("#root");
+            Set<Node> names = chatRoot.lookupAll("#user-name");
+            Set<Node> separators = chatRoot.lookupAll("#separator");
+            Set<Node> messages = chatRoot.lookupAll("#user-message");
+            names.iterator().forEachRemaining(node -> {
+                node.setStyle("-fx-font-size: " + new_val + "px;");
+            });
+            separators.iterator().forEachRemaining(node -> {
+                node.setStyle("-fx-font-size: " + new_val + "px;");
+            });
+            messages.iterator().forEachRemaining(node -> {
+                node.setStyle("-fx-font-size: " + new_val + "px;");
+            });
             fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
@@ -195,7 +213,7 @@ public class SettingController {
     }
 
     private Stage getStage() {
-        return (Stage) transparencyValue.getScene().getWindow();
+        return (Stage) root.getScene().getWindow();
     }
 
     private String getLanguage(String value) {
