@@ -8,7 +8,6 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
@@ -80,6 +79,7 @@ public class ChatController {
 
     private void openSettingsStage() {
         Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
         stage.setResizable(false);
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
@@ -98,7 +98,6 @@ public class ChatController {
         }
         stage.setScene(undecorator);
         stage.setTitle("Settings");
-        stage.initModality(Modality.WINDOW_MODAL);
         stage.initOwner(getStage().getScene().getWindow());
         stage.show();
     }
