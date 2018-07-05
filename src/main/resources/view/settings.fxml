@@ -47,7 +47,7 @@
                 <Insets left="100.0"/>
             </GridPane.margin>
         </Label>
-        <Label text="%font-size" GridPane.rowIndex="3">
+        <Label text="%font-size" GridPane.rowIndex="2">
             <GridPane.margin>
                 <Insets left="100.0"/>
             </GridPane.margin>
@@ -77,7 +77,7 @@
                 <Insets left="70.0"/>
             </GridPane.margin>
         </ChoiceBox>
-        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
             <Slider fx:id="fontSizeSlider">
             </Slider>
             <Label fx:id="fontSize"/>
@@ -85,25 +85,34 @@
                 <Insets left="70.0"/>
             </GridPane.margin>
         </HBox>
-        <Label text="%transparency" GridPane.rowIndex="4">
+        <Label text="%transparency" GridPane.rowIndex="3">
             <GridPane.margin>
                 <Insets left="100.0"/>
             </GridPane.margin>
         </Label>
-        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
-            <Slider fx:id="transparencySlider" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Slider fx:id="transparencySlider" GridPane.columnIndex="1" GridPane.rowIndex="3">
             </Slider>
             <Label fx:id="transparencyValue"/>
             <GridPane.margin>
                 <Insets left="70.0"/>
             </GridPane.margin>
         </HBox>
-
+        <Label text="%base-color" GridPane.rowIndex="4">
+            <GridPane.margin>
+                <Insets left="100.0"/>
+            </GridPane.margin>
+        </Label>
         <Label text="%background-color" GridPane.rowIndex="5">
             <GridPane.margin>
                 <Insets left="100.0"/>
             </GridPane.margin>
         </Label>
+        <ColorPicker fx:id="baseColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <GridPane.margin>
+                <Insets left="70.0"/>
+            </GridPane.margin>
+        </ColorPicker>
         <ColorPicker fx:id="backgroundColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="5">
             <GridPane.margin>
                 <Insets left="70.0"/>

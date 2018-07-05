@@ -26,6 +26,8 @@ import java.util.*;
 public class SettingController {
 
     @FXML
+    private ColorPicker baseColorPicker;
+    @FXML
     private Node root;
     @FXML
     private Label transparencyValue;
@@ -58,10 +60,16 @@ public class SettingController {
         initTheme();
         initFontSizeSlider();
         initTransparencySlider();
+        initBaseColorPicker();
         initBackGroundColorPicker();
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+    }
+
+    private void initBaseColorPicker() {
+        baseColorPicker.setValue(Color.valueOf(settings.getProperty("root.base.color")));
+        baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> setRootStyle(getHexColor(new ColorPicker(new_val)), getHexColor(backgroundColorPicker)));
     }
 
     private void initLanguage() {
@@ -110,7 +118,7 @@ public class SettingController {
     private void initBackGroundColorPicker() {
         backgroundColorPicker.setValue(Color.valueOf(settings.getProperty("root.background.color")));
         backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            setRootStyle("-fx-background: " + getHexColor(new ColorPicker(new_val)) + ";");
+            setRootStyle(getHexColor(baseColorPicker), getHexColor(new ColorPicker(new_val)));
         });
     }
 
@@ -168,6 +176,7 @@ public class SettingController {
                 settings.setProperty("root.language", getLanguage(languageChoiceBox.getValue()));
                 settings.setProperty("root.theme", themeChoiceBox.getValue());
 
+                settings.setProperty("root.base.color", getHexColor(baseColorPicker));
                 settings.setProperty("root.background.color", getHexColor(backgroundColorPicker));
                 settings.setProperty("nick.font.color", getHexColor(nickColorPicker));
                 settings.setProperty("separator.font.color", getHexColor(separatorColorPicker));
@@ -197,13 +206,13 @@ public class SettingController {
                 settings.getProperty("separator.font.color"),
                 settings.getProperty("message.font.color")
         );
-        setRootStyle("-fx-background: " + settings.getProperty("root.background.color") + ";");
+        setRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
         getStage().close();
     }
 
-    private void setRootStyle(String backgroundColor) {
-        chatRoot.setStyle(backgroundColor);
-        root.setStyle(backgroundColor);
+    private void setRootStyle(String baseColor, String backgroundColor) {
+        chatRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
+        root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
     }
 
     private void setLabelStyle(String fontSize, String nickColor, String separatorColor, String messageColor) {
