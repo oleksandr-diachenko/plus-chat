@@ -94,7 +94,6 @@ public class ChatController {
         UndecoratorScene undecorator = new UndecoratorScene(settingStage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
         settingStage.setScene(undecorator);
-        settingStage.setTitle("Settings");
         settingStage.initOwner(getStage().getScene().getWindow());
         settingStage.show();
     }
