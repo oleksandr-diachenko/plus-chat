@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.component.SettingsDialog;
 import chat.component.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
@@ -79,36 +80,7 @@ public class ChatController {
     }
 
     private void openSettingsStage() {
-        Stage stage = new Stage();
-        stage.setAlwaysOnTop(true);
-        stage.setResizable(false);
-        settings = AppProperty.getProperty("./settings/settings.properties");
-        String language = settings.getProperty("root.language");
-        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        Region root = null;
-        FXMLLoader loader = new FXMLLoader();
-        loader.setResources(bundle);
-        try {
-            root = loader.load(getClass().getResourceAsStream("/view/settings.fxml"));
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        Region finalRoot = root;
-        stage.setOnShown(event -> {
-            finalRoot.setStyle(StyleUtil.getRootStyle(this.settings));
-            Set<Node> labels = finalRoot.lookupAll(".label");
-            for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(this.settings.getProperty("nick.font.color")));
-            }
-        });
-
-        stage.setOnCloseRequest(event -> {
-            StyleUtil.reverseStyle(settings, this.root);
-        });
-        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
-        stage.setScene(undecorator);
-        stage.initOwner(getStage().getScene().getWindow());
-        stage.show();
+        SettingsDialog dialog = new SettingsDialog();
+        dialog.openDialog(getStage(), this.root);
     }
 }
