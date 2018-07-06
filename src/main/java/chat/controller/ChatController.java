@@ -38,7 +38,7 @@ public class ChatController {
     @FXML
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
-        root.setStyle(StyleUtil.getRootStyle(settings));
+        root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
