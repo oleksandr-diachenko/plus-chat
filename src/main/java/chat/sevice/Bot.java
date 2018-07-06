@@ -2,6 +2,7 @@ package chat.sevice;
 
 import chat.controller.ChatController;
 import javafx.application.Platform;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -88,6 +89,7 @@ public class Bot extends ListenerAdapter {
     private void updateUI(String nick, String message) {
         Platform.runLater(() -> {
             HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
             Optional<User> userByName = userRepository.getUserByName(nick);
             Label image = new Label();
             if (userByName.isPresent()) {
