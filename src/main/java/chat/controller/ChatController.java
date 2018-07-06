@@ -37,7 +37,6 @@ public class ChatController {
     private ScrollPane scrollPane;
     private List<HBox> messages = new ArrayList<>();
     private Properties settings;
-    public static Stage settingStage;
 
 
     @FXML
@@ -80,9 +79,9 @@ public class ChatController {
     }
 
     private void openSettingsStage() {
-        settingStage = new Stage();
-        settingStage.setAlwaysOnTop(true);
-        settingStage.setResizable(false);
+        Stage stage = new Stage();
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
         settings = AppProperty.getProperty("./settings/settings.properties");
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
@@ -94,24 +93,22 @@ public class ChatController {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        SettingController settingController = loader.getController();
-        Node settingsRoot = settingController.getSettingsRoot();
-        settingStage.setOnShown(event -> {
-            settingsRoot.setStyle(StyleUtil.getRootStyle(this.settings));
-            Set<Node> labels = settingsRoot.lookupAll(".label");
+        Region finalRoot = root;
+        stage.setOnShown(event -> {
+            finalRoot.setStyle(StyleUtil.getRootStyle(this.settings));
+            Set<Node> labels = finalRoot.lookupAll(".label");
             for (Node label : labels) {
                 label.setStyle(StyleUtil.getLabelStyle(this.settings.getProperty("nick.font.color")));
             }
         });
 
-        Region finalRoot = root;
-        settingStage.setOnCloseRequest(event -> {
-            StyleUtil.reverseStyle(settings, finalRoot, settingsRoot);
+        stage.setOnCloseRequest(event -> {
+            StyleUtil.reverseStyle(settings, this.root);
         });
-        UndecoratorScene undecorator = new UndecoratorScene(settingStage, root);
+        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
-        settingStage.setScene(undecorator);
-        settingStage.initOwner(getStage().getScene().getWindow());
-        settingStage.show();
+        stage.setScene(undecorator);
+        stage.initOwner(getStage().getScene().getWindow());
+        stage.show();
     }
 }

@@ -32,22 +32,26 @@ public class StyleUtil {
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
 
-        Set<Node> labels = settingRoot.lookupAll(".label");
-        labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(nickColor)));
+        if(settingRoot != null) {
+            Set<Node> labels = settingRoot.lookupAll(".label");
+            labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(nickColor)));
+        }
     }
 
     public static void setRootStyle(Node chatRoot, Node settingRoot, String baseColor, String backgroundColor) {
         chatRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
-        settingRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
+        if (settingRoot != null) {
+            settingRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
+        }
     }
 
-    public static void reverseStyle(Properties settings, Node chatRoot, Node settingsRoot) {
-        StyleUtil.setLabelStyle(chatRoot, settingsRoot,
+    public static void reverseStyle(Properties settings, Node chatRoot) {
+        StyleUtil.setLabelStyle(chatRoot, null,
                 settings.getProperty("font.size"),
                 settings.getProperty("nick.font.color"),
                 settings.getProperty("separator.font.color"),
                 settings.getProperty("message.font.color")
         );
-        StyleUtil.setRootStyle(chatRoot, settingsRoot, settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
+        StyleUtil.setRootStyle(chatRoot, null, settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
     }
 }

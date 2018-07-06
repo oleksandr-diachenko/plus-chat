@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import chat.util.AppProperty;
+import javafx.stage.WindowEvent;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -157,8 +158,7 @@ public class SettingController {
     }
 
     public void cancelAction() {
-        StyleUtil.reverseStyle(this.settings, chatRoot, settingsRoot);
-        getStage().close();
+        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     private String getLanguage(String value) {
@@ -179,7 +179,7 @@ public class SettingController {
         return owner.getScene().lookup("#root");
     }
 
-    public Node getSettingsRoot() {
+    public Node getRoot() {
         return settingsRoot;
     }
 }
