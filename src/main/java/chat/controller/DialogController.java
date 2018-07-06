@@ -16,6 +16,8 @@ public class DialogController {
 
     public void confirmAction() {
         confirmed = true;
+        Stage owner = (Stage) getStage().getOwner();
+        owner.close();
         getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
