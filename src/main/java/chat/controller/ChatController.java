@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.component.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -42,7 +43,7 @@ public class ChatController {
     @FXML
     public void initialize() {
         settings = AppProperty.getProperty("./settings/settings.properties");
-        root.setStyle(getRootStyle());
+        root.setStyle(StyleUtil.getRootStyle(settings));
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
@@ -93,23 +94,14 @@ public class ChatController {
         }
         UndecoratorScene undecorator = new UndecoratorScene(settingStage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
-        root.setStyle(getRootStyle());
+        root.setStyle(StyleUtil.getRootStyle(settings));
         Set<Node> labels = root.lookupAll(".label");
         for (Node label : labels) {
-            label.setStyle(getLabelStyle());
+            label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));
         }
         settingStage.setScene(undecorator);
         settingStage.setTitle("Settings");
         settingStage.initOwner(getStage().getScene().getWindow());
         settingStage.show();
-    }
-
-    private String getLabelStyle() {
-        return "-fx-text-fill: " + settings.getProperty("nick.font.color") + ";";
-    }
-
-    private String getRootStyle() {
-        return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
-                "-fx-background: " + settings.getProperty("root.background.color") + ";";
     }
 }

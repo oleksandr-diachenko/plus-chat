@@ -24,7 +24,7 @@ public class SettingController {
     @FXML
     private ColorPicker baseColorPicker;
     @FXML
-    private Node root;
+    private Node settingsRoot;
     @FXML
     private Label transparencyValue;
     @FXML
@@ -52,6 +52,7 @@ public class SettingController {
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.chatRoot = getChatRoot();
+
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -68,7 +69,7 @@ public class SettingController {
 
     private void initBaseColorPicker() {
         this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.base.color")));
-        this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setRootStyle(this.chatRoot, this.root, ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.backgroundColorPicker.getValue())));
+        this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setRootStyle(this.chatRoot, this.settingsRoot, ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.backgroundColorPicker.getValue())));
     }
 
     private void initLanguage() {
@@ -100,7 +101,7 @@ public class SettingController {
         this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
-            StyleUtil.setLabelStyle(this.chatRoot, this.root, String.valueOf(new_val), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
+            StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot, String.valueOf(new_val), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
         });
     }
 
@@ -116,26 +117,26 @@ public class SettingController {
 
     private void initBackGroundColorPicker() {
         this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.background.color")));
-        this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setRootStyle(this.chatRoot, this.root, ColorUtil.getHexColor(this.baseColorPicker.getValue()), ColorUtil.getHexColor(new_val)));
+        this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setRootStyle(this.chatRoot, this.settingsRoot, ColorUtil.getHexColor(this.baseColorPicker.getValue()), ColorUtil.getHexColor(new_val)));
     }
 
     private void initNickColorPicker() {
         this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty("nick.font.color")));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.chatRoot, this.root, this.fontSize.getText(), ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
+            StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot, this.fontSize.getText(), ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
         });
     }
 
     private void initSeparatorColorPicker() {
         this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty("separator.font.color")));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.chatRoot, this.root, this.fontSize.getText(), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
+            StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot, this.fontSize.getText(), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(new_val), ColorUtil.getHexColor(this.messageColorPicker.getValue()));
         });
     }
 
     private void initMessageColorPicker() {
         this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty("message.font.color")));
-        this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setLabelStyle(this.chatRoot, this.root, this.fontSize.getText(), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(new_val)));
+        this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot, this.fontSize.getText(), ColorUtil.getHexColor(this.nickColorPicker.getValue()), ColorUtil.getHexColor(this.separatorColorPicker.getValue()), ColorUtil.getHexColor(new_val)));
     }
 
     public void confirmAction() {
@@ -165,13 +166,13 @@ public class SettingController {
     }
 
     private void reverseStyle() {
-        StyleUtil.setLabelStyle(this.chatRoot, this.root,
+        StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot,
                 this.settings.getProperty("font.size"),
                 this.settings.getProperty("nick.font.color"),
                 this.settings.getProperty("separator.font.color"),
                 this.settings.getProperty("message.font.color")
         );
-        StyleUtil.setRootStyle(this.chatRoot, this.root, this.settings.getProperty("root.base.color"), this.settings.getProperty("root.background.color"));
+        StyleUtil.setRootStyle(this.chatRoot, this.settingsRoot, this.settings.getProperty("root.base.color"), this.settings.getProperty("root.background.color"));
     }
 
     private String getLanguage(String value) {
