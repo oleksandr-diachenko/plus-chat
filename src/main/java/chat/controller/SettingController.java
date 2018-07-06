@@ -1,24 +1,18 @@
 package chat.controller;
 
 import chat.Main;
+import chat.component.ConfirmDialog;
 import chat.component.StyleUtil;
 import chat.util.ColorUtil;
-import chat.util.ResourceBundleControl;
-import insidefx.undecorator.UndecoratorScene;
-import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
-import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
 import chat.util.AppProperty;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.*;
 
@@ -145,33 +139,11 @@ public class SettingController {
     }
 
     public void confirmAction() {
-        Stage stage = new Stage();
-        stage.setResizable(false);
-        String language = this.settings.getProperty("root.language");
-        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        Region root = null;
-        FXMLLoader fxmlLoader = new FXMLLoader();
-        try {
-            fxmlLoader.setResources(bundle);
-            root = fxmlLoader.load(getClass().getResource("/view/dialog.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + this.settings.getProperty("root.theme") + "/dialog.css");
-        root.setStyle(StyleUtil.getRootStyle(this.settings));
-        Set<Node> labels = root.lookupAll(".label");
-        for (Node label : labels) {
-            label.setStyle(StyleUtil.getTextStyle(this.fontSize.getText(), ColorUtil.getHexColor(this.nickColorPicker.getValue())));
-        }
-        stage.setScene(undecorator);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(getStage().getScene().getWindow());
-        stage.show();
-
+        ConfirmDialog confirmDialog = new ConfirmDialog();
+        confirmDialog.openDialog(getStage(), this.settings, this.fontSize.getText(), this.nickColorPicker.getValue());
+        Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
-            DialogController dialogController = fxmlLoader.getController();
-            if (dialogController.isConfirmed()) {
+            if (confirmDialog.isConfirmed()) {
                 this.settings.setProperty("background.transparency", this.transparencyValue.getText());
                 this.settings.setProperty("font.size", this.fontSize.getText());
                 this.settings.setProperty("root.language", getLanguage(this.languageChoiceBox.getValue()));
@@ -183,24 +155,16 @@ public class SettingController {
                 this.settings.setProperty("separator.font.color", ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
                 this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
                 AppProperty.setProperties(this.settings);
-                reload();
-            }
-        });
-    }
-
-    private void reload() {
-        Stage primaryStage = (Stage) getStage().getOwner();
-        primaryStage.close();
-        Platform.runLater(() -> {
-            try {
-                new Main().start(new Stage());
-            } catch (Exception e) {
-                e.printStackTrace();
             }
         });
     }
 
     public void cancelAction() {
+        reverseStyle();
+        getStage().close();
+    }
+
+    private void reverseStyle() {
         StyleUtil.setLabelStyle(this.chatRoot, this.root,
                 this.settings.getProperty("font.size"),
                 this.settings.getProperty("nick.font.color"),
@@ -208,7 +172,6 @@ public class SettingController {
                 this.settings.getProperty("message.font.color")
         );
         StyleUtil.setRootStyle(this.chatRoot, this.root, this.settings.getProperty("root.base.color"), this.settings.getProperty("root.background.color"));
-        getStage().close();
     }
 
     private String getLanguage(String value) {
