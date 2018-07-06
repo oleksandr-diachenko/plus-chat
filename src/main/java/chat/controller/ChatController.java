@@ -4,7 +4,6 @@ import chat.component.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -94,11 +93,6 @@ public class ChatController {
         }
         UndecoratorScene undecorator = new UndecoratorScene(settingStage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
-        root.setStyle(StyleUtil.getRootStyle(settings));
-        Set<Node> labels = root.lookupAll(".label");
-        for (Node label : labels) {
-            label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));
-        }
         settingStage.setScene(undecorator);
         settingStage.setTitle("Settings");
         settingStage.initOwner(getStage().getScene().getWindow());

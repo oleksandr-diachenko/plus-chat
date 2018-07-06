@@ -52,7 +52,6 @@ public class SettingController {
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.chatRoot = getChatRoot();
-
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -62,9 +61,8 @@ public class SettingController {
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
-        getStage().setOnCloseRequest(event -> {
-            cancelAction();
-        });
+        onShownEvent();
+        onCloseEvent();
     }
 
     private void initBaseColorPicker() {
@@ -182,6 +180,20 @@ public class SettingController {
             }
         }
         return null;
+    }
+
+    private void onShownEvent() {
+        getStage().setOnShown(event -> {
+            this.settingsRoot.setStyle(StyleUtil.getRootStyle(this.settings));
+            Set<Node> labels = this.settingsRoot.lookupAll(".label");
+            for (Node label : labels) {
+                label.setStyle(StyleUtil.getLabelStyle(this.settings.getProperty("nick.font.color")));
+            }
+        });
+    }
+
+    private void onCloseEvent() {
+        getStage().setOnCloseRequest(event -> cancelAction());
     }
 
     private Stage getStage() {
