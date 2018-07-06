@@ -2,13 +2,9 @@ package chat.controller;
 
 import chat.component.SettingsDialog;
 import chat.component.StyleUtil;
-import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
@@ -17,7 +13,6 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 import chat.sevice.Bot;
 import chat.util.AppProperty;
-import chat.util.ResourceBundleControl;
 
 import java.io.*;
 import java.util.*;
