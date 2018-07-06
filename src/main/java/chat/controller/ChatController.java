@@ -82,6 +82,7 @@ public class ChatController {
         settingStage = new Stage();
         settingStage.setAlwaysOnTop(true);
         settingStage.setResizable(false);
+        settings = AppProperty.getProperty("./settings/settings.properties");
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         Region root = null;
