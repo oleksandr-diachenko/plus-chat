@@ -25,7 +25,7 @@ public class ConfirmDialog {
     private Stage stage;
     private DialogController controller;
 
-    public void openDialog(Stage ownerStage, Properties settings, String fontSize, Color fontColor) {
+    public void openDialog(Stage ownerStage, Properties settings, Color fontColor) {
         stage = new Stage();
         stage.setResizable(false);
         String language = settings.getProperty("root.language");
@@ -44,7 +44,7 @@ public class ConfirmDialog {
         root.setStyle(StyleUtil.getRootStyle(settings));
         Set<Node> labels = root.lookupAll(".label");
         for (Node label : labels) {
-            label.setStyle(StyleUtil.getTextStyle(fontSize, ColorUtil.getHexColor(fontColor)));
+            label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
         }
         stage.setScene(undecorator);
         stage.initModality(Modality.WINDOW_MODAL);
