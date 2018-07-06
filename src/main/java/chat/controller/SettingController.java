@@ -61,8 +61,6 @@ public class SettingController {
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
-        onShownEvent();
-        onCloseEvent();
     }
 
     private void initBaseColorPicker() {
@@ -159,18 +157,8 @@ public class SettingController {
     }
 
     public void cancelAction() {
-        reverseStyle();
+        StyleUtil.reverseStyle(this.settings, chatRoot, settingsRoot);
         getStage().close();
-    }
-
-    private void reverseStyle() {
-        StyleUtil.setLabelStyle(this.chatRoot, this.settingsRoot,
-                this.settings.getProperty("font.size"),
-                this.settings.getProperty("nick.font.color"),
-                this.settings.getProperty("separator.font.color"),
-                this.settings.getProperty("message.font.color")
-        );
-        StyleUtil.setRootStyle(this.chatRoot, this.settingsRoot, this.settings.getProperty("root.base.color"), this.settings.getProperty("root.background.color"));
     }
 
     private String getLanguage(String value) {
@@ -182,26 +170,16 @@ public class SettingController {
         return null;
     }
 
-    private void onShownEvent() {
-        getStage().setOnShown(event -> {
-            this.settingsRoot.setStyle(StyleUtil.getRootStyle(this.settings));
-            Set<Node> labels = this.settingsRoot.lookupAll(".label");
-            for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(this.settings.getProperty("nick.font.color")));
-            }
-        });
-    }
-
-    private void onCloseEvent() {
-        getStage().setOnCloseRequest(event -> cancelAction());
-    }
-
     private Stage getStage() {
-        return ChatController.settingStage;
+        return (Stage) settingsRoot.getScene().getWindow();
     }
 
     private Node getChatRoot() {
         Stage owner = Main.stage;
         return owner.getScene().lookup("#root");
+    }
+
+    public Node getSettingsRoot() {
+        return settingsRoot;
     }
 }

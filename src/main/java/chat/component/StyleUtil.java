@@ -40,4 +40,14 @@ public class StyleUtil {
         chatRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
         settingRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
     }
+
+    public static void reverseStyle(Properties settings, Node chatRoot, Node settingsRoot) {
+        StyleUtil.setLabelStyle(chatRoot, settingsRoot,
+                settings.getProperty("font.size"),
+                settings.getProperty("nick.font.color"),
+                settings.getProperty("separator.font.color"),
+                settings.getProperty("message.font.color")
+        );
+        StyleUtil.setRootStyle(chatRoot, settingsRoot, settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
+    }
 }

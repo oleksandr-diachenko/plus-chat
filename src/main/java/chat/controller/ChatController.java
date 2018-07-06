@@ -4,6 +4,7 @@ import chat.component.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
@@ -86,11 +87,27 @@ public class ChatController {
         String language = settings.getProperty("root.language");
         ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         Region root = null;
+        FXMLLoader loader = new FXMLLoader();
+        loader.setResources(bundle);
         try {
-            root = FXMLLoader.load(getClass().getResource("/view/settings.fxml"), bundle);
+            root = loader.load(getClass().getResourceAsStream("/view/settings.fxml"));
         } catch (IOException e) {
             e.printStackTrace();
         }
+        SettingController settingController = loader.getController();
+        Node settingsRoot = settingController.getSettingsRoot();
+        settingStage.setOnShown(event -> {
+            settingsRoot.setStyle(StyleUtil.getRootStyle(this.settings));
+            Set<Node> labels = settingsRoot.lookupAll(".label");
+            for (Node label : labels) {
+                label.setStyle(StyleUtil.getLabelStyle(this.settings.getProperty("nick.font.color")));
+            }
+        });
+
+        Region finalRoot = root;
+        settingStage.setOnCloseRequest(event -> {
+            StyleUtil.reverseStyle(settings, finalRoot, settingsRoot);
+        });
         UndecoratorScene undecorator = new UndecoratorScene(settingStage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
         settingStage.setScene(undecorator);
