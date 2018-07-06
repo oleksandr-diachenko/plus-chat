@@ -54,6 +54,7 @@ public class SettingController {
     private Properties settings;
     private Map<String, String> languages;
     private Node chatRoot;
+    private Stage stage;
 
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
@@ -67,6 +68,9 @@ public class SettingController {
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+        getStage().setOnCloseRequest(event -> {
+            cancelAction();
+        });
     }
 
     private void initBaseColorPicker() {
@@ -204,7 +208,7 @@ public class SettingController {
                 this.settings.getProperty("separator.font.color"),
                 this.settings.getProperty("message.font.color")
         );
-        setRootStyle(this.settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
+        setRootStyle(this.settings.getProperty("root.base.color"), this.settings.getProperty("root.background.color"));
         getStage().close();
     }
 
@@ -235,7 +239,7 @@ public class SettingController {
     }
 
     private Stage getStage() {
-        return (Stage) this.root.getScene().getWindow();
+        return  ChatController.settingStage;
     }
 
     private Node getChatRoot() {
