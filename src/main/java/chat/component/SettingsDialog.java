@@ -31,7 +31,7 @@ public class SettingsDialog {
         try {
             Region root = loader.load(getClass().getResourceAsStream("/view/settings.fxml"));
             stage.setOnShown(event -> {
-                root.setStyle(StyleUtil.getRootStyle(settings));
+                root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
                 Set<Node> labels = root.lookupAll(".label");
                 for (Node label : labels) {
                     label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));

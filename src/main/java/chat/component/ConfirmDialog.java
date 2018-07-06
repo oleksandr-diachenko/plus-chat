@@ -25,7 +25,7 @@ public class ConfirmDialog {
     private Stage stage;
     private ConfirmController controller;
 
-    public void openDialog(Stage ownerStage, Properties settings, Color fontColor) {
+    public void openDialog(Stage ownerStage, Properties settings, Color fontColor, Color baseColor, Color backgroundColor) {
         stage = new Stage();
         stage.setResizable(false);
         String language = settings.getProperty("root.language");
@@ -41,7 +41,7 @@ public class ConfirmDialog {
         controller = fxmlLoader.getController();
         UndecoratorScene undecorator = new UndecoratorScene(stage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/dialog.css");
-        root.setStyle(StyleUtil.getRootStyle(settings));
+        root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
         Set<Node> labels = root.lookupAll(".label");
         for (Node label : labels) {
             label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));

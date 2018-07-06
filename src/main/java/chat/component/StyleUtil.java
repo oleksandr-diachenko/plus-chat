@@ -10,9 +10,9 @@ import java.util.Set;
  */
 public class StyleUtil {
 
-    public static String getRootStyle(Properties settings) {
-        return "-fx-base: " + settings.getProperty("root.base.color") + ";" +
-                "-fx-background: " + settings.getProperty("root.background.color") + ";";
+    public static String getRootStyle(String baseColor, String backgroundColor) {
+        return "-fx-base: " + baseColor + ";" +
+                "-fx-background: " + backgroundColor + ";";
     }
 
     public static String getLabelStyle(String nickColor) {
@@ -32,7 +32,7 @@ public class StyleUtil {
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
 
-        if(settingRoot != null) {
+        if (settingRoot != null) {
             Set<Node> labels = settingRoot.lookupAll(".label");
             labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(nickColor)));
         }

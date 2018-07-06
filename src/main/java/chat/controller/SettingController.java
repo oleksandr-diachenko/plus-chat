@@ -138,7 +138,7 @@ public class SettingController {
 
     public void confirmAction() {
         ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue());
+        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(), this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
         Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
