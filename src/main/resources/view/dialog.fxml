@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="root" prefHeight="170.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.DialogController">
+<VBox fx:id="root" prefHeight="170.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.ConfirmController">
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="285.0" />
     <GridPane prefHeight="156.0" prefWidth="285.0">
         <columnConstraints>

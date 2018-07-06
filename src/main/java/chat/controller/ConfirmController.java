@@ -8,7 +8,7 @@ import javafx.stage.WindowEvent;
 /**
  * @author Alexander Diachenko.
  */
-public class DialogController {
+public class ConfirmController {
 
     @FXML
     private VBox root;

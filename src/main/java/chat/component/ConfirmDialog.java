@@ -1,6 +1,6 @@
 package chat.component;
 
-import chat.controller.DialogController;
+import chat.controller.ConfirmController;
 import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
 import insidefx.undecorator.UndecoratorScene;
@@ -23,7 +23,7 @@ import java.util.Set;
 public class ConfirmDialog {
 
     private Stage stage;
-    private DialogController controller;
+    private ConfirmController controller;
 
     public void openDialog(Stage ownerStage, Properties settings, Color fontColor) {
         stage = new Stage();
