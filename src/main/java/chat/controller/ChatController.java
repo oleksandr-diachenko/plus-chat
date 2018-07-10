@@ -61,15 +61,15 @@ public class ChatController implements Observer {
 
     private void startBot() {
         Thread thread = new Thread(() -> {
-            Properties connect = AppProperty.getProperty("./settings/connect.properties");
+            Properties connect = AppProperty.getProperty("./settings/twitch.properties");
             Bot listener = new Bot(connect, userRepository, rankRepository, commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
-                    .setName(connect.getProperty("twitch.botname"))
+                    .setName(connect.getProperty("botname"))
                     .addServer("irc.chat.twitch.tv", 6667)
-                    .setServerPassword(connect.getProperty("twitch.oauth"))
+                    .setServerPassword(connect.getProperty("oauth"))
                     .addListener(listener)
-                    .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
+                    .addAutoJoinChannel("#" + connect.getProperty("channel"))
                     .buildConfiguration();
             bot = new PircBotX(config);
             try {

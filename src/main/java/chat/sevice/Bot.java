@@ -34,14 +34,14 @@ public class Bot extends ListenerAdapter implements Subject {
 
     @Override
     public void onConnect(ConnectEvent event) {
-        final String botName = connect.getProperty("twitch.botname");
+        final String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Connected!");
     }
 
     @Override
     public void onDisconnect(DisconnectEvent event) {
-        final String botName = connect.getProperty("twitch.botname");
+        final String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Disconnected!");
     }
@@ -111,10 +111,10 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private void sendMessage(String message) {
-        String botName = connect.getProperty("twitch.botname");
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, message);
-        ChatController.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
+        ChatController.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
     }
 
     private User updateUser(String nick) {
