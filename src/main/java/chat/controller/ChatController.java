@@ -101,7 +101,7 @@ public class ChatController implements Observer {
     @Override
     public void update(final String nick, final String message) {
         final HBox hBox = new HBox();
-        hBox.setAlignment(Pos.CENTER_LEFT);
+        hBox.setAlignment(Pos.TOP_LEFT);
         final Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
@@ -109,9 +109,9 @@ public class ChatController implements Observer {
             hBox.getChildren().add(image);
         }
         final TextFlow textFlow = new TextFlow();
-        final Text name = getText(nick, "user-name", "nick.font.color");
-        final Text separator = getText(": ", "separator", "separator.font.color");
-        final Text mess = getText(message, "user-message", "message.font.color");
+        final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
+        final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
+        final Text mess = getText(message, "user-message", this.settings.getProperty("message.font.color"));
         textFlow.getChildren().addAll(name, separator, mess);
         hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
@@ -136,10 +136,10 @@ public class ChatController implements Observer {
         return new Label();
     }
 
-    private Text getText(String nick, String s, String s2) {
-        final Text name = new Text(StringUtil.getUTF8String(nick));
-        name.setId(s);
-        name.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), this.settings.getProperty(s2)));
-        return name;
+    private Text getText(String string, String id, String color) {
+        final Text text = new Text(StringUtil.getUTF8String(string));
+        text.setId(id);
+        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+        return text;
     }
 }
