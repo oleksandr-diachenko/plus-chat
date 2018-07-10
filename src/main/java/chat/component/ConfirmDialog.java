@@ -37,7 +37,7 @@ public class ConfirmDialog {
         final FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.setResources(bundle);
-            final Region root = fxmlLoader.load(ConfirmDialog.class.getResource("/view/dialog.fxml").openStream());
+            final Region root = fxmlLoader.load(ConfirmDialog.class.getResource("/view/confirm.fxml").openStream());
             this.controller = fxmlLoader.getController();
             final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
             undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
