@@ -21,9 +21,9 @@ public class Rank implements Comparable<Rank> {
     @Override
     public String toString() {
         return "Rank{" +
-                "name='" + name + '\'' +
-                ", id=" + id +
-                ", exp=" + exp +
+                "name='" + this.name + '\'' +
+                ", id=" + this.id +
+                ", exp=" + this.exp +
                 '}';
     }
 

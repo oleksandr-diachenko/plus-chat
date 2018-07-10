@@ -12,7 +12,7 @@ public interface UserRepository {
 
     Set<User> getUsers();
 
-    Optional<User> getUserByName(String name);
+    Optional<User> getUserByName(final String name);
 
     void add(User user);
 

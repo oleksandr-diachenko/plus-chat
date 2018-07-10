@@ -9,11 +9,10 @@ public class JSONParser {
 
     private final static Logger logger = Logger.getLogger(JSONParser.class);
 
-    public static String readFile(String fileName) {
+    public static String readFile(final String fileName) {
         String result = "";
-        try {
-            BufferedReader br = new BufferedReader(new FileReader(fileName));
-            StringBuilder sb = new StringBuilder();
+        try (final BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            final StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);
@@ -22,6 +21,7 @@ public class JSONParser {
             result = sb.toString();
         } catch (Exception exception) {
             logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         return result;
     }

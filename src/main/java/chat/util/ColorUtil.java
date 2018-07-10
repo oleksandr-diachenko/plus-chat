@@ -7,7 +7,7 @@ import javafx.scene.paint.Color;
  */
 public class ColorUtil {
 
-    public static String getHexColor(Color color) {
+    public static String getHexColor(final Color color) {
         return "#" + Integer.toHexString(color.hashCode()).substring(0, 6).toUpperCase();
     }
 }

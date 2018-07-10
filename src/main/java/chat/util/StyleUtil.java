@@ -1,4 +1,4 @@
-package chat.component;
+package chat.util;
 
 import javafx.scene.Node;
 
@@ -10,42 +10,42 @@ import java.util.Set;
  */
 public class StyleUtil {
 
-    public static String getRootStyle(String baseColor, String backgroundColor) {
+    public static String getRootStyle(final String baseColor, final String backgroundColor) {
         return "-fx-base: " + baseColor + ";" +
                 "-fx-background: " + backgroundColor + ";";
     }
 
-    public static String getLabelStyle(String nickColor) {
+    public static String getLabelStyle(final String nickColor) {
         return "-fx-text-fill: " + nickColor + ";";
     }
 
-    public static String getTextStyle(String fontSize, String nickColor) {
+    public static String getTextStyle(final String fontSize, final String nickColor) {
         return "-fx-font-size: " + fontSize + "px;" +
                 "-fx-fill: " + nickColor + ";";
     }
 
-    public static void setLabelStyle(Node chatRoot, Node settingRoot, String fontSize, String nickColor, String separatorColor, String messageColor) {
-        Set<Node> names = chatRoot.lookupAll("#user-name");
-        Set<Node> separators = chatRoot.lookupAll("#separator");
-        Set<Node> messages = chatRoot.lookupAll("#user-message");
+    public static void setLabelStyle(final Node chatRoot, final Node settingRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor) {
+        final Set<Node> names = chatRoot.lookupAll("#user-name");
+        final Set<Node> separators = chatRoot.lookupAll("#separator");
+        final Set<Node> messages = chatRoot.lookupAll("#user-message");
         names.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, nickColor)));
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
 
         if (settingRoot != null) {
-            Set<Node> labels = settingRoot.lookupAll(".label");
+            final Set<Node> labels = settingRoot.lookupAll(".label");
             labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(nickColor)));
         }
     }
 
-    public static void setRootStyle(Node chatRoot, Node settingRoot, String baseColor, String backgroundColor) {
+    public static void setRootStyle(final Node chatRoot, final Node settingRoot, final String baseColor, final String backgroundColor) {
         chatRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
         if (settingRoot != null) {
             settingRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
         }
     }
 
-    public static void reverseStyle(Properties settings, Node chatRoot) {
+    public static void reverseStyle(final Properties settings, final Node chatRoot) {
         StyleUtil.setLabelStyle(chatRoot, null,
                 settings.getProperty("font.size"),
                 settings.getProperty("nick.font.color"),

@@ -20,9 +20,9 @@ public class Command {
     @Override
     public String toString() {
         return "Command{" +
-                "name='" + name + '\'' +
-                ", description='" + description + '\'' +
-                ", response='" + response + '\'' +
+                "name='" + this.name + '\'' +
+                ", description='" + this.description + '\'' +
+                ", response='" + this.response + '\'' +
                 '}';
     }
 }

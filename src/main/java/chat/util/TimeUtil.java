@@ -10,10 +10,11 @@ public class TimeUtil {
 
     /**
      * Convert Date to String
+     *
      * @param date
      * @return String in dd-MM-yyyy HH:mm format
      */
-    public static String getDateToString(Date date) {
+    public static String getDateToString(final Date date) {
         return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
     }
 }

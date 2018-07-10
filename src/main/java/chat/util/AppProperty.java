@@ -15,33 +15,23 @@ public class AppProperty {
 
     private final static Logger logger = Logger.getLogger(AppProperty.class);
 
-    public static Properties getProperty(String path) {
-        Properties mainProperties = new Properties();
-        try {
-            FileInputStream file = new FileInputStream(path);
+    public static Properties getProperty(final String path) {
+        final Properties mainProperties = new Properties();
+        try (final FileInputStream file = new FileInputStream(path)) {
             mainProperties.load(file);
-            file.close();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         return mainProperties;
     }
 
-    public static Properties setProperties(Properties properties) {
-        OutputStream output = null;
-        try {
-            output = new FileOutputStream("./settings/settings.properties");
+    public static Properties setProperties(final Properties properties) {
+        try (final OutputStream output = new FileOutputStream("./settings/settings.properties")) {
             properties.store(output, null);
-        } catch (IOException e) {
-            logger.error(e.getMessage(), e);
-        } finally {
-            if (output != null) {
-                try {
-                    output.close();
-                } catch (IOException e) {
-                    logger.error(e.getMessage(), e);
-                }
-            }
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         return properties;
     }

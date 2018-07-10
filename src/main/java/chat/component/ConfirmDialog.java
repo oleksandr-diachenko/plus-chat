@@ -3,6 +3,7 @@ package chat.component;
 import chat.controller.ConfirmController;
 import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
+import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -10,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -22,41 +24,43 @@ import java.util.Set;
  */
 public class ConfirmDialog {
 
+    private final static Logger logger = Logger.getLogger(ConfirmDialog.class);
+
     private Stage stage;
     private ConfirmController controller;
 
-    public void openDialog(Stage ownerStage, Properties settings, Color fontColor, Color baseColor, Color backgroundColor) {
-        stage = new Stage();
-        stage.setResizable(false);
-        String language = settings.getProperty("root.language");
-        ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        Region root = null;
-        FXMLLoader fxmlLoader = new FXMLLoader();
+    public void openDialog(final Stage ownerStage, final Properties settings, final Color fontColor, final Color baseColor, final Color backgroundColor) {
+        this.stage = new Stage();
+        this.stage.setResizable(false);
+        final String language = settings.getProperty("root.language");
+        final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
+        final FXMLLoader fxmlLoader = new FXMLLoader();
         try {
             fxmlLoader.setResources(bundle);
-            root = fxmlLoader.load(ConfirmDialog.class.getResource("/view/dialog.fxml").openStream());
-        } catch (IOException e) {
-            e.printStackTrace();
+            final Region root = fxmlLoader.load(ConfirmDialog.class.getResource("/view/dialog.fxml").openStream());
+            this.controller = fxmlLoader.getController();
+            final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
+            undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
+            root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
+            final Set<Node> labels = root.lookupAll(".label");
+            for (Node label : labels) {
+                label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
+            }
+            this.stage.setScene(undecorator);
+            this.stage.initModality(Modality.WINDOW_MODAL);
+            this.stage.initOwner(ownerStage.getScene().getWindow());
+            this.stage.show();
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
-        controller = fxmlLoader.getController();
-        UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/dialog.css");
-        root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
-        Set<Node> labels = root.lookupAll(".label");
-        for (Node label : labels) {
-            label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
-        }
-        stage.setScene(undecorator);
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.initOwner(ownerStage.getScene().getWindow());
-        stage.show();
     }
 
     public Stage getStage() {
-        return stage;
+        return this.stage;
     }
 
     public boolean isConfirmed() {
-        return controller.isConfirmed();
+        return this.controller.isConfirmed();
     }
 }

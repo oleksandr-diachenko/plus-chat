@@ -11,5 +11,5 @@ public interface RankRepository {
 
     Set<Rank> getRanks();
 
-    Rank getRankByExp(int exp);
+    Rank getRankByExp(final int exp);
 }

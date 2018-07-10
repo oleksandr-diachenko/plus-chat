@@ -12,5 +12,5 @@ public interface CommandRepository {
 
     Set<Command> getCommands();
 
-    Optional<Command> getCommandByName(String name);
+    Optional<Command> getCommandByName(final String name);
 }

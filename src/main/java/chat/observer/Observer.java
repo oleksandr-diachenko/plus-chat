@@ -5,5 +5,5 @@ package chat.observer;
  */
 public interface Observer {
 
-    void update(String nick, String message);
+    void update(final String nick, final String message);
 }

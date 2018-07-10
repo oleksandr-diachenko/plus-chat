@@ -21,10 +21,10 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
-                ", firstMessageDate=" + firstMessageDate +
-                ", lastMessageDate=" + lastMessageDate +
-                ", exp=" + exp +
+                "name='" + this.name + '\'' +
+                ", firstMessageDate=" + this.firstMessageDate +
+                ", lastMessageDate=" + this.lastMessageDate +
+                ", exp=" + this.exp +
                 '}';
     }
 }

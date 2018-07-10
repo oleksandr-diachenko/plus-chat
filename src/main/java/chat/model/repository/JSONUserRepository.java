@@ -19,26 +19,28 @@ import java.util.Set;
 public class JSONUserRepository implements UserRepository {
 
     private final static Logger logger = Logger.getLogger(JSONUserRepository.class);
+
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
 
     public JSONUserRepository() {
-        users = getUsers();
+        this.users = getUsers();
     }
 
     @Override
     public Set<User> getUsers() {
         try {
-            return new HashSet<>(mapper.readValue(JSONParser.readFile("./data/users.json"), new TypeReference<List<User>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/users.json"), new TypeReference<List<User>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
         }
         return new HashSet<>();
     }
 
     @Override
-    public Optional<User> getUserByName(String name) {
+    public Optional<User> getUserByName(final String name) {
         for (User user : users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);
@@ -48,25 +50,26 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public void add(User user) {
+    public void add(final User user) {
         users.add(user);
         flush();
     }
 
     @Override
-    public void update(User user) {
+    public void update(final User user) {
         users.remove(user);
         users.add(user);
         flush();
     }
 
     private void flush() {
-        Thread thread = new Thread(() -> {
+        final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    mapper.writeValue(new FileOutputStream("./data/users.json"), users);
+                    this.mapper.writeValue(new FileOutputStream("./data/users.json"), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    exception.printStackTrace();
                 }
             }
         });
