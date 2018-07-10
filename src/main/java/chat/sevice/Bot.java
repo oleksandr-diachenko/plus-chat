@@ -9,6 +9,8 @@ import chat.model.entity.Rank;
 import chat.model.entity.User;
 import chat.model.repository.*;
 import org.pircbotx.hooks.ListenerAdapter;
+import org.pircbotx.hooks.events.ConnectEvent;
+import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import chat.util.AppProperty;
@@ -32,15 +34,19 @@ public class Bot extends ListenerAdapter implements Subject {
         connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
-//    @Override
-//    public void onConnect(ConnectEvent event) {
-//        notifyObserver("Connected!", Color.GREEN.toString());
-//    }
-//
-//    @Override
-//    public void onDisconnect(DisconnectEvent event) {
-//        notifyObserver("Disconnected!", Color.RED.toString());
-//    }
+    @Override
+    public void onConnect(ConnectEvent event) {
+        final String botName = connect.getProperty("twitch.botname");
+        updateUser(botName);
+        notifyObserver(botName, "Connected!");
+    }
+
+    @Override
+    public void onDisconnect(DisconnectEvent event) {
+        final String botName = connect.getProperty("twitch.botname");
+        updateUser(botName);
+        notifyObserver(botName, "Disconnected!");
+    }
 
     /**
      * PircBotx will return the exact message sent and not the raw line
@@ -109,6 +115,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private void sendMessage(String message) {
         String botName = connect.getProperty("twitch.botname");
         updateUser(botName);
+        notifyObserver(botName, message);
         ChatController.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
