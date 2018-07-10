@@ -107,6 +107,7 @@ public class SettingController {
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
         this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            Main.stage.setOpacity((Double) new_val / 100);
             this.transparencyValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
