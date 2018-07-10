@@ -30,7 +30,7 @@ public class Main extends Application {
         stage = primaryStage;
         primaryStage.setAlwaysOnTop(true);
         primaryStage.getIcons().add(new Image("/img/logo.png"));
-        final Properties settings = AppProperty.getProperty("./settings/settings.properties");
+        final Properties settings = AppProperty.getProperty("settings/settings.properties");
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {

@@ -30,7 +30,7 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getUsers() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/users.json"), new TypeReference<List<User>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("data/users.json"), new TypeReference<List<User>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -66,7 +66,7 @@ public class JSONUserRepository implements UserRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream("./data/users.json"), this.users);
+                    this.mapper.writeValue(new FileOutputStream("data/users.json"), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     exception.printStackTrace();

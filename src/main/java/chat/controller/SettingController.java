@@ -54,7 +54,7 @@ public class SettingController {
     private Node chatRoot;
 
     public void initialize() {
-        this.settings = AppProperty.getProperty("./settings/settings.properties");
+        this.settings = AppProperty.getProperty("settings/settings.properties");
         this.chatRoot = getChatRoot();
         initLanguage();
         initTheme();
