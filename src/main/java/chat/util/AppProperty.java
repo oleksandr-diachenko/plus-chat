@@ -16,14 +16,14 @@ public class AppProperty {
     private final static Logger logger = Logger.getLogger(AppProperty.class);
 
     public static Properties getProperty(final String path) {
-        final Properties mainProperties = new Properties();
+        final Properties properties = new Properties();
         try (final FileInputStream file = new FileInputStream(path)) {
-            mainProperties.load(file);
+            properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
             exception.printStackTrace();
         }
-        return mainProperties;
+        return properties;
     }
 
     public static Properties setProperties(final Properties properties) {
