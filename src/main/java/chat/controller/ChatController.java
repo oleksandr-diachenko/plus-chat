@@ -49,7 +49,6 @@ public class ChatController implements Observer {
     private CommandRepository commandRepository = new JSONCommandRepository();
     private int index = 0;
 
-
     @FXML
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
@@ -104,35 +103,43 @@ public class ChatController implements Observer {
         final HBox hBox = new HBox();
         hBox.setAlignment(Pos.CENTER_LEFT);
         final Optional<User> userByName = userRepository.getUserByName(nick);
-        final Label image = new Label();
         if (userByName.isPresent()) {
             final User user = userByName.get();
-            final Rank rank = rankRepository.getRankByExp(user.getExp());
-            image.setId("rank-image");
-            try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-                final ImageView imageView = new ImageView(new Image(fis));
-                imageView.setFitHeight(20);
-                imageView.setFitWidth(20);
-                image.setGraphic(imageView);
-            } catch (IOException exception) {
-                logger.error(exception.getMessage(), exception);
-                exception.printStackTrace();
-            }
+            final Label image = getRankImage(user);
+            hBox.getChildren().add(image);
         }
         final TextFlow textFlow = new TextFlow();
-        final Text name = new Text(StringUtil.getUTF8String(nick));
-        name.setId("user-name");
-        name.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), this.settings.getProperty("nick.font.color")));
-        final Text separator = new Text(StringUtil.getUTF8String(": "));
-        separator.setId("separator");
-        separator.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), this.settings.getProperty("separator.font.color")));
-        final Text mess = new Text(StringUtil.getUTF8String(message));
-        mess.setId("user-message");
-        mess.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), this.settings.getProperty("message.font.color")));
+        final Text name = getText(nick, "user-name", "nick.font.color");
+        final Text separator = getText(": ", "separator", "separator.font.color");
+        final Text mess = getText(message, "user-message", "message.font.color");
         textFlow.getChildren().addAll(name, separator, mess);
-        hBox.getChildren().addAll(image, textFlow);
+        hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
         this.container.getChildren().add(this.messages.get(this.index));
         this.index++;
+    }
+
+    private Label getRankImage(User user) {
+        final Label image = new Label();
+        final Rank rank = rankRepository.getRankByExp(user.getExp());
+        image.setId("rank-image");
+        try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+            final ImageView imageView = new ImageView(new Image(fis));
+            imageView.setFitHeight(20);
+            imageView.setFitWidth(20);
+            image.setGraphic(imageView);
+            return image;
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
+        }
+        return new Label();
+    }
+
+    private Text getText(String nick, String s, String s2) {
+        final Text name = new Text(StringUtil.getUTF8String(nick));
+        name.setId(s);
+        name.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), this.settings.getProperty(s2)));
+        return name;
     }
 }
