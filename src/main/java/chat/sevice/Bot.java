@@ -1,75 +1,43 @@
 package chat.sevice;
 
 import chat.controller.ChatController;
+import chat.observer.Observer;
+import chat.observer.Subject;
 import javafx.application.Platform;
-import javafx.geometry.Pos;
-import javafx.scene.control.Label;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import chat.model.entity.Command;
 import chat.model.entity.Rank;
 import chat.model.entity.User;
 import chat.model.repository.*;
-import org.apache.log4j.Logger;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.ConnectEvent;
-import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import chat.util.AppProperty;
-import chat.util.StringUtil;
 import chat.util.TimeUtil;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.util.*;
 
-public class Bot extends ListenerAdapter {
+public class Bot extends ListenerAdapter implements Subject {
 
-    private final static Logger logger = Logger.getLogger(Bot.class);
+    private List<Observer> observers = new ArrayList<>();
 
     private Properties connect;
     private UserRepository userRepository = new JSONUserRepository();
     private CommandRepository commandRepository = new JSONCommandRepository();
     private RankRepository rankRepository = new JSONRankRepository();
-    private Pane container;
-    private List<HBox> messages;
-    private Properties properties;
-    private int index = 0;
 
-    public Bot(Pane container, List<HBox> messages, Properties properties) {
-        this.container = container;
-        this.messages = messages;
-        this.properties = properties;
+    public Bot() {
         connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
-    @Override
-    public void onConnect(ConnectEvent event) {
-        updateUI("Connected!", Color.GREEN);
-    }
-
-    @Override
-    public void onDisconnect(DisconnectEvent event) {
-        updateUI("Disconnected!", Color.RED);
-    }
-
-    private void updateUI(String message, Color color) {
-        Platform.runLater(() -> {
-            HBox hBox = new HBox();
-            Label label = new Label(message);
-            label.setTextFill(color);
-            hBox.getChildren().add(label);
-            messages.add(hBox);
-            container.getChildren().add(messages.get(index));
-            index++;
-        });
-    }
+//    @Override
+//    public void onConnect(ConnectEvent event) {
+//        notifyObserver("Connected!", Color.GREEN.toString());
+//    }
+//
+//    @Override
+//    public void onDisconnect(DisconnectEvent event) {
+//        notifyObserver("Disconnected!", Color.RED.toString());
+//    }
 
     /**
      * PircBotx will return the exact message sent and not the raw line
@@ -77,56 +45,13 @@ public class Bot extends ListenerAdapter {
     @Override
     public void onGenericMessage(GenericMessageEvent event) {
         String nick = event.getUser().getNick();
-        updateUser(nick);
+        User user = updateUser(nick);
         String message = event.getMessage();
-        updateUI(nick, message);
+        notifyObserver(user, message);
         String command = getCommandFromMessage(message);
         if (command != null) {
             runCommand(event, command);
         }
-    }
-
-    private void updateUI(String nick, String message) {
-        Platform.runLater(() -> {
-            HBox hBox = new HBox();
-            hBox.setAlignment(Pos.CENTER_LEFT);
-            Optional<User> userByName = userRepository.getUserByName(nick);
-            Label image = new Label();
-            if (userByName.isPresent()) {
-                User user = userByName.get();
-                Rank rank = rankRepository.getRankByExp(user.getExp());
-                image.setId("rank-image");
-                try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-                    ImageView imageView = new ImageView(new Image(fis));
-                    imageView.setFitHeight(20);
-                    imageView.setFitWidth(20);
-                    image.setGraphic(imageView);
-                } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
-                    exception.printStackTrace();
-                }
-            }
-            TextFlow textFlow = new TextFlow();
-            Text name = new Text(StringUtil.getUTF8String(nick));
-            name.setId("user-name");
-            name.setStyle(getStyle("font.size", "nick.font.color"));
-            Text separator = new Text(StringUtil.getUTF8String(": "));
-            separator.setId("separator");
-            separator.setStyle(getStyle("font.size", "separator.font.color"));
-            Text mess = new Text(StringUtil.getUTF8String(message));
-            mess.setId("user-message");
-            mess.setStyle(getStyle("font.size", "message.font.color"));
-            textFlow.getChildren().addAll(name, separator, mess);
-            hBox.getChildren().addAll(image, textFlow);
-            messages.add(hBox);
-            container.getChildren().add(messages.get(index));
-            index++;
-        });
-    }
-
-    private String getStyle(String size, String color) {
-        return " -fx-font-size: " + properties.getProperty(size) + "px;" +
-                "-fx-fill: " + properties.getProperty(color) + ";";
     }
 
     /**
@@ -181,34 +106,54 @@ public class Bot extends ListenerAdapter {
     private void sendMessage(String message) {
         String botName = connect.getProperty("twitch.botname");
         updateUser(botName);
-        updateUI(botName, message);
         ChatController.bot.sendIRC().message("#" + connect.getProperty("twitch.channel"), message);
     }
 
-    private void updateUser(String nick) {
+    private User updateUser(String nick) {
         Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
-            updateExistingUser(userByName.get());
+            return updateExistingUser(userByName.get());
         } else {
-            createNewUser(nick);
+            return createNewUser(nick);
         }
     }
 
-    private void updateExistingUser(User userByName) {
+    private User updateExistingUser(User userByName) {
         User user = new User();
         user.setName(userByName.getName());
         user.setFirstMessageDate(userByName.getFirstMessageDate());
         user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
         user.setExp(userByName.getExp() + 1);
         userRepository.update(user);
+        return user;
     }
 
-    private void createNewUser(String nick) {
+    private User createNewUser(String nick) {
         User user = new User();
         user.setName(nick);
         user.setFirstMessageDate(TimeUtil.getDateToString(new Date()));
         user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
         user.setExp(1);
         userRepository.add(user);
+        return user;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObserver(User user, String message) {
+        for (Observer observer : observers) {
+            Platform.runLater(() -> {
+                observer.update(user, message);
+            });
+        }
     }
 }

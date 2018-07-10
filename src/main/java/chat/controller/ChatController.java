@@ -2,10 +2,24 @@ package chat.controller;
 
 import chat.component.SettingsDialog;
 import chat.component.StyleUtil;
+import chat.model.entity.Rank;
+import chat.model.entity.User;
+import chat.model.repository.JSONRankRepository;
+import chat.model.repository.JSONUserRepository;
+import chat.model.repository.RankRepository;
+import chat.model.repository.UserRepository;
+import chat.observer.Observer;
+import chat.util.StringUtil;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
+import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
@@ -20,7 +34,7 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
-public class ChatController {
+public class ChatController implements Observer {
 
     private final static Logger logger = Logger.getLogger(ChatController.class);
 
@@ -33,6 +47,9 @@ public class ChatController {
     private ScrollPane scrollPane;
     private List<HBox> messages = new ArrayList<>();
     private Properties settings;
+    private RankRepository rankRepository = new JSONRankRepository();
+    private UserRepository userRepository = new JSONUserRepository();
+    private int index = 0;
 
 
     @FXML
@@ -47,11 +64,13 @@ public class ChatController {
     private void startBot() {
         Thread thread = new Thread(() -> {
             Properties connect = AppProperty.getProperty("./settings/connect.properties");
+            Bot listener = new Bot();
+            listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("twitch.botname"))
                     .addServer("irc.chat.twitch.tv", 6667)
                     .setServerPassword(connect.getProperty("twitch.oauth"))
-                    .addListener(new Bot(container, messages, settings))
+                    .addListener(listener)
                     .addAutoJoinChannel("#" + connect.getProperty("twitch.channel"))
                     .buildConfiguration();
             bot = new PircBotX(config);
@@ -77,5 +96,41 @@ public class ChatController {
     private void openSettingsStage() {
         SettingsDialog dialog = new SettingsDialog();
         dialog.openDialog(getStage(), this.root);
+    }
+
+    @Override
+    public void update(User user, String message) {
+            HBox hBox = new HBox();
+            hBox.setAlignment(Pos.CENTER_LEFT);
+            Optional<User> userByName = userRepository.getUserByName(user.getName());
+            Label image = new Label();
+            if (userByName.isPresent()) {
+                Rank rank = rankRepository.getRankByExp(user.getExp());
+                image.setId("rank-image");
+                try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+                    ImageView imageView = new ImageView(new Image(fis));
+                    imageView.setFitHeight(20);
+                    imageView.setFitWidth(20);
+                    image.setGraphic(imageView);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                    exception.printStackTrace();
+                }
+            }
+            TextFlow textFlow = new TextFlow();
+            Text name = new Text(StringUtil.getUTF8String(user.getName()));
+            name.setId("user-name");
+            name.setStyle(StyleUtil.getTextStyle(settings.getProperty("font.size"), settings.getProperty("nick.font.color")));
+            Text separator = new Text(StringUtil.getUTF8String(": "));
+            separator.setId("separator");
+            separator.setStyle(StyleUtil.getTextStyle(settings.getProperty("font.size"), settings.getProperty("separator.font.color")));
+            Text mess = new Text(StringUtil.getUTF8String(message));
+            mess.setId("user-message");
+            mess.setStyle(StyleUtil.getTextStyle(settings.getProperty("font.size"), settings.getProperty("message.font.color")));
+            textFlow.getChildren().addAll(name, separator, mess);
+            hBox.getChildren().addAll(image, textFlow);
+            messages.add(hBox);
+            container.getChildren().add(messages.get(index));
+            index++;
     }
 }
