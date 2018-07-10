@@ -62,7 +62,7 @@ public class ChatController implements Observer {
     private void startBot() {
         Thread thread = new Thread(() -> {
             Properties connect = AppProperty.getProperty("./settings/connect.properties");
-            Bot listener = new Bot(userRepository, rankRepository, commandRepository);
+            Bot listener = new Bot(connect, userRepository, rankRepository, commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("twitch.botname"))

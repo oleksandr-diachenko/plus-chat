@@ -13,7 +13,6 @@ import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import chat.util.AppProperty;
 import chat.util.TimeUtil;
 
 import java.util.*;
@@ -24,14 +23,13 @@ public class Bot extends ListenerAdapter implements Subject {
     private final RankRepository rankRepository;
     private final CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
-
     private Properties connect;
 
-    public Bot(UserRepository userRepository, RankRepository rankRepository, CommandRepository commandRepository) {
+    public Bot(Properties connect, UserRepository userRepository, RankRepository rankRepository, CommandRepository commandRepository) {
+        this.connect = connect;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.commandRepository = commandRepository;
-        connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
     @Override
