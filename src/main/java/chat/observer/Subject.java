@@ -1,7 +1,5 @@
 package chat.observer;
 
-import chat.model.entity.User;
-
 /**
  * @author Alexander Diachenko.
  */
@@ -11,5 +9,5 @@ public interface Subject {
 
     void removeObserver(Observer observer);
 
-    void notifyObserver(User user, String message);
+    void notifyObserver(String nick, String message);
 }

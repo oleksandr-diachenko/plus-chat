@@ -4,10 +4,7 @@ import chat.component.SettingsDialog;
 import chat.component.StyleUtil;
 import chat.model.entity.Rank;
 import chat.model.entity.User;
-import chat.model.repository.JSONRankRepository;
-import chat.model.repository.JSONUserRepository;
-import chat.model.repository.RankRepository;
-import chat.model.repository.UserRepository;
+import chat.model.repository.*;
 import chat.observer.Observer;
 import chat.util.StringUtil;
 import javafx.fxml.FXML;
@@ -49,6 +46,7 @@ public class ChatController implements Observer {
     private Properties settings;
     private RankRepository rankRepository = new JSONRankRepository();
     private UserRepository userRepository = new JSONUserRepository();
+    private CommandRepository  commandRepository = new JSONCommandRepository();
     private int index = 0;
 
 
@@ -64,7 +62,7 @@ public class ChatController implements Observer {
     private void startBot() {
         Thread thread = new Thread(() -> {
             Properties connect = AppProperty.getProperty("./settings/connect.properties");
-            Bot listener = new Bot();
+            Bot listener = new Bot(userRepository, rankRepository, commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("twitch.botname"))
@@ -99,12 +97,13 @@ public class ChatController implements Observer {
     }
 
     @Override
-    public void update(User user, String message) {
+    public void update(String nick, String message) {
             HBox hBox = new HBox();
             hBox.setAlignment(Pos.CENTER_LEFT);
-            Optional<User> userByName = userRepository.getUserByName(user.getName());
+            Optional<User> userByName = userRepository.getUserByName(nick);
             Label image = new Label();
             if (userByName.isPresent()) {
+                final User user = userByName.get();
                 Rank rank = rankRepository.getRankByExp(user.getExp());
                 image.setId("rank-image");
                 try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
@@ -118,7 +117,7 @@ public class ChatController implements Observer {
                 }
             }
             TextFlow textFlow = new TextFlow();
-            Text name = new Text(StringUtil.getUTF8String(user.getName()));
+            Text name = new Text(StringUtil.getUTF8String(nick));
             name.setId("user-name");
             name.setStyle(StyleUtil.getTextStyle(settings.getProperty("font.size"), settings.getProperty("nick.font.color")));
             Text separator = new Text(StringUtil.getUTF8String(": "));

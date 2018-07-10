@@ -18,14 +18,17 @@ import java.util.*;
 
 public class Bot extends ListenerAdapter implements Subject {
 
+    private final UserRepository userRepository;
+    private final RankRepository rankRepository;
+    private final CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
 
     private Properties connect;
-    private UserRepository userRepository = new JSONUserRepository();
-    private CommandRepository commandRepository = new JSONCommandRepository();
-    private RankRepository rankRepository = new JSONRankRepository();
 
-    public Bot() {
+    public Bot(UserRepository userRepository, RankRepository rankRepository, CommandRepository commandRepository) {
+        this.userRepository = userRepository;
+        this.rankRepository = rankRepository;
+        this.commandRepository = commandRepository;
         connect = AppProperty.getProperty("./settings/connect.properties");
     }
 
@@ -47,7 +50,7 @@ public class Bot extends ListenerAdapter implements Subject {
         String nick = event.getUser().getNick();
         User user = updateUser(nick);
         String message = event.getMessage();
-        notifyObserver(user, message);
+        notifyObserver(user.getName(), message);
         String command = getCommandFromMessage(message);
         if (command != null) {
             runCommand(event, command);
@@ -149,10 +152,10 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     @Override
-    public void notifyObserver(User user, String message) {
+    public void notifyObserver(String nick, String message) {
         for (Observer observer : observers) {
             Platform.runLater(() -> {
-                observer.update(user, message);
+                observer.update(nick, message);
             });
         }
     }
