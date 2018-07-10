@@ -1,39 +1,20 @@
 package chat.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 /**
  * @author Alexander Diachenko.
  */
+@Getter
+@Setter
 public class Command {
 
     private String name;
     private String description;
     private String response;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getResponse() {
-        return response;
-    }
-
-    public void setResponse(String response) {
-        this.response = response;
-    }
 
     @Override
     public boolean equals(Object o) {

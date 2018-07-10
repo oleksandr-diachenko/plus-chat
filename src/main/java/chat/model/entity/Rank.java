@@ -1,48 +1,21 @@
 package chat.model.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.Objects;
 
 /**
  * @author Alexander Diachenko.
  */
+@Getter
+@Setter
 public class Rank implements Comparable<Rank> {
 
     private String name;
     private int id;
     private int exp;
     private String imagePath;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public int getExp() {
-        return exp;
-    }
-
-    public void setExp(int exp) {
-        this.exp = exp;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 
     @Override
     public boolean equals(Object o) {
