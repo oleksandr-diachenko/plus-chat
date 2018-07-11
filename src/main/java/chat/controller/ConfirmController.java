@@ -16,9 +16,10 @@ public class ConfirmController {
 
     public void confirmAction() {
         this.confirmed = true;
-        final Stage owner = (Stage) getStage().getOwner();
+        final Stage stage = getStage();
+        final Stage owner = (Stage) stage.getOwner();
+        stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
         owner.close();
-        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     public void cancelAction() {

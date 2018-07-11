@@ -27,7 +27,7 @@ public class SettingsDialog {
         final Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
-        final Properties settings = AppProperty.getProperty("settings/settings.properties");
+        final Properties settings = AppProperty.getProperty("./settings/settings.properties");
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         final FXMLLoader loader = new FXMLLoader();

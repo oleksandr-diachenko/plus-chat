@@ -51,7 +51,7 @@ public class ChatController implements Observer {
 
     @FXML
     public void initialize() {
-        this.settings = AppProperty.getProperty("settings/settings.properties");
+        this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),
                 this.settings.getProperty("root.background.color")
@@ -63,7 +63,7 @@ public class ChatController implements Observer {
 
     private void startBot() {
         final Thread thread = new Thread(() -> {
-            final Properties connect = AppProperty.getProperty("settings/twitch.properties");
+            final Properties connect = AppProperty.getProperty("./settings/twitch.properties");
             final Bot listener = new Bot(connect, this.userRepository, this.rankRepository, this.commandRepository);
             listener.addObserver(this);
             final Configuration config = new Configuration.Builder()

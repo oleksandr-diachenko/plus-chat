@@ -27,7 +27,7 @@ public class AppProperty {
     }
 
     public static Properties setProperties(final Properties properties) {
-        try (final OutputStream output = new FileOutputStream("settings/settings.properties")) {
+        try (final OutputStream output = new FileOutputStream("./settings/settings.properties")) {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

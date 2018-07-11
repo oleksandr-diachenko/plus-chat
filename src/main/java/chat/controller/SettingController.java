@@ -54,7 +54,7 @@ public class SettingController {
     private Node chatRoot;
 
     public void initialize() {
-        this.settings = AppProperty.getProperty("settings/settings.properties");
+        this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.chatRoot = getChatRoot();
         initLanguage();
         initTheme();
@@ -89,20 +89,20 @@ public class SettingController {
     }
 
     private void initTheme() {
-        try {
-            final File[] themes = new File(getClass().getResource("/theme").toURI()).listFiles();
-            final List<String> list = new ArrayList<>();
-            if (themes != null) {
-                for (File theme : themes) {
-                    list.add(theme.getName());
-                }
-            }
-            this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
-            this.themeChoiceBox.setValue(this.settings.getProperty("root.theme"));
-        } catch (URISyntaxException exception) {
-            logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
-        }
+//        try {
+//            final File[] themes = new File(getClass().getResource("/theme").toURI()).listFiles();
+//            final List<String> list = new ArrayList<>();
+//            if (themes != null) {
+//                for (File theme : themes) {
+//                    list.add(theme.getName());
+//                }
+//            }
+//            this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
+//            this.themeChoiceBox.setValue(this.settings.getProperty("root.theme"));
+//        } catch (URISyntaxException exception) {
+//            logger.error(exception.getMessage(), exception);
+//            exception.printStackTrace();
+//        } //TODO бага
     }
 
     private void initFontSizeSlider() {
@@ -195,7 +195,7 @@ public class SettingController {
                 this.settings.setProperty("background.transparency", this.transparencyValue.getText());
                 this.settings.setProperty("font.size", this.fontSize.getText());
                 this.settings.setProperty("root.language", getLanguage(this.languageChoiceBox.getValue()));
-                this.settings.setProperty("root.theme", this.themeChoiceBox.getValue());
+//                this.settings.setProperty("root.theme", this.themeChoiceBox.getValue()); //TODO поправить после исправления баги со списком тем
 
                 this.settings.setProperty("root.base.color", ColorUtil.getHexColor(this.baseColorPicker.getValue()));
                 this.settings.setProperty("root.background.color", ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
