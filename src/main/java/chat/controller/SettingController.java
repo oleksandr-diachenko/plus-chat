@@ -12,18 +12,13 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import chat.util.AppProperty;
 import javafx.stage.WindowEvent;
-import org.apache.log4j.Logger;
 
-import java.io.File;
-import java.net.URISyntaxException;
 import java.util.*;
 
 /**
  * @author Alexander Diachenko.
  */
 public class SettingController {
-
-    private final static Logger logger = Logger.getLogger(SettingController.class);
 
     @FXML
     private ColorPicker baseColorPicker;
@@ -89,20 +84,10 @@ public class SettingController {
     }
 
     private void initTheme() {
-//        try {
-//            final File[] themes = new File(getClass().getResource("/theme").toURI()).listFiles();
-//            final List<String> list = new ArrayList<>();
-//            if (themes != null) {
-//                for (File theme : themes) {
-//                    list.add(theme.getName());
-//                }
-//            }
-//            this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
-//            this.themeChoiceBox.setValue(this.settings.getProperty("root.theme"));
-//        } catch (URISyntaxException exception) {
-//            logger.error(exception.getMessage(), exception);
-//            exception.printStackTrace();
-//        } //TODO бага
+        final List<String> list = new ArrayList<>();
+        list.add("default");
+        this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
+        this.themeChoiceBox.setValue(this.settings.getProperty("root.theme"));
     }
 
     private void initFontSizeSlider() {
@@ -195,7 +180,9 @@ public class SettingController {
                 this.settings.setProperty("background.transparency", this.transparencyValue.getText());
                 this.settings.setProperty("font.size", this.fontSize.getText());
                 this.settings.setProperty("root.language", getLanguage(this.languageChoiceBox.getValue()));
-//                this.settings.setProperty("root.theme", this.themeChoiceBox.getValue()); //TODO поправить после исправления баги со списком тем
+                final String value = this.themeChoiceBox.getValue();
+                System.out.println(value);
+                this.settings.setProperty("root.theme", value);
 
                 this.settings.setProperty("root.base.color", ColorUtil.getHexColor(this.baseColorPicker.getValue()));
                 this.settings.setProperty("root.background.color", ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
