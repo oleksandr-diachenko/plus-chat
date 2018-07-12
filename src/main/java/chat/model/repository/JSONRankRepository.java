@@ -26,7 +26,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Set<Rank> getRanks() {
         try {
-            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile("data/ranks.json"), new TypeReference<List<Rank>>() {
+            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/ranks.json"), new TypeReference<List<Rank>>() {
             })));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

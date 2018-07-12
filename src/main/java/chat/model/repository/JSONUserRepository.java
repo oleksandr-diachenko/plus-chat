@@ -30,7 +30,7 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getUsers() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("data/users.json"), new TypeReference<List<User>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/users.json"), new TypeReference<List<User>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
