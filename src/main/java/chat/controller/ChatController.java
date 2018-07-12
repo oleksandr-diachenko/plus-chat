@@ -106,12 +106,12 @@ public class ChatController implements Observer {
         final HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_LEFT);
         final Optional<User> userByName = userRepository.getUserByName(nick);
+        final TextFlow textFlow = new TextFlow();
         if (userByName.isPresent()) {
             final User user = userByName.get();
             final Label image = getRankImage(user);
-            hBox.getChildren().add(image);
+            textFlow.getChildren().add(image);
         }
-        final TextFlow textFlow = new TextFlow();
         final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
         final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
         final Text mess = getText(message, "user-message", this.settings.getProperty("message.font.color"));
