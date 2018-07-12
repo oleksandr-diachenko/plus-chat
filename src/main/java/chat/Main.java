@@ -11,11 +11,18 @@ import chat.util.ResourceBundleControl;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
+
+    static {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hhmmss");
+        System.setProperty("current.date", dateFormat.format(new Date()));
+    }
 
     private final static Logger logger = Logger.getLogger(Main.class);
 
