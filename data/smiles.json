@@ -1,0 +1,58 @@
+[
+  {
+    "name": ":)",
+    "imagePath": "./img/smiles/twitch/0.png"
+  },
+  {
+    "name": ":(",
+    "imagePath": "./img/smiles/twitch/1.png"
+  },
+  {
+    "name": ":o",
+    "imagePath": "./img/smiles/twitch/2.png"
+  },
+  {
+    "name": ":z",
+    "imagePath": "./img/smiles/twitch/3.png"
+  },
+  {
+    "name": "B)",
+    "imagePath": "./img/smiles/twitch/4.png"
+  },
+  {
+    "name": ":\\",
+    "imagePath": "./img/smiles/twitch/5.png"
+  },
+  {
+    "name": ";)",
+    "imagePath": "./img/smiles/twitch/6.png"
+  },
+  {
+    "name": ";p",
+    "imagePath": "./img/smiles/twitch/7.png"
+  },
+  {
+    "name": ":p",
+    "imagePath": "./img/smiles/twitch/8.png"
+  },
+  {
+    "name": "R)",
+    "imagePath": "./img/smiles/twitch/9.png"
+  },
+  {
+    "name": "o_O",
+    "imagePath": "./img/smiles/twitch/10.png"
+  },
+  {
+    "name": ":D",
+    "imagePath": "./img/smiles/twitch/11.png"
+  },
+  {
+    "name": ">(",
+    "imagePath": "./img/smiles/twitch/12.png"
+  },
+  {
+    "name": "<3",
+    "imagePath": "./img/smiles/twitch/13.png"
+  }
+]
