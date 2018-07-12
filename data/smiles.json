@@ -54,5 +54,289 @@
   {
     "name": "<3",
     "imagePath": "./img/smiles/twitch/13.png"
+  },
+  {
+    "name": "4Head",
+    "imagePath": "./img/smiles/twitch/4Head.png"
+  },
+  {
+    "name": "ANELE",
+    "imagePath": "./img/smiles/twitch/ANELE.png"
+  },
+  {
+    "name": "AngryJack",
+    "imagePath": "./img/smiles/twitch/AngryJack.png"
+  },
+  {
+    "name": "ArgieB8",
+    "imagePath": "./img/smiles/twitch/ArgieB8.png"
+  },
+  {
+    "name": "ArigatoNas",
+    "imagePath": "./img/smiles/twitch/ArigatoNas.png"
+  },
+  {
+    "name": "ArsonNoSexy",
+    "imagePath": "./img/smiles/twitch/ArsonNoSexy.png"
+  },
+  {
+    "name": "AsexualPride",
+    "imagePath": "./img/smiles/twitch/AsexualPride.png"
+  },
+  {
+    "name": "AsianGlow",
+    "imagePath": "./img/smiles/twitch/AsianGlow.png"
+  },
+  {
+    "name": "bleedPurple",
+    "imagePath": "./img/smiles/twitch/bleedPurple.png"
+  },
+  {
+    "name": "cmonBruh",
+    "imagePath": "./img/smiles/twitch/cmonBruh.png"
+  },
+  {
+    "name": "copyThis",
+    "imagePath": "./img/smiles/twitch/copyThis.png"
+  },
+  {
+    "name": "duDudu",
+    "imagePath": "./img/smiles/twitch/duDudu.png"
+  },
+  {
+    "name": "imGlitch",
+    "imagePath": "./img/smiles/twitch/imGlitch.png"
+  },
+  {
+    "name": "mcaT",
+    "imagePath": "./img/smiles/twitch/mcaT.png"
+  },
+  {
+    "name": "panicBasket",
+    "imagePath": "./img/smiles/twitch/panicBasket.png"
+  },
+  {
+    "name": "pastaThat",
+    "imagePath": "./img/smiles/twitch/pastaThat.png"
+  },
+  {
+    "name": "riPepperonis",
+    "imagePath": "./img/smiles/twitch/riPepperonis.png"
+  },
+  {
+    "name": "SabaPing",
+    "imagePath": "./img/smiles/twitch/SabaPing.png"
+  },
+  {
+    "name": "SeemsGood",
+    "imagePath": "./img/smiles/twitch/SeemsGood.png"
+  },
+  {
+    "name": "SeriousSloth",
+    "imagePath": "./img/smiles/twitch/SeriousSloth.png"
+  },
+  {
+    "name": "ShadyLulu",
+    "imagePath": "./img/smiles/twitch/ShadyLulu.png"
+  },
+  {
+    "name": "ShazBotstix",
+    "imagePath": "./img/smiles/twitch/ShazBotstix.png"
+  },
+  {
+    "name": "SmoocherZ",
+    "imagePath": "./img/smiles/twitch/SmoocherZ.png"
+  },
+  {
+    "name": "SoBayed",
+    "imagePath": "./img/smiles/twitch/SoBayed.png"
+  },
+  {
+    "name": "SoonerLater",
+    "imagePath": "./img/smiles/twitch/SoonerLater.png"
+  },
+  {
+    "name": "SOTshark",
+    "imagePath": "./img/smiles/twitch/SOTshark.png"
+  },
+  {
+    "name": "Squid1",
+    "imagePath": "./img/smiles/twitch/Squid1.png"
+  },
+  {
+    "name": "Squid2",
+    "imagePath": "./img/smiles/twitch/Squid2.png"
+  },
+  {
+    "name": "Squid3",
+    "imagePath": "./img/smiles/twitch/Squid3.png"
+  },
+  {
+    "name": "Squid4",
+    "imagePath": "./img/smiles/twitch/Squid4.png"
+  },
+  {
+    "name": "SSSsss",
+    "imagePath": "./img/smiles/twitch/SSSsss.png"
+  },
+  {
+    "name": "StinkyCheese",
+    "imagePath": "./img/smiles/twitch/StinkyCheese.png"
+  },
+  {
+    "name": "StoneLightning",
+    "imagePath": "./img/smiles/twitch/StoneLightning.png"
+  },
+  {
+    "name": "StrawBeary",
+    "imagePath": "./img/smiles/twitch/StrawBeary.png"
+  },
+  {
+    "name": "SuperVinlin",
+    "imagePath": "./img/smiles/twitch/SuperVinlin.png"
+  },
+  {
+    "name": "SwiftRage",
+    "imagePath": "./img/smiles/twitch/SwiftRage.png"
+  },
+  {
+    "name": "TakeNRG",
+    "imagePath": "./img/smiles/twitch/TakeNRG.png"
+  },
+  {
+    "name": "TBAngel",
+    "imagePath": "./img/smiles/twitch/TBAngel.png"
+  },
+  {
+    "name": "TearGlove",
+    "imagePath": "./img/smiles/twitch/TearGlove.png"
+  },
+  {
+    "name": "TehePelo",
+    "imagePath": "./img/smiles/twitch/TehePelo.png"
+  },
+  {
+    "name": "TF2John",
+    "imagePath": "./img/smiles/twitch/TF2John.png"
+  },
+  {
+    "name": "ThankEgg",
+    "imagePath": "./img/smiles/twitch/ThankEgg.png"
+  },
+  {
+    "name": "TheIlluminati",
+    "imagePath": "./img/smiles/twitch/TheIlluminati.png"
+  },
+  {
+    "name": "TheRinger",
+    "imagePath": "./img/smiles/twitch/TheRinger.png"
+  },
+  {
+    "name": "TheTarFu",
+    "imagePath": "./img/smiles/twitch/TheTarFu.png"
+  },
+  {
+    "name": "TheThing",
+    "imagePath": "./img/smiles/twitch/TheThing.png"
+  },
+  {
+    "name": "ThunBeast",
+    "imagePath": "./img/smiles/twitch/ThunBeast.png"
+  },
+  {
+    "name": "TinyFace",
+    "imagePath": "./img/smiles/twitch/TinyFace.png"
+  },
+  {
+    "name": "TombRaid",
+    "imagePath": "./img/smiles/twitch/TombRaid.png"
+  },
+  {
+    "name": "TooSpicy",
+    "imagePath": "./img/smiles/twitch/TooSpicy.png"
+  },
+  {
+    "name": "TPcrunchyroll",
+    "imagePath": "./img/smiles/twitch/TPcrunchyroll.png"
+  },
+  {
+    "name": "TPFufun",
+    "imagePath": "./img/smiles/twitch/TPFufun.png"
+  },
+  {
+    "name": "TransgenderPride",
+    "imagePath": "./img/smiles/twitch/TransgenderPride.png"
+  },
+  {
+    "name": "TriHard",
+    "imagePath": "./img/smiles/twitch/TriHard.png"
+  },
+  {
+    "name": "TTours",
+    "imagePath": "./img/smiles/twitch/TTours.png"
+  },
+  {
+    "name": "TwitchLit",
+    "imagePath": "./img/smiles/twitch/TwitchLit.png"
+  },
+  {
+    "name": "twitchRaid",
+    "imagePath": "./img/smiles/twitch/twitchRaid.png"
+  },
+  {
+    "name": "TwitchRPG",
+    "imagePath": "./img/smiles/twitch/TwitchRPG.png"
+  },
+  {
+    "name": "TwitchUnity",
+    "imagePath": "./img/smiles/twitch/TwitchUnity.png"
+  },
+  {
+    "name": "TwitchVotes",
+    "imagePath": "./img/smiles/twitch/TwitchVotes.png"
+  },
+  {
+    "name": "UncleNox",
+    "imagePath": "./img/smiles/twitch/UncleNox.png"
+  },
+  {
+    "name": "UnSane",
+    "imagePath": "./img/smiles/twitch/UnSane.png"
+  },
+  {
+    "name": "UWot",
+    "imagePath": "./img/smiles/twitch/UWot.png"
+  },
+  {
+    "name": "VoHiYo",
+    "imagePath": "./img/smiles/twitch/VoHiYo.png"
+  },
+  {
+    "name": "VoteNay",
+    "imagePath": "./img/smiles/twitch/VoteNay.png"
+  },
+  {
+    "name": "VoteYea",
+    "imagePath": "./img/smiles/twitch/VoteYea.png"
+  },
+  {
+    "name": "WholeWheat",
+    "imagePath": "./img/smiles/twitch/WholeWheat.png"
+  },
+  {
+    "name": "WTRuck",
+    "imagePath": "./img/smiles/twitch/WTRuck.png"
+  },
+  {
+    "name": "WutFace",
+    "imagePath": "./img/smiles/twitch/WutFace.png"
+  },
+  {
+    "name": "YouDontSay",
+    "imagePath": "./img/smiles/twitch/YouDontSay.png"
+  },
+  {
+    "name": "YouWHY",
+    "imagePath": "./img/smiles/twitch/YouWHY.png"
   }
 ]
