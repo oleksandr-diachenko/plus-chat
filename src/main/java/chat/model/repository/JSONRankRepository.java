@@ -38,7 +38,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Rank getRankByExp(final int exp) {
         Rank nearest = new Rank();
-        for (Rank rank : ranks) {
+        for (Rank rank : this.ranks) {
             final int rankExp = rank.getExp();
             if (rankExp <= exp) {
                 nearest = rank;

@@ -20,6 +20,11 @@ public class JSONCommandRepository implements CommandRepository {
     private final static Logger logger = Logger.getLogger(JSONCommandRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
+    private Set<Command> commands;
+
+    public JSONCommandRepository() {
+        this.commands = getCommands();
+    }
 
     @Override
     public Set<Command> getCommands() {
@@ -35,7 +40,7 @@ public class JSONCommandRepository implements CommandRepository {
 
     @Override
     public Optional<Command> getCommandByName(final String name) {
-        for (Command command : getCommands()) {
+        for (Command command : this.commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);
             }

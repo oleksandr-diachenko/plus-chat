@@ -44,13 +44,16 @@ public class ChatController implements Observer {
     private ScrollPane scrollPane;
     private List<HBox> messages = new ArrayList<>();
     private Properties settings;
-    private RankRepository rankRepository = new JSONRankRepository();
-    private UserRepository userRepository = new JSONUserRepository();
-    private CommandRepository commandRepository = new JSONCommandRepository();
+    private RankRepository rankRepository;
+    private UserRepository userRepository;
+    private CommandRepository commandRepository;
     private int index = 0;
 
     @FXML
     public void initialize() {
+        this.rankRepository = new JSONRankRepository();
+        this.userRepository = new JSONUserRepository();
+        this.commandRepository = new JSONCommandRepository();
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),
@@ -119,7 +122,7 @@ public class ChatController implements Observer {
         this.index++;
     }
 
-    private Label getRankImage(User user) {
+    private Label getRankImage(final User user) {
         final Label image = new Label();
         final Rank rank = rankRepository.getRankByExp(user.getExp());
         image.setId("rank-image");
@@ -136,7 +139,7 @@ public class ChatController implements Observer {
         return new Label();
     }
 
-    private Text getText(String string, String id, String color) {
+    private Text getText(final String string, final String id, final String color) {
         final Text text = new Text(StringUtil.getUTF8String(string));
         text.setId(id);
         text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));

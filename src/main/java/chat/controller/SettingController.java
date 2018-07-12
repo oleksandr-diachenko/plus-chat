@@ -181,7 +181,6 @@ public class SettingController {
                 this.settings.setProperty("font.size", this.fontSize.getText());
                 this.settings.setProperty("root.language", getLanguage(this.languageChoiceBox.getValue()));
                 final String value = this.themeChoiceBox.getValue();
-                System.out.println(value);
                 this.settings.setProperty("root.theme", value);
 
                 this.settings.setProperty("root.base.color", ColorUtil.getHexColor(this.baseColorPicker.getValue()));
@@ -189,7 +188,7 @@ public class SettingController {
                 this.settings.setProperty("nick.font.color", ColorUtil.getHexColor(this.nickColorPicker.getValue()));
                 this.settings.setProperty("separator.font.color", ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
                 this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
-                AppProperty.setProperties(this.settings);
+                AppProperty.setProperties("./settings/settings.properties", this.settings);
             }
         });
     }

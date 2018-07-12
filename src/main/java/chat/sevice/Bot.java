@@ -126,12 +126,9 @@ public class Bot extends ListenerAdapter implements Subject {
         }
     }
 
-    private User updateExistingUser(final User userByName) {
-        final User user = new User();
-        user.setName(userByName.getName());
-        user.setFirstMessageDate(userByName.getFirstMessageDate());
+    private User updateExistingUser(final User user) {
         user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
-        user.setExp(userByName.getExp() + 1);
+        user.setExp(user.getExp() + 1);
         this.userRepository.update(user);
         return user;
     }
