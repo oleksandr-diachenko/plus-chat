@@ -2,8 +2,7 @@ package chat.util;
 
 import javafx.scene.Node;
 
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko
@@ -38,10 +37,9 @@ public class StyleUtil {
         }
     }
 
-    public static void setRootStyle(final Node chatRoot, final Node settingRoot, final String baseColor, final String backgroundColor) {
-        chatRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
-        if (settingRoot != null) {
-            settingRoot.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
+    public static void setRootStyle(final List<Node> roots, final String baseColor, final String backgroundColor) {
+        for (Node root : roots) {
+            root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
         }
     }
 
@@ -52,6 +50,6 @@ public class StyleUtil {
                 settings.getProperty("separator.font.color"),
                 settings.getProperty("message.font.color")
         );
-        StyleUtil.setRootStyle(chatRoot, null, settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
+        StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
     }
 }

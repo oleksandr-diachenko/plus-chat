@@ -65,9 +65,7 @@ public class SettingController {
     private void initBaseColorPicker() {
         this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.base.color")));
         this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setRootStyle(
-                    this.chatRoot,
-                    this.settingsRoot,
+            StyleUtil.setRootStyle(Arrays.asList(this.chatRoot, this.settingsRoot),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.backgroundColorPicker.getValue())
             );
@@ -120,9 +118,7 @@ public class SettingController {
     private void initBackGroundColorPicker() {
         this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.background.color")));
         this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setRootStyle(
-                    this.chatRoot,
-                    this.settingsRoot,
+            StyleUtil.setRootStyle(Arrays.asList(this.chatRoot, this.settingsRoot),
                     ColorUtil.getHexColor(this.baseColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val)
             );
