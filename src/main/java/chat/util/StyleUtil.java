@@ -14,19 +14,19 @@ public class StyleUtil {
                 "-fx-background: " + backgroundColor + ";";
     }
 
-    public static String getLabelStyle(final String nickColor) {
-        return "-fx-text-fill: " + nickColor + ";";
+    public static String getLabelStyle(final String color) {
+        return "-fx-text-fill: " + color + ";";
     }
 
-    public static String getTextStyle(final String fontSize, final String nickColor) {
+    public static String getTextStyle(final String fontSize, final String color) {
         return "-fx-font-size: " + fontSize + "px;" +
-                "-fx-fill: " + nickColor + ";";
+                "-fx-fill: " + color + ";";
     }
 
     public static void setLabelStyle(final Node chatRoot, final Node settingRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor) {
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
-        final Set<Node> messages = chatRoot.lookupAll("#user-message");
+        final Set<Node> messages = chatRoot.lookupAll("#user-message .text");
         names.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, nickColor)));
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));

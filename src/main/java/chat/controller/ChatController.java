@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.component.SettingsDialog;
+import chat.model.entity.Smile;
 import chat.util.StyleUtil;
 import chat.model.entity.Rank;
 import chat.model.entity.User;
@@ -47,12 +48,14 @@ public class ChatController implements Observer {
     private RankRepository rankRepository;
     private UserRepository userRepository;
     private CommandRepository commandRepository;
+    private SmileRepository smileRepository;
     private int index = 0;
 
     @FXML
     public void initialize() {
         this.rankRepository = new JSONRankRepository();
         this.userRepository = new JSONUserRepository();
+        this.smileRepository = new JSONSmileRepository();
         this.commandRepository = new JSONCommandRepository();
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.root.setStyle(StyleUtil.getRootStyle(
@@ -114,12 +117,44 @@ public class ChatController implements Observer {
         }
         final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
         final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
-        final Text mess = getText(message, "user-message", this.settings.getProperty("message.font.color"));
+        final TextFlow mess = getMessage(message, this.settings.getProperty("message.font.color"));
         textFlow.getChildren().addAll(name, separator, mess);
         hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
         this.container.getChildren().add(this.messages.get(this.index));
         this.index++;
+    }
+
+    private TextFlow getMessage(final String message, final String color) {
+        final String utf8Message = StringUtil.getUTF8String(message);
+        final String[] words = utf8Message.split(" ");
+        final TextFlow textFlow = new TextFlow();
+        textFlow.setId("user-message");
+        for (String word : words) {
+            final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
+            if (smileByName.isPresent()) {
+                final Label label = new Label();
+                final Smile smile = smileByName.get();
+                final ImageView imageView = getSmile(smile);
+                label.setGraphic(imageView);
+                textFlow.getChildren().add(label);
+            } else {
+                Text text = new Text(word + " ");
+                text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+                textFlow.getChildren().add(text);
+            }
+        }
+        return textFlow;
+    }
+
+    private ImageView getSmile(Smile smile) {
+        try (final FileInputStream fis = new FileInputStream(smile.getImagePath())) {
+            return new ImageView(new Image(fis));
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+            exception.printStackTrace();
+        }
+        return null;
     }
 
     private Label getRankImage(final User user) {
