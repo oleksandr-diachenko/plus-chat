@@ -338,5 +338,517 @@
   {
     "name": "YouWHY",
     "imagePath": "./img/smiles/twitch/YouWHY.png"
+  },
+  {
+    "name": "BabyRage",
+    "imagePath": "./img/smiles/twitch/BabyRage.png"
+  },
+  {
+    "name": "BatChest",
+    "imagePath": "./img/smiles/twitch/BatChest.png"
+  },
+  {
+    "name": "BCWarrior",
+    "imagePath": "./img/smiles/twitch/BCWarrior.png"
+  },
+  {
+    "name": "BegWan",
+    "imagePath": "./img/smiles/twitch/BegWan.png"
+  },
+  {
+    "name": "BibleThump",
+    "imagePath": "./img/smiles/twitch/BibleThump.png"
+  },
+  {
+    "name": "BigBrother",
+    "imagePath": "./img/smiles/twitch/BigBrother.png"
+  },
+  {
+    "name": "BigPhish",
+    "imagePath": "./img/smiles/twitch/BigPhish.png"
+  },
+  {
+    "name": "BisexualPride",
+    "imagePath": "./img/smiles/twitch/BisexualPride.png"
+  },
+  {
+    "name": "BlargNaut",
+    "imagePath": "./img/smiles/twitch/BlargNaut.png"
+  },
+  {
+    "name": "BlessRNG",
+    "imagePath": "./img/smiles/twitch/BlessRNG.png"
+  },
+  {
+    "name": "BloodTrail",
+    "imagePath": "./img/smiles/twitch/BloodTrail.png"
+  },
+  {
+    "name": "BrainSlug",
+    "imagePath": "./img/smiles/twitch/BrainSlug.png"
+  },
+  {
+    "name": "BrokeBack",
+    "imagePath": "./img/smiles/twitch/BrokeBack.png"
+  },
+  {
+    "name": "BuddhaBar",
+    "imagePath": "./img/smiles/twitch/BuddhaBar.png"
+  },
+  {
+    "name": "CarlSmile",
+    "imagePath": "./img/smiles/twitch/CarlSmile.png"
+  },
+  {
+    "name": "ChefFrank",
+    "imagePath": "./img/smiles/twitch/ChefFrank.png"
+  },
+  {
+    "name": "CoolCat",
+    "imagePath": "./img/smiles/twitch/CoolCat.png"
+  },
+  {
+    "name": "CoolStoryBob",
+    "imagePath": "./img/smiles/twitch/CoolStoryBob.png"
+  },
+  {
+    "name": "CorgiDerp",
+    "imagePath": "./img/smiles/twitch/CorgiDerp.png"
+  },
+  {
+    "name": "CrreamAwk",
+    "imagePath": "./img/smiles/twitch/CrreamAwk.png"
+  },
+  {
+    "name": "CurseLit",
+    "imagePath": "./img/smiles/twitch/CurseLit.png"
+  },
+  {
+    "name": "DAESuppy",
+    "imagePath": "./img/smiles/twitch/DAESuppy.png"
+  },
+  {
+    "name": "DansGame",
+    "imagePath": "./img/smiles/twitch/DansGame.png"
+  },
+  {
+    "name": "DarkMode",
+    "imagePath": "./img/smiles/twitch/DarkMode.png"
+  },
+  {
+    "name": "DatSheffy",
+    "imagePath": "./img/smiles/twitch/DatSheffy.png"
+  },
+  {
+    "name": "DBstyle",
+    "imagePath": "./img/smiles/twitch/DBstyle.png"
+  },
+  {
+    "name": "DendiFace",
+    "imagePath": "./img/smiles/twitch/DendiFace.png"
+  },
+  {
+    "name": "DogFace",
+    "imagePath": "./img/smiles/twitch/DogFace.png"
+  },
+  {
+    "name": "DogFace",
+    "imagePath": "./img/smiles/twitch/DogFace.png"
+  },
+  {
+    "name": "DoritosChip",
+    "imagePath": "./img/smiles/twitch/DoritosChip.png"
+  },
+  {
+    "name": "DrinkPurple",
+    "imagePath": "./img/smiles/twitch/DrinkPurple.png"
+  },
+  {
+    "name": "DxCat",
+    "imagePath": "./img/smiles/twitch/DxCat.png"
+  },
+  {
+    "name": "EarthDay",
+    "imagePath": "./img/smiles/twitch/EarthDay.png"
+  },
+  {
+    "name": "EleGiggle",
+    "imagePath": "./img/smiles/twitch/EleGiggle.png"
+  },
+  {
+    "name": "EntropyWins",
+    "imagePath": "./img/smiles/twitch/EntropyWins.png"
+  },
+  {
+    "name": "EntropyWins",
+    "imagePath": "./img/smiles/twitch/EntropyWins.png"
+  },
+  {
+    "name": "FailFish",
+    "imagePath": "./img/smiles/twitch/FailFish.png"
+  },
+  {
+    "name": "FBtouchdown",
+    "imagePath": "./img/smiles/twitch/FBtouchdown.png"
+  },
+  {
+    "name": "FrankerZ",
+    "imagePath": "./img/smiles/twitch/FrankerZ.png"
+  },
+  {
+    "name": "FreakinStinkin",
+    "imagePath": "./img/smiles/twitch/FreakinStinkin.png"
+  },
+  {
+    "name": "FUNgineer",
+    "imagePath": "./img/smiles/twitch/FUNgineer.png"
+  },
+  {
+    "name": "FunRun",
+    "imagePath": "./img/smiles/twitch/FunRun.png"
+  },
+  {
+    "name": "FutureMan",
+    "imagePath": "./img/smiles/twitch/FutureMan.png"
+  },
+  {
+    "name": "GayPride",
+    "imagePath": "./img/smiles/twitch/GayPride.png"
+  },
+  {
+    "name": "GingerPower",
+    "imagePath": "./img/smiles/twitch/GingerPower.png"
+  },
+  {
+    "name": "GivePLZ",
+    "imagePath": "./img/smiles/twitch/GivePLZ.png"
+  },
+  {
+    "name": "GOWAtreus",
+    "imagePath": "./img/smiles/twitch/GOWAtreus.png"
+  },
+  {
+    "name": "GOWKratos",
+    "imagePath": "./img/smiles/twitch/GOWKratos.png"
+  },
+  {
+    "name": "GrammarKing",
+    "imagePath": "./img/smiles/twitch/GrammarKing.png"
+  },
+  {
+    "name": "GreenTeam",
+    "imagePath": "./img/smiles/twitch/GreenTeam.png"
+  },
+  {
+    "name": "HappyJack",
+    "imagePath": "./img/smiles/twitch/HappyJack.png"
+  },
+  {
+    "name": "HassaanChop",
+    "imagePath": "./img/smiles/twitch/HassaanChop.png"
+  },
+  {
+    "name": "HassanChop",
+    "imagePath": "./img/smiles/twitch/HassanChop.png"
+  },
+  {
+    "name": "HeyGuys",
+    "imagePath": "./img/smiles/twitch/HeyGuys.png"
+  },
+  {
+    "name": "HotPokket",
+    "imagePath": "./img/smiles/twitch/HotPokket.png"
+  },
+  {
+    "name": "HSCheers",
+    "imagePath": "./img/smiles/twitch/HSCheers.png"
+  },
+  {
+    "name": "HSWP",
+    "imagePath": "./img/smiles/twitch/HSWP.png"
+  },
+  {
+    "name": "HumbleLife",
+    "imagePath": "./img/smiles/twitch/HumbleLife.png"
+  },
+  {
+    "name": "InuyoFace",
+    "imagePath": "./img/smiles/twitch/InuyoFace.png"
+  },
+  {
+    "name": "ItsBoshyTime",
+    "imagePath": "./img/smiles/twitch/ItsBoshyTime.png"
+  },
+  {
+    "name": "Jebaited",
+    "imagePath": "./img/smiles/twitch/Jebaited.png"
+  },
+  {
+    "name": "JKanStyle",
+    "imagePath": "./img/smiles/twitch/JKanStyle.png"
+  },
+  {
+    "name": "JonCarnage",
+    "imagePath": "./img/smiles/twitch/JonCarnage.png"
+  },
+  {
+    "name": "KAPOW",
+    "imagePath": "./img/smiles/twitch/KAPOW.png"
+  },
+  {
+    "name": "Kappa",
+    "imagePath": "./img/smiles/twitch/Kappa.png"
+  },
+  {
+    "name": "KappaClaus",
+    "imagePath": "./img/smiles/twitch/KappaClaus.png"
+  },
+  {
+    "name": "KappaPride",
+    "imagePath": "./img/smiles/twitch/KappaPride.png"
+  },
+  {
+    "name": "KappaRoss",
+    "imagePath": "./img/smiles/twitch/KappaRoss.png"
+  },
+  {
+    "name": "KappaWealth",
+    "imagePath": "./img/smiles/twitch/KappaWealth.png"
+  },
+  {
+    "name": "Kappu",
+    "imagePath": "./img/smiles/twitch/Kappu.png"
+  },
+  {
+    "name": "Keepo",
+    "imagePath": "./img/smiles/twitch/Keepo.png"
+  },
+  {
+    "name": "KevinTurtle",
+    "imagePath": "./img/smiles/twitch/KevinTurtle.png"
+  },
+  {
+    "name": "Kippa",
+    "imagePath": "./img/smiles/twitch/Kippa.png"
+  },
+  {
+    "name": "KomodoHype",
+    "imagePath": "./img/smiles/twitch/KomodoHype.png"
+  },
+  {
+    "name": "KonCha",
+    "imagePath": "./img/smiles/twitch/KonCha.png"
+  },
+  {
+    "name": "Kreygasm",
+    "imagePath": "./img/smiles/twitch/Kreygasm.png"
+  },
+  {
+    "name": "LesbianPride",
+    "imagePath": "./img/smiles/twitch/LesbianPride.png"
+  },
+  {
+    "name": "LUL",
+    "imagePath": "./img/smiles/twitch/LUL.png"
+  },
+  {
+    "name": "Mau5",
+    "imagePath": "./img/smiles/twitch/Mau5.png"
+  },
+  {
+    "name": "MercyWing1",
+    "imagePath": "./img/smiles/twitch/MercyWing1.png"
+  },
+  {
+    "name": "MercyWing2",
+    "imagePath": "./img/smiles/twitch/MercyWing2.png"
+  },
+  {
+    "name": "MikeHogu",
+    "imagePath": "./img/smiles/twitch/MikeHogu.png"
+  },
+  {
+    "name": "MingLee",
+    "imagePath": "./img/smiles/twitch/MingLee.png"
+  },
+  {
+    "name": "MorphinTime",
+    "imagePath": "./img/smiles/twitch/MorphinTime.png"
+  },
+  {
+    "name": "MrDestructoid",
+    "imagePath": "./img/smiles/twitch/MrDestructoid.png"
+  },
+  {
+    "name": "MVGame",
+    "imagePath": "./img/smiles/twitch/MVGame.png"
+  },
+  {
+    "name": "NinjaGrumpy",
+    "imagePath": "./img/smiles/twitch/NinjaGrumpy.png"
+  },
+  {
+    "name": "NomNom",
+    "imagePath": "./img/smiles/twitch/NomNom.png"
+  },
+  {
+    "name": "NotATK",
+    "imagePath": "./img/smiles/twitch/NotATK.png"
+  },
+  {
+    "name": "NotLikeThis",
+    "imagePath": "./img/smiles/twitch/NotLikeThis.png"
+  },
+  {
+    "name": "OhMyDog",
+    "imagePath": "./img/smiles/twitch/OhMyDog.png"
+  },
+  {
+    "name": "OneHand",
+    "imagePath": "./img/smiles/twitch/OneHand.png"
+  },
+  {
+    "name": "OpieOP",
+    "imagePath": "./img/smiles/twitch/OpieOP.png"
+  },
+  {
+    "name": "OptimizePrime",
+    "imagePath": "./img/smiles/twitch/OptimizePrime.png"
+  },
+  {
+    "name": "OSFrog",
+    "imagePath": "./img/smiles/twitch/OSFrog.png"
+  },
+  {
+    "name": "OSSmooth",
+    "imagePath": "./img/smiles/twitch/OSSmooth.png"
+  },
+  {
+    "name": "PanicVis",
+    "imagePath": "./img/smiles/twitch/PanicVis.png"
+  },
+  {
+    "name": "PansexualPride",
+    "imagePath": "./img/smiles/twitch/PansexualPride.png"
+  },
+  {
+    "name": "PartyHat",
+    "imagePath": "./img/smiles/twitch/PartyHat.png"
+  },
+  {
+    "name": "PartyTime",
+    "imagePath": "./img/smiles/twitch/PartyTime.png"
+  },
+  {
+    "name": "PeoplesChamp",
+    "imagePath": "./img/smiles/twitch/PeoplesChamp.png"
+  },
+  {
+    "name": "PermaSmug",
+    "imagePath": "./img/smiles/twitch/PermaSmug.png"
+  },
+  {
+    "name": "PicoMause",
+    "imagePath": "./img/smiles/twitch/PicoMause.png"
+  },
+  {
+    "name": "PinkMercy",
+    "imagePath": "./img/smiles/twitch/PinkMercy.png"
+  },
+  {
+    "name": "PipeHype",
+    "imagePath": "./img/smiles/twitch/PipeHype.png"
+  },
+  {
+    "name": "PJSalt",
+    "imagePath": "./img/smiles/twitch/PJSalt.png"
+  },
+  {
+    "name": "PJSugar",
+    "imagePath": "./img/smiles/twitch/PJSugar.png"
+  },
+  {
+    "name": "PMSTwin",
+    "imagePath": "./img/smiles/twitch/PMSTwin.png"
+  },
+  {
+    "name": "PogChamp",
+    "imagePath": "./img/smiles/twitch/PogChamp.png"
+  },
+  {
+    "name": "Poooound",
+    "imagePath": "./img/smiles/twitch/Poooound.png"
+  },
+  {
+    "name": "PopCorn",
+    "imagePath": "./img/smiles/twitch/PopCorn.png"
+  },
+  {
+    "name": "PowerUpL",
+    "imagePath": "./img/smiles/twitch/PowerUpL.png"
+  },
+  {
+    "name": "PowerUpR",
+    "imagePath": "./img/smiles/twitch/PowerUpR.png"
+  },
+  {
+    "name": "PraiseIt",
+    "imagePath": "./img/smiles/twitch/PraiseIt.png"
+  },
+  {
+    "name": "PrimeMe",
+    "imagePath": "./img/smiles/twitch/PrimeMe.png"
+  },
+  {
+    "name": "PunchTrees",
+    "imagePath": "./img/smiles/twitch/PunchTrees.png"
+  },
+  {
+    "name": "PunOko",
+    "imagePath": "./img/smiles/twitch/PunOko.png"
+  },
+  {
+    "name": "PurpleStar",
+    "imagePath": "./img/smiles/twitch/PurpleStar.png"
+  },
+  {
+    "name": "RaccAttack",
+    "imagePath": "./img/smiles/twitch/RaccAttack.png"
+  },
+  {
+    "name": "RalpherZ",
+    "imagePath": "./img/smiles/twitch/RalpherZ.png"
+  },
+  {
+    "name": "RedCoat",
+    "imagePath": "./img/smiles/twitch/RedCoat.png"
+  },
+  {
+    "name": "RedTeam",
+    "imagePath": "./img/smiles/twitch/RedTeam.png"
+  },
+  {
+    "name": "ResidentSleeper",
+    "imagePath": "./img/smiles/twitch/ResidentSleeper.png"
+  },
+  {
+    "name": "RitzMitz",
+    "imagePath": "./img/smiles/twitch/RitzMitz.png"
+  },
+  {
+    "name": "RlyTho",
+    "imagePath": "./img/smiles/twitch/RlyTho.png"
+  },
+  {
+    "name": "RuleFive",
+    "imagePath": "./img/smiles/twitch/RuleFive.png"
+  },
+  {
+    "name": "SMOrc",
+    "imagePath": "./img/smiles/twitch/SMOrc.png"
+  },
+  {
+    "name": "SOTahoy",
+    "imagePath": "./img/smiles/twitch/SOTahoy.png"
   }
 ]
