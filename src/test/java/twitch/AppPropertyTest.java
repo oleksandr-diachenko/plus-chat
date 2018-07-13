@@ -14,7 +14,7 @@ public class AppPropertyTest {
 
     @Test
     public void readPropertiesTest() {
-        Properties properties = AppProperty.getProperty(getResource("/property/simplePropertyOneObject"));
+        Properties properties = AppProperty.getProperty(getResource("/property/simplePropertyOneObject.properties"));
 
         String name = properties.getProperty("name");
 
