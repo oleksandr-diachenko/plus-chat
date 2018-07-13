@@ -20,7 +20,7 @@ import java.util.ResourceBundle;
 public class Main extends Application {
 
     static {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hhmmss");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
         System.setProperty("current.date", dateFormat.format(new Date()));
     }
 
