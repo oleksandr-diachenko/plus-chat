@@ -3,7 +3,7 @@ package twitch;
 import org.junit.Test;
 import chat.util.JSONParser;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 /**
  * @author Alexander Diachenko
@@ -13,7 +13,7 @@ public class JSONParserTest {
     @Test
     public void readJsonFileTest() {
         String jsonString = JSONParser.readFile(getResource("/json/simpleJsonOneObject.json"));
-        assertTrue(!jsonString.isEmpty());
+        assertEquals("{  \"name\": \"Alex\",  \"nick\": \"POSITIV\",  \"birthday\": 1989}", jsonString);
     }
 
     private String getResource(String path) {
