@@ -70,7 +70,6 @@ public class JSONUserRepository implements UserRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    exception.printStackTrace();
                 }
             }
         });
