@@ -1,0 +1,14 @@
+[
+  {
+    "name": "Noob",
+    "id": 0,
+    "exp": 0,
+    "imagePath": ""
+  },
+  {
+    "name": "Pro",
+    "id": 1,
+    "exp": 10,
+    "imagePath": ""
+  }
+]
