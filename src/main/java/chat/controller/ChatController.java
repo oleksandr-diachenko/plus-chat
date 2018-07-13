@@ -129,7 +129,6 @@ public class ChatController implements Observer {
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
         final TextFlow textFlow = new TextFlow();
-        textFlow.setId("user-message");
         for (String word : words) {
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
@@ -140,6 +139,7 @@ public class ChatController implements Observer {
                 textFlow.getChildren().add(label);
             } else {
                 Text text = new Text(word + " ");
+                text.setId("user-message");
                 text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
                 textFlow.getChildren().add(text);
             }
