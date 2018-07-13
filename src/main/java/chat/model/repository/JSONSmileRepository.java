@@ -30,7 +30,6 @@ public class JSONSmileRepository implements SmileRepository {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return new TreeSet<>();
     }

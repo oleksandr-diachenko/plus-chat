@@ -23,7 +23,6 @@ public class StringUtil {
             return new String(bytes, "UTF-8");
         } catch (UnsupportedEncodingException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return "";
     }

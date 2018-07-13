@@ -21,7 +21,6 @@ public class JSONParser {
             result = sb.toString();
         } catch (Exception exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return result;
     }

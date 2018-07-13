@@ -30,7 +30,6 @@ public class JSONRankRepository implements RankRepository {
             })));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return new TreeSet<>();
     }

@@ -34,7 +34,6 @@ public class JSONUserRepository implements UserRepository {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return new HashSet<>();
     }

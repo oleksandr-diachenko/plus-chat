@@ -52,7 +52,6 @@ public class ConfirmDialog {
             this.stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
     }
 

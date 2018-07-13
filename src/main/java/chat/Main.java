@@ -55,7 +55,6 @@ public class Main extends Application {
             primaryStage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
     }
 }

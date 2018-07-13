@@ -21,7 +21,6 @@ public class AppProperty {
             properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return properties;
     }

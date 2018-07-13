@@ -84,7 +84,6 @@ public class ChatController implements Observer {
                 bot.startBot();
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
-                exception.printStackTrace();
             }
         });
         thread.setDaemon(true);
@@ -169,7 +168,6 @@ public class ChatController implements Observer {
             return image;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return new Label();
     }
