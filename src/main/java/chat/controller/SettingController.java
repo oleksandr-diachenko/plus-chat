@@ -185,6 +185,8 @@ public class SettingController {
                 this.settings.setProperty("separator.font.color", ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
                 this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
                 AppProperty.setProperties("./settings/settings.properties", this.settings);
+                final ChatController chatController = (ChatController) this.chatRoot.getUserData();
+                chatController.setSettings(this.settings);
             }
         });
     }

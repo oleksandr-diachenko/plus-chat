@@ -13,4 +13,7 @@
     <ScrollPane fx:id="scrollPane" fitToWidth="true">
         <VBox fx:id="container"/>
     </ScrollPane>
+    <userData>
+        <fx:reference source="controller"/>
+    </userData>
 </VBox>

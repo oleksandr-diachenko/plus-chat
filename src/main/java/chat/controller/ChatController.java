@@ -180,4 +180,8 @@ public class ChatController implements Observer {
         text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
         return text;
     }
+
+    public void setSettings(final Properties settings) {
+        this.settings = settings;
+    }
 }
