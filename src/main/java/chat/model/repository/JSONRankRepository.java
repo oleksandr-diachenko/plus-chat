@@ -18,15 +18,17 @@ public class JSONRankRepository implements RankRepository {
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Rank> ranks;
+    private String path;
 
-    public JSONRankRepository() {
+    public JSONRankRepository(final String path) {
+        this.path = path;
         this.ranks = getRanks();
     }
 
     @Override
     public Set<Rank> getRanks() {
         try {
-            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/ranks.json"), new TypeReference<List<Rank>>() {
+            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
             })));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

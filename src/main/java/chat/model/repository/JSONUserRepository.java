@@ -22,15 +22,17 @@ public class JSONUserRepository implements UserRepository {
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
+    private String path;
 
-    public JSONUserRepository() {
+    public JSONUserRepository(final String path) {
+        this.path = path;
         this.users = getUsers();
     }
 
     @Override
     public Set<User> getUsers() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/users.json"), new TypeReference<List<User>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<User>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -65,7 +67,7 @@ public class JSONUserRepository implements UserRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream("data/users.json"), this.users);
+                    this.mapper.writeValue(new FileOutputStream(path), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     exception.printStackTrace();

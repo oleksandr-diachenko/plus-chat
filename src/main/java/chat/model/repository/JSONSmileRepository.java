@@ -18,15 +18,17 @@ public class JSONSmileRepository implements SmileRepository {
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Smile> smiles;
+    private String path;
 
-    public JSONSmileRepository() {
+    public JSONSmileRepository(final String path) {
+        this.path = path;
         this.smiles = getSmiles();
     }
 
     @Override
     public Set<Smile> getSmiles() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/smiles.json"), new TypeReference<List<Smile>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

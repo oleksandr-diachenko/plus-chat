@@ -54,10 +54,10 @@ public class ChatController implements Observer {
 
     @FXML
     public void initialize() {
-        this.rankRepository = new JSONRankRepository();
-        this.userRepository = new JSONUserRepository();
-        this.smileRepository = new JSONSmileRepository();
-        this.commandRepository = new JSONCommandRepository();
+        this.rankRepository = new JSONRankRepository("./data/ranks.json");
+        this.userRepository = new JSONUserRepository("./data/users.json");
+        this.smileRepository = new JSONSmileRepository("./data/smiles.json");
+        this.commandRepository = new JSONCommandRepository("./data/commands.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),

@@ -21,15 +21,17 @@ public class JSONCommandRepository implements CommandRepository {
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Command> commands;
+    private String path;
 
-    public JSONCommandRepository() {
+    public JSONCommandRepository(final String path) {
+        this.path = path;
         this.commands = getCommands();
     }
 
     @Override
     public Set<Command> getCommands() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile("./data/commands.json"), new TypeReference<List<Command>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
