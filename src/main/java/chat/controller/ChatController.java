@@ -10,6 +10,7 @@ import chat.observer.Observer;
 import chat.util.StringUtil;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -116,34 +117,35 @@ public class ChatController implements Observer {
         }
         final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
         final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
-        final TextFlow mess = getMessage(message, this.settings.getProperty("message.font.color"));
-        textFlow.getChildren().addAll(name, separator, mess);
+        textFlow.getChildren().addAll(name, separator);
+        final List<Node> nodes = getMessage(message, this.settings.getProperty("message.font.color"));
+        nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
         this.container.getChildren().add(this.messages.get(this.index));
         this.index++;
     }
 
-    private TextFlow getMessage(final String message, final String color) {
+    private List<Node> getMessage(final String message, final String color) {
+        final List<Node> nodes = new ArrayList<>();
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
-        final TextFlow textFlow = new TextFlow();
         for (String word : words) {
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
-                final Label label = new Label();
+                final Label image = new Label();
                 final Smile smile = smileByName.get();
                 final ImageView imageView = getSmile(smile);
-                label.setGraphic(imageView);
-                textFlow.getChildren().add(label);
+                image.setGraphic(imageView);
+                nodes.add(image);
             } else {
                 Text text = new Text(word + " ");
                 text.setId("user-message");
                 text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
-                textFlow.getChildren().add(text);
+                nodes.add(text);
             }
         }
-        return textFlow;
+        return nodes;
     }
 
     private ImageView getSmile(Smile smile) {
