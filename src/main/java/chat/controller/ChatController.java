@@ -106,6 +106,9 @@ public class ChatController implements Observer {
 
     @Override
     public void update(final String nick, final String message) {
+        //TODO добавить json со словами, которые будут считаться приватным сообщением
+        //TODO добавить ColorPicker для выбора цвета приватного сообщения
+        //TODO при нахождении приватного слова, менять цвет сообщения в соответствии с выбраным цветом
         final HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_LEFT);
         final Optional<User> userByName = userRepository.getUserByName(nick);
