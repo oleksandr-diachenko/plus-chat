@@ -62,6 +62,7 @@ public class SettingController {
         initNickColorPicker();
         initSeparatorColorPicker();
         initMessageColorPicker();
+        initDirectMessageColorPicker();
     }
 
     private void initBaseColorPicker() {
@@ -102,7 +103,8 @@ public class SettingController {
                     String.valueOf(new_val),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue())
+                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
+                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
         });
     }
@@ -136,7 +138,8 @@ public class SettingController {
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue())
+                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
+                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
         });
     }
@@ -150,7 +153,8 @@ public class SettingController {
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue())
+                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
+                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
         });
     }
@@ -164,6 +168,22 @@ public class SettingController {
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
+                    ColorUtil.getHexColor(new_val),
+                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
+            );
+        });
+    }
+
+    private void initDirectMessageColorPicker() {
+        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty("direct.message.font.color")));
+        this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            StyleUtil.setLabelStyle(
+                    this.chatRoot,
+                    this.settingsRoot,
+                    this.fontSize.getText(),
+                    ColorUtil.getHexColor(this.nickColorPicker.getValue()),
+                    ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
+                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val)
             );
         });
@@ -186,6 +206,7 @@ public class SettingController {
                 this.settings.setProperty("nick.font.color", ColorUtil.getHexColor(this.nickColorPicker.getValue()));
                 this.settings.setProperty("separator.font.color", ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
                 this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
+                this.settings.setProperty("direct.message.font.color", ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
                 AppProperty.setProperties("./settings/settings.properties", this.settings);
                 final ChatController chatController = (ChatController) this.chatRoot.getUserData();
                 chatController.setSettings(this.settings);

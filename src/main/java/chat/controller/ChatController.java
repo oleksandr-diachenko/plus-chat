@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.component.SettingsDialog;
+import chat.model.entity.Direct;
 import chat.model.entity.Smile;
 import chat.util.StyleUtil;
 import chat.model.entity.Rank;
@@ -50,6 +51,7 @@ public class ChatController implements Observer {
     private UserRepository userRepository;
     private CommandRepository commandRepository;
     private SmileRepository smileRepository;
+    private DirectRepository directRepository;
     private int index = 0;
 
     @FXML
@@ -58,6 +60,7 @@ public class ChatController implements Observer {
         this.userRepository = new JSONUserRepository("./data/users.json");
         this.smileRepository = new JSONSmileRepository("./data/smiles.json");
         this.commandRepository = new JSONCommandRepository("./data/commands.json");
+        this.directRepository = new JSONDirectRepository("./data/directs.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),
@@ -106,9 +109,6 @@ public class ChatController implements Observer {
 
     @Override
     public void update(final String nick, final String message) {
-        //TODO добавить json со словами, которые будут считаться приватным сообщением
-        //TODO добавить ColorPicker для выбора цвета приватного сообщения
-        //TODO при нахождении приватного слова, менять цвет сообщения в соответствии с выбраным цветом
         final HBox hBox = new HBox();
         hBox.setAlignment(Pos.TOP_LEFT);
         final Optional<User> userByName = userRepository.getUserByName(nick);
@@ -121,7 +121,7 @@ public class ChatController implements Observer {
         final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
         final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
         textFlow.getChildren().addAll(name, separator);
-        final List<Node> nodes = getMessage(message, this.settings.getProperty("message.font.color"));
+        final List<Node> nodes = getMessage(message, this.settings.getProperty("message.font.color"), this.settings.getProperty("direct.message.font.color"));
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
@@ -129,7 +129,7 @@ public class ChatController implements Observer {
         this.index++;
     }
 
-    private List<Node> getMessage(final String message, final String color) {
+    private List<Node> getMessage(final String message, final String color, final String directColor) {
         final List<Node> nodes = new ArrayList<>();
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
@@ -142,13 +142,30 @@ public class ChatController implements Observer {
                 image.setGraphic(imageView);
                 nodes.add(image);
             } else {
-                Text text = new Text(word + " ");
-                text.setId("user-message");
-                text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+                final Text text = new Text(word + " ");
+                if (isDirect(words)) {
+                    text.setId("user-direct-message");
+                    text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), directColor));
+                } else {
+                    text.setId("user-message");
+                    text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+                }
                 nodes.add(text);
             }
         }
         return nodes;
+    }
+
+    private boolean isDirect(final String[] words) {
+        boolean isDirect = false;
+        for (String word : words) {
+            final Optional<Direct> directByWord = directRepository.getDirectByWord(word);
+            if (directByWord.isPresent()) {
+                isDirect = true;
+                break;
+            }
+        }
+        return isDirect;
     }
 
     private ImageView getSmile(Smile smile) {

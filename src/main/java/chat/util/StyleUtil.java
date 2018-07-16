@@ -23,13 +23,15 @@ public class StyleUtil {
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setLabelStyle(final Node chatRoot, final Node settingRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor) {
+    public static void setLabelStyle(final Node chatRoot, final Node settingRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor, final String directMessageColor) {
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
         final Set<Node> messages = chatRoot.lookupAll("#user-message");
+        final Set<Node> directMessages = chatRoot.lookupAll("#user-direct-message");
         names.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, nickColor)));
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
+        directMessages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, directMessageColor)));
 
         if (settingRoot != null) {
             final Set<Node> labels = settingRoot.lookupAll(".label");
@@ -48,7 +50,8 @@ public class StyleUtil {
                 settings.getProperty("font.size"),
                 settings.getProperty("nick.font.color"),
                 settings.getProperty("separator.font.color"),
-                settings.getProperty("message.font.color")
+                settings.getProperty("message.font.color"),
+                settings.getProperty("direct.message.font.color")
         );
         StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
     }
