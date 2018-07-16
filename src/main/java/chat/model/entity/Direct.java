@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 public class Direct {
 
-   private String word;
+    private String word;
 
     @Override
     public boolean equals(Object o) {

@@ -1,7 +1,7 @@
 package twitch;
 
-import org.junit.Test;
 import chat.util.TimeUtil;
+import org.junit.Test;
 
 import java.util.Date;
 

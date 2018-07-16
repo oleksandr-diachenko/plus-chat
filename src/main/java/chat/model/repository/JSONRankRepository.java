@@ -1,13 +1,16 @@
 package chat.model.repository;
 
 import chat.model.entity.Rank;
+import chat.util.JSONParser;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import chat.util.JSONParser;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Alexander Diachenko.

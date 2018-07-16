@@ -2,15 +2,18 @@ package chat.controller;
 
 import chat.Main;
 import chat.component.ConfirmDialog;
-import chat.util.StyleUtil;
+import chat.util.AppProperty;
 import chat.util.ColorUtil;
+import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.ColorPicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import chat.util.AppProperty;
 import javafx.stage.WindowEvent;
 
 import java.util.*;

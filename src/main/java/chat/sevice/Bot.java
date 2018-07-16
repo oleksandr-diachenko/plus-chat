@@ -1,19 +1,21 @@
 package chat.sevice;
 
 import chat.controller.ChatController;
-import chat.observer.Observer;
-import chat.observer.Subject;
-import javafx.application.Platform;
 import chat.model.entity.Command;
 import chat.model.entity.Rank;
 import chat.model.entity.User;
-import chat.model.repository.*;
+import chat.model.repository.CommandRepository;
+import chat.model.repository.RankRepository;
+import chat.model.repository.UserRepository;
+import chat.observer.Observer;
+import chat.observer.Subject;
+import chat.util.TimeUtil;
+import javafx.application.Platform;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.ConnectEvent;
 import org.pircbotx.hooks.events.DisconnectEvent;
 import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
-import chat.util.TimeUtil;
 
 import java.util.*;
 

@@ -1,13 +1,13 @@
 package chat;
 
+import chat.util.AppProperty;
+import chat.util.ResourceBundleControl;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import chat.util.AppProperty;
-import chat.util.ResourceBundleControl;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;

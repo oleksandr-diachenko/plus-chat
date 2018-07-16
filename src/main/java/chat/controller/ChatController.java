@@ -2,13 +2,15 @@ package chat.controller;
 
 import chat.component.SettingsDialog;
 import chat.model.entity.Direct;
-import chat.model.entity.Smile;
-import chat.util.StyleUtil;
 import chat.model.entity.Rank;
+import chat.model.entity.Smile;
 import chat.model.entity.User;
 import chat.model.repository.*;
 import chat.observer.Observer;
+import chat.sevice.Bot;
+import chat.util.AppProperty;
 import chat.util.StringUtil;
+import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -25,11 +27,13 @@ import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
-import chat.sevice.Bot;
-import chat.util.AppProperty;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.

@@ -1,10 +1,10 @@
 package chat.model.repository;
 
 import chat.model.entity.User;
+import chat.util.JSONParser;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import chat.util.JSONParser;
 
 import java.io.FileOutputStream;
 import java.io.IOException;

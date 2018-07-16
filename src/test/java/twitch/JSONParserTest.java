@@ -1,7 +1,7 @@
 package twitch;
 
-import org.junit.Test;
 import chat.util.JSONParser;
+import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;
 
