@@ -1,7 +1,6 @@
 package chat.model.repository;
 
 import chat.model.entity.Direct;
-import chat.model.entity.Smile;
 import chat.util.JSONParser;
 import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -29,7 +28,7 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getDirects() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
