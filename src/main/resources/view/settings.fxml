@@ -102,32 +102,32 @@
                 <opaqueInsets>
                     <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
                 </opaqueInsets>
-                <Label text="%nick-color" GridPane.rowIndex="0">
+                <Label text="%nick-color" GridPane.rowIndex="2">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Label text="%separator-color" GridPane.rowIndex="1">
+                <Label text="%separator-color" GridPane.rowIndex="3">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Label text="%message-color" GridPane.rowIndex="2">
+                <Label text="%message-color" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Label text="%direct-message-color" GridPane.rowIndex="3">
+                <Label text="%direct-message-color" GridPane.rowIndex="5">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Label text="%base-color" GridPane.rowIndex="4">
+                <Label text="%base-color" GridPane.rowIndex="0">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Label text="%background-color" GridPane.rowIndex="5">
+                <Label text="%background-color" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="100.0"/>
                     </GridPane.margin>
