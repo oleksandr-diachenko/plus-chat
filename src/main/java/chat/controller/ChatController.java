@@ -23,6 +23,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
@@ -30,10 +31,7 @@ import org.pircbotx.exception.IrcException;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -147,7 +145,7 @@ public class ChatController implements Observer {
                 nodes.add(image);
             } else {
                 final Text text = new Text(word + " ");
-                if (isDirect(words)) {
+                if (isDirect(message)) {
                     text.setId("user-direct-message");
                     text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), directColor));
                 } else {
@@ -160,16 +158,15 @@ public class ChatController implements Observer {
         return nodes;
     }
 
-    private boolean isDirect(final String[] words) {
-        boolean isDirect = false;
-        for (String word : words) {
-            final Optional<Direct> directByWord = directRepository.getDirectByWord(word);
-            if (directByWord.isPresent()) {
-                isDirect = true;
-                break;
+    private boolean isDirect(final String message) {
+        final Set<Direct> directs = directRepository.getDirects();
+        for (Direct direct : directs) {
+            final String word = direct.getWord();
+            if(StringUtils.containsIgnoreCase(message, word)) {
+                return true;
             }
         }
-        return isDirect;
+        return false;
     }
 
     private ImageView getSmile(Smile smile) {
