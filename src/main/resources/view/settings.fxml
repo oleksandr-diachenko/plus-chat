@@ -6,7 +6,7 @@
 <VBox fx:id="settingsRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.SettingController">
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
-    <TabPane tabClosingPolicy="UNAVAILABLE">
+    <TabPane fx:id="settingsTab" tabClosingPolicy="UNAVAILABLE">
         <Tab text="%settings.tab.general">
             <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
                 <columnConstraints>
