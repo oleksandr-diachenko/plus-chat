@@ -26,7 +26,7 @@ public class StyleUtil {
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setLabelStyle(final Node chatRoot, final Node settingRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor, final String directMessageColor) {
+    public static void setMessageStyle(final Node chatRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor, final String directMessageColor) {
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
         final Set<Node> messages = chatRoot.lookupAll("#user-message");
@@ -35,11 +35,11 @@ public class StyleUtil {
         separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
         messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
         directMessages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, directMessageColor)));
+    }
 
-        if (settingRoot != null) {
-            final Set<Node> labels = settingRoot.lookupAll(".label");
-            labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(nickColor)));
-        }
+    public static void setLabelStyle(final Node root, final String color) {
+        final Set<Node> labels = root.lookupAll(".label");
+        labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(color)));
     }
 
     public static void setRootStyle(final List<Node> roots, final String baseColor, final String backgroundColor) {
@@ -49,7 +49,7 @@ public class StyleUtil {
     }
 
     public static void reverseStyle(final Properties settings, final Node chatRoot) {
-        StyleUtil.setLabelStyle(chatRoot, null,
+        StyleUtil.setMessageStyle(chatRoot,
                 settings.getProperty("font.size"),
                 settings.getProperty("nick.font.color"),
                 settings.getProperty("separator.font.color"),

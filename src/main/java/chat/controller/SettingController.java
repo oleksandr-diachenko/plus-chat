@@ -100,9 +100,9 @@ public class SettingController {
         this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
-            StyleUtil.setLabelStyle(
+            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+            StyleUtil.setMessageStyle(
                     this.chatRoot,
-                    this.settingsRoot,
                     String.valueOf(new_val),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
@@ -135,60 +135,64 @@ public class SettingController {
     private void initNickColorPicker() {
         this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty("nick.font.color")));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(
+            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+            StyleUtil.setMessageStyle(
                     this.chatRoot,
-                    this.settingsRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
                     ColorUtil.getHexColor(this.messageColorPicker.getValue()),
                     ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
+
         });
     }
 
     private void initSeparatorColorPicker() {
         this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty("separator.font.color")));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(
+            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+            StyleUtil.setMessageStyle(
                     this.chatRoot,
-                    this.settingsRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.messageColorPicker.getValue()),
                     ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
+
         });
     }
 
     private void initMessageColorPicker() {
         this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty("message.font.color")));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(
+            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+            StyleUtil.setMessageStyle(
                     this.chatRoot,
-                    this.settingsRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
             );
+
         });
     }
 
     private void initDirectMessageColorPicker() {
         this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty("direct.message.font.color")));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(
+            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+            StyleUtil.setMessageStyle(
                     this.chatRoot,
-                    this.settingsRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
                     ColorUtil.getHexColor(this.messageColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val)
             );
+
         });
     }
 

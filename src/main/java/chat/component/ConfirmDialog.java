@@ -6,7 +6,6 @@ import chat.util.ResourceBundleControl;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
@@ -14,10 +13,7 @@ import javafx.stage.Stage;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
-import java.util.Locale;
-import java.util.Properties;
-import java.util.ResourceBundle;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -38,8 +34,8 @@ public class ConfirmDialog {
             final Region root = getRoot(bundle);
             this.controller = (ConfirmController) root.getUserData();
             final UndecoratorScene undecorator = getScene(settings, root);
-            setRootStyles(baseColor, backgroundColor, root);
-            setLabelStyles(fontColor, root);
+            StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor));
+            StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
             this.stage.initOwner(ownerStage.getScene().getWindow());
@@ -47,17 +43,6 @@ public class ConfirmDialog {
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
-    }
-
-    private void setLabelStyles(Color fontColor, Region root) {
-        final Set<Node> labels = root.lookupAll(".label");
-        for (Node label : labels) {
-            label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
-        }
-    }
-
-    private void setRootStyles(Color baseColor, Color backgroundColor, Region root) {
-        root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
     }
 
     private UndecoratorScene getScene(final Properties settings, final Region root) {
