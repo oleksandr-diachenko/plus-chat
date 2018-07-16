@@ -20,7 +20,7 @@
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
     <TabPane tabClosingPolicy="UNAVAILABLE">
         <Tab text="General">
-            <GridPane prefHeight="365.0" prefWidth="600.0">
+            <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
@@ -71,7 +71,7 @@
             </GridPane>
         </Tab>
         <Tab text="Font">
-            <GridPane prefHeight="365.0" prefWidth="600.0">
+            <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
@@ -98,7 +98,7 @@
             </GridPane>
         </Tab>
         <Tab text="Color">
-            <GridPane prefHeight="365.0" prefWidth="600.0">
+            <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
                 <columnConstraints>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
                     <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
@@ -134,8 +134,6 @@
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-
-
                 <Label text="%base-color" GridPane.rowIndex="4">
                     <GridPane.margin>
                         <Insets left="100.0"/>
