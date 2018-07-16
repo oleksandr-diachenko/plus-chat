@@ -30,26 +30,37 @@ public class SettingsDialog {
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        final FXMLLoader loader = new FXMLLoader();
-        loader.setResources(bundle);
         try {
-            final Region root = loader.load(getClass().getResourceAsStream("/view/settings.fxml"));
-            stage.setOnShown(event -> {
-                root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
-                final Set<Node> labels = root.lookupAll(".label");
-                for (Node label : labels) {
-                    label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));
-                }
-            });
-
-            stage.setOnCloseRequest(event -> StyleUtil.reverseStyle(settings, ownerRoot));
-            final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-            undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
+            final Region root = getRoot(bundle);
+            final UndecoratorScene undecorator = getScene(stage, settings, root);
+            stageEvents(ownerRoot, stage, settings, root);
+            root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
             stage.setScene(undecorator);
             stage.initOwner(owner.getScene().getWindow());
             stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
+    }
+
+    private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
+        final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
+        return undecorator;
+    }
+
+    private void stageEvents(final Node ownerRoot, final Stage stage, final Properties settings, final Region root) {
+        stage.setOnShown(event -> {
+            final Set<Node> labels = root.lookupAll(".label");
+            for (Node label : labels) {
+                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));
+            }
+        });
+
+        stage.setOnCloseRequest(event -> StyleUtil.reverseStyle(settings, ownerRoot));
+    }
+
+    private Region getRoot(final ResourceBundle bundle) throws IOException {
+        return FXMLLoader.load(getClass().getResource("/view/settings.fxml"), bundle);
     }
 }

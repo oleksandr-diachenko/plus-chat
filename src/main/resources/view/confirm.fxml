@@ -35,4 +35,7 @@
         </Label>
         <Label fx:id="question" prefHeight="53.0" prefWidth="176.0" GridPane.columnIndex="1"/>
     </GridPane>
+    <userData>
+        <fx:reference source="controller"/>
+    </userData>
 </VBox>

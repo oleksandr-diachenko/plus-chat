@@ -34,18 +34,12 @@ public class ConfirmDialog {
         this.stage.setResizable(false);
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
-        final FXMLLoader fxmlLoader = new FXMLLoader();
         try {
-            fxmlLoader.setResources(bundle);
-            final Region root = fxmlLoader.load(ConfirmDialog.class.getResource("/view/confirm.fxml").openStream());
-            this.controller = fxmlLoader.getController();
-            final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
-            undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
-            root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
-            final Set<Node> labels = root.lookupAll(".label");
-            for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
-            }
+            final Region root = getRoot(bundle);
+            this.controller = (ConfirmController) root.getUserData();
+            final UndecoratorScene undecorator = getScene(settings, root);
+            setRootStyles(baseColor, backgroundColor, root);
+            setLabelStyles(fontColor, root);
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
             this.stage.initOwner(ownerStage.getScene().getWindow());
@@ -53,6 +47,27 @@ public class ConfirmDialog {
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
+    }
+
+    private void setLabelStyles(Color fontColor, Region root) {
+        final Set<Node> labels = root.lookupAll(".label");
+        for (Node label : labels) {
+            label.setStyle(StyleUtil.getLabelStyle(ColorUtil.getHexColor(fontColor)));
+        }
+    }
+
+    private void setRootStyles(Color baseColor, Color backgroundColor, Region root) {
+        root.setStyle(StyleUtil.getRootStyle(ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor)));
+    }
+
+    private UndecoratorScene getScene(final Properties settings, final Region root) {
+        final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
+        return undecorator;
+    }
+
+    private Region getRoot(final ResourceBundle bundle) throws IOException {
+        return FXMLLoader.load(getClass().getResource("/view/confirm.fxml"), bundle);
     }
 
     public Stage getStage() {

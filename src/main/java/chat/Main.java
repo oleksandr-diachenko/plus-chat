@@ -41,20 +41,33 @@ public class Main extends Application {
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
-            final Region root = FXMLLoader.load(getClass().getResource("/view/chat.fxml"), bundle);
-            final UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
-            undecorator.setFadeInTransition();
-            undecorator.setBackgroundOpacity(0);
-            undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/chat.css");
-            primaryStage.setOnCloseRequest(we -> {
-                we.consume();
-                undecorator.setFadeOutTransition();
-            });
+            final Region root = getRoot(bundle);
+            final UndecoratorScene undecorator = getScene(primaryStage, settings, root);
+            stageEvents(primaryStage, undecorator);
             primaryStage.setScene(undecorator);
             primaryStage.setTitle("(+) chat");
             primaryStage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
+    }
+
+    private UndecoratorScene getScene(final Stage primaryStage, final Properties settings, final Region root) {
+        final UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
+        undecorator.setFadeInTransition();
+        undecorator.setBackgroundOpacity(0);
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/chat.css");
+        return undecorator;
+    }
+
+    private void stageEvents(final Stage primaryStage, final UndecoratorScene undecorator) {
+        primaryStage.setOnCloseRequest(we -> {
+            we.consume();
+            undecorator.setFadeOutTransition();
+        });
+    }
+
+    private Region getRoot(final ResourceBundle bundle) throws IOException {
+        return FXMLLoader.load(getClass().getResource("/view/chat.fxml"), bundle);
     }
 }
