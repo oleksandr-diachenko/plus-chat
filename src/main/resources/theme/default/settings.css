@@ -8,6 +8,7 @@
 
 #settingsTab .tab-label {
     -fx-font-size: 17px;
+    -fx-text-fill: #819FF7;
 }
 
 #confirm {
