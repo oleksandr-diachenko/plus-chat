@@ -123,7 +123,7 @@ public class ChatController implements Observer {
         final Text name = getText(nick, "user-name", this.settings.getProperty("nick.font.color"));
         final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
         textFlow.getChildren().addAll(name, separator);
-        final List<Node> nodes = getMessage(message, this.settings.getProperty("message.font.color"), this.settings.getProperty("direct.message.font.color"));
+        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty("message.font.color"), this.settings.getProperty("direct.message.font.color"));
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         hBox.getChildren().add(textFlow);
         this.messages.add(hBox);
@@ -131,31 +131,41 @@ public class ChatController implements Observer {
         this.index++;
     }
 
-    private List<Node> getMessage(final String message, final String color, final String directColor) {
+    private List<Node> getMessageNodes(final String message, final String color, final String directColor) {
         final List<Node> nodes = new ArrayList<>();
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
         for (String word : words) {
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
-                final Label image = new Label();
                 final Smile smile = smileByName.get();
-                final ImageView imageView = getSmile(smile);
-                image.setGraphic(imageView);
+                final Label image = getImage(smile);
                 nodes.add(image);
             } else {
-                final Text text = new Text(word + " ");
-                if (isDirect(message)) {
-                    text.setId("user-direct-message");
-                    text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), directColor));
-                } else {
-                    text.setId("user-message");
-                    text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
-                }
+                final Text text = getText(message, color, directColor, word);
                 nodes.add(text);
             }
         }
         return nodes;
+    }
+
+    private Text getText(final String message, final String color, final String directColor, final String word) {
+        final Text text = new Text(word + " ");
+        if (isDirect(message)) {
+            text.setId("user-direct-message");
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), directColor));
+        } else {
+            text.setId("user-message");
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+        }
+        return text;
+    }
+
+    private Label getImage(final Smile smile) {
+        final Label image = new Label();
+        final ImageView imageView = getSmile(smile);
+        image.setGraphic(imageView);
+        return image;
     }
 
     private boolean isDirect(final String message) {
@@ -169,7 +179,7 @@ public class ChatController implements Observer {
         return false;
     }
 
-    private ImageView getSmile(Smile smile) {
+    private ImageView getSmile(final Smile smile) {
         try (final FileInputStream fis = new FileInputStream(smile.getImagePath())) {
             return new ImageView(new Image(fis));
         } catch (IOException exception) {
