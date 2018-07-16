@@ -21,6 +21,8 @@ import java.util.*;
 public class SettingController {
 
     @FXML
+    private ColorPicker directMessageColorPicker;
+    @FXML
     private ColorPicker baseColorPicker;
     @FXML
     private Node settingsRoot;

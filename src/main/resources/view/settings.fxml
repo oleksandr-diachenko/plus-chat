@@ -32,6 +32,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
         </rowConstraints>
         <opaqueInsets>
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
@@ -63,6 +64,11 @@
             </GridPane.margin>
         </Label>
         <Label text="%message-color" GridPane.rowIndex="8">
+            <GridPane.margin>
+                <Insets left="100.0"/>
+            </GridPane.margin>
+        </Label>
+        <Label text="%direct-message-color" GridPane.rowIndex="9">
             <GridPane.margin>
                 <Insets left="100.0"/>
             </GridPane.margin>
@@ -133,8 +139,13 @@
                 <Insets left="70.0"/>
             </GridPane.margin>
         </ColorPicker>
+        <ColorPicker fx:id="directMessageColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="9">
+            <GridPane.margin>
+                <Insets left="70.0"/>
+            </GridPane.margin>
+        </ColorPicker>
         <HBox id="buttons-hbox" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="40.0"
-              GridPane.columnIndex="1" GridPane.rowIndex="9">
+              GridPane.columnIndex="1" GridPane.rowIndex="10">
             <GridPane.margin>
                 <Insets/>
             </GridPane.margin>
