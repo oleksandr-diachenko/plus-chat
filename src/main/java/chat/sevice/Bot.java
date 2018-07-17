@@ -99,8 +99,12 @@ public class Bot extends ListenerAdapter implements Subject {
         final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
+            String customName = nick;
+            if(user.hasCustomName()) {
+                customName = user.getCustomName();
+            }
             final Rank rank = this.rankRepository.getRankByExp(user.getExp());
-            sendMessage(nick + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)");
+            sendMessage(customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)");
         }
     }
 
