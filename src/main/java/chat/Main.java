@@ -34,10 +34,10 @@ public class Main extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
-        stage = primaryStage;
-        primaryStage.setAlwaysOnTop(true);
-        primaryStage.getIcons().add(new Image("/img/logo.png"));
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
+        stage = primaryStage;
+        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty("root.always.on.top")));
+        primaryStage.getIcons().add(new Image("/img/logo.png"));
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {

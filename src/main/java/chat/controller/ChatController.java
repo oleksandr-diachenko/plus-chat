@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.Main;
 import chat.component.SettingsDialog;
 import chat.model.entity.Direct;
 import chat.model.entity.Rank;
@@ -58,6 +59,7 @@ public class ChatController implements Observer {
     private SmileRepository smileRepository;
     private DirectRepository directRepository;
     private int index = 0;
+    private boolean isOnTop;
 
     @FXML
     public void initialize() {
@@ -67,6 +69,7 @@ public class ChatController implements Observer {
         this.commandRepository = new JSONCommandRepository("./data/commands.json");
         this.directRepository = new JSONDirectRepository("./data/directs.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
+        this.isOnTop = Boolean.parseBoolean(this.settings.getProperty("root.always.on.top"));
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),
                 this.settings.getProperty("root.background.color")
@@ -174,7 +177,7 @@ public class ChatController implements Observer {
     }
 
     private boolean isDirect(final String message) {
-        final Set<Direct> directs = directRepository.getDirects();
+        final Set<Direct> directs = this.directRepository.getDirects();
         for (Direct direct : directs) {
             final String word = direct.getWord();
             if(StringUtils.containsIgnoreCase(message, word)) {
@@ -196,7 +199,7 @@ public class ChatController implements Observer {
 
     private Label getRankImage(final User user) {
         final Label image = new Label();
-        final Rank rank = rankRepository.getRankByExp(user.getExp());
+        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
         image.setId("rank-image");
         try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
             final ImageView imageView = new ImageView(new Image(fis));
@@ -222,6 +225,14 @@ public class ChatController implements Observer {
     }
 
     public Button getSetting() {
-        return setting;
+        return this.setting;
+    }
+
+    public void onTopOnAction() {
+        this.isOnTop = !this.isOnTop;
+        final Stage chatRoot = Main.stage;
+        chatRoot.setAlwaysOnTop(this.isOnTop);
+        this.settings.setProperty("root.always.on.top", String.valueOf(this.isOnTop));
+        AppProperty.setProperties("./settings/settings.properties", this.settings);
     }
 }
