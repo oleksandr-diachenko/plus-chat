@@ -14,29 +14,35 @@ import java.util.Objects;
 public class User {
 
     private String name;
+    private String customName;
     private String firstMessageDate;
     private String lastMessageDate;
     private int exp;
 
+    public boolean hasCustomName(){
+        return customName != null;
+    }
+
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        User user = (User) o;
-        return Objects.equals(name, user.name);
+        final User user = (User) o;
+        return Objects.equals(this.name, user.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(this.name);
     }
 
     @Override
     public String toString() {
         return "User{" +
                 "name='" + this.name + '\'' +
-                ", firstMessageDate=" + this.firstMessageDate +
-                ", lastMessageDate=" + this.lastMessageDate +
+                ", customName='" + this.customName + '\'' +
+                ", firstMessageDate='" + this.firstMessageDate + '\'' +
+                ", lastMessageDate='" + this.lastMessageDate + '\'' +
                 ", exp=" + this.exp +
                 '}';
     }
