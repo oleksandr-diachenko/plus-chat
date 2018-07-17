@@ -44,6 +44,8 @@ public class ChatController implements Observer {
 
     public static PircBotX bot;
     @FXML
+    private Button onTop;
+    @FXML
     private Button setting;
     @FXML
     private VBox container;
@@ -70,6 +72,7 @@ public class ChatController implements Observer {
         this.directRepository = new JSONDirectRepository("./data/directs.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.isOnTop = Boolean.parseBoolean(this.settings.getProperty("root.always.on.top"));
+        onTopInit();
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty("root.base.color"),
                 this.settings.getProperty("root.background.color")
@@ -77,6 +80,25 @@ public class ChatController implements Observer {
         this.scrollPane.prefHeightProperty().bind(this.root.heightProperty());
         this.scrollPane.vvalueProperty().bind(this.container.heightProperty());
         startBot();
+    }
+
+    private void onTopInit() {
+        setOnTopGraphic();
+    }
+
+    private void setOnTopGraphic() {
+        String name = "/img/pin-enabled.png";
+        if(!isOnTop) {
+            name = "/img/pin-disabled.png";
+        }
+        final String path = getClass().getResource(name).getPath();
+        final ImageView imageView = getImageView(path);
+        imageView.setFitWidth(22);
+        imageView.setFitHeight(22);
+        onTop.setGraphic(imageView);
+        onTop.setStyle("-fx-background-color: transparent;" +
+                "    -fx-background-repeat: no-repeat;" +
+                "    -fx-background-position: center;");
     }
 
     private void startBot() {
@@ -171,7 +193,7 @@ public class ChatController implements Observer {
 
     private Label getImage(final Smile smile) {
         final Label image = new Label();
-        final ImageView imageView = getSmile(smile);
+        final ImageView imageView = getImageView(smile.getImagePath());
         image.setGraphic(imageView);
         return image;
     }
@@ -180,15 +202,15 @@ public class ChatController implements Observer {
         final Set<Direct> directs = this.directRepository.getDirects();
         for (Direct direct : directs) {
             final String word = direct.getWord();
-            if(StringUtils.containsIgnoreCase(message, word)) {
+            if (StringUtils.containsIgnoreCase(message, word)) {
                 return true;
             }
         }
         return false;
     }
 
-    private ImageView getSmile(final Smile smile) {
-        try (final FileInputStream fis = new FileInputStream(smile.getImagePath())) {
+    private ImageView getImageView(final String path) {
+        try (final FileInputStream fis = new FileInputStream(path)) {
             return new ImageView(new Image(fis));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -232,6 +254,7 @@ public class ChatController implements Observer {
         this.isOnTop = !this.isOnTop;
         final Stage chatRoot = Main.stage;
         chatRoot.setAlwaysOnTop(this.isOnTop);
+        setOnTopGraphic();
         this.settings.setProperty("root.always.on.top", String.valueOf(this.isOnTop));
         AppProperty.setProperties("./settings/settings.properties", this.settings);
     }
