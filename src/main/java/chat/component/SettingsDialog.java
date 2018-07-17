@@ -1,5 +1,6 @@
 package chat.component;
 
+import chat.controller.ChatController;
 import chat.util.AppProperty;
 import chat.util.ResourceBundleControl;
 import chat.util.StyleUtil;
@@ -57,7 +58,11 @@ public class SettingsDialog {
             }
         });
 
-        stage.setOnCloseRequest(event -> StyleUtil.reverseStyle(settings, ownerRoot));
+        stage.setOnCloseRequest(event -> {
+            final ChatController chatController = (ChatController) ownerRoot.getUserData();
+            chatController.getSetting().setDisable(false);
+            StyleUtil.reverseStyle(settings, ownerRoot);
+        });
     }
 
     private Region getRoot(final ResourceBundle bundle) throws IOException {

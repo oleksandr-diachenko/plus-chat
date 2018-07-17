@@ -14,6 +14,7 @@ import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -41,6 +42,8 @@ public class ChatController implements Observer {
     private final static Logger logger = Logger.getLogger(ChatController.class);
 
     public static PircBotX bot;
+    @FXML
+    private Button setting;
     @FXML
     private VBox container;
     @FXML
@@ -107,6 +110,8 @@ public class ChatController implements Observer {
     private void openSettingsStage() {
         final SettingsDialog dialog = new SettingsDialog();
         dialog.openDialog(getStage(), this.root);
+        this.setting.setDisable(true);
+
     }
 
     @Override
@@ -214,5 +219,9 @@ public class ChatController implements Observer {
 
     public void setSettings(final Properties settings) {
         this.settings = settings;
+    }
+
+    public Button getSetting() {
+        return setting;
     }
 }

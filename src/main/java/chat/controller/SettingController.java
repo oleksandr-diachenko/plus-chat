@@ -117,7 +117,7 @@ public class SettingController {
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
         this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            Main.stage.setOpacity((Double) new_val / 100);
+            getOwnerStage().setOpacity((Double) new_val / 100);
             this.transparencyValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
@@ -239,8 +239,12 @@ public class SettingController {
     }
 
     private Node getChatRoot() {
-        final Stage owner = Main.stage;
+        final Stage owner = getOwnerStage();
         return owner.getScene().lookup("#root");
+    }
+
+    private Stage getOwnerStage() {
+        return Main.stage;
     }
 
     public Node getRoot() {
