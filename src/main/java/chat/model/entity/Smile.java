@@ -17,22 +17,22 @@ public class Smile {
     private String imagePath;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Smile smile = (Smile) o;
-        return Objects.equals(name, smile.name);
+        final Smile smile = (Smile) o;
+        return Objects.equals(this.name, smile.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(this.name);
     }
 
     @Override
     public String toString() {
         return "Smile{" +
-                "name='" + name + '\'' +
+                "name='" + this.name + '\'' +
                 '}';
     }
 }

@@ -19,16 +19,16 @@ public class Rank implements Comparable<Rank> {
     private String imagePath;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Rank rank = (Rank) o;
-        return Objects.equals(name, rank.name);
+        final Rank rank = (Rank) o;
+        return Objects.equals(this.name, rank.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(name);
+        return Objects.hash(this.name);
     }
 
     @Override
@@ -41,7 +41,7 @@ public class Rank implements Comparable<Rank> {
     }
 
     @Override
-    public int compareTo(Rank rank) {
+    public int compareTo(final Rank rank) {
         return Integer.compare(this.getId(), rank.getId());
     }
 }

@@ -16,16 +16,16 @@ public class Direct {
     private String word;
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Direct direct = (Direct) o;
-        return Objects.equals(word, direct.word);
+        final Direct direct = (Direct) o;
+        return Objects.equals(this.word, direct.getWord());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(word);
+        return Objects.hash(this.word);
     }
 
     @Override
