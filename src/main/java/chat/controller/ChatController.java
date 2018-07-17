@@ -138,8 +138,8 @@ public class ChatController implements Observer {
 
     @Override
     public void update(final String nick, final String message) {
-        final HBox hBox = new HBox();
-        hBox.setAlignment(Pos.TOP_LEFT);
+        final HBox messageBox = new HBox();
+        messageBox.setId("messageBox");
         final Optional<User> userByName = userRepository.getUserByName(nick);
         final TextFlow textFlow = new TextFlow();
         String customName = nick;
@@ -156,8 +156,8 @@ public class ChatController implements Observer {
         textFlow.getChildren().addAll(name, separator);
         final List<Node> nodes = getMessageNodes(message, this.settings.getProperty("message.font.color"), this.settings.getProperty("direct.message.font.color"));
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
-        hBox.getChildren().add(textFlow);
-        this.messages.add(hBox);
+        messageBox.getChildren().add(textFlow);
+        this.messages.add(messageBox);
         this.container.getChildren().add(this.messages.get(this.index));
         this.index++;
     }
