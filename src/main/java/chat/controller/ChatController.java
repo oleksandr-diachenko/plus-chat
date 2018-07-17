@@ -88,13 +88,13 @@ public class ChatController implements Observer {
 
     private void setOnTopGraphic() {
         String name = "/img/pin-enabled.png";
-        if(!isOnTop) {
+        if (!isOnTop) {
             name = "/img/pin-disabled.png";
         }
         final String path = getClass().getResource(name).getPath();
         final ImageView imageView = getImageView(path);
-        imageView.setFitWidth(22);
-        imageView.setFitHeight(22);
+        imageView.setFitWidth(15);
+        imageView.setFitHeight(15);
         onTop.setGraphic(imageView);
     }
 
