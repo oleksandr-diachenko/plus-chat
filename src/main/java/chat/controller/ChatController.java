@@ -96,9 +96,6 @@ public class ChatController implements Observer {
         imageView.setFitWidth(22);
         imageView.setFitHeight(22);
         onTop.setGraphic(imageView);
-        onTop.setStyle("-fx-background-color: transparent;" +
-                "    -fx-background-repeat: no-repeat;" +
-                "    -fx-background-position: center;");
     }
 
     private void startBot() {
