@@ -13,7 +13,6 @@ import chat.util.AppProperty;
 import chat.util.StringUtil;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -91,8 +90,7 @@ public class ChatController implements Observer {
         if (!isOnTop) {
             name = "/img/pin-disabled.png";
         }
-        final String path = getClass().getResource(name).getPath();
-        final ImageView imageView = getImageView(path);
+        final ImageView imageView = new ImageView(new Image(name));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
         onTop.setGraphic(imageView);
