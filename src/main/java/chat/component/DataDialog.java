@@ -30,7 +30,7 @@ public class DataDialog {
     private Stage stage;
 
     public void openDialog(final Stage ownerStage, final Properties settings, final Color fontColor, final Color baseColor,
-                           final Color backgroundColor, final Set<Command> commands, final Set<String> fields) {
+                           final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {
         this.stage = new Stage();
         this.stage.setResizable(false);
         final String language = settings.getProperty("root.language");
@@ -42,7 +42,7 @@ public class DataDialog {
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             final DataController dataController = (DataController) root.getUserData();
             final TableView<Object> table = dataController.getTable();
-            initData(table, commands, fields);
+            initData(table, objects, fields);
             this.stage.setScene(undecorator);
             this.stage.initOwner(ownerStage.getScene().getWindow());
             this.stage.show();
@@ -51,13 +51,13 @@ public class DataDialog {
         }
     }
 
-    private void initData(final TableView<Object> table, final Set<Command> commands, final Set<String> fields) {
+    private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
         for (String field : fields) {
             final TableColumn<Object, String> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
             table.getColumns().add(column);
         }
-        final ObservableList<Object> data = FXCollections.observableArrayList(commands);
+        final ObservableList<Object> data = FXCollections.observableArrayList(objects);
         table.setItems(data);
     }
 

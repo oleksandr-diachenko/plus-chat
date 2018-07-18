@@ -267,6 +267,7 @@ public class SettingController {
         final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json");
         final Set<Command> commands = repository.getAll();
         final Optional<Command> first = commands.stream().findFirst();
+        final Set<Object> objects = new HashSet<>(commands);
         final Set<String> fields = new HashSet<>();
         if (first.isPresent()) {
             final Command command = first.get();
@@ -282,7 +283,7 @@ public class SettingController {
                 this.nickColorPicker.getValue(),
                 this.baseColorPicker.getValue(),
                 this.backgroundColorPicker.getValue(),
-                commands,
+                objects,
                 fields);
     }
 
