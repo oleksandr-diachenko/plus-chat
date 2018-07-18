@@ -40,12 +40,31 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Optional<Command> getCommandByName(final String name) {
+    public Optional<Command> getByName(final String name) {
         for (Command command : this.commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Command add(final Command command) {
+        this.commands.add(command);
+        return command;
+    }
+
+    @Override
+    public Command update(final Command command) {
+        this.commands.remove(command);
+        this.commands.add(command);
+        return command;
+    }
+
+    @Override
+    public Command delete(final Command command) {
+        this.commands.remove(command);
+        return command;
     }
 }

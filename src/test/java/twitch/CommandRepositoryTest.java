@@ -25,17 +25,17 @@ public class CommandRepositoryTest {
 
     @Test
     public void getCommandByNameTest() {
-        final Optional<Command> commandByName = commandRepository.getCommandByName("!info");
+        final Optional<Command> commandByName = commandRepository.getByName("!info");
         assertTrue(commandByName.isPresent());
     }
 
     @Test
     public void getCommandByIncorrectNameTest() {
-        final Optional<Command> commandByName = commandRepository.getCommandByName("!QWE");
+        final Optional<Command> commandByName = commandRepository.getByName("!QWE");
         assertTrue(!commandByName.isPresent());
     }
 
-    private String getResource(String path) {
+    private String getResource(final String path) {
         return getClass().getResource(path).getPath();
     }
 }

@@ -7,10 +7,7 @@ import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -37,6 +34,35 @@ public class JSONRankRepository implements RankRepository {
             logger.error(exception.getMessage(), exception);
         }
         return new TreeSet<>();
+    }
+
+    @Override
+    public Optional<Rank> getByName(final String name) {
+        for (Rank rank : this.ranks) {
+            if (rank.getName().equalsIgnoreCase(name)) {
+                return Optional.of(rank);
+            }
+        }
+        return Optional.empty();
+    }
+
+    @Override
+    public Rank add(final Rank rank) {
+        this.ranks.add(rank);
+        return rank;
+    }
+
+    @Override
+    public Rank update(final Rank rank) {
+        this.ranks.remove(rank);
+        this.ranks.add(rank);
+        return rank;
+    }
+
+    @Override
+    public Rank delete(final Rank rank) {
+        this.ranks.remove(rank);
+        return rank;
     }
 
     @Override

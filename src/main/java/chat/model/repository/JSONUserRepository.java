@@ -41,7 +41,7 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByName(final String name) {
+    public Optional<User> getByName(final String name) {
         for (User user : this.users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);
@@ -51,16 +51,24 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public void add(final User user) {
-        users.add(user);
+    public User add(final User user) {
+        this.users.add(user);
         flush();
+        return user;
     }
 
     @Override
-    public void update(final User user) {
-        users.remove(user);
-        users.add(user);
+    public User update(final User user) {
+        this.users.remove(user);
+        this.users.add(user);
         flush();
+        return user;
+    }
+
+    @Override
+    public User delete(final User user) {
+        this.users.remove(user);
+        return user;
     }
 
     private void flush() {

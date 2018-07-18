@@ -25,13 +25,13 @@ public class SmileRepositoryTest {
 
     @Test
     public void getSmileByNameTest() {
-        final Optional<Smile> smileByName = smileRepository.getSmileByName(":)");
+        final Optional<Smile> smileByName = smileRepository.getByName(":)");
         assertTrue(smileByName.isPresent());
     }
 
     @Test
     public void getSmileByIncorrectNameTest() {
-        final Optional<Smile> smileByName = smileRepository.getSmileByName("QWE");
+        final Optional<Smile> smileByName = smileRepository.getByName("QWE");
         assertTrue(!smileByName.isPresent());
     }
 

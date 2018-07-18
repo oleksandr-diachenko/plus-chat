@@ -37,12 +37,31 @@ public class JSONSmileRepository implements SmileRepository {
     }
 
     @Override
-    public Optional<Smile> getSmileByName(final String name) {
+    public Optional<Smile> getByName(final String name) {
         for (Smile smile : this.smiles) {
             if (smile.getName().equalsIgnoreCase(name)) {
                 return Optional.of(smile);
             }
         }
         return Optional.empty();
+    }
+
+    @Override
+    public Smile add(final Smile smile) {
+        this.smiles.add(smile);
+        return smile;
+    }
+
+    @Override
+    public Smile update(final Smile smile) {
+        this.smiles.remove(smile);
+        this.smiles.add(smile);
+        return smile;
+    }
+
+    @Override
+    public Smile delete(final Smile smile) {
+        this.smiles.remove(smile);
+        return smile;
     }
 }
