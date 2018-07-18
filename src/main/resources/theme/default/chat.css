@@ -18,7 +18,7 @@
 
 #setting:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/settings-cover.png");
+    -fx-background-image:url("../../img/settings-hover.png");
     -fx-background-repeat:no-repeat;
 }
 

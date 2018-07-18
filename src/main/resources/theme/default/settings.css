@@ -25,50 +25,80 @@
     -fx-background-radius: 0;
     -fx-border-style: null;
     -fx-background-color: null;
-    -fx-pref-height: 38;
-    -fx-pref-width: 53;
+    -fx-pref-height: 45;
+    -fx-pref-width: 60;
     -fx-background-image: url("../../img/data/users.png");
     -fx-background-repeat: no-repeat;
+}
+
+#usersData:hover {
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/data/users-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #smilesData {
     -fx-background-radius: 0;
     -fx-border-style: null;
     -fx-background-color: null;
-    -fx-pref-height: 38;
-    -fx-pref-width: 53;
+    -fx-pref-height: 45;
+    -fx-pref-width: 60;
     -fx-background-image: url("../../img/data/smiles.png");
     -fx-background-repeat: no-repeat;
+}
+
+#smilesData:hover {
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/data/smiles-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #commandsData {
     -fx-background-radius: 0;
     -fx-border-style: null;
     -fx-background-color: null;
-    -fx-pref-height: 38;
-    -fx-pref-width: 53;
+    -fx-pref-height: 45;
+    -fx-pref-width: 60;
     -fx-background-image: url("../../img/data/commands.png");
     -fx-background-repeat: no-repeat;
+}
+
+#commandsData:hover {
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/data/commands-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #ranksData {
     -fx-background-radius: 0;
     -fx-border-style: null;
     -fx-background-color: null;
-    -fx-pref-height: 38;
-    -fx-pref-width: 53;
+    -fx-pref-height: 45;
+    -fx-pref-width: 60;
     -fx-background-image: url("../../img/data/ranks.png");
     -fx-background-repeat: no-repeat;
+}
+
+#ranksData:hover {
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/data/ranks-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #directsData {
     -fx-background-radius: 0;
     -fx-border-style: null;
     -fx-background-color: null;
-    -fx-pref-height: 38;
-    -fx-pref-width: 53;
+    -fx-pref-height: 45;
+    -fx-pref-width: 60;
     -fx-background-image: url("../../img/data/directs.png");
     -fx-background-repeat: no-repeat;
+}
+
+#directsData:hover {
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/data/directs-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #confirm:hover {
