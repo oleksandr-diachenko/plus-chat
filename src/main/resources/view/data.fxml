@@ -5,11 +5,17 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.TableView?>
 <VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
       prefHeight="400.0"
       prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="chat.controller.DataController">
     <Pane maxHeight="30.0" minHeight="30.0" prefHeight="30.0" prefWidth="200.0"/>
-    <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0"/>
+    <ScrollPane fx:id="scrollPane" prefHeight="200.0" prefWidth="200.0">
+        <TableView fx:id="table" prefWidth="600.0"/>
+    </ScrollPane>
     <HBox maxHeight="100.0" minHeight="100.0" prefHeight="100.0" prefWidth="200.0"/>
+    <userData>
+        <fx:reference source="controller"/>
+    </userData>
 </VBox>

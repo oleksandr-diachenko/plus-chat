@@ -2,6 +2,10 @@ package chat.controller;
 
 import chat.Main;
 import chat.component.ConfirmDialog;
+import chat.component.DataDialog;
+import chat.model.entity.Command;
+import chat.model.repository.CRUDRepository;
+import chat.model.repository.JSONCommandRepository;
 import chat.util.AppProperty;
 import chat.util.ColorUtil;
 import chat.util.StyleUtil;
@@ -13,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.lang.reflect.Field;
 import java.util.*;
 
 /**
@@ -259,6 +264,26 @@ public class SettingController {
     }
 
     public void commandsDataAction() {
+        final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json");
+        final Set<Command> commands = repository.getAll();
+        final Optional<Command> first = commands.stream().findFirst();
+        final Set<String> fields = new HashSet<>();
+        if (first.isPresent()) {
+            final Command command = first.get();
+            final Field[] declaredFields = command.getClass().getDeclaredFields();
+            for (Field field : declaredFields) {
+                fields.add(field.getName());
+            }
+        }
+        final DataDialog dataDialog = new DataDialog();
+        dataDialog.openDialog(
+                getStage(),
+                this.settings,
+                this.nickColorPicker.getValue(),
+                this.baseColorPicker.getValue(),
+                this.backgroundColorPicker.getValue(),
+                commands,
+                fields);
     }
 
     public void usersDataAction() {
