@@ -19,7 +19,7 @@ public class UserRepositoryTest {
 
     @Test
     public void getAllUsersTest() {
-        final Set<User> users = userRepository.getUsers();
+        final Set<User> users = userRepository.getAll();
         assertTrue(!users.isEmpty());
     }
 

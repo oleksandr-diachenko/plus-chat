@@ -18,7 +18,7 @@ public class RankRepositoryTest {
 
     @Test
     public void getAllRanksTest() {
-        final Set<Rank> ranks = rankRepository.getRanks();
+        final Set<Rank> ranks = rankRepository.getAll();
         assertTrue(!ranks.isEmpty());
     }
 

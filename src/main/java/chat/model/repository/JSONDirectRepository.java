@@ -22,11 +22,11 @@ public class JSONDirectRepository implements DirectRepository {
 
     public JSONDirectRepository(final String path) {
         this.path = path;
-        this.directs = getDirects();
+        this.directs = getAll();
     }
 
     @Override
-    public Set<Direct> getDirects() {
+    public Set<Direct> getAll() {
         try {
             return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
             }));

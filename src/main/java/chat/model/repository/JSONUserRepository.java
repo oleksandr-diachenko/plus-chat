@@ -26,11 +26,11 @@ public class JSONUserRepository implements UserRepository {
 
     public JSONUserRepository(final String path) {
         this.path = path;
-        this.users = getUsers();
+        this.users = getAll();
     }
 
     @Override
-    public Set<User> getUsers() {
+    public Set<User> getAll() {
         try {
             return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<User>>() {
             }));

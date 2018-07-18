@@ -25,11 +25,11 @@ public class JSONCommandRepository implements CommandRepository {
 
     public JSONCommandRepository(final String path) {
         this.path = path;
-        this.commands = getCommands();
+        this.commands = getAll();
     }
 
     @Override
-    public Set<Command> getCommands() {
+    public Set<Command> getAll() {
         try {
             return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
             }));

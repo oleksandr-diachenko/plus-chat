@@ -198,7 +198,7 @@ public class ChatController implements Observer {
     }
 
     private boolean isDirect(final String message) {
-        final Set<Direct> directs = this.directRepository.getDirects();
+        final Set<Direct> directs = this.directRepository.getAll();
         for (Direct direct : directs) {
             final String word = direct.getWord();
             if (StringUtils.containsIgnoreCase(message, word)) {

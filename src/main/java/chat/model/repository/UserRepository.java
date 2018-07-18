@@ -3,14 +3,11 @@ package chat.model.repository;
 import chat.model.entity.User;
 
 import java.util.Optional;
-import java.util.Set;
 
 /**
  * @author Alexander Diachenko.
  */
-public interface UserRepository {
-
-    Set<User> getUsers();
+public interface UserRepository extends CRUDRepository<User>{
 
     Optional<User> getUserByName(final String name);
 

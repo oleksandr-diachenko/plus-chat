@@ -22,11 +22,11 @@ public class JSONSmileRepository implements SmileRepository {
 
     public JSONSmileRepository(final String path) {
         this.path = path;
-        this.smiles = getSmiles();
+        this.smiles = getAll();
     }
 
     @Override
-    public Set<Smile> getSmiles() {
+    public Set<Smile> getAll() {
         try {
             return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
             }));

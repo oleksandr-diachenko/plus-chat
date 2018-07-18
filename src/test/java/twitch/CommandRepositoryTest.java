@@ -19,7 +19,7 @@ public class CommandRepositoryTest {
 
     @Test
     public void getAllCommandsTest() {
-        final Set<Command> commands = commandRepository.getCommands();
+        final Set<Command> commands = commandRepository.getAll();
         assertTrue(!commands.isEmpty());
     }
 

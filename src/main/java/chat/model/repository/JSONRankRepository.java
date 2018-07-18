@@ -25,11 +25,11 @@ public class JSONRankRepository implements RankRepository {
 
     public JSONRankRepository(final String path) {
         this.path = path;
-        this.ranks = getRanks();
+        this.ranks = getAll();
     }
 
     @Override
-    public Set<Rank> getRanks() {
+    public Set<Rank> getAll() {
         try {
             return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
             })));

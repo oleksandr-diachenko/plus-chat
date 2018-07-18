@@ -19,7 +19,7 @@ public class SmileRepositoryTest {
 
     @Test
     public void getAllSmilesTest() {
-        final Set<Smile> smiles = smileRepository.getSmiles();
+        final Set<Smile> smiles = smileRepository.getAll();
         assertTrue(!smiles.isEmpty());
     }
 
