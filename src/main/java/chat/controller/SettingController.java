@@ -3,9 +3,8 @@ package chat.controller;
 import chat.Main;
 import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
-import chat.model.entity.Command;
-import chat.model.repository.CRUDRepository;
-import chat.model.repository.JSONCommandRepository;
+import chat.model.entity.*;
+import chat.model.repository.*;
 import chat.util.AppProperty;
 import chat.util.ColorUtil;
 import chat.util.StyleUtil;
@@ -267,15 +266,66 @@ public class SettingController {
         final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json");
         final Set<Command> commands = repository.getAll();
         final Optional<Command> first = commands.stream().findFirst();
-        final Set<Object> objects = new HashSet<>(commands);
-        final Set<String> fields = new HashSet<>();
         if (first.isPresent()) {
             final Command command = first.get();
-            final Field[] declaredFields = command.getClass().getDeclaredFields();
-            for (Field field : declaredFields) {
-                fields.add(field.getName());
-            }
+            final Set<String> fields = getFields(command.getClass().getDeclaredFields());
+            openDialog(new HashSet<>(commands), fields);
         }
+    }
+
+    public void usersDataAction() {
+        final CRUDRepository<User> repository = new JSONUserRepository("./data/users.json");
+        final Set<User> commands = repository.getAll();
+        final Optional<User> first = commands.stream().findFirst();
+        if (first.isPresent()) {
+            final User user = first.get();
+            final Set<String> fields = getFields(user.getClass().getDeclaredFields());
+            openDialog(new HashSet<>(commands), fields);
+        }
+    }
+
+    public void ranksDataAction() {
+        final CRUDRepository<Rank> repository = new JSONRankRepository("./data/ranks.json");
+        final Set<Rank> ranks = repository.getAll();
+        final Optional<Rank> first = ranks.stream().findFirst();
+        if (first.isPresent()) {
+            final Rank rank = first.get();
+            final Set<String> fields = getFields(rank.getClass().getDeclaredFields());
+            openDialog(new HashSet<>(ranks), fields);
+        }
+    }
+
+    public void smilesDataAction() {
+        final CRUDRepository<Smile> repository = new JSONSmileRepository("./data/smiles.json");
+        final Set<Smile> smiles = repository.getAll();
+        final Optional<Smile> first = smiles.stream().findFirst();
+        if (first.isPresent()) {
+            final Smile smile = first.get();
+            final Set<String> fields = getFields(smile.getClass().getDeclaredFields());
+            openDialog(new HashSet<>(smiles), fields);
+        }
+    }
+
+    public void directsDataAction() {
+        final CRUDRepository<Direct> repository = new JSONDirectRepository("./data/directs.json");
+        final Set<Direct> directs = repository.getAll();
+        final Optional<Direct> first = directs.stream().findFirst();
+        if (first.isPresent()) {
+            final Direct direct = first.get();
+            final Set<String> fields = getFields(direct.getClass().getDeclaredFields());
+            openDialog(new HashSet<>(directs), fields);
+        }
+    }
+
+    private Set<String> getFields(final Field[] declaredFields) {
+        final Set<String> fields = new HashSet<>();
+        for (Field field : declaredFields) {
+            fields.add(field.getName());
+        }
+        return fields;
+    }
+
+    private void openDialog(final Set<Object> objects, final Set<String> fields) {
         final DataDialog dataDialog = new DataDialog();
         dataDialog.openDialog(
                 getStage(),
@@ -285,17 +335,5 @@ public class SettingController {
                 this.backgroundColorPicker.getValue(),
                 objects,
                 fields);
-    }
-
-    public void usersDataAction() {
-    }
-
-    public void ranksDataAction() {
-    }
-
-    public void smilesDataAction() {
-    }
-
-    public void directsDataAction() {
     }
 }
