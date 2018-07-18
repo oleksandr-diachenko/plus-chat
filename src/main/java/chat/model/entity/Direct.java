@@ -13,25 +13,25 @@ import java.util.Objects;
 @Setter
 public class Direct {
 
-    private String word;
+    private String name;
 
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         final Direct direct = (Direct) o;
-        return Objects.equals(this.word, direct.getWord());
+        return Objects.equals(this.name, direct.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.word);
+        return Objects.hash(this.name);
     }
 
     @Override
     public String toString() {
         return "Direct{" +
-                "word='" + this.word + '\'' +
+                "name='" + this.name + '\'' +
                 '}';
     }
 }
