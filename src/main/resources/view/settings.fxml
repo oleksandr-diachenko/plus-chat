@@ -205,15 +205,15 @@
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="commandsData" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                <Button fx:id="commandsData" onAction="#commandsDataAction" GridPane.columnIndex="1" GridPane.rowIndex="0"
                         GridPane.halignment="CENTER"/>
-                <Button fx:id="usersData" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                <Button fx:id="usersData" onAction="#usersDataAction" GridPane.columnIndex="1" GridPane.rowIndex="1"
                         GridPane.halignment="CENTER"/>
-                <Button fx:id="ranksData" GridPane.columnIndex="1" GridPane.rowIndex="2"
+                <Button fx:id="ranksData" onAction="#ranksDataAction" GridPane.columnIndex="1" GridPane.rowIndex="2"
                         GridPane.halignment="CENTER"/>
-                <Button fx:id="smilesData" GridPane.columnIndex="1" GridPane.rowIndex="3"
+                <Button fx:id="smilesData" onAction="#smilesDataAction" GridPane.columnIndex="1" GridPane.rowIndex="3"
                         GridPane.halignment="CENTER"/>
-                <Button fx:id="directsData" GridPane.columnIndex="1" GridPane.rowIndex="4"
+                <Button fx:id="directsData" onAction="#directsDataAction" GridPane.columnIndex="1" GridPane.rowIndex="4"
                         GridPane.halignment="CENTER"/>
             </GridPane>
         </Tab>

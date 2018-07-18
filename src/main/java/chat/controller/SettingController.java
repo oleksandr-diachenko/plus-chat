@@ -8,10 +8,7 @@ import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
@@ -23,6 +20,16 @@ import java.util.*;
  */
 public class SettingController {
 
+    @FXML
+    private Button commandsData;
+    @FXML
+    private Button usersData;
+    @FXML
+    private Button ranksData;
+    @FXML
+    private Button smilesData;
+    @FXML
+    private Button directsData;
     @FXML
     private ColorPicker directMessageColorPicker;
     @FXML
@@ -249,5 +256,20 @@ public class SettingController {
 
     public Node getRoot() {
         return this.settingsRoot;
+    }
+
+    public void commandsDataAction() {
+    }
+
+    public void usersDataAction() {
+    }
+
+    public void ranksDataAction() {
+    }
+
+    public void smilesDataAction() {
+    }
+
+    public void directsDataAction() {
     }
 }
