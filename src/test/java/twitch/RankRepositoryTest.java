@@ -18,23 +18,23 @@ public class RankRepositoryTest {
 
     @Test
     public void getAllRanksTest() {
-        final Set<Rank> ranks = rankRepository.getAll();
+        final Set<Rank> ranks = this.rankRepository.getAll();
         assertTrue(!ranks.isEmpty());
     }
 
     @Test
     public void getRankByExpTest() {
-        final Rank rankByExp = rankRepository.getRankByExp(10);
+        final Rank rankByExp = this.rankRepository.getRankByExp(10);
         assertEquals("Pro", rankByExp.getName());
     }
 
     @Test
     public void getRankByNegativeExpTest() {
-        final Rank rankByExp = rankRepository.getRankByExp(-1);
+        final Rank rankByExp = this.rankRepository.getRankByExp(-1);
         assertNull(rankByExp.getName());
     }
 
-    private String getResource(String path) {
+    private String getResource(final String path) {
         return getClass().getResource(path).getPath();
     }
 }

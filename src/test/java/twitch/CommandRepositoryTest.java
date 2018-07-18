@@ -19,13 +19,13 @@ public class CommandRepositoryTest {
 
     @Test
     public void getAllCommandsTest() {
-        final Set<Command> commands = commandRepository.getAll();
+        final Set<Command> commands = this.commandRepository.getAll();
         assertTrue(!commands.isEmpty());
     }
 
     @Test
     public void getCommandByNameTest() {
-        final Optional<Command> commandByName = commandRepository.getByName("!info");
+        final Optional<Command> commandByName = this.commandRepository.getByName("!info");
         assertTrue(commandByName.isPresent());
     }
 

@@ -19,23 +19,23 @@ public class SmileRepositoryTest {
 
     @Test
     public void getAllSmilesTest() {
-        final Set<Smile> smiles = smileRepository.getAll();
+        final Set<Smile> smiles = this.smileRepository.getAll();
         assertTrue(!smiles.isEmpty());
     }
 
     @Test
     public void getSmileByNameTest() {
-        final Optional<Smile> smileByName = smileRepository.getByName(":)");
+        final Optional<Smile> smileByName = this.smileRepository.getByName(":)");
         assertTrue(smileByName.isPresent());
     }
 
     @Test
     public void getSmileByIncorrectNameTest() {
-        final Optional<Smile> smileByName = smileRepository.getByName("QWE");
+        final Optional<Smile> smileByName = this.smileRepository.getByName("QWE");
         assertTrue(!smileByName.isPresent());
     }
 
-    private String getResource(String path) {
+    private String getResource(final String path) {
         return getClass().getResource(path).getPath();
     }
 }

@@ -14,14 +14,14 @@ public class AppPropertyTest {
 
     @Test
     public void readPropertiesTest() {
-        Properties properties = AppProperty.getProperty(getResource("/property/simplePropertyOneObject.properties"));
+        final Properties properties = AppProperty.getProperty(getResource("/property/simplePropertyOneObject.properties"));
 
-        String name = properties.getProperty("name");
+        final String name = properties.getProperty("name");
 
         assertEquals("alex", name);
     }
 
-    private String getResource(String path) {
+    private String getResource(final String path) {
         return getClass().getResource(path).getPath();
     }
 }
