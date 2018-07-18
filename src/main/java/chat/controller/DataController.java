@@ -17,4 +17,10 @@ public class DataController {
     public TableView<Object> getTable() {
         return this.table;
     }
+
+    public void confirmAction() {
+    }
+
+    public void cancelAction() {
+    }
 }
