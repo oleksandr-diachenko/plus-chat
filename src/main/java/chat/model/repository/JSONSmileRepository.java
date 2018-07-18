@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -49,6 +50,7 @@ public class JSONSmileRepository implements SmileRepository {
     @Override
     public Smile add(final Smile smile) {
         this.smiles.add(smile);
+        flush();
         return smile;
     }
 
@@ -56,12 +58,27 @@ public class JSONSmileRepository implements SmileRepository {
     public Smile update(final Smile smile) {
         this.smiles.remove(smile);
         this.smiles.add(smile);
+        flush();
         return smile;
     }
 
     @Override
     public Smile delete(final Smile smile) {
         this.smiles.remove(smile);
+        flush();
         return smile;
+    }
+
+    private void flush() {
+        final Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    this.mapper.writeValue(new FileOutputStream(path), this.smiles);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }

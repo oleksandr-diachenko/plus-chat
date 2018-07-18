@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -49,6 +50,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Rank add(final Rank rank) {
         this.ranks.add(rank);
+        flush();
         return rank;
     }
 
@@ -56,12 +58,14 @@ public class JSONRankRepository implements RankRepository {
     public Rank update(final Rank rank) {
         this.ranks.remove(rank);
         this.ranks.add(rank);
+        flush();
         return rank;
     }
 
     @Override
     public Rank delete(final Rank rank) {
         this.ranks.remove(rank);
+        flush();
         return rank;
     }
 
@@ -75,5 +79,18 @@ public class JSONRankRepository implements RankRepository {
             }
         }
         return nearest;
+    }
+
+    private void flush() {
+        final Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    this.mapper.writeValue(new FileOutputStream(path), this.ranks);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }

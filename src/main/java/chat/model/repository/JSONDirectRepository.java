@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -49,6 +50,7 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Direct add(final Direct direct) {
         this.directs.add(direct);
+        flush();
         return direct;
     }
 
@@ -56,12 +58,27 @@ public class JSONDirectRepository implements DirectRepository {
     public Direct update(final Direct direct) {
         this.directs.remove(direct);
         this.directs.add(direct);
+        flush();
         return direct;
     }
 
     @Override
     public Direct delete(final Direct direct) {
         this.directs.remove(direct);
+        flush();
         return direct;
+    }
+
+    private void flush() {
+        final Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    this.mapper.writeValue(new FileOutputStream(path), this.directs);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }

@@ -6,6 +6,7 @@ import org.apache.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.List;
@@ -52,6 +53,7 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Command add(final Command command) {
         this.commands.add(command);
+        flush();
         return command;
     }
 
@@ -59,12 +61,27 @@ public class JSONCommandRepository implements CommandRepository {
     public Command update(final Command command) {
         this.commands.remove(command);
         this.commands.add(command);
+        flush();
         return command;
     }
 
     @Override
     public Command delete(final Command command) {
         this.commands.remove(command);
+        flush();
         return command;
+    }
+
+    private void flush() {
+        final Thread thread = new Thread(() -> {
+            synchronized (this) {
+                try {
+                    this.mapper.writeValue(new FileOutputStream(path), this.commands);
+                } catch (IOException exception) {
+                    logger.error(exception.getMessage(), exception);
+                }
+            }
+        });
+        thread.start();
     }
 }
