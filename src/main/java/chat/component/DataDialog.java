@@ -1,7 +1,6 @@
 package chat.component;
 
 import chat.controller.DataController;
-import chat.model.entity.Command;
 import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
 import chat.util.StyleUtil;
@@ -69,9 +68,5 @@ public class DataDialog {
 
     private Region getRoot(final ResourceBundle bundle) throws IOException {
         return FXMLLoader.load(getClass().getResource("/view/data.fxml"), bundle);
-    }
-
-    public Stage getStage() {
-        return this.stage;
     }
 }
