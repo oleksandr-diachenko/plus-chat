@@ -62,7 +62,7 @@ public class DataDialog {
 
     private UndecoratorScene getScene(final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/data.css");
         return undecorator;
     }
 
