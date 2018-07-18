@@ -21,6 +21,16 @@
     -fx-background-position: center;
 }
 
+#usersData {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 38;
+    -fx-pref-width: 53;
+    -fx-background-image: url("../../img/data/users.png");
+    -fx-background-repeat: no-repeat;
+}
+
 #confirm:hover {
     -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
     -fx-background-insets: 0 0 -1 0, 0, 1, 2;

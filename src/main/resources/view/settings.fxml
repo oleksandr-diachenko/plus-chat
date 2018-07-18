@@ -205,6 +205,31 @@
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
+                <Button fx:id="commandsData" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="usersData" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="ranksData" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="smilesData" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </Button>
+                <Button fx:id="directsData" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </Button>
             </GridPane>
         </Tab>
     </TabPane>
