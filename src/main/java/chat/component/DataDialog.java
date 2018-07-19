@@ -8,12 +8,14 @@ import insidefx.undecorator.UndecoratorScene;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import org.apache.log4j.Logger;
 
 import java.io.IOException;
@@ -41,7 +43,7 @@ public class DataDialog {
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             final DataController dataController = (DataController) root.getUserData();
             final TableView<Object> table = dataController.getTable();
-            initData(table, objects, fields);
+            initData(table, objects, fields, fontColor);
             this.stage.setScene(undecorator);
             this.stage.initOwner(ownerStage.getScene().getWindow());
             this.stage.show();
@@ -50,14 +52,34 @@ public class DataDialog {
         }
     }
 
-    private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
+    private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields, final Color fontColor) {
         for (String field : fields) {
             final TableColumn<Object, Object> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
+            final Callback<TableColumn<Object, Object>, TableCell<Object, Object>> cellFactory = getCellFactory(column, fontColor);
+            column.setCellFactory(cellFactory);
             table.getColumns().add(column);
         }
         final ObservableList<Object> data = FXCollections.observableArrayList(objects);
         table.setItems(data);
+    }
+
+    private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory(final TableColumn<Object, Object> column, final Color fontColor) {
+        return new Callback<TableColumn<Object, Object>, TableCell<Object, Object>>() {
+            @Override
+            public TableCell<Object, Object> call(final TableColumn<Object, Object> param) {
+                return new TableCell<Object, Object>() {
+                    @Override
+                    public void updateItem(final Object item, final boolean empty) {
+                        super.updateItem(item, empty);
+                        if (!isEmpty()) {
+                            this.setTextFill(Color.web("#474747"));
+                            setText(item.toString());
+                        }
+                    }
+                };
+            }
+        };
     }
 
     private UndecoratorScene getScene(final Properties settings, final Region root) {
