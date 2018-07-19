@@ -228,6 +228,7 @@ public class SettingController {
                 AppProperty.setProperties("./settings/settings.properties", this.settings);
                 final ChatController chatController = (ChatController) this.chatRoot.getUserData();
                 chatController.setSettings(this.settings);
+                chatController.getSetting().setDisable(false);
             }
         });
     }
