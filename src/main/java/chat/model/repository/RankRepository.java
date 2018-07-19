@@ -7,5 +7,5 @@ import chat.model.entity.Rank;
  */
 public interface RankRepository extends CRUDRepository<Rank>{
 
-    Rank getRankByExp(final int exp);
+    Rank getRankByExp(final long exp);
 }

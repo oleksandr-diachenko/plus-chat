@@ -52,7 +52,7 @@ public class DataDialog {
 
     private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
         for (String field : fields) {
-            final TableColumn<Object, String> column = new TableColumn<>(field);
+            final TableColumn<Object, Object> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
             table.getColumns().add(column);
         }
