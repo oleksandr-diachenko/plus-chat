@@ -6,6 +6,10 @@
     -fx-background-color: transparent;
 }
 
+.table-row-cell:selected {
+    -fx-background-color: null;
+}
+
 #confirm {
     -fx-pref-height: 50;
     -fx-pref-width: 50;
