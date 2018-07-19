@@ -220,7 +220,7 @@ public class ChatController implements Observer {
 
     private Label getRankImage(final User user) {
         final Label image = new Label();
-        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        final Rank rank = this.rankRepository.getRankByExp(Integer.parseInt(user.getExp()));
         image.setId("rank-image");
         try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
             final ImageView imageView = new ImageView(new Image(fis));

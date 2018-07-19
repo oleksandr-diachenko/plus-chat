@@ -103,7 +103,7 @@ public class Bot extends ListenerAdapter implements Subject {
             if(user.hasCustomName()) {
                 customName = user.getCustomName();
             }
-            final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+            final Rank rank = this.rankRepository.getRankByExp(Integer.parseInt(user.getExp()));
             sendMessage(customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)");
         }
     }
@@ -144,7 +144,7 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setName(nick);
         user.setFirstMessageDate(TimeUtil.getDateToString(new Date()));
         user.setLastMessageDate(TimeUtil.getDateToString(new Date()));
-        user.setExp(1);
+        user.setExp("1");
         this.userRepository.add(user);
         return user;
     }

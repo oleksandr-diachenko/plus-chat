@@ -17,7 +17,7 @@ public class User {
     private String customName;
     private String firstMessageDate;
     private String lastMessageDate;
-    private int exp;
+    private String exp;
 
     public boolean hasCustomName(){
         return customName != null;
