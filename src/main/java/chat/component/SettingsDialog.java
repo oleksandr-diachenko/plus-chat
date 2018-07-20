@@ -3,6 +3,7 @@ package chat.component;
 import chat.controller.ChatController;
 import chat.util.AppProperty;
 import chat.util.ResourceBundleControl;
+import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXMLLoader;
@@ -29,13 +30,13 @@ public class SettingsDialog {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
-        final String language = settings.getProperty("root.language");
+        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
             final Region root = getRoot(bundle);
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             stageEvents(owner, ownerRoot, stage, settings, root);
-            root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
+            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR), settings.getProperty("root.background.color")));
             stage.setScene(undecorator);
             stage.initOwner(owner);
             stage.show();
@@ -46,7 +47,7 @@ public class SettingsDialog {
 
     private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/settings.css");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/settings.css");
         return undecorator;
     }
 
@@ -54,7 +55,7 @@ public class SettingsDialog {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
             for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty("nick.font.color")));
+                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.NICK_FONT_COLOR)));
             }
         });
 

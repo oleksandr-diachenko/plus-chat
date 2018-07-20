@@ -3,6 +3,7 @@ package chat.component;
 import chat.controller.ConfirmController;
 import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
+import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXMLLoader;
@@ -28,7 +29,7 @@ public class ConfirmDialog {
     public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor, final Color backgroundColor) {
         this.stage = new Stage();
         this.stage.setResizable(false);
-        final String language = settings.getProperty("root.language");
+        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
             final Region root = getRoot(bundle);
@@ -47,7 +48,7 @@ public class ConfirmDialog {
 
     private UndecoratorScene getScene(final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/confirm.css");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/confirm.css");
         return undecorator;
     }
 

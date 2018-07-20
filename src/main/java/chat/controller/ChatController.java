@@ -10,6 +10,7 @@ import chat.model.repository.*;
 import chat.observer.Observer;
 import chat.sevice.Bot;
 import chat.util.AppProperty;
+import chat.util.Settings;
 import chat.util.StringUtil;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
@@ -73,8 +74,8 @@ public class ChatController implements Observer {
         this.isOnTop = Boolean.parseBoolean(this.settings.getProperty("root.always.on.top"));
         onTopInit();
         this.root.setStyle(StyleUtil.getRootStyle(
-                this.settings.getProperty("root.base.color"),
-                this.settings.getProperty("root.background.color")
+                this.settings.getProperty(Settings.ROOT_BASE_COLOR),
+                this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
         ));
         this.scrollPane.prefHeightProperty().bind(this.root.heightProperty());
         this.scrollPane.vvalueProperty().bind(this.container.heightProperty());
@@ -133,7 +134,7 @@ public class ChatController implements Observer {
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
         onTop.setGraphic(imageView);
-        this.settings.setProperty("root.always.on.top", String.valueOf(this.isOnTop));
+        this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
         AppProperty.setProperties("./settings/settings.properties", this.settings);
     }
 
@@ -152,10 +153,11 @@ public class ChatController implements Observer {
             final Label image = getRankImage(user);
             textFlow.getChildren().add(image);
         }
-        final Text name = getText(customName, "user-name", this.settings.getProperty("nick.font.color"));
-        final Text separator = getText(": ", "separator", this.settings.getProperty("separator.font.color"));
+        final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.NICK_FONT_COLOR));
+        final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.SEPARATOR_FONT_COLOR));
         textFlow.getChildren().addAll(name, separator);
-        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty("message.font.color"), this.settings.getProperty("direct.message.font.color"));
+        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty(Settings.MESSAGE_FONT_COLOR),
+                this.settings.getProperty(Settings.DIRECT_MESSAGE_FONT_COLOR));
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         messageBox.getChildren().add(textFlow);
         this.messages.add(messageBox);
@@ -185,10 +187,10 @@ public class ChatController implements Observer {
         final Text text = new Text(word + " ");
         if (isDirect(message)) {
             text.setId("user-direct-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), directColor));
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), directColor));
         } else {
             text.setId("user-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         }
         return text;
     }
@@ -239,7 +241,7 @@ public class ChatController implements Observer {
     private Text getText(final String string, final String id, final String color) {
         final Text text = new Text(StringUtil.getUTF8String(string));
         text.setId(id);
-        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty("font.size"), color));
+        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         return text;
     }
 

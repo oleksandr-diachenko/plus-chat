@@ -2,6 +2,7 @@ package chat;
 
 import chat.util.AppProperty;
 import chat.util.ResourceBundleControl;
+import chat.util.Settings;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -36,9 +37,9 @@ public class Main extends Application {
     public void start(final Stage primaryStage) {
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
         stage = primaryStage;
-        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty("root.always.on.top")));
+        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
         primaryStage.getIcons().add(new Image("/img/logo.png"));
-        final String language = settings.getProperty("root.language");
+        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
             final Region root = getRoot(bundle);
@@ -56,7 +57,7 @@ public class Main extends Application {
         final UndecoratorScene undecorator = new UndecoratorScene(primaryStage, root);
         undecorator.setFadeInTransition();
         undecorator.setBackgroundOpacity(0);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/chat.css");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/chat.css");
         return undecorator;
     }
 

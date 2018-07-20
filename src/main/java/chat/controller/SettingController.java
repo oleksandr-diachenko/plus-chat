@@ -7,6 +7,7 @@ import chat.model.entity.*;
 import chat.model.repository.*;
 import chat.util.AppProperty;
 import chat.util.ColorUtil;
+import chat.util.Settings;
 import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -24,16 +25,6 @@ import java.util.*;
  */
 public class SettingController {
 
-    @FXML
-    private Button commandsData;
-    @FXML
-    private Button usersData;
-    @FXML
-    private Button ranksData;
-    @FXML
-    private Button smilesData;
-    @FXML
-    private Button directsData;
     @FXML
     private ColorPicker directMessageColorPicker;
     @FXML
@@ -80,7 +71,7 @@ public class SettingController {
     }
 
     private void initBaseColorPicker() {
-        this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.base.color")));
+        this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.ROOT_BASE_COLOR)));
         this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setRootStyle(Arrays.asList(this.ownerRoot, this.settingsRoot),
                     ColorUtil.getHexColor(new_val),
@@ -95,18 +86,18 @@ public class SettingController {
         this.languages.put("ru", "Russian");
         this.languages.put("ua", "Ukrainian");
         this.languageChoiceBox.setItems(FXCollections.observableArrayList(this.languages.values()));
-        this.languageChoiceBox.setValue(this.languages.get(this.settings.getProperty("root.language")));
+        this.languageChoiceBox.setValue(this.languages.get(this.settings.getProperty(Settings.ROOT_LANGUAGE)));
     }
 
     private void initTheme() {
         final List<String> list = new ArrayList<>();
         list.add("default");
         this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
-        this.themeChoiceBox.setValue(this.settings.getProperty("root.theme"));
+        this.themeChoiceBox.setValue(this.settings.getProperty(Settings.ROOT_THEME));
     }
 
     private void initFontSizeSlider() {
-        final String fontSizeValue = this.settings.getProperty("font.size");
+        final String fontSizeValue = this.settings.getProperty(Settings.FONT_SIZE);
         this.fontSize.setText(fontSizeValue);
         this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -124,7 +115,7 @@ public class SettingController {
     }
 
     private void initTransparencySlider() {
-        final String backgroundTransparencyValue = this.settings.getProperty("background.transparency");
+        final String backgroundTransparencyValue = this.settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY);
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
         this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -134,7 +125,7 @@ public class SettingController {
     }
 
     private void initBackGroundColorPicker() {
-        this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.background.color")));
+        this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
         this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setRootStyle(Arrays.asList(this.ownerRoot, this.settingsRoot),
                     ColorUtil.getHexColor(this.baseColorPicker.getValue()),
@@ -144,7 +135,7 @@ public class SettingController {
     }
 
     private void initNickColorPicker() {
-        this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty("nick.font.color")));
+        this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.NICK_FONT_COLOR)));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
@@ -160,7 +151,7 @@ public class SettingController {
     }
 
     private void initSeparatorColorPicker() {
-        this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty("separator.font.color")));
+        this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.SEPARATOR_FONT_COLOR)));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
@@ -176,7 +167,7 @@ public class SettingController {
     }
 
     private void initMessageColorPicker() {
-        this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty("message.font.color")));
+        this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.MESSAGE_FONT_COLOR)));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
@@ -192,7 +183,7 @@ public class SettingController {
     }
 
     private void initDirectMessageColorPicker() {
-        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty("direct.message.font.color")));
+        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.DIRECT_MESSAGE_FONT_COLOR)));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
@@ -209,28 +200,33 @@ public class SettingController {
 
     public void confirmAction() {
         final ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(), this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
+        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
+                this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
-                this.settings.setProperty("background.transparency", this.transparencyValue.getText());
-                this.settings.setProperty("font.size", this.fontSize.getText());
-                this.settings.setProperty("root.language", getLanguage(this.languageChoiceBox.getValue()));
-                final String value = this.themeChoiceBox.getValue();
-                this.settings.setProperty("root.theme", value);
-
-                this.settings.setProperty("root.base.color", ColorUtil.getHexColor(this.baseColorPicker.getValue()));
-                this.settings.setProperty("root.background.color", ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
-                this.settings.setProperty("nick.font.color", ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-                this.settings.setProperty("separator.font.color", ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
-                this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
-                this.settings.setProperty("direct.message.font.color", ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
-                AppProperty.setProperties("./settings/settings.properties", this.settings);
-                final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
-                chatController.setSettings(this.settings);
-                chatController.getSetting().setDisable(false);
+                revertStyle();
             }
         });
+    }
+
+    private void revertStyle() {
+        this.settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, this.transparencyValue.getText());
+        this.settings.setProperty(Settings.FONT_SIZE, this.fontSize.getText());
+        this.settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(this.languageChoiceBox.getValue()));
+        final String value = this.themeChoiceBox.getValue();
+        this.settings.setProperty(Settings.ROOT_THEME, value);
+
+        this.settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(this.baseColorPicker.getValue()));
+        this.settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
+        this.settings.setProperty(Settings.NICK_FONT_COLOR, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
+        this.settings.setProperty(Settings.SEPARATOR_FONT_COLOR, ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
+        this.settings.setProperty(Settings.MESSAGE_FONT_COLOR, ColorUtil.getHexColor(this.messageColorPicker.getValue()));
+        this.settings.setProperty(Settings.DIRECT_MESSAGE_FONT_COLOR, ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
+        AppProperty.setProperties("./settings/settings.properties", this.settings);
+        final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
+        chatController.setSettings(this.settings);
+        chatController.getSetting().setDisable(false);
     }
 
     public void cancelAction() {

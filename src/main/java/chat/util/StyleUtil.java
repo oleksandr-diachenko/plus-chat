@@ -27,7 +27,8 @@ public class StyleUtil {
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setMessageStyle(final Node chatRoot, final String fontSize, final String nickColor, final String separatorColor, final String messageColor, final String directMessageColor) {
+    public static void setMessageStyle(final Node chatRoot, final String fontSize, final String nickColor,
+                                       final String separatorColor, final String messageColor, final String directMessageColor) {
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
         final Set<Node> messages = chatRoot.lookupAll("#user-message");
@@ -51,13 +52,14 @@ public class StyleUtil {
 
     public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
         StyleUtil.setMessageStyle(chatRoot,
-                settings.getProperty("font.size"),
-                settings.getProperty("nick.font.color"),
-                settings.getProperty("separator.font.color"),
-                settings.getProperty("message.font.color"),
-                settings.getProperty("direct.message.font.color")
+                settings.getProperty(Settings.FONT_SIZE),
+                settings.getProperty(Settings.NICK_FONT_COLOR),
+                settings.getProperty(Settings.SEPARATOR_FONT_COLOR),
+                settings.getProperty(Settings.MESSAGE_FONT_COLOR),
+                settings.getProperty(Settings.DIRECT_MESSAGE_FONT_COLOR)
         );
-        StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
-        owner.setOpacity(Double.parseDouble(settings.getProperty("background.transparency")) / 100);
+        StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty(Settings.ROOT_BASE_COLOR),
+                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR));
+        owner.setOpacity(Double.parseDouble(settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100);
     }
 }

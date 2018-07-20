@@ -3,6 +3,7 @@ package chat.component;
 import chat.controller.DataController;
 import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
+import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.collections.FXCollections;
@@ -32,7 +33,7 @@ public class DataDialog {
                            final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {
         final Stage stage = new Stage();
         stage.setResizable(false);
-        final String language = settings.getProperty("root.language");
+        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
             final Region root = getRoot(bundle);
@@ -82,7 +83,7 @@ public class DataDialog {
 
     private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/data.css");
+        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/data.css");
         return undecorator;
     }
 
