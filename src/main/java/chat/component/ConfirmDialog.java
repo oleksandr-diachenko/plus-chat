@@ -25,7 +25,7 @@ public class ConfirmDialog {
     private Stage stage;
     private ConfirmController controller;
 
-    public void openDialog(final Stage ownerStage, final Properties settings, final Color fontColor, final Color baseColor, final Color backgroundColor) {
+    public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor, final Color backgroundColor) {
         this.stage = new Stage();
         this.stage.setResizable(false);
         final String language = settings.getProperty("root.language");
@@ -38,7 +38,7 @@ public class ConfirmDialog {
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
-            this.stage.initOwner(ownerStage.getScene().getWindow());
+            this.stage.initOwner(owner);
             this.stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

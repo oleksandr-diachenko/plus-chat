@@ -37,7 +37,7 @@ public class SettingsDialog {
             stageEvents(ownerRoot, stage, settings, root);
             root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
             stage.setScene(undecorator);
-            stage.initOwner(owner.getScene().getWindow());
+            stage.initOwner(owner);
             stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

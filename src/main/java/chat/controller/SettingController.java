@@ -62,11 +62,11 @@ public class SettingController {
     private ColorPicker messageColorPicker;
     private Properties settings;
     private Map<String, String> languages;
-    private Node chatRoot;
+    private Node ownerRoot;
 
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
-        this.chatRoot = getChatRoot();
+        this.ownerRoot = getOwnerRoot();
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -82,7 +82,7 @@ public class SettingController {
     private void initBaseColorPicker() {
         this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.base.color")));
         this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setRootStyle(Arrays.asList(this.chatRoot, this.settingsRoot),
+            StyleUtil.setRootStyle(Arrays.asList(this.ownerRoot, this.settingsRoot),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.backgroundColorPicker.getValue())
             );
@@ -113,7 +113,7 @@ public class SettingController {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
-                    this.chatRoot,
+                    this.ownerRoot,
                     String.valueOf(new_val),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
@@ -128,7 +128,7 @@ public class SettingController {
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
         this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            getOwnerStage().setOpacity((Double) new_val / 100);
+            getOwner().setOpacity((Double) new_val / 100);
             this.transparencyValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
@@ -136,7 +136,7 @@ public class SettingController {
     private void initBackGroundColorPicker() {
         this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty("root.background.color")));
         this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setRootStyle(Arrays.asList(this.chatRoot, this.settingsRoot),
+            StyleUtil.setRootStyle(Arrays.asList(this.ownerRoot, this.settingsRoot),
                     ColorUtil.getHexColor(this.baseColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val)
             );
@@ -148,7 +148,7 @@ public class SettingController {
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
-                    this.chatRoot,
+                    this.ownerRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(new_val),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
@@ -164,7 +164,7 @@ public class SettingController {
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
-                    this.chatRoot,
+                    this.ownerRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(new_val),
@@ -180,7 +180,7 @@ public class SettingController {
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
-                    this.chatRoot,
+                    this.ownerRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
@@ -196,7 +196,7 @@ public class SettingController {
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             StyleUtil.setMessageStyle(
-                    this.chatRoot,
+                    this.ownerRoot,
                     this.fontSize.getText(),
                     ColorUtil.getHexColor(this.nickColorPicker.getValue()),
                     ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
@@ -226,7 +226,7 @@ public class SettingController {
                 this.settings.setProperty("message.font.color", ColorUtil.getHexColor(this.messageColorPicker.getValue()));
                 this.settings.setProperty("direct.message.font.color", ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
                 AppProperty.setProperties("./settings/settings.properties", this.settings);
-                final ChatController chatController = (ChatController) this.chatRoot.getUserData();
+                final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
                 chatController.setSettings(this.settings);
                 chatController.getSetting().setDisable(false);
             }
@@ -244,23 +244,6 @@ public class SettingController {
             }
         }
         return "en";
-    }
-
-    private Stage getStage() {
-        return (Stage) settingsRoot.getScene().getWindow();
-    }
-
-    private Node getChatRoot() {
-        final Stage owner = getOwnerStage();
-        return owner.getScene().lookup("#root");
-    }
-
-    private Stage getOwnerStage() {
-        return Main.stage;
-    }
-
-    public Node getRoot() {
-        return this.settingsRoot;
     }
 
     public void commandsDataAction() {
@@ -336,5 +319,22 @@ public class SettingController {
                 this.backgroundColorPicker.getValue(),
                 objects,
                 fields);
+    }
+
+    private Stage getStage() {
+        return (Stage) settingsRoot.getScene().getWindow();
+    }
+
+    private Stage getOwner() {
+        return Main.stage;
+    }
+
+    public Node getRoot() {
+        return this.settingsRoot;
+    }
+
+    private Node getOwnerRoot() {
+        final Stage owner = getOwner();
+        return owner.getScene().lookup("#root");
     }
 }

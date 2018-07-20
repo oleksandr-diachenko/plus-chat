@@ -82,10 +82,6 @@ public class ChatController implements Observer {
     }
 
     private void onTopInit() {
-        setOnTopGraphic();
-    }
-
-    private void setOnTopGraphic() {
         String name = "/img/pin-enabled.png";
         if (!isOnTop) {
             name = "/img/pin-disabled.png";
@@ -120,18 +116,25 @@ public class ChatController implements Observer {
     }
 
     public void settingsOnAction() {
-        openSettingsStage();
-    }
-
-    private Stage getStage() {
-        return (Stage) this.container.getScene().getWindow();
-    }
-
-    private void openSettingsStage() {
         final SettingsDialog dialog = new SettingsDialog();
         dialog.openDialog(getStage(), this.root);
         this.setting.setDisable(true);
+    }
 
+    public void onTopOnAction() {
+        this.isOnTop = !this.isOnTop;
+        final Stage chatRoot = Main.stage;
+        chatRoot.setAlwaysOnTop(this.isOnTop);
+        String name = "/img/pin-enabled.png";
+        if (!isOnTop) {
+            name = "/img/pin-disabled.png";
+        }
+        final ImageView imageView = new ImageView(new Image(name));
+        imageView.setFitWidth(15);
+        imageView.setFitHeight(15);
+        onTop.setGraphic(imageView);
+        this.settings.setProperty("root.always.on.top", String.valueOf(this.isOnTop));
+        AppProperty.setProperties("./settings/settings.properties", this.settings);
     }
 
     @Override
@@ -249,12 +252,7 @@ public class ChatController implements Observer {
         return this.setting;
     }
 
-    public void onTopOnAction() {
-        this.isOnTop = !this.isOnTop;
-        final Stage chatRoot = Main.stage;
-        chatRoot.setAlwaysOnTop(this.isOnTop);
-        setOnTopGraphic();
-        this.settings.setProperty("root.always.on.top", String.valueOf(this.isOnTop));
-        AppProperty.setProperties("./settings/settings.properties", this.settings);
+    private Stage getStage() {
+        return (Stage) this.container.getScene().getWindow();
     }
 }

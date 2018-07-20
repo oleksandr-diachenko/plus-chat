@@ -17,7 +17,7 @@ public class ConfirmController {
     public void confirmAction() {
         this.confirmed = true;
         final Stage stage = getStage();
-        final Stage owner = (Stage) stage.getOwner();
+        final Stage owner = getOwner();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
         owner.close();
     }
@@ -32,5 +32,9 @@ public class ConfirmController {
 
     private Stage getStage() {
         return (Stage) this.root.getScene().getWindow();
+    }
+
+    private Stage getOwner() {
+        return (Stage) getStage().getOwner();
     }
 }

@@ -28,25 +28,23 @@ public class DataDialog {
 
     private final static Logger logger = Logger.getLogger(DataDialog.class);
 
-    private Stage stage;
-
-    public void openDialog(final Stage ownerStage, final Properties settings, final Color fontColor, final Color baseColor,
+    public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor,
                            final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {
-        this.stage = new Stage();
-        this.stage.setResizable(false);
+        final Stage stage = new Stage();
+        stage.setResizable(false);
         final String language = settings.getProperty("root.language");
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
             final Region root = getRoot(bundle);
-            final UndecoratorScene undecorator = getScene(settings, root);
+            final UndecoratorScene undecorator = getScene(stage, settings, root);
             StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor));
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             final DataController dataController = (DataController) root.getUserData();
             final TableView<Object> table = dataController.getTable();
             initData(table, objects, fields, fontColor);
-            this.stage.setScene(undecorator);
-            this.stage.initOwner(ownerStage.getScene().getWindow());
-            this.stage.show();
+            stage.setScene(undecorator);
+            stage.initOwner(owner);
+            stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -82,8 +80,8 @@ public class DataDialog {
         };
     }
 
-    private UndecoratorScene getScene(final Properties settings, final Region root) {
-        final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
+    private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
+        final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
         undecorator.getStylesheets().add("/theme/" + settings.getProperty("root.theme") + "/data.css");
         return undecorator;
     }
