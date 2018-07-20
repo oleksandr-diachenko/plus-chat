@@ -5,56 +5,73 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>positiv</groupId>
-    <artifactId>twitch</artifactId>
+    <artifactId>plus-chat</artifactId>
     <version>1.0-SNAPSHOT</version>
+
+    <properties>
+        <project.java.version>1.8</project.java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <maven.resources.plugin>3.1.0</maven.resources.plugin>
+        <maven.compiler.plugin>3.7.0</maven.compiler.plugin>
+        <pircbotx>2.1</pircbotx>
+        <json>20180130</json>
+        <jackson.mapper.asl>1.9.13</jackson.mapper.asl>
+        <slf4j.simple>1.7.5</slf4j.simple>
+        <log4j>1.2.17</log4j>
+        <junit>4.12</junit>
+        <undecorator>1.0</undecorator>
+        <lombok>1.16.8</lombok>
+        <commons-lang3>3.7</commons-lang3>
+    </properties>
 
     <dependencies>
         <dependency>
             <groupId>org.pircbotx</groupId>
             <artifactId>pircbotx</artifactId>
-            <version>2.1</version>
+            <version>${pircbotx}</version>
         </dependency>
         <dependency>
             <groupId>org.json</groupId>
             <artifactId>json</artifactId>
-            <version>20180130</version>
+            <version>${json}</version>
         </dependency>
         <dependency>
             <groupId>org.codehaus.jackson</groupId>
             <artifactId>jackson-mapper-asl</artifactId>
-            <version>1.9.13</version>
+            <version>${jackson.mapper.asl}</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.5</version>
+            <version>${slf4j.simple}</version>
         </dependency>
         <dependency>
             <groupId>log4j</groupId>
             <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
+            <version>${log4j}</version>
         </dependency>
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>${junit}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>in.sidefx</groupId>
             <artifactId>undecorator</artifactId>
-            <version>1.0</version>
+            <version>${undecorator}</version>
         </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
-            <version>1.16.8</version>
+            <version>${lombok}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
+            <version>${commons-lang3}</version>
         </dependency>
     </dependencies>
     <build>
@@ -62,9 +79,19 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin}</version>
                 <configuration>
-                    <source>8</source>
-                    <target>8</target>
+                    <source>${project.java.version}</source>
+                    <target>${project.java.version}</target>
+                    <encoding>${project.build.sourceEncoding}</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-resources-plugin</artifactId>
+                <version>${maven.resources.plugin}</version>
+                <configuration>
+                    <encoding>${project.build.sourceEncoding}</encoding>
                 </configuration>
             </plugin>
             <plugin>
