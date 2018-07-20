@@ -3,6 +3,7 @@ package chat.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 
 /**
  * @author Alexander Diachenko.
@@ -18,9 +19,11 @@ public class DataController {
         return this.table;
     }
 
-    public void confirmAction() {
+    public void closeAction() {
+        getStage().close();
     }
 
-    public void cancelAction() {
+    private Stage getStage() {
+        return (Stage) root.getScene().getWindow();
     }
 }
