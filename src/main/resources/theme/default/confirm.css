@@ -3,11 +3,13 @@
 }
 
 #question {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 60;
+    -fx-pref-width: 44;
     -fx-background-image: url("../../img/question.png");
-    -fx-background-size: 45 45;
-    -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
-    -fx-background-position: center;
 }
 
 #confirm {
