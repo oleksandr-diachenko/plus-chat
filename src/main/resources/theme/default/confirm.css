@@ -18,16 +18,14 @@
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+    -fx-background-radius: 0;
+    -fx-border-style: null;
 }
 
 #confirm:hover {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
-    -fx-text-fill: -fx-text-base-color;
-    -fx-alignment: CENTER;
-    -fx-content-display: LEFT;
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/confirm-hover.png");
+    -fx-background-repeat:no-repeat;
 }
 
 #cancel {
@@ -38,14 +36,12 @@
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
     -fx-background-position: center;
+    -fx-background-radius: 0;
+    -fx-border-style: null;
 }
 
 #cancel:hover {
-    -fx-background-color: -fx-shadow-highlight-color, -fx-outer-border, -fx-inner-border, -fx-body-color;
-    -fx-background-insets: 0 0 -1 0, 0, 1, 2;
-    -fx-background-radius: 3px, 3px, 2px, 1px;
-    -fx-padding: 0.333333em 0.666667em 0.333333em 0.666667em;
-    -fx-text-fill: -fx-text-base-color;
-    -fx-alignment: CENTER;
-    -fx-content-display: LEFT;
+    -fx-background-color: null;
+    -fx-background-image:url("../../img/cancel-hover.png");
+    -fx-background-repeat:no-repeat;
 }
