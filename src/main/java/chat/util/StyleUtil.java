@@ -1,6 +1,7 @@
 package chat.util;
 
 import javafx.scene.Node;
+import javafx.stage.Stage;
 
 import java.util.Collections;
 import java.util.List;
@@ -48,7 +49,7 @@ public class StyleUtil {
         }
     }
 
-    public static void reverseStyle(final Properties settings, final Node chatRoot) {
+    public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
         StyleUtil.setMessageStyle(chatRoot,
                 settings.getProperty("font.size"),
                 settings.getProperty("nick.font.color"),
@@ -57,5 +58,6 @@ public class StyleUtil {
                 settings.getProperty("direct.message.font.color")
         );
         StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty("root.base.color"), settings.getProperty("root.background.color"));
+        owner.setOpacity(Double.parseDouble(settings.getProperty("background.transparency")) / 100);
     }
 }

@@ -34,7 +34,7 @@ public class SettingsDialog {
         try {
             final Region root = getRoot(bundle);
             final UndecoratorScene undecorator = getScene(stage, settings, root);
-            stageEvents(ownerRoot, stage, settings, root);
+            stageEvents(owner, ownerRoot, stage, settings, root);
             root.setStyle(StyleUtil.getRootStyle(settings.getProperty("root.base.color"), settings.getProperty("root.background.color")));
             stage.setScene(undecorator);
             stage.initOwner(owner);
@@ -50,7 +50,7 @@ public class SettingsDialog {
         return undecorator;
     }
 
-    private void stageEvents(final Node ownerRoot, final Stage stage, final Properties settings, final Region root) {
+    private void stageEvents(final Stage owner, final Node ownerRoot, final Stage stage, final Properties settings, final Region root) {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
             for (Node label : labels) {
@@ -61,7 +61,7 @@ public class SettingsDialog {
         stage.setOnCloseRequest(event -> {
             final ChatController chatController = (ChatController) ownerRoot.getUserData();
             chatController.getSetting().setDisable(false);
-            StyleUtil.reverseStyle(settings, ownerRoot);
+            StyleUtil.reverseStyle(settings, owner, ownerRoot);
         });
     }
 
