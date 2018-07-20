@@ -218,7 +218,7 @@
             </GridPane>
         </Tab>
     </TabPane>
-    <HBox id="buttons-hbox" alignment="CENTER_RIGHT" prefHeight="100.0" prefWidth="200.0" spacing="40.0"
+    <HBox fx:id="buttons" alignment="CENTER_RIGHT" minHeight="60.0" prefHeight="60.0" maxHeight="60.0" spacing="40.0"
           GridPane.columnIndex="1" GridPane.rowIndex="10">
         <GridPane.margin>
             <Insets/>
