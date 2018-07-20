@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.util;
 
 import chat.util.TimeUtil;
 import org.junit.Test;

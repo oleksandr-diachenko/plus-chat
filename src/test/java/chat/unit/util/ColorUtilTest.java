@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.util;
 
 import chat.util.ColorUtil;
 import javafx.scene.paint.Color;

@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.util;
 
 import chat.util.JSONParser;
 import org.junit.Test;

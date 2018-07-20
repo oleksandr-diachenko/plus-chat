@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.repository;
 
 import chat.model.entity.Command;
 import chat.model.repository.CommandRepository;

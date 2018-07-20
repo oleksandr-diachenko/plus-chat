@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.repository;
 
 import chat.model.entity.Rank;
 import chat.model.repository.JSONRankRepository;

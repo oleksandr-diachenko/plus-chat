@@ -1,4 +1,4 @@
-package twitch;
+package chat.unit.util;
 
 import chat.util.AppProperty;
 import org.junit.Test;
