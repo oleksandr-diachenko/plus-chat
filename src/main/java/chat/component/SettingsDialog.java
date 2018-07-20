@@ -36,7 +36,7 @@ public class SettingsDialog {
             final Region root = getRoot(bundle);
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             stageEvents(owner, ownerRoot, stage, settings, root);
-            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR), settings.getProperty("root.background.color")));
+            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR), settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
             stage.setScene(undecorator);
             stage.initOwner(owner);
             stage.show();
@@ -55,7 +55,7 @@ public class SettingsDialog {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
             for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.NICK_FONT_COLOR)));
+                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR)));
             }
         });
 

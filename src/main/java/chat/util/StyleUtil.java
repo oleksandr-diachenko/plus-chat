@@ -53,10 +53,10 @@ public class StyleUtil {
     public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
         StyleUtil.setMessageStyle(chatRoot,
                 settings.getProperty(Settings.FONT_SIZE),
-                settings.getProperty(Settings.NICK_FONT_COLOR),
-                settings.getProperty(Settings.SEPARATOR_FONT_COLOR),
-                settings.getProperty(Settings.MESSAGE_FONT_COLOR),
-                settings.getProperty(Settings.DIRECT_MESSAGE_FONT_COLOR)
+                settings.getProperty(Settings.FONT_NICK_COLOR),
+                settings.getProperty(Settings.FONT_SEPARATOR_COLOR),
+                settings.getProperty(Settings.FONT_MESSAGE_COLOR),
+                settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)
         );
         StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR));

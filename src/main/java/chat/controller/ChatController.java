@@ -71,7 +71,7 @@ public class ChatController implements Observer {
         this.commandRepository = new JSONCommandRepository("./data/commands.json");
         this.directRepository = new JSONDirectRepository("./data/directs.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
-        this.isOnTop = Boolean.parseBoolean(this.settings.getProperty("root.always.on.top"));
+        this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
         this.root.setStyle(StyleUtil.getRootStyle(
                 this.settings.getProperty(Settings.ROOT_BASE_COLOR),
@@ -153,11 +153,11 @@ public class ChatController implements Observer {
             final Label image = getRankImage(user);
             textFlow.getChildren().add(image);
         }
-        final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.NICK_FONT_COLOR));
-        final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.SEPARATOR_FONT_COLOR));
+        final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
+        final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         textFlow.getChildren().addAll(name, separator);
-        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty(Settings.MESSAGE_FONT_COLOR),
-                this.settings.getProperty(Settings.DIRECT_MESSAGE_FONT_COLOR));
+        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty(Settings.FONT_MESSAGE_COLOR),
+                this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR));
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         messageBox.getChildren().add(textFlow);
         this.messages.add(messageBox);
