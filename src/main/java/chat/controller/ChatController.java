@@ -216,7 +216,6 @@ public class ChatController implements Observer {
             return new ImageView(new Image(fis));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return null;
     }

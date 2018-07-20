@@ -30,7 +30,6 @@ public class AppProperty {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            exception.printStackTrace();
         }
         return properties;
     }
