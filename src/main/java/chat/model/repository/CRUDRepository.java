@@ -1,6 +1,5 @@
 package chat.model.repository;
 
-import java.util.Optional;
 import java.util.Set;
 
 /**
@@ -9,8 +8,6 @@ import java.util.Set;
 public interface CRUDRepository<T> {
 
     Set<T> getAll();
-
-    Optional<T> getByName(final String name);
 
     T add(T t);
 
