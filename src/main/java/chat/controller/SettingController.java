@@ -205,12 +205,12 @@ public class SettingController {
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
-                revertStyle();
+                flushSettings();
             }
         });
     }
 
-    private void revertStyle() {
+    private void flushSettings() {
         this.settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, this.transparencyValue.getText());
         this.settings.setProperty(Settings.FONT_SIZE, this.fontSize.getText());
         this.settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(this.languageChoiceBox.getValue()));
