@@ -102,6 +102,7 @@ public class ChatController implements Observer {
                     .setName(connect.getProperty("botname"))
                     .addServer("irc.chat.twitch.tv", 6667)
                     .setServerPassword(connect.getProperty("oauth"))
+                    .setAutoReconnect(true)
                     .addListener(listener)
                     .addAutoJoinChannel("#" + connect.getProperty("channel"))
                     .buildConfiguration();
