@@ -25,6 +25,12 @@
         <commons-lang3>3.7</commons-lang3>
     </properties>
 
+    <repositories>
+        <repository>
+            <id>local-repository</id>
+            <url>file://${basedir}/lib</url>
+        </repository>
+    </repositories>
     <dependencies>
         <dependency>
             <groupId>org.pircbotx</groupId>
@@ -57,11 +63,11 @@
             <version>${junit}</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>in.sidefx</groupId>
-            <artifactId>undecorator</artifactId>
-            <version>${undecorator}</version>
-        </dependency>
+            <dependency>
+                <groupId>in.side.fx</groupId>
+                <artifactId>undecorator</artifactId>
+                <version>1.0.0</version>
+            </dependency>
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
