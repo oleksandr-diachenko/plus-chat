@@ -87,7 +87,7 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private void runOtherCommands(final String command) {
-        final Optional<Command> commandByName = this.commandRepository.getByName(command);
+        final Optional<Command> commandByName = this.commandRepository.getCommandByName(command);
         if (commandByName.isPresent()) {
             final Command comm = commandByName.get();
             sendMessage(comm.getResponse());
@@ -96,7 +96,7 @@ public class Bot extends ListenerAdapter implements Subject {
 
     private void runRankCommand(final GenericMessageEvent event) {
         final String nick = event.getUser().getNick();
-        final Optional<User> userByName = this.userRepository.getByName(nick);
+        final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
             String customName = nick;
@@ -124,7 +124,7 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private User updateUser(final String nick) {
-        final Optional<User> userByName = this.userRepository.getByName(nick);
+        final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             return updateExistingUser(userByName.get());
         } else {

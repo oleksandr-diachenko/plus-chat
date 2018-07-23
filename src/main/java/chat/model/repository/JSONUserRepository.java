@@ -41,7 +41,7 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getByName(final String name) {
+    public Optional<User> getUserByName(final String name) {
         for (User user : this.users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);

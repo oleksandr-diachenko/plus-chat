@@ -25,13 +25,13 @@ public class UserRepositoryTest {
 
     @Test
     public void getUserByNameTest() {
-        final Optional<User> userByName = this.userRepository.getByName("POSITIV");
+        final Optional<User> userByName = this.userRepository.getUserByName("POSITIV");
         assertTrue(userByName.isPresent());
     }
 
     @Test
     public void getUserByIncorrectNameTest() {
-        final Optional<User> userByName = this.userRepository.getByName("QWE");
+        final Optional<User> userByName = this.userRepository.getUserByName("QWE");
         assertTrue(!userByName.isPresent());
     }
 

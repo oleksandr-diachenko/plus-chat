@@ -41,7 +41,7 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Optional<Command> getByName(final String name) {
+    public Optional<Command> getCommandByName(final String name) {
         for (Command command : this.commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);

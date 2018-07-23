@@ -25,13 +25,13 @@ public class CommandRepositoryTest {
 
     @Test
     public void getCommandByNameTest() {
-        final Optional<Command> commandByName = this.commandRepository.getByName("!info");
+        final Optional<Command> commandByName = this.commandRepository.getCommandByName("!info");
         assertTrue(commandByName.isPresent());
     }
 
     @Test
     public void getCommandByIncorrectNameTest() {
-        final Optional<Command> commandByName = commandRepository.getByName("!QWE");
+        final Optional<Command> commandByName = this.commandRepository.getCommandByName("!QWE");
         assertTrue(!commandByName.isPresent());
     }
 

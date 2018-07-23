@@ -142,7 +142,7 @@ public class ChatController implements Observer {
     public void update(final String nick, final String message) {
         final HBox messageBox = new HBox();
         messageBox.setId("messageBox");
-        final Optional<User> userByName = userRepository.getByName(nick);
+        final Optional<User> userByName = this.userRepository.getUserByName(nick);
         final TextFlow textFlow = new TextFlow();
         String customName = nick;
         if (userByName.isPresent()) {
@@ -170,7 +170,7 @@ public class ChatController implements Observer {
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
         for (String word : words) {
-            final Optional<Smile> smileByName = this.smileRepository.getByName(word);
+            final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
                 final Label image = getImage(smile);

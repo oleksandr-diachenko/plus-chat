@@ -9,9 +9,9 @@ public interface CRUDRepository<T> {
 
     Set<T> getAll();
 
-    T add(T t);
+    T add(final T t);
 
-    T update(T t);
+    T update(final T t);
 
-    T delete(T t);
+    T delete(final T t);
 }

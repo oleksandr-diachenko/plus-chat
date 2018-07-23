@@ -38,7 +38,7 @@ public class JSONSmileRepository implements SmileRepository {
     }
 
     @Override
-    public Optional<Smile> getByName(final String name) {
+    public Optional<Smile> getSmileByName(final String name) {
         for (Smile smile : this.smiles) {
             if (smile.getName().equalsIgnoreCase(name)) {
                 return Optional.of(smile);

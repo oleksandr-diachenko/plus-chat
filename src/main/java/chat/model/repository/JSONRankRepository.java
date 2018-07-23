@@ -38,16 +38,6 @@ public class JSONRankRepository implements RankRepository {
     }
 
     @Override
-    public Optional<Rank> getByName(final String name) {
-        for (Rank rank : this.ranks) {
-            if (rank.getName().equalsIgnoreCase(name)) {
-                return Optional.of(rank);
-            }
-        }
-        return Optional.empty();
-    }
-
-    @Override
     public Rank add(final Rank rank) {
         this.ranks.add(rank);
         flush();
