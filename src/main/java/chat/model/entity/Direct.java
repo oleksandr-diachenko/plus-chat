@@ -31,7 +31,7 @@ public class Direct {
     @Override
     public String toString() {
         return "Direct{" +
-                "name='" + this.word + '\'' +
+                "word='" + this.word + '\'' +
                 '}';
     }
 }

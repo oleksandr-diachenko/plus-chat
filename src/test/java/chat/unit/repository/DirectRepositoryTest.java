@@ -24,13 +24,13 @@ public class DirectRepositoryTest {
     }
 
     @Test
-    public void getDirectByNameTest() {
-        final Optional<Direct> directByName = this.directRepository.getDirectByWord("POSITIV");
-        assertTrue(directByName.isPresent());
+    public void getDirectByWordTest() {
+        final Optional<Direct> directByWord = this.directRepository.getDirectByWord("POSITIV");
+        assertTrue(directByWord.isPresent());
     }
 
     @Test
-    public void getDirectByIncorrectNameTest() {
+    public void getDirectByIncorrectWordTest() {
         final Optional<Direct> directByName = this.directRepository.getDirectByWord("QWE");
         assertTrue(!directByName.isPresent());
     }
