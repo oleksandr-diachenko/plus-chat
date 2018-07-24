@@ -11,7 +11,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,7 +22,7 @@ import java.util.*;
  */
 public class ConfirmDialog {
 
-    private final static Logger logger = Logger.getLogger(ConfirmDialog.class);
+    private final static Logger logger = LogManager.getLogger(ConfirmDialog.class);
 
     private Stage stage;
     private ConfirmController controller;

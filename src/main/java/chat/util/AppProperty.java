@@ -1,6 +1,7 @@
 package chat.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -13,7 +14,7 @@ import java.util.Properties;
  */
 public class AppProperty {
 
-    private final static Logger logger = Logger.getLogger(AppProperty.class);
+    private final static Logger logger = LogManager.getLogger(AppProperty.class);
 
     public static Properties getProperty(final String path) {
         final Properties properties = new Properties();

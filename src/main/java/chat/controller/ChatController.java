@@ -26,7 +26,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -40,7 +41,7 @@ import java.util.*;
  */
 public class ChatController implements Observer {
 
-    private final static Logger logger = Logger.getLogger(ChatController.class);
+    private final static Logger logger = LogManager.getLogger(ChatController.class);
 
     public static PircBotX bot;
     @FXML

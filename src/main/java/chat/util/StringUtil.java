@@ -1,6 +1,7 @@
 package chat.util;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.UnsupportedEncodingException;
 
@@ -9,7 +10,7 @@ import java.io.UnsupportedEncodingException;
  */
 public class StringUtil {
 
-    private final static Logger logger = Logger.getLogger(StringUtil.class);
+    private final static Logger logger = LogManager.getLogger(StringUtil.class);
 
     /**
      * Convert string to byte array and return string in UTF-8

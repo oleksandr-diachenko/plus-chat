@@ -55,6 +55,7 @@ public class SettingController {
     private Map<String, String> languages;
     private Node ownerRoot;
 
+    @FXML
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.ownerRoot = getOwnerRoot();

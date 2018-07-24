@@ -9,23 +9,17 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
 
-    static {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy hh-mm-ss");
-        System.setProperty("current.date", dateFormat.format(new Date()));
-    }
-
-    private final static Logger logger = Logger.getLogger(Main.class);
+    private final static Logger logger = LogManager.getLogger(Main.class);
 
     public static Stage stage;
 

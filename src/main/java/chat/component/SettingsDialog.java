@@ -10,7 +10,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.Locale;
@@ -23,7 +24,7 @@ import java.util.Set;
  */
 public class SettingsDialog {
 
-    private final static Logger logger = Logger.getLogger(SettingsDialog.class);
+    private final static Logger logger = LogManager.getLogger(SettingsDialog.class);
 
     public void openDialog(final Stage owner, final Node ownerRoot) {
         final Stage stage = new Stage();

@@ -14,7 +14,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.IOException;
 import java.util.*;
@@ -24,7 +25,7 @@ import java.util.*;
  */
 public class DataDialog {
 
-    private final static Logger logger = Logger.getLogger(DataDialog.class);
+    private final static Logger logger = LogManager.getLogger(DataDialog.class);
 
     public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor,
                            final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {

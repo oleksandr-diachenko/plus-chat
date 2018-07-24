@@ -2,7 +2,8 @@ package chat.model.repository;
 
 import chat.model.entity.Smile;
 import chat.util.JSONParser;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 
@@ -15,7 +16,7 @@ import java.util.*;
  */
 public class JSONSmileRepository implements SmileRepository {
 
-    private final static Logger logger = Logger.getLogger(JSONSmileRepository.class);
+    private final static Logger logger = LogManager.getLogger(JSONSmileRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Smile> smiles;
