@@ -79,6 +79,7 @@ public class JSONRankRepository implements RankRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    throw new RuntimeException("Ranks failed to save. Put ranks.json to data/");
                 }
             }
         });

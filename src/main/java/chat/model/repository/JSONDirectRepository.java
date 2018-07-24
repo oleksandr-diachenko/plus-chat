@@ -77,6 +77,7 @@ public class JSONDirectRepository implements DirectRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    throw new RuntimeException("Directs failed to save. Put directs.json to data/");
                 }
             }
         });

@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <RollingFile name="file" fileName="./logs/plus-chat.log.zip"
-                     filePattern="./logs/%d{yyyy-MM-dd-hh-mm}.log.zip">
+        <RollingFile name="file" fileName="./logs/plus-chat.log"
+                     filePattern="./logs/%d{yyyy-MM-dd-hh-mm}.log">
             <PatternLayout>
                 <pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</pattern>
             </PatternLayout>

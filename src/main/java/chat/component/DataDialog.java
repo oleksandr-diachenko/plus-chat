@@ -46,6 +46,7 @@ public class DataDialog {
             stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Data view failed to load");
         }
     }
 

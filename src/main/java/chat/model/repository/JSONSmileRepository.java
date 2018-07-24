@@ -77,6 +77,7 @@ public class JSONSmileRepository implements SmileRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.smiles);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    throw new RuntimeException("Smiles failed to save. Put smiles.json to data/");
                 }
             }
         });

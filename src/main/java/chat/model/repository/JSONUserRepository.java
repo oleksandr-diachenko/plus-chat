@@ -79,6 +79,7 @@ public class JSONUserRepository implements UserRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    throw new RuntimeException("Users failed to save. Put users.json to data/");
                 }
             }
         });
