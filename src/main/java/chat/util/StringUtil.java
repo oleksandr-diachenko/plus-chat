@@ -25,6 +25,6 @@ public class StringUtil {
         } catch (UnsupportedEncodingException exception) {
             logger.error(exception.getMessage(), exception);
         }
-        return "";
+        return string;
     }
 }

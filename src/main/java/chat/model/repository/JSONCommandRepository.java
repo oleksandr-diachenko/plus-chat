@@ -80,6 +80,7 @@ public class JSONCommandRepository implements CommandRepository {
                     this.mapper.writeValue(new FileOutputStream(path), this.commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
+                    throw new RuntimeException("Commands failed to save. Put commands.json to data/");
                 }
             }
         });

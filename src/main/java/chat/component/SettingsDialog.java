@@ -43,6 +43,7 @@ public class SettingsDialog {
             stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Settings view failed to load");
         }
     }
 

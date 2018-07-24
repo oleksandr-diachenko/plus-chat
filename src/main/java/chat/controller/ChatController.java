@@ -33,6 +33,7 @@ import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -112,6 +113,8 @@ public class ChatController implements Observer {
                 bot.startBot();
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
+                throw new RuntimeException("Bot failed to start.\n " +
+                        "Check properties in settings/twitch.properties and restart application.");
             }
         });
         thread.setDaemon(true);
@@ -149,7 +152,7 @@ public class ChatController implements Observer {
         String customName = nick;
         if (userByName.isPresent()) {
             final User user = userByName.get();
-            if(user.hasCustomName()){
+            if (user.hasCustomName()) {
                 customName = user.getCustomName();
             }
             final Label image = getRankImage(user);
@@ -175,8 +178,13 @@ public class ChatController implements Observer {
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
-                final Label image = getImage(smile);
-                nodes.add(image);
+                try {
+                    nodes.add(getImage(smile));
+                } catch (FileNotFoundException exception) {
+                    logger.error(exception.getMessage(), exception);
+                    final Text text = getText(message, color, directColor, word);
+                    nodes.add(text);
+                }
             } else {
                 final Text text = getText(message, color, directColor, word);
                 nodes.add(text);
@@ -197,7 +205,7 @@ public class ChatController implements Observer {
         return text;
     }
 
-    private Label getImage(final Smile smile) {
+    private Label getImage(final Smile smile) throws FileNotFoundException {
         final Label image = new Label();
         final ImageView imageView = getImageView(smile.getImagePath());
         image.setGraphic(imageView);
@@ -215,47 +223,43 @@ public class ChatController implements Observer {
         return false;
     }
 
-    private ImageView getImageView(final String path) {
-        try (final FileInputStream fis = new FileInputStream(path)) {
+    private ImageView getImageView(final String path) throws FileNotFoundException {
+        final FileInputStream fis = new FileInputStream(path);
             return new ImageView(new Image(fis));
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
         }
-        return null;
-    }
 
-    private Label getRankImage(final User user) {
-        final Label image = new Label();
-        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
-        image.setId("rank-image");
-        try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-            final ImageView imageView = new ImageView(new Image(fis));
-            imageView.setFitHeight(20);
-            imageView.setFitWidth(20);
-            image.setGraphic(imageView);
-            return image;
-        } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+        private Label getRankImage ( final User user){
+            final Label image = new Label();
+            final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+            image.setId("rank-image");
+            try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+                final ImageView imageView = new ImageView(new Image(fis));
+                imageView.setFitHeight(20);
+                imageView.setFitWidth(20);
+                image.setGraphic(imageView);
+                return image;
+            } catch (IOException exception) {
+                logger.error(exception.getMessage(), exception);
+            }
+            return new Label();
         }
-        return new Label();
-    }
 
-    private Text getText(final String string, final String id, final String color) {
-        final Text text = new Text(StringUtil.getUTF8String(string));
-        text.setId(id);
-        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
-        return text;
-    }
+        private Text getText ( final String string, final String id, final String color){
+            final Text text = new Text(StringUtil.getUTF8String(string));
+            text.setId(id);
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+            return text;
+        }
 
-    public void setSettings(final Properties settings) {
-        this.settings = settings;
-    }
+        public void setSettings ( final Properties settings){
+            this.settings = settings;
+        }
 
-    public Button getSetting() {
-        return this.setting;
-    }
+        public Button getSetting () {
+            return this.setting;
+        }
 
-    private Stage getStage() {
-        return (Stage) this.container.getScene().getWindow();
+        private Stage getStage () {
+            return (Stage) this.container.getScene().getWindow();
+        }
     }
-}

@@ -22,6 +22,8 @@ public class AppProperty {
             properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Properties " + path + " failed to load. \n" +
+                    "Put properties to settings/ and restart application.");
         }
         return properties;
     }
@@ -31,6 +33,8 @@ public class AppProperty {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Properties " + path + " failed to save. \n" +
+                    "Put properties to settings/");
         }
         return properties;
     }

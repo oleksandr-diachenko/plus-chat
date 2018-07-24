@@ -44,6 +44,7 @@ public class ConfirmDialog {
             this.stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Confirm view failed to load");
         }
     }
 

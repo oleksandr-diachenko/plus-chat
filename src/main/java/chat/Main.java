@@ -44,6 +44,7 @@ public class Main extends Application {
             primaryStage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
+            throw new RuntimeException("Chat view failed to load");
         }
     }
 
