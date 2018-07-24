@@ -8,7 +8,7 @@ import java.util.Optional;
 /**
  * @author Alexander Diachenko.
  */
-public interface UserRepository extends CRUDRepository<User>{
+public interface UserRepository extends CRUDRepository<User> {
 
     Optional<User> getUserByName(final String name);
 }

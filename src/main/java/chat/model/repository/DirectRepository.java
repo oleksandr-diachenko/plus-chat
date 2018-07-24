@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * @author Alexander Diachenko.
  */
-public interface DirectRepository extends CRUDRepository<Direct>{
+public interface DirectRepository extends CRUDRepository<Direct> {
 
     Optional<Direct> getDirectByWord(final String word);
 }

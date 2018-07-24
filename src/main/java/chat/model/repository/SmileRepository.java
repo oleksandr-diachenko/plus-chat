@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * @author Alexander Diachenko.
  */
-public interface SmileRepository extends CRUDRepository<Smile>{
+public interface SmileRepository extends CRUDRepository<Smile> {
 
     Optional<Smile> getSmileByName(final String name);
 }

@@ -7,7 +7,7 @@ import java.util.Optional;
 /**
  * @author Alexander Diachenko.
  */
-public interface CommandRepository extends CRUDRepository<Command>{
+public interface CommandRepository extends CRUDRepository<Command> {
 
     Optional<Command> getCommandByName(final String name);
 }

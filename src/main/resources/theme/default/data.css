@@ -4,7 +4,7 @@
 
 .table-view {
     -fx-background-color: transparent;
-    -fx-base:#424242;
+    -fx-base: #424242;
 }
 
 .table-view .column-header .label {
@@ -30,6 +30,6 @@
 
 #cancel:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/cancel-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/cancel-hover.png");
+    -fx-background-repeat: no-repeat;
 }

@@ -26,8 +26,8 @@
 
 #confirm:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/confirm-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/confirm-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #cancel {
@@ -44,6 +44,6 @@
 
 #cancel:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/cancel-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/cancel-hover.png");
+    -fx-background-repeat: no-repeat;
 }

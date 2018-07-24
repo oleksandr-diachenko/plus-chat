@@ -100,7 +100,7 @@ public class Bot extends ListenerAdapter implements Subject {
         if (userByName.isPresent()) {
             final User user = userByName.get();
             String customName = nick;
-            if(user.hasCustomName()) {
+            if (user.hasCustomName()) {
                 customName = user.getCustomName();
             }
             final Rank rank = this.rankRepository.getRankByExp(user.getExp());

@@ -225,41 +225,41 @@ public class ChatController implements Observer {
 
     private ImageView getImageView(final String path) throws FileNotFoundException {
         final FileInputStream fis = new FileInputStream(path);
-            return new ImageView(new Image(fis));
-        }
-
-        private Label getRankImage ( final User user){
-            final Label image = new Label();
-            final Rank rank = this.rankRepository.getRankByExp(user.getExp());
-            image.setId("rank-image");
-            try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-                final ImageView imageView = new ImageView(new Image(fis));
-                imageView.setFitHeight(20);
-                imageView.setFitWidth(20);
-                image.setGraphic(imageView);
-                return image;
-            } catch (IOException exception) {
-                logger.error(exception.getMessage(), exception);
-            }
-            return new Label();
-        }
-
-        private Text getText ( final String string, final String id, final String color){
-            final Text text = new Text(StringUtil.getUTF8String(string));
-            text.setId(id);
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
-            return text;
-        }
-
-        public void setSettings ( final Properties settings){
-            this.settings = settings;
-        }
-
-        public Button getSetting () {
-            return this.setting;
-        }
-
-        private Stage getStage () {
-            return (Stage) this.container.getScene().getWindow();
-        }
+        return new ImageView(new Image(fis));
     }
+
+    private Label getRankImage(final User user) {
+        final Label image = new Label();
+        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        image.setId("rank-image");
+        try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+            final ImageView imageView = new ImageView(new Image(fis));
+            imageView.setFitHeight(20);
+            imageView.setFitWidth(20);
+            image.setGraphic(imageView);
+            return image;
+        } catch (IOException exception) {
+            logger.error(exception.getMessage(), exception);
+        }
+        return new Label();
+    }
+
+    private Text getText(final String string, final String id, final String color) {
+        final Text text = new Text(StringUtil.getUTF8String(string));
+        text.setId(id);
+        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+        return text;
+    }
+
+    public void setSettings(final Properties settings) {
+        this.settings = settings;
+    }
+
+    public Button getSetting() {
+        return this.setting;
+    }
+
+    private Stage getStage() {
+        return (Stage) this.container.getScene().getWindow();
+    }
+}

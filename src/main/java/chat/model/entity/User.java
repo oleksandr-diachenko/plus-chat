@@ -19,7 +19,7 @@ public class User {
     private String lastMessageDate;
     private long exp;
 
-    public boolean hasCustomName(){
+    public boolean hasCustomName() {
         return customName != null;
     }
 

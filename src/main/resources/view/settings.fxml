@@ -205,7 +205,8 @@
                         <Insets left="100.0"/>
                     </GridPane.margin>
                 </Label>
-                <Button fx:id="commandsData" onAction="#commandsDataAction" GridPane.columnIndex="1" GridPane.rowIndex="0"
+                <Button fx:id="commandsData" onAction="#commandsDataAction" GridPane.columnIndex="1"
+                        GridPane.rowIndex="0"
                         GridPane.halignment="CENTER"/>
                 <Button fx:id="usersData" onAction="#usersDataAction" GridPane.columnIndex="1" GridPane.rowIndex="1"
                         GridPane.halignment="CENTER"/>

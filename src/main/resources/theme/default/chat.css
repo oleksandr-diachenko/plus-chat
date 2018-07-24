@@ -18,8 +18,8 @@
 
 #setting:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/settings-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/settings-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #onTop {
@@ -28,10 +28,10 @@
     -fx-background-position: center;
 }
 
-#actions{
+#actions {
     -fx-alignment: TOP_LEFT;
 }
 
-#messageBox{
+#messageBox {
     -fx-alignment: TOP_LEFT;
 }

@@ -23,8 +23,8 @@
 
 #confirm:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/confirm-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/confirm-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #cancel {
@@ -39,8 +39,8 @@
 
 #cancel:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/cancel-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/cancel-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #usersData {
@@ -55,8 +55,8 @@
 
 #usersData:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/data/users-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/data/users-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #smilesData {
@@ -71,8 +71,8 @@
 
 #smilesData:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/data/smiles-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/data/smiles-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #commandsData {
@@ -87,8 +87,8 @@
 
 #commandsData:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/data/commands-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/data/commands-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #ranksData {
@@ -103,8 +103,8 @@
 
 #ranksData:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/data/ranks-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/data/ranks-hover.png");
+    -fx-background-repeat: no-repeat;
 }
 
 #directsData {
@@ -119,6 +119,6 @@
 
 #directsData:hover {
     -fx-background-color: null;
-    -fx-background-image:url("../../img/data/directs-hover.png");
-    -fx-background-repeat:no-repeat;
+    -fx-background-image: url("../../img/data/directs-hover.png");
+    -fx-background-repeat: no-repeat;
 }
