@@ -1,25 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configuration>
     <Appenders>
-        <RollingFile name="file" append="false" fileName="./logs/plus-chat-${date:yyyy-MM-dd}.log"
-                     filePattern="./logs/plus-chat-%d{yyyy-MM-dd}-%i.log">
+        <RollingFile name="file" fileName="./logs/plus-chat.log.zip"
+                     filePattern="./logs/%d{yyyy-MM-dd-hh-mm}.log.zip">
             <PatternLayout>
-                <pattern>[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n</pattern>
+                <pattern>%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n</pattern>
             </PatternLayout>
             <Policies>
-                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+                <TimeBasedTriggeringPolicy interval="2" modulate="true"/>
             </Policies>
+            <DefaultRolloverStrategy max="5"/>
         </RollingFile>
         <Console name="console" target="SYSTEM_OUT">
-            <PatternLayout pattern="[%-5level] %d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %c{1} - %msg%n"/>
+            <PatternLayout pattern="%d{yyyy-MMM-dd HH:mm:ss a} [%t] %-5level %logger{36} - %msg%n"/>
         </Console>
     </Appenders>
     <Loggers>
-        <Logger name="chat" level="debug" additivity="true">
-            <appender-ref ref="file" level="debug" />
+        <Logger name="chat" level="debug" additivity="false">
+            <appender-ref ref="file" level="debug"/>
+            <appender-ref ref="console"/>
         </Logger>
         <Root level="debug" additivity="false">
-            <appender-ref ref="console" />
+            <appender-ref ref="console"/>
         </Root>
     </Loggers>
 </Configuration>
