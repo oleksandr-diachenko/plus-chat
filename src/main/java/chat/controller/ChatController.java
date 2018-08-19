@@ -198,21 +198,26 @@ public class ChatController implements Observer {
 
     private Text getText(final String message, final String color, final String directColor, final String word) {
         final Text text = new Text(word + " ");
+        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
+        final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
         if (isDirect(message)) {
-            playSound("./sound/direct-message.mp3");
+            playSound("./sound/" + messageSound, isSoundEnable, 1);
             text.setId("user-direct-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), directColor));
         } else {
-            playSound("./sound/message.mp3");
+            playSound("./sound/" + directMessageSound, isSoundEnable, 1);
             text.setId("user-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         }
         return text;
     }
 
-    private void playSound(final String path) {
+    private void playSound(final String path, final boolean isSoundEnable, final double volume) {
         final Media sound = new Media(new File(path).toURI().toString());
         final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.setMute(!isSoundEnable);
+        mediaPlayer.setVolume(volume);
         mediaPlayer.play();
     }
 
