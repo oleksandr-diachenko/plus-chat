@@ -22,6 +22,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
@@ -32,6 +34,7 @@ import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -196,13 +199,21 @@ public class ChatController implements Observer {
     private Text getText(final String message, final String color, final String directColor, final String word) {
         final Text text = new Text(word + " ");
         if (isDirect(message)) {
+            playSound("./sound/direct-message.mp3");
             text.setId("user-direct-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), directColor));
         } else {
+            playSound("./sound/message.mp3");
             text.setId("user-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         }
         return text;
+    }
+
+    private void playSound(final String path) {
+        final Media sound = new Media(new File(path).toURI().toString());
+        final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        mediaPlayer.play();
     }
 
     private Label getImage(final Smile smile) throws FileNotFoundException {
