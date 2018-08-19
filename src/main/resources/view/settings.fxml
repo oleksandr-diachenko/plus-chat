@@ -1,8 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.ColorPicker?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
 <VBox fx:id="settingsRoot" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.SettingController">
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
@@ -42,8 +55,7 @@
                         <Insets left="70.0"/>
                     </GridPane.margin>
                 </ChoiceBox>
-                <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1"
-                           GridPane.rowIndex="1">
+                <ChoiceBox fx:id="themeChoiceBox" prefWidth="150.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                     <GridPane.margin>
                         <Insets left="70.0"/>
                     </GridPane.margin>
@@ -164,6 +176,80 @@
                 </ColorPicker>
             </GridPane>
         </Tab>
+        <Tab text="%settings.tab.sound">
+            <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
+                <columnConstraints>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                    <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+                </columnConstraints>
+                <rowConstraints>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+                </rowConstraints>
+                <opaqueInsets>
+                    <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+                </opaqueInsets>
+                <Label text="%enable-sound">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <CheckBox mnemonicParsing="false" GridPane.columnIndex="1">
+                    <GridPane.margin>
+                        <Insets left="135.0"/>
+                    </GridPane.margin>
+                </CheckBox>
+                <Label text="%message-sound" GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Label text="%message-sound-volume" GridPane.rowIndex="2">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Label text="%direct-message-sound" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Label text="%direct-message-sound-volume" GridPane.rowIndex="4">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <ChoiceBox fx:id="messageSoundChoiceBox" prefWidth="150.0" GridPane.columnIndex="1"
+                           GridPane.rowIndex="1">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </ChoiceBox>
+                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                    <Slider fx:id="messageVolumeSlider"/>
+                    <Label fx:id="messageVolumeValue"/>
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </HBox>
+                <ChoiceBox fx:id="directMessageSoundChoiceBox" prefWidth="150.0" GridPane.columnIndex="1"
+                           GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </ChoiceBox>
+                <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+                    <Slider fx:id="directMessageVolumeSlider"/>
+                    <Label fx:id="directMessageVolumeValue"/>
+                    <GridPane.margin>
+                        <Insets left="70.0"/>
+                    </GridPane.margin>
+                </HBox>
+            </GridPane>
+        </Tab>
         <Tab text="%settings.tab.data">
             <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0">
                 <columnConstraints>
@@ -206,20 +292,19 @@
                     </GridPane.margin>
                 </Label>
                 <Button fx:id="commandsData" onAction="#commandsDataAction" GridPane.columnIndex="1"
-                        GridPane.rowIndex="0"
-                        GridPane.halignment="CENTER"/>
-                <Button fx:id="usersData" onAction="#usersDataAction" GridPane.columnIndex="1" GridPane.rowIndex="1"
-                        GridPane.halignment="CENTER"/>
-                <Button fx:id="ranksData" onAction="#ranksDataAction" GridPane.columnIndex="1" GridPane.rowIndex="2"
-                        GridPane.halignment="CENTER"/>
-                <Button fx:id="smilesData" onAction="#smilesDataAction" GridPane.columnIndex="1" GridPane.rowIndex="3"
-                        GridPane.halignment="CENTER"/>
-                <Button fx:id="directsData" onAction="#directsDataAction" GridPane.columnIndex="1" GridPane.rowIndex="4"
-                        GridPane.halignment="CENTER"/>
+                        GridPane.halignment="CENTER" GridPane.rowIndex="0"/>
+                <Button fx:id="usersData" onAction="#usersDataAction" GridPane.columnIndex="1"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <Button fx:id="ranksData" onAction="#ranksDataAction" GridPane.columnIndex="1"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="2"/>
+                <Button fx:id="smilesData" onAction="#smilesDataAction" GridPane.columnIndex="1"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="3"/>
+                <Button fx:id="directsData" onAction="#directsDataAction" GridPane.columnIndex="1"
+                        GridPane.halignment="CENTER" GridPane.rowIndex="4"/>
             </GridPane>
         </Tab>
     </TabPane>
-    <HBox fx:id="buttons" alignment="CENTER_RIGHT" minHeight="60.0" prefHeight="60.0" maxHeight="60.0" spacing="40.0">
+    <HBox fx:id="buttons" alignment="CENTER_RIGHT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" spacing="40.0">
         <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction"/>
         <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction">
             <HBox.margin>
