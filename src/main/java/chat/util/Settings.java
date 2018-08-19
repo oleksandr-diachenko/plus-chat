@@ -18,4 +18,5 @@ public class Settings {
     public static final String SOUND_ENABLE = "sound.enable";
     public static final String SOUND_MESSAGE = "sound.message";
     public static final String SOUND_DIRECT_MESSAGE = "sound.direct.message";
+    public static final String SOUND_MESSAGE_VOLUME = "sound.message.volume";
 }

@@ -27,6 +27,10 @@ import java.util.*;
 public class SettingController {
 
     @FXML
+    private Label messageVolumeValue;
+    @FXML
+    private Slider messageVolumeSlider;
+    @FXML
     private ChoiceBox<String> messageSoundChoiceBox;
     @FXML
     private CheckBox enableSoundCheckBox;
@@ -90,7 +94,12 @@ public class SettingController {
     }
 
     private void initMessageSoundVolume() {
-
+        final String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
+        this.messageVolumeValue.setText(messageSoundVolumeValue);
+        this.messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
+        this.messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            this.messageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+        });
     }
 
     private void initMessageSound() {
@@ -280,6 +289,7 @@ public class SettingController {
         this.settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
         this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(this.enableSoundCheckBox.isSelected()));
         this.settings.setProperty(Settings.SOUND_MESSAGE, this.messageSoundChoiceBox.getValue());
+        this.settings.setProperty(Settings.SOUND_MESSAGE_VOLUME, this.messageVolumeValue.getText());
 
         AppProperty.setProperties("./settings/settings.properties", this.settings);
         final ChatController chatController = (ChatController) this.ownerRoot.getUserData();

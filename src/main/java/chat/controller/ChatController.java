@@ -201,12 +201,13 @@ public class ChatController implements Observer {
         final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
         final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
         final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
+        final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
         if (isDirect(message)) {
-            playSound("./sound/" + messageSound, isSoundEnable, 1);
+            playSound("./sound/" + directMessageSound, isSoundEnable, 1);
             text.setId("user-direct-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), directColor));
         } else {
-            playSound("./sound/" + directMessageSound, isSoundEnable, 1);
+            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
             text.setId("user-message");
             text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         }
