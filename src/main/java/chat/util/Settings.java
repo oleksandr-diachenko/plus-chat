@@ -15,4 +15,6 @@ public class Settings {
     public static final String FONT_SEPARATOR_COLOR = "font.separator.color";
     public static final String FONT_MESSAGE_COLOR = "font.message.color";
     public static final String FONT_DIRECT_MESSAGE_COLOR = "font.direct.message.color";
+    public static final String SOUND_ENABLE = "sound.enable";
+    public static final String SOUND_MESSAGE = "sound.message";
 }

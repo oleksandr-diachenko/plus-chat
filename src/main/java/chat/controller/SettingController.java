@@ -12,14 +12,12 @@ import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.ColorPicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.Slider;
+import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
 
@@ -28,6 +26,10 @@ import java.util.*;
  */
 public class SettingController {
 
+    @FXML
+    private ChoiceBox<String> messageSoundChoiceBox;
+    @FXML
+    private CheckBox enableSoundCheckBox;
     @FXML
     private ColorPicker directMessageColorPicker;
     @FXML
@@ -72,6 +74,55 @@ public class SettingController {
         initSeparatorColorPicker();
         initMessageColorPicker();
         initDirectMessageColorPicker();
+        initEnableSound();
+        initMessageSound();
+        initMessageSoundVolume();
+        initDirectMessageSound();
+        initDirectMessageSoundVolume();
+    }
+
+    private void initDirectMessageSoundVolume() {
+
+    }
+
+    private void initDirectMessageSound() {
+
+    }
+
+    private void initMessageSoundVolume() {
+
+    }
+
+    private void initMessageSound() {
+        final Set<File> sounds = getFilesFromFolder("./sound/");
+        final Set<String> soundNames = new HashSet<>();
+        for (File sound : sounds) {
+            soundNames.add(sound.getName());
+        }
+        this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+        this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
+    }
+
+    private Set<File> getFilesFromFolder(final String path) {
+        final Set<File> result = new HashSet<>();
+        final File folder = new File(path);
+        final File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                result.add(file);
+            }
+        }
+        return result;
+    }
+
+    private void initEnableSound() {
+        if(isSoundEnable()) {
+            this.enableSoundCheckBox.setSelected(true);
+        }
+    }
+
+    private boolean isSoundEnable() {
+        return Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
     }
 
     private void initBaseColorPicker() {
@@ -227,6 +278,9 @@ public class SettingController {
         this.settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
         this.settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(this.messageColorPicker.getValue()));
         this.settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
+        this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(this.enableSoundCheckBox.isSelected()));
+        this.settings.setProperty(Settings.SOUND_MESSAGE, this.messageSoundChoiceBox.getValue());
+
         AppProperty.setProperties("./settings/settings.properties", this.settings);
         final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
         chatController.setSettings(this.settings);
