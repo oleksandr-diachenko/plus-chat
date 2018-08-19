@@ -27,6 +27,12 @@ import java.util.*;
 public class SettingController {
 
     @FXML
+    private Label directMessageVolumeValue;
+    @FXML
+    private Slider directMessageVolumeSlider;
+    @FXML
+    private ChoiceBox<String> directMessageSoundChoiceBox;
+    @FXML
     private Label messageVolumeValue;
     @FXML
     private Slider messageVolumeSlider;
@@ -83,51 +89,6 @@ public class SettingController {
         initMessageSoundVolume();
         initDirectMessageSound();
         initDirectMessageSoundVolume();
-    }
-
-    private void initDirectMessageSoundVolume() {
-
-    }
-
-    private void initDirectMessageSound() {
-
-    }
-
-    private void initMessageSoundVolume() {
-        final String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
-        this.messageVolumeValue.setText(messageSoundVolumeValue);
-        this.messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
-        this.messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.messageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
-        });
-    }
-
-    private void initMessageSound() {
-        final Set<File> sounds = getFilesFromFolder("./sound/");
-        final Set<String> soundNames = new HashSet<>();
-        for (File sound : sounds) {
-            soundNames.add(sound.getName());
-        }
-        this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-        this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
-    }
-
-    private Set<File> getFilesFromFolder(final String path) {
-        final Set<File> result = new HashSet<>();
-        final File folder = new File(path);
-        final File[] files = folder.listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                result.add(file);
-            }
-        }
-        return result;
-    }
-
-    private void initEnableSound() {
-        if(isSoundEnable()) {
-            this.enableSoundCheckBox.setSelected(true);
-        }
     }
 
     private boolean isSoundEnable() {
@@ -262,6 +223,50 @@ public class SettingController {
         });
     }
 
+    private void initEnableSound() {
+        if(isSoundEnable()) {
+            this.enableSoundCheckBox.setSelected(true);
+        }
+    }
+
+    private void initMessageSound() {
+        final Set<File> sounds = getFilesFromFolder("./sound/");
+        final Set<String> soundNames = new HashSet<>();
+        for (File sound : sounds) {
+            soundNames.add(sound.getName());
+        }
+        this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+        this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
+    }
+
+    private void initMessageSoundVolume() {
+        final String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
+        this.messageVolumeValue.setText(messageSoundVolumeValue);
+        this.messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
+        this.messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            this.messageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+        });
+    }
+
+    private void initDirectMessageSound() {
+        final Set<File> sounds = getFilesFromFolder("./sound/");
+        final Set<String> soundNames = new HashSet<>();
+        for (File sound : sounds) {
+            soundNames.add(sound.getName());
+        }
+        this.directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+        this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE));
+    }
+
+    private void initDirectMessageSoundVolume() {
+        final String directMessageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME);
+        this.directMessageVolumeValue.setText(directMessageSoundVolumeValue);
+        this.directMessageVolumeSlider.setValue(Double.parseDouble(directMessageSoundVolumeValue));
+        this.directMessageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            this.directMessageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+        });
+    }
+
     public void confirmAction() {
         final ConfirmDialog confirmDialog = new ConfirmDialog();
         confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
@@ -290,6 +295,8 @@ public class SettingController {
         this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(this.enableSoundCheckBox.isSelected()));
         this.settings.setProperty(Settings.SOUND_MESSAGE, this.messageSoundChoiceBox.getValue());
         this.settings.setProperty(Settings.SOUND_MESSAGE_VOLUME, this.messageVolumeValue.getText());
+        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE, this.directMessageSoundChoiceBox.getValue());
+        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME, this.directMessageVolumeValue.getText());
 
         AppProperty.setProperties("./settings/settings.properties", this.settings);
         final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
@@ -383,6 +390,18 @@ public class SettingController {
                 this.backgroundColorPicker.getValue(),
                 objects,
                 fields);
+    }
+
+    private Set<File> getFilesFromFolder(final String path) {
+        final Set<File> result = new HashSet<>();
+        final File folder = new File(path);
+        final File[] files = folder.listFiles();
+        for (File file : files) {
+            if (file.isFile()) {
+                result.add(file);
+            }
+        }
+        return result;
     }
 
     private Stage getStage() {
