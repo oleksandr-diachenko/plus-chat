@@ -11,6 +11,22 @@
     -fx-text-fill: #819FF7;
 }
 
+#reload {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+    -fx-background-image: url("../../img/reload.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#reload:hover {
+    -fx-background-color: null;
+    -fx-background-image: url("../../img/reload-hover.png");
+    -fx-background-repeat: no-repeat;
+}
+
 #confirm {
     -fx-background-radius: 0;
     -fx-border-style: null;

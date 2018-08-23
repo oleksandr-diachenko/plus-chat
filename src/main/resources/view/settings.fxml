@@ -305,6 +305,11 @@
         </Tab>
     </TabPane>
     <HBox fx:id="buttons" alignment="CENTER_RIGHT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" spacing="40.0">
+        <Button fx:id="reload" onAction="#reloadAction">
+            <HBox.margin>
+                <Insets right="300.0"/>
+            </HBox.margin>
+        </Button>
         <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction"/>
         <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction">
             <HBox.margin>

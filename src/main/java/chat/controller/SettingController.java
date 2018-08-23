@@ -224,7 +224,7 @@ public class SettingController {
     }
 
     private void initEnableSound() {
-        if(isSoundEnable()) {
+        if (isSoundEnable()) {
             this.enableSoundCheckBox.setSelected(true);
         }
     }
@@ -267,6 +267,19 @@ public class SettingController {
         });
     }
 
+    public void reloadAction() {
+        final ConfirmDialog confirmDialog = new ConfirmDialog();
+        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
+                this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
+        final Stage stage = confirmDialog.getStage();
+        stage.setOnCloseRequest(event -> {
+            if (confirmDialog.isConfirmed()) {
+                getOwner().close();
+                new Main().start(Main.stage);
+            }
+        });
+    }
+
     public void confirmAction() {
         final ConfirmDialog confirmDialog = new ConfirmDialog();
         confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
@@ -277,6 +290,10 @@ public class SettingController {
                 flushSettings();
             }
         });
+    }
+
+    public void cancelAction() {
+        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     private void flushSettings() {
@@ -302,10 +319,6 @@ public class SettingController {
         final ChatController chatController = (ChatController) this.ownerRoot.getUserData();
         chatController.setSettings(this.settings);
         chatController.getSetting().setDisable(false);
-    }
-
-    public void cancelAction() {
-        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     private String getLanguage(final String value) {
