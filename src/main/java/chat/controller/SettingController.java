@@ -224,7 +224,7 @@ public class SettingController {
     }
 
     private void initEnableSound() {
-        if(isSoundEnable()) {
+        if (isSoundEnable()) {
             this.enableSoundCheckBox.setSelected(true);
         }
     }
@@ -419,5 +419,18 @@ public class SettingController {
     private Node getOwnerRoot() {
         final Stage owner = getOwner();
         return owner.getScene().lookup("#root");
+    }
+
+    public void reloadAction() {
+        final ConfirmDialog confirmDialog = new ConfirmDialog();
+        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
+                this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
+        final Stage stage = confirmDialog.getStage();
+        stage.setOnCloseRequest(event -> {
+            if (confirmDialog.isConfirmed()) {
+                getOwner().close();
+                new Main().start(Main.stage);
+            }
+        });
     }
 }
