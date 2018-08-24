@@ -5,10 +5,7 @@ import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
 import chat.model.entity.*;
 import chat.model.repository.*;
-import chat.util.AppProperty;
-import chat.util.ColorUtil;
-import chat.util.Settings;
-import chat.util.StyleUtil;
+import chat.util.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -230,7 +227,7 @@ public class SettingController {
     }
 
     private void initMessageSound() {
-        final Set<File> sounds = getFilesFromFolder("./sound/");
+        final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
         final Set<String> soundNames = new HashSet<>();
         for (File sound : sounds) {
             soundNames.add(sound.getName());
@@ -249,7 +246,7 @@ public class SettingController {
     }
 
     private void initDirectMessageSound() {
-        final Set<File> sounds = getFilesFromFolder("./sound/");
+        final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
         final Set<String> soundNames = new HashSet<>();
         for (File sound : sounds) {
             soundNames.add(sound.getName());
@@ -300,8 +297,7 @@ public class SettingController {
         this.settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, this.transparencyValue.getText());
         this.settings.setProperty(Settings.FONT_SIZE, this.fontSize.getText());
         this.settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(this.languageChoiceBox.getValue()));
-        final String value = this.themeChoiceBox.getValue();
-        this.settings.setProperty(Settings.ROOT_THEME, value);
+        this.settings.setProperty(Settings.ROOT_THEME, this.themeChoiceBox.getValue());
 
         this.settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(this.baseColorPicker.getValue()));
         this.settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
@@ -333,56 +329,36 @@ public class SettingController {
     public void commandsDataAction() {
         final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json");
         final Set<Command> commands = repository.getAll();
-        final Optional<Command> first = commands.stream().findFirst();
-        if (first.isPresent()) {
-            final Command command = first.get();
-            final Set<String> fields = getFields(command.getClass().getDeclaredFields());
-            openDialog(new HashSet<>(commands), fields);
-        }
+        final Set<String> fields = getFields(Command.class.getDeclaredFields());
+        openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
         final CRUDRepository<User> repository = new JSONUserRepository("./data/users.json");
         final Set<User> commands = repository.getAll();
-        final Optional<User> first = commands.stream().findFirst();
-        if (first.isPresent()) {
-            final User user = first.get();
-            final Set<String> fields = getFields(user.getClass().getDeclaredFields());
-            openDialog(new HashSet<>(commands), fields);
-        }
+        final Set<String> fields = getFields(User.class.getDeclaredFields());
+        openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
         final CRUDRepository<Rank> repository = new JSONRankRepository("./data/ranks.json");
         final Set<Rank> ranks = repository.getAll();
-        final Optional<Rank> first = ranks.stream().findFirst();
-        if (first.isPresent()) {
-            final Rank rank = first.get();
-            final Set<String> fields = getFields(rank.getClass().getDeclaredFields());
-            openDialog(new HashSet<>(ranks), fields);
-        }
+        final Set<String> fields = getFields(Rank.class.getDeclaredFields());
+        openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
         final CRUDRepository<Smile> repository = new JSONSmileRepository("./data/smiles.json");
         final Set<Smile> smiles = repository.getAll();
-        final Optional<Smile> first = smiles.stream().findFirst();
-        if (first.isPresent()) {
-            final Smile smile = first.get();
-            final Set<String> fields = getFields(smile.getClass().getDeclaredFields());
-            openDialog(new HashSet<>(smiles), fields);
-        }
+        final Set<String> fields = getFields(Smile.class.getDeclaredFields());
+        openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
         final CRUDRepository<Direct> repository = new JSONDirectRepository("./data/directs.json");
         final Set<Direct> directs = repository.getAll();
-        final Optional<Direct> first = directs.stream().findFirst();
-        if (first.isPresent()) {
-            final Direct direct = first.get();
-            final Set<String> fields = getFields(direct.getClass().getDeclaredFields());
-            openDialog(new HashSet<>(directs), fields);
-        }
+        final Set<String> fields = getFields(Direct.class.getDeclaredFields());
+        openDialog(new HashSet<>(directs), fields);
     }
 
     private Set<String> getFields(final Field[] declaredFields) {
@@ -403,18 +379,6 @@ public class SettingController {
                 this.backgroundColorPicker.getValue(),
                 objects,
                 fields);
-    }
-
-    private Set<File> getFilesFromFolder(final String path) {
-        final Set<File> result = new HashSet<>();
-        final File folder = new File(path);
-        final File[] files = folder.listFiles();
-        for (File file : files) {
-            if (file.isFile()) {
-                result.add(file);
-            }
-        }
-        return result;
     }
 
     private Stage getStage() {
