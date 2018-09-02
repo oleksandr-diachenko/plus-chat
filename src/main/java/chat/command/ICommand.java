@@ -5,7 +5,7 @@ package chat.command;
  */
 public interface ICommand {
 
-    boolean check(final String command);
+    boolean canExecute(final String command);
 
     String execute();
 }

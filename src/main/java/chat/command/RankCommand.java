@@ -24,22 +24,22 @@ public class RankCommand implements ICommand {
     }
 
     @Override
-    public boolean check(final String command) {
+    public boolean canExecute(final String command) {
         return "!rank".equalsIgnoreCase(command);
     }
 
     @Override
     public String execute() {
         final Optional<User> userByName = this.userRepository.getUserByName(this.nick);
-        if (userByName.isPresent()) {
-            final User user = userByName.get();
-            String customName = this.nick;
-            if (user.hasCustomName()) {
-                customName = user.getCustomName();
-            }
-            final Rank rank = this.rankRepository.getRankByExp(user.getExp());
-            return customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)";
+        if (!userByName.isPresent()) {
+            return "";
         }
-        return "";
+        final User user = userByName.get();
+        String customName = this.nick;
+        if (user.hasCustomName()) {
+            customName = user.getCustomName();
+        }
+        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        return customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)";
     }
 }

@@ -82,7 +82,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private void runCommand(final String nick, final String command) {
         final List<ICommand> commands = getCommands(nick);
         for (ICommand comm : commands) {
-            if (comm.check(command)) {
+            if (comm.canExecute(command)) {
                 sendMessage(comm.execute());
                 break;
             }

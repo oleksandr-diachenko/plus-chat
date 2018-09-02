@@ -18,7 +18,7 @@ public class JSONCommand implements ICommand {
     }
 
     @Override
-    public boolean check(final String command) {
+    public boolean canExecute(final String command) {
         final Optional<Command> commandByName = this.commandRepository.getCommandByName(command);
         if(commandByName.isPresent()) {
             this.command = commandByName.get();
