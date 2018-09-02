@@ -150,9 +150,9 @@ public class ChatController implements Observer {
     public void update(final String nick, final String message) {
         final HBox messageBox = new HBox();
         messageBox.setId("messageBox");
-        final Optional<User> userByName = this.userRepository.getUserByName(nick);
         final TextFlow textFlow = new TextFlow();
         String customName = nick;
+        final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
             customName = user.getCustomName();
