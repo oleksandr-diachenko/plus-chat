@@ -19,10 +19,6 @@ public class User {
     private String lastMessageDate;
     private long exp;
 
-    public boolean hasCustomName() {
-        return customName != null;
-    }
-
     @Override
     public boolean equals(final Object o) {
         if (this == o) return true;
@@ -34,6 +30,13 @@ public class User {
     @Override
     public int hashCode() {
         return Objects.hash(this.name);
+    }
+
+    public String getCustomName() {
+        if (this.customName != null) {
+            return this.customName;
+        }
+        return this.name;
     }
 
     @Override

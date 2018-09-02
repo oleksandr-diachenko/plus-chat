@@ -155,9 +155,7 @@ public class ChatController implements Observer {
         String customName = nick;
         if (userByName.isPresent()) {
             final User user = userByName.get();
-            if (user.hasCustomName()) {
-                customName = user.getCustomName();
-            }
+            customName = user.getCustomName();
             final Label image = getRankImage(user);
             textFlow.getChildren().add(image);
         }
