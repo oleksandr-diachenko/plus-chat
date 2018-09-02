@@ -1,8 +1,9 @@
 package chat.sevice;
 
+import chat.command.ICommand;
+import chat.command.JSONCommand;
+import chat.command.RankCommand;
 import chat.controller.ChatController;
-import chat.model.entity.Command;
-import chat.model.entity.Rank;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
 import chat.model.repository.RankRepository;
@@ -59,7 +60,7 @@ public class Bot extends ListenerAdapter implements Subject {
         notifyObserver(user.getName(), message);
         final String command = getCommandFromMessage(message);
         if (command != null) {
-            runCommand(event, command);
+            runCommand(event.getUser().getNick(), command);
         }
     }
 
@@ -78,34 +79,21 @@ public class Bot extends ListenerAdapter implements Subject {
         }
     }
 
-    private void runCommand(final GenericMessageEvent event, final String command) {
-        if (command.equalsIgnoreCase("!rank")) {
-            runRankCommand(event);
-        } else {
-            runOtherCommands(command);
-        }
-    }
-
-    private void runOtherCommands(final String command) {
-        final Optional<Command> commandByName = this.commandRepository.getCommandByName(command);
-        if (commandByName.isPresent()) {
-            final Command comm = commandByName.get();
-            sendMessage(comm.getResponse());
-        }
-    }
-
-    private void runRankCommand(final GenericMessageEvent event) {
-        final String nick = event.getUser().getNick();
-        final Optional<User> userByName = this.userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            final User user = userByName.get();
-            String customName = nick;
-            if (user.hasCustomName()) {
-                customName = user.getCustomName();
+    private void runCommand(final String nick, final String command) {
+        final List<ICommand> commands = getCommands(nick);
+        for (ICommand comm : commands) {
+            if (comm.check(command)) {
+                sendMessage(comm.execute());
+                break;
             }
-            final Rank rank = this.rankRepository.getRankByExp(user.getExp());
-            sendMessage(customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)");
         }
+    }
+
+    private List<ICommand> getCommands(final String nick) {
+        final List<ICommand> commands = new ArrayList<>();
+        commands.add(new RankCommand(nick, this.userRepository, this.rankRepository));
+        commands.add(new JSONCommand(this.commandRepository));
+        return commands;
     }
 
     /**
