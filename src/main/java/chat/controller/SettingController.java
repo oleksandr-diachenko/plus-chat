@@ -246,9 +246,7 @@ public class SettingController {
     private void initDirectMessageSound() {
         final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
         final Set<String> soundNames = new HashSet<>();
-        for (File sound : sounds) {
-            soundNames.add(sound.getName());
-        }
+        sounds.forEach(sound -> soundNames.add(sound.getName()));
         this.directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
         this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE));
     }
