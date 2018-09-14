@@ -9,10 +9,7 @@ import org.codehaus.jackson.type.TypeReference;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko.
@@ -65,14 +62,11 @@ public class JSONRankRepository implements RankRepository {
 
     @Override
     public Rank getRankByExp(final long exp) {
-        Rank nearest = new Rank();
-        for (Rank rank : this.ranks) {
-            final int rankExp = rank.getExp();
-            if (rankExp <= exp) {
-                nearest = rank;
-            }
-        }
-        return nearest;
+        return this.ranks
+                .stream()
+                .filter(rank -> rank.getExp() <= exp)
+                .min(Comparator.reverseOrder())
+                .orElse(new Rank());
     }
 
     private void flush() {
