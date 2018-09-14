@@ -4,10 +4,7 @@ import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
-import java.util.Collections;
-import java.util.List;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko
@@ -28,8 +25,11 @@ public class StyleUtil {
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setMessageStyle(final ApplicationStyle applicationStyle) {
+    public static void setStyles(final ApplicationStyle applicationStyle) {
         final Node chatRoot = applicationStyle.getChatRoot();
+        chatRoot.setStyle("-fx-base: " + applicationStyle.getBaseColor() + "; -fx-background: " + applicationStyle.getBackgroundColor()+ ";");
+        final Node settingRoot = applicationStyle.getSettingRoot();
+        settingRoot.setStyle("-fx-base: " + applicationStyle.getBaseColor() + "; -fx-background: " + applicationStyle.getBackgroundColor()+ ";");
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
         final Set<Node> messages = chatRoot.lookupAll("#user-message");
@@ -52,10 +52,8 @@ public class StyleUtil {
         roots.forEach(root -> root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";"));
     }
 
-    public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
-        StyleUtil.setMessageStyle(new ApplicationStyle(chatRoot, settings));
-        StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty(Settings.ROOT_BASE_COLOR),
-                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR));
+    public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot, final Node settingRoot) {
+        StyleUtil.setStyles(new ApplicationStyle(chatRoot, settingRoot, settings));
         owner.setOpacity(Double.parseDouble(settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100);
     }
 }

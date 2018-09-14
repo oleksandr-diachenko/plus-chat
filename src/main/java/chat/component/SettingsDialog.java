@@ -62,7 +62,7 @@ public class SettingsDialog {
         stage.setOnCloseRequest(event -> {
             final ChatController chatController = (ChatController) ownerRoot.getUserData();
             chatController.getSetting().setDisable(false);
-            StyleUtil.reverseStyle(settings, owner, ownerRoot);
+            StyleUtil.reverseStyle(settings, owner, ownerRoot, root);
         });
     }
 

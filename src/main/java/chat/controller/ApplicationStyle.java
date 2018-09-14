@@ -11,14 +11,20 @@ import java.util.Properties;
 public class ApplicationStyle {
 
     private Node chatRoot;
+    private Node settingRoot;
+    private String backgroundColor;
+    private String baseColor;
     private String fontSize;
     private String nickColor;
     private String separatorColor;
     private String messageColor;
     private String directColor;
 
-    public ApplicationStyle(final Node chatRoot, final Properties settings) {
+    public ApplicationStyle(final Node chatRoot, final Node settingRoot, final Properties settings) {
         this.chatRoot = chatRoot;
+        this.settingRoot = settingRoot;
+        this.backgroundColor = settings.getProperty(Settings.ROOT_BACKGROUND_COLOR);
+        this.baseColor = settings.getProperty(Settings.ROOT_BASE_COLOR);
         this.fontSize = settings.getProperty(Settings.FONT_SIZE);
         this.nickColor = settings.getProperty(Settings.FONT_NICK_COLOR);
         this.separatorColor = settings.getProperty(Settings.FONT_SEPARATOR_COLOR);
@@ -32,6 +38,30 @@ public class ApplicationStyle {
 
     public void setChatRoot(final Node chatRoot) {
         this.chatRoot = chatRoot;
+    }
+
+    public Node getSettingRoot() {
+        return settingRoot;
+    }
+
+    public void setSettingRoot(final Node settingRoot) {
+        this.settingRoot = settingRoot;
+    }
+
+    public String getBackgroundColor() {
+        return this.backgroundColor;
+    }
+
+    public void setBackgroundColor(final String backgroundColor) {
+        this.backgroundColor = backgroundColor;
+    }
+
+    public String getBaseColor() {
+        return this.baseColor;
+    }
+
+    public void setBaseColor(final String baseColor) {
+        this.baseColor = baseColor;
     }
 
     public String getFontSize() {
