@@ -67,11 +67,13 @@ public class SettingController {
     private Properties settings;
     private Map<String, String> languages;
     private Node ownerRoot;
+    private ApplicationStyle applicationStyle;
 
     @FXML
     public void initialize() {
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.ownerRoot = getOwnerRoot();
+        this.applicationStyle = new ApplicationStyle(this.ownerRoot, this.settings);
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -126,14 +128,8 @@ public class SettingController {
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-            StyleUtil.setMessageStyle(
-                    this.ownerRoot,
-                    String.valueOf(new_val),
-                    ColorUtil.getHexColor(this.nickColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
-            );
+            applicationStyle.setFontSize(String.valueOf(new_val));
+            StyleUtil.setMessageStyle(applicationStyle);
         });
     }
 
@@ -161,15 +157,8 @@ public class SettingController {
         this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_NICK_COLOR)));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-            StyleUtil.setMessageStyle(
-                    this.ownerRoot,
-                    this.fontSize.getText(),
-                    ColorUtil.getHexColor(new_val),
-                    ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
-            );
-
+            applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
+            StyleUtil.setMessageStyle(applicationStyle);
         });
     }
 
@@ -177,15 +166,8 @@ public class SettingController {
         this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR)));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-            StyleUtil.setMessageStyle(
-                    this.ownerRoot,
-                    this.fontSize.getText(),
-                    ColorUtil.getHexColor(this.nickColorPicker.getValue()),
-                    ColorUtil.getHexColor(new_val),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
-            );
-
+            applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
+            StyleUtil.setMessageStyle(applicationStyle);
         });
     }
 
@@ -193,15 +175,8 @@ public class SettingController {
         this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-            StyleUtil.setMessageStyle(
-                    this.ownerRoot,
-                    this.fontSize.getText(),
-                    ColorUtil.getHexColor(this.nickColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(new_val),
-                    ColorUtil.getHexColor(this.directMessageColorPicker.getValue())
-            );
-
+            applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
+            StyleUtil.setMessageStyle(applicationStyle);
         });
     }
 
@@ -209,15 +184,8 @@ public class SettingController {
         this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-            StyleUtil.setMessageStyle(
-                    this.ownerRoot,
-                    this.fontSize.getText(),
-                    ColorUtil.getHexColor(this.nickColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.separatorColorPicker.getValue()),
-                    ColorUtil.getHexColor(this.messageColorPicker.getValue()),
-                    ColorUtil.getHexColor(new_val)
-            );
-
+            applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
+            StyleUtil.setMessageStyle(applicationStyle);
         });
     }
 

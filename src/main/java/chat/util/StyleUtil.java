@@ -1,5 +1,6 @@
 package chat.util;
 
+import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
 import javafx.stage.Stage;
 
@@ -27,16 +28,19 @@ public class StyleUtil {
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setMessageStyle(final Node chatRoot, final String fontSize, final String nickColor,
-                                       final String separatorColor, final String messageColor, final String directMessageColor) {
+    public static void setMessageStyle(final ApplicationStyle applicationStyle) {
+        final Node chatRoot = applicationStyle.getChatRoot();
         final Set<Node> names = chatRoot.lookupAll("#user-name");
         final Set<Node> separators = chatRoot.lookupAll("#separator");
         final Set<Node> messages = chatRoot.lookupAll("#user-message");
         final Set<Node> directMessages = chatRoot.lookupAll("#user-direct-message");
-        names.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, nickColor)));
-        separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, separatorColor)));
-        messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, messageColor)));
-        directMessages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, directMessageColor)));
+        final String fontSize = applicationStyle.getFontSize();
+        names.iterator().forEachRemaining(node -> {
+            node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getNickColor()));
+        });
+        separators.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getSeparatorColor())));
+        messages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getMessageColor())));
+        directMessages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getDirectColor())));
     }
 
     public static void setLabelStyle(final Node root, final String color) {
@@ -49,13 +53,7 @@ public class StyleUtil {
     }
 
     public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
-        StyleUtil.setMessageStyle(chatRoot,
-                settings.getProperty(Settings.FONT_SIZE),
-                settings.getProperty(Settings.FONT_NICK_COLOR),
-                settings.getProperty(Settings.FONT_SEPARATOR_COLOR),
-                settings.getProperty(Settings.FONT_MESSAGE_COLOR),
-                settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)
-        );
+        StyleUtil.setMessageStyle(new ApplicationStyle(chatRoot, settings));
         StyleUtil.setRootStyle(Collections.singletonList(chatRoot), settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR));
         owner.setOpacity(Double.parseDouble(settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100);
