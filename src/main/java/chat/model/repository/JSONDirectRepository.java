@@ -40,12 +40,10 @@ public class JSONDirectRepository implements DirectRepository {
 
     @Override
     public Optional<Direct> getDirectByWord(final String word) {
-        for (Direct direct : this.directs) {
-            if (direct.getWord().equalsIgnoreCase(word)) {
-                return Optional.of(direct);
-            }
-        }
-        return Optional.empty();
+        return this.directs
+                .stream()
+                .filter(command -> command.getWord().equalsIgnoreCase(word))
+                .findFirst();
     }
 
     @Override
