@@ -1,16 +1,1 @@
-[
-  {
-    "name": "NoLogic_bot",
-    "customName": "NoLogic",
-    "firstMessageDate": "17-07-2018 15:20",
-    "lastMessageDate": "19-07-2018 14:41",
-    "exp": 1
-  },
-  {
-    "name": "p0sltlv",
-    "customName": "POSITIV",
-    "firstMessageDate": "17-07-2018 15:27",
-    "lastMessageDate": "19-07-2018 12:49",
-    "exp": 1
-  }
-]
+[{"name":"NoLogic_bot","customName":"NoLogic","firstMessageDate":"17-07-2018 15:20","lastMessageDate":"14-09-2018 10:27","exp":3},{"name":"p0sltlv","customName":"POSITIV","firstMessageDate":"17-07-2018 15:27","lastMessageDate":"14-09-2018 10:27","exp":4}]
