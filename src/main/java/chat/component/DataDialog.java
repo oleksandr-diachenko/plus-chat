@@ -51,13 +51,13 @@ public class DataDialog {
     }
 
     private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
-        for (String field : fields) {
+        fields.forEach(field -> {
             final TableColumn<Object, Object> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
             final Callback<TableColumn<Object, Object>, TableCell<Object, Object>> cellFactory = getCellFactory();
             column.setCellFactory(cellFactory);
             table.getColumns().add(column);
-        }
+        });
         final ObservableList<Object> data = FXCollections.observableArrayList(objects);
         table.setItems(data);
     }

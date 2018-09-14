@@ -229,9 +229,7 @@ public class SettingController {
     private void initMessageSound() {
         final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
         final Set<String> soundNames = new HashSet<>();
-        for (File sound : sounds) {
-            soundNames.add(sound.getName());
-        }
+        sounds.forEach(sound -> soundNames.add(sound.getName()));
         this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
         this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
     }
@@ -362,9 +360,7 @@ public class SettingController {
 
     private Set<String> getFields(final Field[] declaredFields) {
         final Set<String> fields = new HashSet<>();
-        for (Field field : declaredFields) {
-            fields.add(field.getName());
-        }
+        Arrays.asList(declaredFields).forEach(field -> fields.add(field.getName()));
         return fields;
     }
 
