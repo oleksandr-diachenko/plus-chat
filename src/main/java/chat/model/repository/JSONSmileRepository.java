@@ -30,7 +30,7 @@ public class JSONSmileRepository implements SmileRepository {
     @Override
     public Set<Smile> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Smile>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -72,7 +72,7 @@ public class JSONSmileRepository implements SmileRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(path), this.smiles);
+                    this.mapper.writeValue(new FileOutputStream(this.path), this.smiles);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Smiles failed to save. Put smiles.json to data/");

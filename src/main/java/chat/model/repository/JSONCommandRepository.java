@@ -33,7 +33,7 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Set<Command> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -75,7 +75,7 @@ public class JSONCommandRepository implements CommandRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(path), this.commands);
+                    this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Commands failed to save. Put commands.json to data/");

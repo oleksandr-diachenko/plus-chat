@@ -30,7 +30,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Set<Rank> getAll() {
         try {
-            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
+            return new TreeSet<>(new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Rank>>() {
             })));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -73,7 +73,7 @@ public class JSONRankRepository implements RankRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(path), this.ranks);
+                    this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Ranks failed to save. Put ranks.json to data/");

@@ -30,7 +30,7 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
+            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -72,7 +72,7 @@ public class JSONDirectRepository implements DirectRepository {
         final Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(path), this.directs);
+                    this.mapper.writeValue(new FileOutputStream(this.path), this.directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Put directs.json to data/");
