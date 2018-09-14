@@ -45,9 +45,7 @@ public class StyleUtil {
     }
 
     public static void setRootStyle(final List<Node> roots, final String baseColor, final String backgroundColor) {
-        for (Node root : roots) {
-            root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
-        }
+        roots.forEach(root -> root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";"));
     }
 
     public static void reverseStyle(final Properties settings, final Stage owner, final Node chatRoot) {
