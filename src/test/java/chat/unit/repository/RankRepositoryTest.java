@@ -23,9 +23,15 @@ public class RankRepositoryTest {
     }
 
     @Test
-    public void getRankByExpTest() {
+    public void getRankByExpProTest() {
         final Rank rankByExp = this.rankRepository.getRankByExp(10);
         assertEquals("Pro", rankByExp.getName());
+    }
+
+    @Test
+    public void getRankByExpNoobTest() {
+        final Rank rankByExp = this.rankRepository.getRankByExp(9);
+        assertEquals("Noob", rankByExp.getName());
     }
 
     @Test
