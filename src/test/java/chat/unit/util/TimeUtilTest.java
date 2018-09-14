@@ -3,7 +3,7 @@ package chat.unit.util;
 import chat.util.TimeUtil;
 import org.junit.Test;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 import static org.junit.Assert.assertEquals;
 
@@ -13,10 +13,10 @@ import static org.junit.Assert.assertEquals;
 public class TimeUtilTest {
 
     @Test
-    public void dateTo_dd_MM_yyyy_HH_mm() {
-        final Date date = new Date(100);
-        final String dateToString = TimeUtil.getDateToString(date);
+    public void dateTo_dd_MM_yyyy_HH_mm__ss() {
+        final LocalDateTime dateTime = LocalDateTime.of(1989, 5, 23, 13, 45);
+        final String dateToString = TimeUtil.getDateToString(dateTime);
 
-        assertEquals("01-01-1970 02:00", dateToString);
+        assertEquals("1989-05-23 13:45:00", dateToString);
     }
 }

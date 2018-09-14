@@ -1,7 +1,7 @@
 package chat.util;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * @author Alexander Diachenko.
@@ -12,9 +12,9 @@ public class TimeUtil {
      * Convert Date to String
      *
      * @param date
-     * @return String in dd-MM-yyyy HH:mm format
+     * @return String in dd-MM-yyyy HH:mm:ss format
      */
-    public static String getDateToString(final Date date) {
-        return new SimpleDateFormat("dd-MM-yyyy HH:mm").format(date);
+    public static String getDateToString(final LocalDateTime date) {
+        return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }
