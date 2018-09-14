@@ -17,6 +17,7 @@ import javafx.stage.WindowEvent;
 import java.io.File;
 import java.lang.reflect.Field;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * @author Alexander Diachenko.
@@ -357,9 +358,9 @@ public class SettingController {
     }
 
     private Set<String> getFields(final Field[] declaredFields) {
-        final Set<String> fields = new HashSet<>();
-        Arrays.asList(declaredFields).forEach(field -> fields.add(field.getName()));
-        return fields;
+        return Arrays.stream(declaredFields)
+                .map(Field::getName)
+                .collect(Collectors.toSet());
     }
 
     private void openDialog(final Set<Object> objects, final Set<String> fields) {
