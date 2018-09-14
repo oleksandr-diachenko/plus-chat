@@ -230,13 +230,9 @@ public class ChatController implements Observer {
 
     private boolean isDirect(final String message) {
         final Set<Direct> directs = this.directRepository.getAll();
-        for (Direct direct : directs) {
-            final String word = direct.getWord();
-            if (StringUtils.containsIgnoreCase(message, word)) {
-                return true;
-            }
-        }
-        return false;
+        return directs
+                .stream()
+                .anyMatch((direct -> StringUtils.containsIgnoreCase(message, direct.getWord())));
     }
 
     private ImageView getImageView(final String path) throws FileNotFoundException {
