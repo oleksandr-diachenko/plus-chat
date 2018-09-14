@@ -113,19 +113,15 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private User updateUser(final String nick) {
-        final Optional<User> userByName = this.userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            return updateExistingUser(userByName.get());
-        } else {
-            return createNewUser(nick);
-        }
+        return this.userRepository.getUserByName(nick)
+                .map(this::updateExistingUser)
+                .orElseGet(() -> createNewUser(nick));
     }
 
     private User updateExistingUser(final User user) {
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(user.getExp() + 1);
-        this.userRepository.update(user);
-        return user;
+        return this.userRepository.update(user);
     }
 
     private User createNewUser(final String nick) {
@@ -134,8 +130,7 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setFirstMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(1);
-        this.userRepository.add(user);
-        return user;
+        return this.userRepository.add(user);
     }
 
     @Override
@@ -150,8 +145,6 @@ public class Bot extends ListenerAdapter implements Subject {
 
     @Override
     public void notifyObserver(final String nick, final String message) {
-        for (Observer observer : this.observers) {
-            Platform.runLater(() -> observer.update(nick, message));
-        }
+        this.observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
     }
 }
