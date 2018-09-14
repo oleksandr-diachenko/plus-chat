@@ -56,9 +56,7 @@ public class SettingsDialog {
     private void stageEvents(final Stage owner, final Node ownerRoot, final Stage stage, final Properties settings, final Region root) {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
-            for (Node label : labels) {
-                label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR)));
-            }
+            labels.forEach(label -> label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {
