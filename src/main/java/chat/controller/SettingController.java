@@ -318,12 +318,11 @@ public class SettingController {
     }
 
     private String getLanguage(final String value) {
-        for (String key : this.languages.keySet()) {
-            if (this.languages.get(key).equals(value)) {
-                return key;
-            }
-        }
-        return "en";
+        return this.languages.keySet()
+                .stream()
+                .filter(key -> this.languages.get(key).equals(value))
+                .findFirst()
+                .orElse("en");
     }
 
     public void commandsDataAction() {
