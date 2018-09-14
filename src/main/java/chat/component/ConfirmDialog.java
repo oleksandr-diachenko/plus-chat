@@ -1,14 +1,13 @@
 package chat.component;
 
+import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
-import chat.util.ColorUtil;
 import chat.util.ResourceBundleControl;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
@@ -30,7 +29,7 @@ public class ConfirmDialog {
     private Stage stage;
     private ConfirmController controller;
 
-    public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor, final Color backgroundColor) {
+    public void openDialog(final Stage owner, final Properties settings, final ApplicationStyle applicationStyle) {
         this.stage = new Stage();
         this.stage.setResizable(false);
         final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
@@ -39,8 +38,8 @@ public class ConfirmDialog {
             final Region root = getRoot(bundle);
             this.controller = (ConfirmController) root.getUserData();
             final UndecoratorScene undecorator = getScene(settings, root);
-            StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor));
-            StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
+            StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(), applicationStyle.getBackgroundColor());
+            StyleUtil.setLabelStyle(root, applicationStyle.getNickColor());
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
             this.stage.initOwner(owner);

@@ -43,8 +43,8 @@ public class StyleUtil {
         directMessages.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getDirectColor())));
     }
 
-    public static void setLabelStyle(final Node root, final String color) {
-        final Set<Node> labels = root.lookupAll(".label");
+    public static void setLabelStyle(final Node settingRoot, final String color) {
+        final Set<Node> labels = settingRoot.lookupAll(".label");
         labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(color)));
     }
 

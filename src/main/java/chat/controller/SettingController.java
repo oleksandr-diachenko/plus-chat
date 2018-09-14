@@ -125,7 +125,6 @@ public class SettingController {
         this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
-            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             this.applicationStyle.setFontSize(String.valueOf(new_val));
             StyleUtil.setStyles(this.applicationStyle);
         });
@@ -152,7 +151,6 @@ public class SettingController {
     private void initNickColorPicker() {
         this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_NICK_COLOR)));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             this.applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
         });
@@ -161,7 +159,6 @@ public class SettingController {
     private void initSeparatorColorPicker() {
         this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR)));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             this.applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
         });
@@ -170,7 +167,6 @@ public class SettingController {
     private void initMessageColorPicker() {
         this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             this.applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
         });
@@ -179,7 +175,6 @@ public class SettingController {
     private void initDirectMessageColorPicker() {
         this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            StyleUtil.setLabelStyle(this.settingsRoot, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
             this.applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
         });
@@ -227,8 +222,7 @@ public class SettingController {
 
     public void reloadAction() {
         final ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
-                this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
+        confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
@@ -240,8 +234,7 @@ public class SettingController {
 
     public void confirmAction() {
         final ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.nickColorPicker.getValue(),
-                this.baseColorPicker.getValue(), this.backgroundColorPicker.getValue());
+        confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
