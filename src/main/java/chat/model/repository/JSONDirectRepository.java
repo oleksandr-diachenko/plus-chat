@@ -42,7 +42,7 @@ public class JSONDirectRepository implements DirectRepository {
     public Optional<Direct> getDirectByWord(final String word) {
         return this.directs
                 .stream()
-                .filter(command -> command.getWord().equalsIgnoreCase(word))
+                .filter(direct -> direct.getWord().equalsIgnoreCase(word))
                 .findFirst();
     }
 
