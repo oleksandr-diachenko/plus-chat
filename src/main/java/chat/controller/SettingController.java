@@ -1,6 +1,6 @@
 package chat.controller;
 
-import chat.Main;
+import chat.PlusChatFX;
 import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
 import chat.model.entity.*;
@@ -227,7 +227,7 @@ public class SettingController {
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
                 getOwner().close();
-                new Main().start(Main.stage);
+                new PlusChatFX().start(PlusChatFX.stage);
             }
         });
     }
@@ -337,7 +337,7 @@ public class SettingController {
     }
 
     private Stage getOwner() {
-        return Main.stage;
+        return PlusChatFX.stage;
     }
 
     public Node getRoot() {

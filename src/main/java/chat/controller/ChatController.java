@@ -1,6 +1,6 @@
 package chat.controller;
 
-import chat.Main;
+import chat.PlusChatFX;
 import chat.component.SettingsDialog;
 import chat.model.entity.Direct;
 import chat.model.entity.Rank;
@@ -132,7 +132,7 @@ public class ChatController implements Observer {
 
     public void onTopOnAction() {
         this.isOnTop = !this.isOnTop;
-        final Stage chatRoot = Main.stage;
+        final Stage chatRoot = PlusChatFX.stage;
         chatRoot.setAlwaysOnTop(this.isOnTop);
         String name = "/img/pin-enabled.png";
         if (!this.isOnTop) {

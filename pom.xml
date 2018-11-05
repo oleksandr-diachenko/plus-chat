@@ -13,7 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <maven.resources.plugin>3.1.0</maven.resources.plugin>
-        <maven.compiler.plugin>3.7.0</maven.compiler.plugin>
+        <maven.compiler.plugin>3.8.0</maven.compiler.plugin>
         <pircbotx>2.1</pircbotx>
         <json>20180130</json>
         <jackson.mapper.asl>1.9.13</jackson.mapper.asl>
@@ -22,8 +22,9 @@
         <log4j.core>2.11.0</log4j.core>
         <junit>4.12</junit>
         <undecorator>1.0</undecorator>
-        <lombok>1.16.8</lombok>
+        <lombok>1.18.4</lombok>
         <commons-lang3>3.7</commons-lang3>
+        <javafx>11</javafx>
     </properties>
 
     <repositories>
@@ -86,6 +87,27 @@
             <artifactId>commons-lang3</artifactId>
             <version>${commons-lang3}</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-base</artifactId>
+            <version>${javafx}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-controls</artifactId>
+            <version>${javafx}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-fxml</artifactId>
+            <version>${javafx}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.openjfx</groupId>
+            <artifactId>javafx-media</artifactId>
+            <version>${javafx}</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>
@@ -97,6 +119,7 @@
                     <source>${project.java.version}</source>
                     <target>${project.java.version}</target>
                     <encoding>${project.build.sourceEncoding}</encoding>
+                    <release>${javafx}</release>
                 </configuration>
             </plugin>
             <plugin>
