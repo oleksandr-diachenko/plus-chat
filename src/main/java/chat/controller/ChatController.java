@@ -210,7 +210,7 @@ public class ChatController implements Observer {
         final boolean isDirect = isDirect(message);
         final List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            final Text node = getText(word, getWordId(isDirect), getWordColor(isDirect));
+            final Text node = getText(word + " ", getWordId(isDirect), getWordColor(isDirect));
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
