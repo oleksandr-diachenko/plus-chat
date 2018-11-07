@@ -46,6 +46,8 @@ import java.util.*;
 public class ChatController implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
+    private static final String IMG_PIN_ENABLED_PNG_PATH = "/img/pin-enabled.png";
+    private static final String IMG_PIN_DISABLED_PNG_PATH = "/img/pin-disabled.png";
 
     public static PircBotX bot;
     @FXML
@@ -88,9 +90,9 @@ public class ChatController implements Observer {
     }
 
     private void onTopInit() {
-        String name = "/img/pin-enabled.png";
-        if (!isOnTop) {
-            name = "/img/pin-disabled.png";
+        String name = IMG_PIN_ENABLED_PNG_PATH;
+        if (!this.isOnTop) {
+            name = IMG_PIN_DISABLED_PNG_PATH;
         }
         final ImageView imageView = new ImageView(new Image(name));
         imageView.setFitWidth(15);
@@ -134,9 +136,9 @@ public class ChatController implements Observer {
         this.isOnTop = !this.isOnTop;
         final Stage chatRoot = PlusChatFX.stage;
         chatRoot.setAlwaysOnTop(this.isOnTop);
-        String name = "/img/pin-enabled.png";
+        String name = IMG_PIN_ENABLED_PNG_PATH;
         if (!this.isOnTop) {
-            name = "/img/pin-disabled.png";
+            name = IMG_PIN_DISABLED_PNG_PATH;
         }
         final ImageView imageView = new ImageView(new Image(name));
         imageView.setFitWidth(15);
@@ -273,5 +275,9 @@ public class ChatController implements Observer {
 
     private Stage getStage() {
         return (Stage) this.container.getScene().getWindow();
+    }
+
+    public void pinOnAction() {
+
     }
 }
