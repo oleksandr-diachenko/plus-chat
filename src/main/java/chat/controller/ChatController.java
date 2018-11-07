@@ -154,30 +154,29 @@ public class ChatController implements Observer {
 
     @Override
     public void update(final String nick, final String message) {
-        final HBox messageBox = new HBox();
-        messageBox.setId("messageBox");
         final TextFlow textFlow = new TextFlow();
         String customName = nick;
         final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
             customName = user.getCustomName();
-            final Label image = getRankImage(user);
-            textFlow.getChildren().add(image);
+            final Label rankImage = getRankImage(user);
+            textFlow.getChildren().add(rankImage);
         }
         final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
         final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         textFlow.getChildren().addAll(name, separator);
-        final List<Node> nodes = getMessageNodes(message, this.settings.getProperty(Settings.FONT_MESSAGE_COLOR),
-                this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR));
+        final List<Node> nodes = getMessageNodes(message);
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
+        final HBox messageBox = new HBox();
+        messageBox.setId("messageBox");
         messageBox.getChildren().add(textFlow);
         this.messages.add(messageBox);
         this.container.getChildren().add(this.messages.get(this.messageIndex));
         this.messageIndex++;
     }
 
-    private List<Node> getMessageNodes(final String message, final String color, final String directColor) {
+    private List<Node> getMessageNodes(final String message) {
         final List<Node> nodes = new ArrayList<>();
         final String utf8Message = StringUtil.getUTF8String(message);
         final String[] words = utf8Message.split(" ");
@@ -189,18 +188,18 @@ public class ChatController implements Observer {
                     nodes.add(getGraphicLabel(smile));
                 } catch (FileNotFoundException exception) {
                     logger.error(exception.getMessage(), exception);
-                    final Text text = getText(message, color, directColor, word);
+                    final Text text = getText(message, word);
                     nodes.add(text);
                 }
             } else {
-                final Text text = getText(message, color, directColor, word);
+                final Text text = getText(message, word);
                 nodes.add(text);
             }
         }
         return nodes;
     }
 
-    private Text getText(final String message, final String color, final String directColor, final String word) {
+    private Text getText(final String message, final String word) {
         final Text text = new Text(word + " ");
         final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
         final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
@@ -210,11 +209,11 @@ public class ChatController implements Observer {
         if (isDirect(message)) {
             playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
             text.setId("user-direct-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), directColor));
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
         } else {
             playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
             text.setId("user-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
         }
         return text;
     }
