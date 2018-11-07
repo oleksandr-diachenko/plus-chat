@@ -67,7 +67,7 @@ public class ChatController implements Observer {
     private CommandRepository commandRepository;
     private SmileRepository smileRepository;
     private DirectRepository directRepository;
-    private int index = 0;
+    private int messageIndex = 0;
     private boolean isOnTop;
 
     @FXML
@@ -169,8 +169,8 @@ public class ChatController implements Observer {
         nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
         messageBox.getChildren().add(textFlow);
         this.messages.add(messageBox);
-        this.container.getChildren().add(this.messages.get(this.index));
-        this.index++;
+        this.container.getChildren().add(this.messages.get(this.messageIndex));
+        this.messageIndex++;
     }
 
     private List<Node> getMessageNodes(final String message, final String color, final String directColor) {
