@@ -20,7 +20,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
@@ -163,14 +162,13 @@ public class ChatController implements Observer {
             final Label rankImage = getRankImage(user);
             addNodesToMessageContainer(messageContainer, rankImage);
         }
-        addNameAndSeparatorToMessageContainer(messageContainer, userName, ": ");
+        addUserNameAndSeparatorToMessageContainer(messageContainer, userName, ": ");
         addMessageNodesToMessageContainer(messageContainer, message);
         this.messages.add(messageContainer);
-        this.container.getChildren().add(this.messages.get(this.messageIndex));
-        this.messageIndex++;
+        this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
 
-    private void addNameAndSeparatorToMessageContainer(final TextFlow messageContainer, final String userName, final String messageSeparator) {
+    private void addUserNameAndSeparatorToMessageContainer(final TextFlow messageContainer, final String userName, final String messageSeparator) {
         final Text nick = getText(userName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
         final Text separator = getText(messageSeparator, "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, nick, separator);
