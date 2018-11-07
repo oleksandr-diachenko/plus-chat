@@ -167,6 +167,7 @@ public class ChatController implements Observer {
         addUserMessageToMessageContainer(messageContainer, message);
         this.messages.add(messageContainer);
         addNewMessageToContainer();
+        playSound(message);
     }
 
     private void addNewMessageToContainer() {
@@ -193,11 +194,10 @@ public class ChatController implements Observer {
     }
 
     private List<Node> getMessageNodes(final String message) {
-        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
         final boolean isDirect = isDirect(message);
         final List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            final Text node = getWordNode(isDirect, word);
+            final Text node = getWordNode(word, isDirect);
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
@@ -211,7 +211,12 @@ public class ChatController implements Observer {
                 nodes.add(node);
             }
         }
-        if (isDirect) {
+        return nodes;
+    }
+
+    private void playSound(final String message) {
+        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        if (isDirect(message)) {
             final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
             final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
             playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
@@ -220,12 +225,11 @@ public class ChatController implements Observer {
             final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
             playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
         }
-        return nodes;
     }
 
-    private Text getWordNode(final boolean isDirect, final String word) {
+    private Text getWordNode(final String word, final boolean isDirect) {
         final Text node = new Text(word + " ");
-        if(isDirect) {
+        if (isDirect) {
             node.setId("user-direct-message");
             node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
         } else {
