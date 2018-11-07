@@ -12,7 +12,6 @@ import java.util.Optional;
  */
 public class RankCommand implements ICommand {
 
-
     private String nick;
     private final UserRepository userRepository;
     private final RankRepository rankRepository;

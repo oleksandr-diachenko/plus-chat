@@ -3,6 +3,7 @@ package chat.sevice;
 import chat.command.ICommand;
 import chat.command.JSONCommand;
 import chat.command.RankCommand;
+import chat.command.UpCommand;
 import chat.controller.ChatController;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
@@ -13,9 +14,7 @@ import chat.observer.Subject;
 import chat.util.TimeUtil;
 import javafx.application.Platform;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.ConnectEvent;
-import org.pircbotx.hooks.events.DisconnectEvent;
-import org.pircbotx.hooks.events.PingEvent;
+import org.pircbotx.hooks.events.*;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 
 import java.time.LocalDateTime;
@@ -28,6 +27,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private final CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
     private Properties connect;
+    private LocalDateTime start;
 
     public Bot(final Properties connect, final UserRepository userRepository, final RankRepository rankRepository, final CommandRepository commandRepository) {
         this.connect = connect;
@@ -38,6 +38,7 @@ public class Bot extends ListenerAdapter implements Subject {
 
     @Override
     public void onConnect(final ConnectEvent event) {
+        this.start = LocalDateTime.now();
         final String botName = this.connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Connected!");
@@ -93,6 +94,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private List<ICommand> getCommands(final String nick) {
         final List<ICommand> commands = new ArrayList<>();
         commands.add(new RankCommand(nick, this.userRepository, this.rankRepository));
+        commands.add(new UpCommand(this.start));
         commands.add(new JSONCommand(this.commandRepository));
         return commands;
     }
