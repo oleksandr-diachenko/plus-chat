@@ -162,19 +162,28 @@ public class ChatController implements Observer {
             final Label rankImage = getRankImage(user);
             addNodesToMessageContainer(messageContainer, rankImage);
         }
-        addUserNameAndSeparatorToMessageContainer(messageContainer, userName, ": ");
-        addMessageToMessageContainer(messageContainer, message);
+        addUserNameToMessageContainer(messageContainer, userName);
+        addSeparatorToMessageContainer(messageContainer, ": ");
+        addUserMessageToMessageContainer(messageContainer, message);
         this.messages.add(messageContainer);
+        addNewMessageToContainer();
+    }
+
+    private void addNewMessageToContainer() {
         this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
 
-    private void addUserNameAndSeparatorToMessageContainer(final TextFlow messageContainer, final String userName, final String messageSeparator) {
-        final Text nick = getText(userName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
+    private void addSeparatorToMessageContainer(TextFlow messageContainer, String messageSeparator) {
         final Text separator = getText(messageSeparator, "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
-        addNodesToMessageContainer(messageContainer, nick, separator);
+        addNodesToMessageContainer(messageContainer, separator);
     }
 
-    private void addMessageToMessageContainer(final TextFlow messageContainer, final String message) {
+    private void addUserNameToMessageContainer(final TextFlow messageContainer, final String userName) {
+        final Text nick = getText(userName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
+        addNodesToMessageContainer(messageContainer, nick);
+    }
+
+    private void addUserMessageToMessageContainer(final TextFlow messageContainer, final String message) {
         final List<Node> messageNodes = getMessageNodes(message);
         messageNodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
     }
