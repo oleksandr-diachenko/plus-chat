@@ -155,21 +155,25 @@ public class ChatController implements Observer {
     @Override
     public void update(final String nick, final String message) {
         final TextFlow messageContainer = new TextFlow();
-        String customName = nick;
+        String userName = nick;
         final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
-            customName = user.getCustomName();
+            userName = user.getCustomName();
             final Label rankImage = getRankImage(user);
             addNodesToMessageContainer(messageContainer, rankImage);
         }
-        final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
-        final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
-        addNodesToMessageContainer(messageContainer, name, separator);
+        addNameAndSeparatorToMessageContainer(messageContainer, userName, ": ");
         addMessageNodesToMessageContainer(messageContainer, message);
         this.messages.add(messageContainer);
         this.container.getChildren().add(this.messages.get(this.messageIndex));
         this.messageIndex++;
+    }
+
+    private void addNameAndSeparatorToMessageContainer(final TextFlow messageContainer, final String userName, final String messageSeparator) {
+        final Text nick = getText(userName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
+        final Text separator = getText(messageSeparator, "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
+        addNodesToMessageContainer(messageContainer, nick, separator);
     }
 
     private void addMessageNodesToMessageContainer(final TextFlow messageContainer, final String message) {
