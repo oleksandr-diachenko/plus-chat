@@ -193,8 +193,11 @@ public class ChatController implements Observer {
     }
 
     private List<Node> getMessageNodes(final String message) {
+        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        final boolean isDirect = isDirect(message);
         final List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
+            final Text node = getWordNode(isDirect, word);
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
@@ -202,39 +205,39 @@ public class ChatController implements Observer {
                     nodes.add(getGraphicLabel(smile));
                 } catch (FileNotFoundException exception) {
                     logger.error(exception.getMessage(), exception);
-                    final Text text = getText(message, word);
-                    nodes.add(text);
+                    nodes.add(node);
                 }
             } else {
-                final Text text = getText(message, word);
-                nodes.add(text);
+                nodes.add(node);
             }
         }
+        if (isDirect) {
+            final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
+            final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
+            playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
+        } else {
+            final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
+            final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
+            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
+        }
         return nodes;
+    }
+
+    private Text getWordNode(final boolean isDirect, final String word) {
+        final Text node = new Text(word + " ");
+        if(isDirect) {
+            node.setId("user-direct-message");
+            node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
+        } else {
+            node.setId("user-message");
+            node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
+        }
+        return node;
     }
 
     private String[] getWords(final String message) {
         final String utf8Message = StringUtil.getUTF8String(message);
         return utf8Message.split(" ");
-    }
-
-    private Text getText(final String message, final String word) {
-        final Text text = new Text(word + " ");
-        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
-        final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
-        final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
-        final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-        final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-        if (isDirect(message)) {
-            playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
-            text.setId("user-direct-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
-        } else {
-            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
-            text.setId("user-message");
-            text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
-        }
-        return text;
     }
 
     private void playSound(final String path, final boolean isSoundEnable, final double volume) {
