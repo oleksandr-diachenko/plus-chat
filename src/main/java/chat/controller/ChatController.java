@@ -90,14 +90,10 @@ public class ChatController implements Observer {
     }
 
     private void onTopInit() {
-        String name = IMG_PIN_ENABLED_PNG_PATH;
-        if (!this.isOnTop) {
-            name = IMG_PIN_DISABLED_PNG_PATH;
-        }
-        final ImageView imageView = new ImageView(new Image(name));
+        final ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
-        onTop.setGraphic(imageView);
+        this.onTop.setGraphic(imageView);
     }
 
     private void startBot() {
@@ -136,16 +132,20 @@ public class ChatController implements Observer {
         this.isOnTop = !this.isOnTop;
         final Stage chatRoot = PlusChatFX.stage;
         chatRoot.setAlwaysOnTop(this.isOnTop);
-        String name = IMG_PIN_ENABLED_PNG_PATH;
-        if (!this.isOnTop) {
-            name = IMG_PIN_DISABLED_PNG_PATH;
-        }
-        final ImageView imageView = new ImageView(new Image(name));
+        final ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
         this.onTop.setGraphic(imageView);
         this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
         AppProperty.setProperties("./settings/settings.properties", this.settings);
+    }
+
+    private String getOnTopImagePath() {
+        String name = IMG_PIN_ENABLED_PNG_PATH;
+        if (!this.isOnTop) {
+            name = IMG_PIN_DISABLED_PNG_PATH;
+        }
+        return name;
     }
 
     @Override
