@@ -210,7 +210,7 @@ public class ChatController implements Observer {
         final boolean isDirect = isDirect(message);
         final List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            final Text node = getWordNode(word, getWordId(isDirect), getWordColor(isDirect));
+            final Text node = getText(word, getWordId(isDirect), getWordColor(isDirect));
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
@@ -241,16 +241,8 @@ public class ChatController implements Observer {
         return "user-message";
     }
 
-    private Text getWordNode(final String word, final String id, final String color) {
-        final Text node = new Text(word + " ");
-        node.setId(id);
-        node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
-        return node;
-    }
-
     private String[] getWords(final String message) {
-        final String utf8Message = StringUtil.getUTF8String(message);
-        return utf8Message.split(" ");
+        return message.split(" ");
     }
 
     private void playSound(final String path, final boolean isSoundEnable, final double volume) {
