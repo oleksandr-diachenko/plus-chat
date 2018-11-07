@@ -193,11 +193,24 @@ public class ChatController implements Observer {
         textFlow.getChildren().addAll(nodes);
     }
 
+    private void playSound(final String message) {
+        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        if (isDirect(message)) {
+            final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
+            final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
+            playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
+        } else {
+            final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
+            final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
+            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
+        }
+    }
+
     private List<Node> getMessageNodes(final String message) {
         final boolean isDirect = isDirect(message);
         final List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            final Text node = getWordNode(word, isDirect);
+            final Text node = getWordNode(word, getWordId(isDirect), getWordColor(isDirect));
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
@@ -214,28 +227,24 @@ public class ChatController implements Observer {
         return nodes;
     }
 
-    private void playSound(final String message) {
-        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
-        if (isDirect(message)) {
-            final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
-            final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
-        } else {
-            final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
-            final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
+    private String getWordColor(final boolean isDirect) {
+        if (isDirect) {
+            return this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
         }
+        return this.settings.getProperty(Settings.FONT_MESSAGE_COLOR);
     }
 
-    private Text getWordNode(final String word, final boolean isDirect) {
-        final Text node = new Text(word + " ");
+    private String getWordId(final boolean isDirect) {
         if (isDirect) {
-            node.setId("user-direct-message");
-            node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
-        } else {
-            node.setId("user-message");
-            node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
+            return "user-direct-message";
         }
+        return "user-message";
+    }
+
+    private Text getWordNode(final String word, final String id, final String color) {
+        final Text node = new Text(word + " ");
+        node.setId(id);
+        node.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         return node;
     }
 
