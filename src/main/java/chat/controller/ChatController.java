@@ -173,7 +173,7 @@ public class ChatController implements Observer {
         this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
 
-    private void addSeparatorToMessageContainer(TextFlow messageContainer, String messageSeparator) {
+    private void addSeparatorToMessageContainer(final TextFlow messageContainer, final String messageSeparator) {
         final Text separator = getText(messageSeparator, "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, separator);
     }
@@ -297,9 +297,5 @@ public class ChatController implements Observer {
 
     private Stage getStage() {
         return (Stage) this.container.getScene().getWindow();
-    }
-
-    public void pinOnAction() {
-
     }
 }
