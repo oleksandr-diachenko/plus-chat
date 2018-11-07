@@ -90,10 +90,7 @@ public class ChatController implements Observer {
     }
 
     private void onTopInit() {
-        final ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
-        imageView.setFitWidth(15);
-        imageView.setFitHeight(15);
-        this.onTop.setGraphic(imageView);
+        setOnTopImage();
     }
 
     private void startBot() {
@@ -132,12 +129,16 @@ public class ChatController implements Observer {
         this.isOnTop = !this.isOnTop;
         final Stage chatRoot = PlusChatFX.stage;
         chatRoot.setAlwaysOnTop(this.isOnTop);
+        setOnTopImage();
+        this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
+        AppProperty.setProperties("./settings/settings.properties", this.settings);
+    }
+
+    private void setOnTopImage() {
         final ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
         this.onTop.setGraphic(imageView);
-        this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
-        AppProperty.setProperties("./settings/settings.properties", this.settings);
     }
 
     private String getOnTopImagePath() {
