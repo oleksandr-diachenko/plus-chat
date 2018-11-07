@@ -63,10 +63,10 @@ public class DataDialog {
     }
 
     private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory() {
-        return new Callback<TableColumn<Object, Object>, TableCell<Object, Object>>() {
+        return new Callback<>() {
             @Override
             public TableCell<Object, Object> call(final TableColumn<Object, Object> param) {
-                return new TableCell<Object, Object>() {
+                return new TableCell<>() {
                     @Override
                     public void updateItem(final Object item, final boolean empty) {
                         super.updateItem(item, empty);
