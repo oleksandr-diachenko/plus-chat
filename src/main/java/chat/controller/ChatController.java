@@ -163,7 +163,7 @@ public class ChatController implements Observer {
             addNodesToMessageContainer(messageContainer, rankImage);
         }
         addUserNameAndSeparatorToMessageContainer(messageContainer, userName, ": ");
-        addMessageNodesToMessageContainer(messageContainer, message);
+        addMessageToMessageContainer(messageContainer, message);
         this.messages.add(messageContainer);
         this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
@@ -174,7 +174,7 @@ public class ChatController implements Observer {
         addNodesToMessageContainer(messageContainer, nick, separator);
     }
 
-    private void addMessageNodesToMessageContainer(final TextFlow messageContainer, final String message) {
+    private void addMessageToMessageContainer(final TextFlow messageContainer, final String message) {
         final List<Node> messageNodes = getMessageNodes(message);
         messageNodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
     }
