@@ -126,12 +126,15 @@ public class ChatController implements Observer {
     }
 
     public void onTopOnAction() {
-        this.isOnTop = !this.isOnTop;
-        final Stage chatRoot = PlusChatFX.stage;
-        chatRoot.setAlwaysOnTop(this.isOnTop);
+        reverseOnTop();
+        PlusChatFX.stage.setAlwaysOnTop(this.isOnTop);
         setOnTopImage();
         this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
         AppProperty.setProperties("./settings/settings.properties", this.settings);
+    }
+
+    private void reverseOnTop() {
+        this.isOnTop = !this.isOnTop;
     }
 
     private void setOnTopImage() {
@@ -183,7 +186,7 @@ public class ChatController implements Observer {
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
                 try {
-                    nodes.add(getImage(smile));
+                    nodes.add(getGraphicLabel(smile));
                 } catch (FileNotFoundException exception) {
                     logger.error(exception.getMessage(), exception);
                     final Text text = getText(message, color, directColor, word);
@@ -224,7 +227,7 @@ public class ChatController implements Observer {
         mediaPlayer.play();
     }
 
-    private Label getImage(final Smile smile) throws FileNotFoundException {
+    private Label getGraphicLabel(final Smile smile) throws FileNotFoundException {
         final Label image = new Label();
         final ImageView imageView = getImageView(smile.getImagePath());
         image.setGraphic(imageView);
