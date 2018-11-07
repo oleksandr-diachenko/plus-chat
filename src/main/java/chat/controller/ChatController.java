@@ -154,26 +154,30 @@ public class ChatController implements Observer {
 
     @Override
     public void update(final String nick, final String message) {
-        final TextFlow textFlow = new TextFlow();
+        final TextFlow messageContainer = new TextFlow();
         String customName = nick;
         final Optional<User> userByName = this.userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
             customName = user.getCustomName();
             final Label rankImage = getRankImage(user);
-            textFlow.getChildren().add(rankImage);
+            addNodesToMessageContainer(messageContainer, rankImage);
         }
         final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
         final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
-        textFlow.getChildren().addAll(name, separator);
+        addNodesToMessageContainer(messageContainer, name, separator);
         final List<Node> nodes = getMessageNodes(message);
-        nodes.iterator().forEachRemaining(node -> textFlow.getChildren().add(node));
+        nodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
         final HBox messageBox = new HBox();
         messageBox.setId("messageBox");
-        messageBox.getChildren().add(textFlow);
+        messageBox.getChildren().add(messageContainer);
         this.messages.add(messageBox);
         this.container.getChildren().add(this.messages.get(this.messageIndex));
         this.messageIndex++;
+    }
+
+    private void addNodesToMessageContainer(TextFlow textFlow, Node... rankImage) {
+        textFlow.getChildren().addAll(rankImage);
     }
 
     private List<Node> getMessageNodes(final String message) {
