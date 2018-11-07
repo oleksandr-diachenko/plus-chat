@@ -194,9 +194,7 @@ public class ChatController implements Observer {
 
     private List<Node> getMessageNodes(final String message) {
         final List<Node> nodes = new ArrayList<>();
-        final String utf8Message = StringUtil.getUTF8String(message);
-        final String[] words = utf8Message.split(" ");
-        for (String word : words) {
+        for (String word : getWords(message)) {
             final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 final Smile smile = smileByName.get();
@@ -213,6 +211,11 @@ public class ChatController implements Observer {
             }
         }
         return nodes;
+    }
+
+    private String[] getWords(final String message) {
+        final String utf8Message = StringUtil.getUTF8String(message);
+        return utf8Message.split(" ");
     }
 
     private Text getText(final String message, final String word) {
