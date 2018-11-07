@@ -166,18 +166,27 @@ public class ChatController implements Observer {
         final Text name = getText(customName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
         final Text separator = getText(": ", "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, name, separator);
-        final List<Node> nodes = getMessageNodes(message);
-        nodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
-        final HBox messageBox = new HBox();
-        messageBox.setId("messageBox");
+        addMessageNodesToMessageContainer(messageContainer, message);
+        final HBox messageBox = getMessageBox();
         messageBox.getChildren().add(messageContainer);
         this.messages.add(messageBox);
         this.container.getChildren().add(this.messages.get(this.messageIndex));
         this.messageIndex++;
     }
 
-    private void addNodesToMessageContainer(TextFlow textFlow, Node... rankImage) {
-        textFlow.getChildren().addAll(rankImage);
+    private void addMessageNodesToMessageContainer(final TextFlow messageContainer, final String message) {
+        final List<Node> messageNodes = getMessageNodes(message);
+        messageNodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
+    }
+
+    private HBox getMessageBox() {
+        final HBox messageBox = new HBox();
+        messageBox.setId("messageBox");
+        return messageBox;
+    }
+
+    private void addNodesToMessageContainer(final TextFlow textFlow, final Node... nodes) {
+        textFlow.getChildren().addAll(nodes);
     }
 
     private List<Node> getMessageNodes(final String message) {
