@@ -6,6 +6,9 @@ import org.apache.logging.log4j.Logger;
 import java.io.BufferedReader;
 import java.io.FileReader;
 
+/**
+ * @author Alexander Diachenko
+ */
 public class JSONParser {
 
     private final static Logger logger = LogManager.getLogger(JSONParser.class);

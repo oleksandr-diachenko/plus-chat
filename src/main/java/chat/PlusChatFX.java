@@ -17,6 +17,9 @@ import java.util.Locale;
 import java.util.Properties;
 import java.util.ResourceBundle;
 
+/**
+ * @author Alexander Diachenko
+ */
 public class PlusChatFX extends Application {
 
     private final static Logger logger = LogManager.getLogger(PlusChatFX.class);

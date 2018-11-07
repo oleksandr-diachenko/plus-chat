@@ -3,6 +3,9 @@ package chat.command;
 import java.time.Duration;
 import java.time.LocalDateTime;
 
+/**
+ * @author Alexander Diachenko
+ */
 public class UpCommand implements ICommand {
 
     private LocalDateTime start;

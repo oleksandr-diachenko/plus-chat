@@ -20,6 +20,9 @@ import org.pircbotx.hooks.types.GenericMessageEvent;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * @author Alexander Diachenko
+ */
 public class Bot extends ListenerAdapter implements Subject {
 
     private final UserRepository userRepository;
