@@ -25,6 +25,7 @@
         <lombok>1.18.4</lombok>
         <commons-lang3>3.7</commons-lang3>
         <javafx>11</javafx>
+        <spring>5.1.2.RELEASE</spring>
     </properties>
 
     <repositories>
@@ -107,6 +108,18 @@
             <groupId>org.openjfx</groupId>
             <artifactId>javafx-media</artifactId>
             <version>${javafx}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>${spring}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+            <version>${spring}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>

@@ -1,9 +1,12 @@
 package chat.unit.repository;
 
 import chat.model.entity.Rank;
-import chat.model.repository.JSONRankRepository;
 import chat.model.repository.RankRepository;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Set;
 
@@ -12,9 +15,12 @@ import static org.junit.Assert.*;
 /**
  * @author Alexander Diachenko.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class RankRepositoryTest {
 
-    private RankRepository rankRepository = new JSONRankRepository(getResource("/json/ranks.json"));
+    @Autowired
+    private RankRepository rankRepository;
 
     @Test
     public void getAllRanksTest() {
@@ -38,9 +44,5 @@ public class RankRepositoryTest {
     public void getRankByNegativeExpTest() {
         final Rank rankByExp = this.rankRepository.getRankByExp(-1);
         assertNull(rankByExp.getName());
-    }
-
-    private String getResource(final String path) {
-        return getClass().getResource(path).getPath();
     }
 }

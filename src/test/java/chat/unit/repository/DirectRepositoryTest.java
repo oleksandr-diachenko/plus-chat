@@ -2,8 +2,11 @@ package chat.unit.repository;
 
 import chat.model.entity.Direct;
 import chat.model.repository.DirectRepository;
-import chat.model.repository.JSONDirectRepository;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Optional;
 import java.util.Set;
@@ -13,9 +16,12 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Alexander Diachenko.
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class DirectRepositoryTest {
 
-    private DirectRepository directRepository = new JSONDirectRepository(getResource("/json/directs.json"));
+    @Autowired
+    private DirectRepository directRepository;
 
     @Test
     public void getAllDirectsTest() {
@@ -33,9 +39,5 @@ public class DirectRepositoryTest {
     public void getDirectByIncorrectWordTest() {
         final Optional<Direct> directByName = this.directRepository.getDirectByWord("QWE");
         assertTrue(!directByName.isPresent());
-    }
-
-    private String getResource(final String path) {
-        return getClass().getResource(path).getPath();
     }
 }
