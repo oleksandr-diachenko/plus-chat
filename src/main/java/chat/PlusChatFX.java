@@ -1,6 +1,6 @@
 package chat;
 
-import chat.controller.SpringStageLoader;
+import chat.component.ChatDialog;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -24,7 +24,8 @@ public class PlusChatFX extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
-        SpringStageLoader.loadMain().show();
+        final ChatDialog chatDialog = new ChatDialog();
+        chatDialog.openDialog();
     }
 
     @Override

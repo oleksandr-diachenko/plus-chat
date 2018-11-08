@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.PlusChatFX;
+import chat.component.ChatDialog;
 import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
 import chat.model.entity.*;
@@ -356,7 +357,7 @@ public class SettingController extends Controller {
     }
 
     private Stage getOwner() {
-        return SpringStageLoader.chatStage;
+        return ChatDialog.chatStage;
     }
 
     public Node getRoot() {
