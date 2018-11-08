@@ -1,6 +1,7 @@
 package chat.component;
 
 import chat.controller.DataController;
+import chat.controller.SpringStageLoader;
 import chat.util.*;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.collections.FXCollections;
@@ -31,10 +32,8 @@ public class DataDialog {
                            final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {
         final Stage stage = new Stage();
         stage.setResizable(false);
-        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
-        final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
-            final Region root = getRoot(bundle);
+            final Region root = SpringStageLoader.load("data");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor));
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
