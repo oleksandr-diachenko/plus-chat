@@ -17,11 +17,11 @@ public class Paths {
     private String disabledPin;
     private String twitchProperties;
     private String soundDirectory;
-    private String commandJson;
+    private String commandsJson;
     private String directsJson;
-    private String rankJson;
-    private String smileJson;
-    private String userJson;
+    private String ranksJson;
+    private String smilesJson;
+    private String usersJson;
 
     public Paths() {
         //do nothing
@@ -30,9 +30,9 @@ public class Paths {
     public Paths(final String logo, final AppProperty settingsProperties,
                  final String chatCss, final String confirmCss, final String dataCss,
                  final String settingsCss, final String enabledPin, final String disabledPin,
-                 final String twitchProperties, final String soundDirectory, final String commandJson,
-                 final String directsJson, final String rankJson, final String smileJson,
-                 final String userJson) {
+                 final String twitchProperties, final String soundDirectory, final String commandsJson,
+                 final String directsJson, final String ranksJson, final String smilesJson,
+                 final String usersJson) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;
@@ -43,11 +43,11 @@ public class Paths {
         this.disabledPin = disabledPin;
         this.twitchProperties = twitchProperties;
         this.soundDirectory = soundDirectory;
-        this.commandJson = commandJson;
+        this.commandsJson = commandsJson;
         this.directsJson = directsJson;
-        this.rankJson = rankJson;
-        this.smileJson = smileJson;
-        this.userJson = userJson;
+        this.ranksJson = ranksJson;
+        this.smilesJson = smilesJson;
+        this.usersJson = usersJson;
     }
 
     public String getLogo() {
@@ -90,23 +90,23 @@ public class Paths {
         return this.soundDirectory;
     }
 
-    public String getCommandJson() {
-        return this.commandJson;
+    public String getCommandsJson() {
+        return this.commandsJson;
     }
 
     public String getDirectsJson() {
         return this.directsJson;
     }
 
-    public String getRankJson() {
-        return this.rankJson;
+    public String getRanksJson() {
+        return this.ranksJson;
     }
 
-    public String getSmileJson() {
-        return this.smileJson;
+    public String getSmilesJson() {
+        return this.smilesJson;
     }
 
-    public String getUserJso() {
-        return this.userJson;
+    public String getUsersJson() {
+        return this.usersJson;
     }
 }

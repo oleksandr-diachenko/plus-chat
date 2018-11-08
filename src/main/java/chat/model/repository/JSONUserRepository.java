@@ -88,7 +88,7 @@ public class JSONUserRepository implements UserRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Users failed to save. Create " +
-                            this.paths.getUserJso());
+                            this.paths.getUsersJson());
                 }
             }
         });

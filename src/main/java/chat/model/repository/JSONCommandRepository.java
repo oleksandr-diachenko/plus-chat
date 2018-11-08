@@ -88,7 +88,7 @@ public class JSONCommandRepository implements CommandRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Commands failed to save. Create " +
-                            this.paths.getCommandJson());
+                            this.paths.getCommandsJson());
                 }
             }
         });
