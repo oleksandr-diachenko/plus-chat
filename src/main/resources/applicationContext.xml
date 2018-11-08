@@ -21,4 +21,16 @@
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg value=".\data\users.json"/>
     </bean>
+
+    <bean id="twitchProperties" class="chat.util.AppProperty">
+        <constructor-arg value=".\settings\twitch.properties"/>
+    </bean>
+    <bean id="settingsProperties" class="chat.util.AppProperty">
+        <constructor-arg value=".\settings\settings.properties"/>
+    </bean>
+    <bean id="chatDialog" class="chat.component.ChatDialog"/>
+    <bean id="settingsDialog" class="chat.component.SettingsDialog"/>
+    <bean id="confirmDialog" class="chat.component.ConfirmDialog"/>
+    <bean id="dataDialog" class="chat.component.DataDialog"/>
+    <bean id="springStageLoader" class="chat.controller.SpringStageLoader"/>
 </beans>

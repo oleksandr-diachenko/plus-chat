@@ -33,6 +33,7 @@ import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -71,23 +72,34 @@ public class ChatController implements Observer {
     private DirectRepository directRepository;
     private int messageIndex = 0;
     private boolean isOnTop;
+    private AppProperty settingsProperties;
+    private AppProperty twitchProperties;
+    private SettingsDialog settingsDialog;
 
     public ChatController() {
         //do nothing
     }
 
     @Autowired
-    public ChatController(RankRepository rankRepository, UserRepository userRepository, CommandRepository commandRepository, SmileRepository smileRepository, DirectRepository directRepository) {
+    public ChatController(final RankRepository rankRepository, final UserRepository userRepository,
+                          final CommandRepository commandRepository, final SmileRepository smileRepository,
+                          final DirectRepository directRepository,
+                          @Qualifier("settingsProperties") final AppProperty settingsProperties,
+                          @Qualifier("twitchProperties") final AppProperty twitchProperties,
+                          final SettingsDialog settingsDialog) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.commandRepository = commandRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
+        this.settingsProperties = settingsProperties;
+        this.twitchProperties = twitchProperties;
+        this.settingsDialog = settingsDialog;
     }
 
     @FXML
     public void initialize() {
-        this.settings = AppProperty.getProperty("./settings/settings.properties");
+        this.settings = this.settingsProperties.getProperty();
         this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
         this.root.setStyle(StyleUtil.getRootStyle(
@@ -105,7 +117,7 @@ public class ChatController implements Observer {
 
     private void startBot() {
         final Thread thread = new Thread(() -> {
-            final Properties connect = AppProperty.getProperty("./settings/twitch.properties");
+            final Properties connect = this.twitchProperties.getProperty();
             final Bot listener = new Bot(connect, this.userRepository, this.rankRepository, this.commandRepository);
             listener.addObserver(this);
             final Configuration config = new Configuration.Builder()
@@ -130,8 +142,7 @@ public class ChatController implements Observer {
     }
 
     public void settingsOnAction() {
-        final SettingsDialog dialog = new SettingsDialog();
-        dialog.openDialog(getStage(), this.root);
+        this.settingsDialog.openDialog(getStage(), this.root);
         this.setting.setDisable(true);
     }
 
@@ -140,7 +151,7 @@ public class ChatController implements Observer {
         PlusChatFX.stage.setAlwaysOnTop(this.isOnTop);
         setOnTopImage();
         this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
-        AppProperty.setProperties("./settings/settings.properties", this.settings);
+        this.settingsProperties.setProperties(this.settings);
     }
 
     private void reverseOnTop() {

@@ -2,6 +2,7 @@ package chat.util;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -12,28 +13,39 @@ import java.util.Properties;
 /**
  * @author Alexander Diachenko.
  */
-public class AppProperty {
+@Component
+public class AppProperty{
 
     private final static Logger logger = LogManager.getLogger(AppProperty.class);
 
-    public static Properties getProperty(final String path) {
+    private String path;
+
+    public AppProperty() {
+        //do nothing
+    }
+
+    public AppProperty(String path) {
+        this.path = path;
+    }
+
+    public Properties getProperty() {
         final Properties properties = new Properties();
-        try (final FileInputStream file = new FileInputStream(path)) {
+        try (final FileInputStream file = new FileInputStream(this.path)) {
             properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Properties " + path + " failed to load. \n" +
+            throw new RuntimeException("Properties " + this.path + " failed to load. \n" +
                     "Put properties to settings/ and restart application.");
         }
         return properties;
     }
 
-    public static Properties setProperties(final String path, final Properties properties) {
-        try (final OutputStream output = new FileOutputStream(path)) {
+    public Properties setProperties(final Properties properties) {
+        try (final OutputStream output = new FileOutputStream(this.path)) {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Properties " + path + " failed to save. \n" +
+            throw new RuntimeException("Properties " + this.path + " failed to save. \n" +
                     "Put properties to settings/");
         }
         return properties;

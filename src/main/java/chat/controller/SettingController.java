@@ -16,6 +16,7 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -76,10 +77,21 @@ public class SettingController {
     private Map<String, String> languages;
     private Node chatRoot;
     private ApplicationStyle applicationStyle;
+    private AppProperty settingsProperties;
+    private ConfirmDialog confirmDialog;
+    private DataDialog dataDialog;
+
+    @Autowired
+    public SettingController(final AppProperty settingsProperties,  final ConfirmDialog confirmDialog,
+                             final DataDialog dataDialog) {
+        this.settingsProperties = settingsProperties;
+        this.confirmDialog = confirmDialog;
+        this.dataDialog = dataDialog;
+    }
 
     @FXML
     public void initialize() {
-        this.settings = AppProperty.getProperty("./settings/settings.properties");
+        this.settings = settingsProperties.getProperty();
         this.chatRoot = getChatRoot();
         this.applicationStyle = new ApplicationStyle(this.chatRoot, this.settingsRoot, this.settings);
         initLanguage();
@@ -241,8 +253,7 @@ public class SettingController {
     }
 
     public void reloadAction() {
-        final ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
+        this.confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
@@ -253,8 +264,7 @@ public class SettingController {
     }
 
     public void confirmAction() {
-        final ConfirmDialog confirmDialog = new ConfirmDialog();
-        confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
+        this.confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
@@ -285,7 +295,7 @@ public class SettingController {
         this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE, this.directMessageSoundChoiceBox.getValue());
         this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME, this.directMessageVolumeValue.getText());
 
-        AppProperty.setProperties("./settings/settings.properties", this.settings);
+        this.settingsProperties.setProperties(this.settings);
         final ChatController chatController = (ChatController) this.chatRoot.getUserData();
         chatController.setSettings(this.settings);
         chatController.getSetting().setDisable(false);
@@ -341,8 +351,7 @@ public class SettingController {
     }
 
     private void openDialog(final Set<Object> objects, final Set<String> fields) {
-        final DataDialog dataDialog = new DataDialog();
-        dataDialog.openDialog(
+        this.dataDialog.openDialog(
                 getStage(),
                 this.settings,
                 this.nickColorPicker.getValue(),

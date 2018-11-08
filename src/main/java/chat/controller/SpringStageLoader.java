@@ -6,6 +6,8 @@ import chat.util.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
@@ -24,8 +26,18 @@ public class SpringStageLoader implements ApplicationContextAware {
     @Value("${title}")
     private String appTitle;
     private static String staticTitle;
+    private AppProperty settingsProperties;
 
     private static final String FXML_DIR = "/view/";
+
+    public SpringStageLoader() {
+        //do nothing
+    }
+
+    @Autowired
+    public SpringStageLoader(@Qualifier("settingsProperties") final AppProperty settingsProperties) {
+        this.settingsProperties = settingsProperties;
+    }
 
     /**
      * Загрузка корневого узла и его дочерних элементов из fxml шаблона
@@ -33,8 +45,8 @@ public class SpringStageLoader implements ApplicationContextAware {
      * @return объект типа Region
      * @throws IOException бросает исключение ввода-вывода
      */
-    public static Region load(final String fxmlName) throws IOException {
-        final Properties settings = AppProperty.getProperty("./settings/settings.properties");
+    public Region load(final String fxmlName) throws IOException {
+        final Properties settings = this.settingsProperties.getProperty();
         final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         final FXMLLoader loader = new FXMLLoader();

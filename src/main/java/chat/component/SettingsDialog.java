@@ -11,6 +11,9 @@ import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Properties;
@@ -19,17 +22,33 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
+@Component
 public class SettingsDialog {
 
     private final static Logger logger = LogManager.getLogger(SettingsDialog.class);
+
+    private AppProperty settingsProperties;
+
+    private SpringStageLoader springStageLoader;
+
+    public SettingsDialog() {
+        //do nothing
+    }
+
+    @Autowired
+    public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
+                          final SpringStageLoader springStageLoader) {
+        this.settingsProperties = settingsProperties;
+        this.springStageLoader = springStageLoader;
+    }
 
     public void openDialog(final Stage owner, final Node ownerRoot) {
         final Stage stage = new Stage();
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
-        final Properties settings = AppProperty.getProperty("./settings/settings.properties");
+        final Properties settings = this.settingsProperties.getProperty();
         try {
-            final Region root = SpringStageLoader.load("settings");
+            final Region root = this.springStageLoader.load("settings");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             stageEvents(owner, ownerRoot, stage, settings, root);
             root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR), settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
