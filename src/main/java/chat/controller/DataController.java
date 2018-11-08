@@ -4,13 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 /**
  * @author Alexander Diachenko.
  */
-@Component
-public class DataController extends Controller {
+@Controller
+public class DataController extends AbstractController {
 
     @FXML
     private TableView<Object> table;

@@ -33,7 +33,7 @@ import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -44,8 +44,8 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
-@Component
-public class ChatController extends Controller implements Observer {
+@Controller
+public class ChatController extends AbstractController implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
     private static final String IMG_PIN_ENABLED_PNG_PATH = "/img/pin-enabled.png";
