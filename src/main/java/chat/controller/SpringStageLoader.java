@@ -31,7 +31,7 @@ public class SpringStageLoader implements ApplicationContextAware {
     @Value("${title}")
     private String appTitle;
     private static String staticTitle;
-    private static Stage chatStage;
+    public static Stage chatStage;
 
     private static final String FXML_DIR = "/view/";
 

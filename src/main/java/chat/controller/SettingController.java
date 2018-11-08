@@ -356,7 +356,7 @@ public class SettingController extends Controller {
     }
 
     private Stage getOwner() {
-        return SpringStageLoader.loadMain();
+        return SpringStageLoader.chatStage;
     }
 
     public Node getRoot() {
