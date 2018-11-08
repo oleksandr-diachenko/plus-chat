@@ -45,7 +45,7 @@ import java.util.*;
  * @author Alexander Diachenko.
  */
 @Controller
-public class ChatController extends AbstractController implements Observer {
+public class ChatController implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
     private static final String IMG_PIN_ENABLED_PNG_PATH = "/img/pin-enabled.png";

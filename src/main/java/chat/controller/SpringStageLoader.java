@@ -39,7 +39,7 @@ public class SpringStageLoader implements ApplicationContextAware {
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         final FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
-        // setLocation необходим для корректной загрузки включенных шаблонов, таких как productTable.fxml,
+        // setLocation необходим для корректной загрузки включенных шаблонов,
         // без этого получим исключение javafx.fxml.LoadException: Base location is undefined.
         loader.setLocation(SpringStageLoader.class.getResource(FXML_DIR + fxmlName + ".fxml"));
         // setLocation необходим для корректной того чтобы loader видел наши кастомные котнролы

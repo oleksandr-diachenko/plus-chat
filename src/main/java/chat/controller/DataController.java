@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
  * @author Alexander Diachenko.
  */
 @Controller
-public class DataController extends AbstractController {
+public class DataController {
 
     @FXML
     private TableView<Object> table;

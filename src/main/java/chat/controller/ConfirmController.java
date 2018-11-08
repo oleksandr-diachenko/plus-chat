@@ -10,7 +10,7 @@ import org.springframework.stereotype.Controller;
  * @author Alexander Diachenko.
  */
 @Controller
-public class ConfirmController extends AbstractController {
+public class ConfirmController {
 
     @FXML
     private VBox root;

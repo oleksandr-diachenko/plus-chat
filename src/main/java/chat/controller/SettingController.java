@@ -28,7 +28,7 @@ import java.util.stream.Collectors;
  * @author Alexander Diachenko.
  */
 @Controller
-public class SettingController extends AbstractController {
+public class SettingController {
 
     private final static Logger logger = LogManager.getLogger(SettingController.class);
 
