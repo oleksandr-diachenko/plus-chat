@@ -80,13 +80,15 @@ public class SettingController {
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
+    private PathsImpl paths;
 
     @Autowired
     public SettingController(final AppProperty settingsProperties,  final ConfirmDialog confirmDialog,
-                             final DataDialog dataDialog) {
+                             final DataDialog dataDialog, final PathsImpl paths) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
+        this.paths = paths;
     }
 
     @FXML
@@ -216,7 +218,7 @@ public class SettingController {
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to sound/ and restart application.");
+                    "Put your sounds to " + this.paths.getSoundsDirectory() +  " and restart application.");
         }
     }
 
@@ -239,7 +241,7 @@ public class SettingController {
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to sound/ and restart application.");
+                    "Put your sounds to " + this.paths.getSoundsDirectory() + " and restart application.");
         }
     }
 
@@ -258,7 +260,7 @@ public class SettingController {
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
                 getOwner().close();
-                new PlusChatFX().start(PlusChatFX.stage);
+                new PlusChatFX().start(getOwner());
             }
         });
     }
@@ -309,36 +311,37 @@ public class SettingController {
                 .orElse("en");
     }
 
+    //TODO spring inject
     public void commandsDataAction() {
-        final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json");
+        final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json", this.paths);
         final Set<Command> commands = repository.getAll();
         final Set<String> fields = getFields(Command.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
-        final CRUDRepository<User> repository = new JSONUserRepository("./data/users.json");
+        final CRUDRepository<User> repository = new JSONUserRepository("./data/users.json", this.paths);
         final Set<User> commands = repository.getAll();
         final Set<String> fields = getFields(User.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
-        final CRUDRepository<Rank> repository = new JSONRankRepository("./data/ranks.json");
+        final CRUDRepository<Rank> repository = new JSONRankRepository("./data/ranks.json", this.paths);
         final Set<Rank> ranks = repository.getAll();
         final Set<String> fields = getFields(Rank.class.getDeclaredFields());
         openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
-        final CRUDRepository<Smile> repository = new JSONSmileRepository("./data/smiles.json");
+        final CRUDRepository<Smile> repository = new JSONSmileRepository("./data/smiles.json", this.paths);
         final Set<Smile> smiles = repository.getAll();
         final Set<String> fields = getFields(Smile.class.getDeclaredFields());
         openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
-        final CRUDRepository<Direct> repository = new JSONDirectRepository("./data/directs.json");
+        final CRUDRepository<Direct> repository = new JSONDirectRepository("./data/directs.json", this.paths);
         final Set<Direct> directs = repository.getAll();
         final Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);

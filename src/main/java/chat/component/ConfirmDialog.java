@@ -3,7 +3,7 @@ package chat.component;
 import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
 import chat.controller.SpringStageLoader;
-import chat.util.Settings;
+import chat.util.PathsImpl;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
@@ -29,14 +29,16 @@ public class ConfirmDialog {
     private Stage stage;
     private ConfirmController controller;
     private SpringStageLoader springStageLoader;
+    private PathsImpl paths;
 
     public ConfirmDialog() {
         //do nothing
     }
 
     @Autowired
-    public ConfirmDialog(final SpringStageLoader springStageLoader) {
+    public ConfirmDialog(final SpringStageLoader springStageLoader, final PathsImpl paths) {
         this.springStageLoader = springStageLoader;
+        this.paths = paths;
     }
 
     public void openDialog(final Stage owner, final Properties settings, final ApplicationStyle applicationStyle) {
@@ -60,7 +62,7 @@ public class ConfirmDialog {
 
     private UndecoratorScene getScene(final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/confirm.css");
+        undecorator.getStylesheets().add(this.paths.getConfirmCSS());
         return undecorator;
     }
 

@@ -2,11 +2,11 @@ package chat.model.repository;
 
 import chat.model.entity.User;
 import chat.util.JSONParser;
+import chat.util.PathsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
@@ -27,13 +27,15 @@ public class JSONUserRepository implements UserRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
     private String path;
+    private PathsImpl paths;
 
     public JSONUserRepository() {
         //do nothing
     }
 
-    public JSONUserRepository(final String path) {
+    public JSONUserRepository(final String path, final PathsImpl paths) {
         this.path = path;
+        this.paths = paths;
         this.users = getAll();
     }
 
@@ -84,7 +86,7 @@ public class JSONUserRepository implements UserRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Users failed to save. Put users.json to data/");
+                    throw new RuntimeException("Users failed to save. Create " + this.paths.getUserJso());
                 }
             }
         });

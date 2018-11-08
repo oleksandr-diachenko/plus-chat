@@ -8,18 +8,23 @@
 
     <bean id="commandRepository" class="chat.model.repository.JSONCommandRepository">
         <constructor-arg value=".\data\commands.json"/>
+        <constructor-arg ref="paths"/>
     </bean>
     <bean id="directRepository" class="chat.model.repository.JSONDirectRepository">
         <constructor-arg value=".\data\directs.json"/>
+        <constructor-arg ref="paths"/>
     </bean>
     <bean id="rankRepository" class="chat.model.repository.JSONRankRepository">
         <constructor-arg value=".\data\ranks.json"/>
+        <constructor-arg ref="paths"/>
     </bean>
     <bean id="smileRepository" class="chat.model.repository.JSONSmileRepository">
         <constructor-arg value=".\data\smiles.json"/>
+        <constructor-arg ref="paths"/>
     </bean>
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg value=".\data\users.json"/>
+        <constructor-arg ref="paths"/>
     </bean>
 
     <bean id="twitchProperties" class="chat.util.AppProperty">
@@ -33,4 +38,21 @@
     <bean id="confirmDialog" class="chat.component.ConfirmDialog"/>
     <bean id="dataDialog" class="chat.component.DataDialog"/>
     <bean id="springStageLoader" class="chat.controller.SpringStageLoader"/>
+    <bean id="paths" class="chat.util.PathsImpl">
+        <constructor-arg value="/img/logo.png"/>
+        <constructor-arg ref="settingsProperties"/>
+        <constructor-arg value="/chat.css"/>
+        <constructor-arg value="/confirm.css"/>
+        <constructor-arg value="/data.css"/>
+        <constructor-arg value="/settings.css"/>
+        <constructor-arg value="/img/pin-enabled.png"/>
+        <constructor-arg value="/img/pin-disabled.png"/>
+        <constructor-arg value="/settings/twitch.properties"/>
+        <constructor-arg value="./sound/"/>
+        <constructor-arg value=".\data\commands.json"/>
+        <constructor-arg value=".\data\directs.json"/>
+        <constructor-arg value=".\data\ranks.json"/>
+        <constructor-arg value=".\data\smiles.json"/>
+        <constructor-arg value=".\data\users.json"/>
+    </bean>
 </beans>

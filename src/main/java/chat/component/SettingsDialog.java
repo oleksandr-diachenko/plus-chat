@@ -3,6 +3,7 @@ package chat.component;
 import chat.controller.ChatController;
 import chat.controller.SpringStageLoader;
 import chat.util.AppProperty;
+import chat.util.PathsImpl;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
@@ -30,6 +31,7 @@ public class SettingsDialog {
     private AppProperty settingsProperties;
 
     private SpringStageLoader springStageLoader;
+    private PathsImpl paths;
 
     public SettingsDialog() {
         //do nothing
@@ -37,9 +39,10 @@ public class SettingsDialog {
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          final SpringStageLoader springStageLoader) {
+                          final SpringStageLoader springStageLoader, final PathsImpl paths) {
         this.settingsProperties = settingsProperties;
         this.springStageLoader = springStageLoader;
+        this.paths = paths;
     }
 
     public void openDialog(final Stage owner, final Node ownerRoot) {
@@ -64,7 +67,7 @@ public class SettingsDialog {
 
     private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/settings.css");
+        undecorator.getStylesheets().add(this.paths.getSettingsCSS());
         return undecorator;
     }
 

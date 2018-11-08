@@ -2,14 +2,11 @@ package chat.model.repository;
 
 import chat.model.entity.Command;
 import chat.util.JSONParser;
+import chat.util.PathsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Controller;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
@@ -30,12 +27,14 @@ public class JSONCommandRepository implements CommandRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Command> commands;
     private String path;
+    private PathsImpl paths;
 
     public JSONCommandRepository() {
     }
 
-    public JSONCommandRepository(final String path) {
+    public JSONCommandRepository(final String path, final PathsImpl paths) {
         this.path = path;
+        this.paths = paths;
         this.commands = getAll();
     }
 
@@ -87,7 +86,7 @@ public class JSONCommandRepository implements CommandRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Commands failed to save. Put commands.json to data/");
+                    throw new RuntimeException("Commands failed to save. Create " + this.paths.getCommandJson());
                 }
             }
         });

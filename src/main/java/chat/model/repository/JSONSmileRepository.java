@@ -2,11 +2,11 @@ package chat.model.repository;
 
 import chat.model.entity.Smile;
 import chat.util.JSONParser;
+import chat.util.PathsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
@@ -24,12 +24,14 @@ public class JSONSmileRepository implements SmileRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Smile> smiles;
     private String path;
+    private PathsImpl paths;
 
     public JSONSmileRepository() {
     }
 
-    public JSONSmileRepository(final String path) {
+    public JSONSmileRepository(final String path, final PathsImpl paths) {
         this.path = path;
+        this.paths = paths;
         this.smiles = getAll();
     }
 
@@ -81,7 +83,7 @@ public class JSONSmileRepository implements SmileRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.smiles);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Smiles failed to save. Put smiles.json to data/");
+                    throw new RuntimeException("Smiles failed to save. Create " + this.paths.getSmileJson());
                 }
             }
         });

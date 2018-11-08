@@ -14,7 +14,6 @@ import org.springframework.stereotype.Component;
 public class PlusChatFX extends Application {
 
     private static ClassPathXmlApplicationContext context;
-    public static Stage stage;
     private static ChatDialog chatDialog;
 
     public PlusChatFX() {

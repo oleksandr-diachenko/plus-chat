@@ -1,6 +1,5 @@
 package chat.controller;
 
-import chat.PlusChatFX;
 import chat.component.SettingsDialog;
 import chat.model.entity.Direct;
 import chat.model.entity.Rank;
@@ -9,10 +8,7 @@ import chat.model.entity.User;
 import chat.model.repository.*;
 import chat.observer.Observer;
 import chat.sevice.Bot;
-import chat.util.AppProperty;
-import chat.util.Settings;
-import chat.util.StringUtil;
-import chat.util.StyleUtil;
+import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
@@ -49,8 +45,6 @@ import java.util.*;
 public class ChatController implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
-    private static final String IMG_PIN_ENABLED_PNG_PATH = "/img/pin-enabled.png";
-    private static final String IMG_PIN_DISABLED_PNG_PATH = "/img/pin-disabled.png";
 
     public static PircBotX bot;
     @FXML
@@ -75,6 +69,7 @@ public class ChatController implements Observer {
     private AppProperty settingsProperties;
     private AppProperty twitchProperties;
     private SettingsDialog settingsDialog;
+    private PathsImpl paths;
 
     public ChatController() {
         //do nothing
@@ -86,7 +81,7 @@ public class ChatController implements Observer {
                           final DirectRepository directRepository,
                           @Qualifier("settingsProperties") final AppProperty settingsProperties,
                           @Qualifier("twitchProperties") final AppProperty twitchProperties,
-                          final SettingsDialog settingsDialog) {
+                          final SettingsDialog settingsDialog, final PathsImpl paths) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.commandRepository = commandRepository;
@@ -95,6 +90,7 @@ public class ChatController implements Observer {
         this.settingsProperties = settingsProperties;
         this.twitchProperties = twitchProperties;
         this.settingsDialog = settingsDialog;
+        this.paths = paths;
     }
 
     @FXML
@@ -134,7 +130,7 @@ public class ChatController implements Observer {
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
-                        "Check properties in settings/twitch.properties and restart application.");
+                        "Check properties in " + this.paths.getTwitchProperties() + " and restart application.");
             }
         });
         thread.setDaemon(true);
@@ -148,7 +144,8 @@ public class ChatController implements Observer {
 
     public void onTopOnAction() {
         reverseOnTop();
-        PlusChatFX.stage.setAlwaysOnTop(this.isOnTop);
+
+        getStage().setAlwaysOnTop(this.isOnTop);
         setOnTopImage();
         this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
         this.settingsProperties.setProperties(this.settings);
@@ -166,9 +163,9 @@ public class ChatController implements Observer {
     }
 
     private String getOnTopImagePath() {
-        String name = IMG_PIN_ENABLED_PNG_PATH;
+        String name = this.paths.getEnabledPin();
         if (!this.isOnTop) {
-            name = IMG_PIN_DISABLED_PNG_PATH;
+            name = this.paths.getDisabledPin();
         }
         return name;
     }
@@ -220,11 +217,11 @@ public class ChatController implements Observer {
         if (isDirect(message)) {
             final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
             final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound("./sound/" + directMessageSound, isSoundEnable, soundDirectMessageVolume);
+            playSound(this.paths.getSoundsDirectory() + directMessageSound, isSoundEnable, soundDirectMessageVolume);
         } else {
             final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
             final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound("./sound/" + messageSound, isSoundEnable, soundMessageVolume);
+            playSound(this.paths.getSoundsDirectory() + messageSound, isSoundEnable, soundMessageVolume);
         }
     }
 

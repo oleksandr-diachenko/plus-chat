@@ -2,11 +2,11 @@ package chat.model.repository;
 
 import chat.model.entity.Direct;
 import chat.util.JSONParser;
+import chat.util.PathsImpl;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
@@ -24,12 +24,14 @@ public class JSONDirectRepository implements DirectRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Direct> directs;
     private String path;
+    private PathsImpl paths;
 
     public JSONDirectRepository() {
     }
 
-    public JSONDirectRepository(final String path) {
+    public JSONDirectRepository(final String path, final PathsImpl paths) {
         this.path = path;
+        this.paths = paths;
         this.directs = getAll();
     }
 
@@ -81,7 +83,7 @@ public class JSONDirectRepository implements DirectRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Directs failed to save. Put directs.json to data/");
+                    throw new RuntimeException("Directs failed to save. Create " + this.paths.getDirectsJson());
                 }
             }
         });

@@ -31,14 +31,16 @@ public class DataDialog {
     private final static Logger logger = LogManager.getLogger(DataDialog.class);
 
     private SpringStageLoader springStageLoader;
+    private PathsImpl paths;
 
     public DataDialog() {
         //do nothing
     }
 
     @Autowired
-    public DataDialog(final SpringStageLoader springStageLoader) {
+    public DataDialog(final SpringStageLoader springStageLoader, final PathsImpl paths) {
         this.springStageLoader = springStageLoader;
+        this.paths = paths;
     }
 
     public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor,
@@ -94,7 +96,7 @@ public class DataDialog {
 
     private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add("/theme/" + settings.getProperty(Settings.ROOT_THEME) + "/data.css");
+        undecorator.getStylesheets().add(this.paths.getDataCSS());
         return undecorator;
     }
 }
