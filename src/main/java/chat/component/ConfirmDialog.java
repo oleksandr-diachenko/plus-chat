@@ -2,7 +2,7 @@ package chat.component;
 
 import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
-import chat.util.ResourceBundleControl;
+import chat.controller.SpringStageLoader;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
@@ -32,10 +32,8 @@ public class ConfirmDialog {
     public void openDialog(final Stage owner, final Properties settings, final ApplicationStyle applicationStyle) {
         this.stage = new Stage();
         this.stage.setResizable(false);
-        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
-        final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
         try {
-            final Region root = getRoot(bundle);
+            final Region root = SpringStageLoader.load("confirm");
             this.controller = (ConfirmController) root.getUserData();
             final UndecoratorScene undecorator = getScene(settings, root);
             StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(), applicationStyle.getBackgroundColor());
