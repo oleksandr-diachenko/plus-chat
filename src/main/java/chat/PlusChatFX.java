@@ -24,7 +24,7 @@ public class PlusChatFX extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
-        SpringStageLoader.loadChat().show();
+        SpringStageLoader.loadMain().show();
     }
 
     @Override

@@ -19,7 +19,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -357,7 +356,7 @@ public class SettingController extends Controller {
     }
 
     private Stage getOwner() {
-        return PlusChatFX.stage;
+        return SpringStageLoader.loadMain();
     }
 
     public Node getRoot() {

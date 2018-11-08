@@ -31,6 +31,7 @@ public class SpringStageLoader implements ApplicationContextAware {
     @Value("${title}")
     private String appTitle;
     private static String staticTitle;
+    private static Stage chatStage;
 
     private static final String FXML_DIR = "/view/";
 
@@ -40,7 +41,7 @@ public class SpringStageLoader implements ApplicationContextAware {
      * @return объект типа Region
      * @throws IOException бросает исключение ввода-вывода
      */
-    private static Region load(String fxmlName) throws IOException {
+    public static Region load(String fxmlName) throws IOException {
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
         final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
@@ -59,9 +60,10 @@ public class SpringStageLoader implements ApplicationContextAware {
      * Реализуем загрузку главной сцены. На закрытие сцены стоит обработчик, которых выходит из приложения
      * @return главную сцену
      */
-    public static Stage loadChat() {
+    public static Stage loadMain() {
         final Properties settings = AppProperty.getProperty("./settings/settings.properties");
-        Stage primaryStage = new Stage();
+        final Stage primaryStage = new Stage();
+        chatStage = primaryStage;
         primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
         primaryStage.getIcons().add(new Image("/img/logo.png"));
         try {
