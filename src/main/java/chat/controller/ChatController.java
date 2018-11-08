@@ -32,6 +32,8 @@ import org.apache.logging.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -42,7 +44,8 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
-public class ChatController implements Observer {
+@Component
+public class ChatController extends Controller implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
     private static final String IMG_PIN_ENABLED_PNG_PATH = "/img/pin-enabled.png";
@@ -69,13 +72,21 @@ public class ChatController implements Observer {
     private int messageIndex = 0;
     private boolean isOnTop;
 
+    public ChatController() {
+        //do nothing
+    }
+
+    @Autowired
+    public ChatController(RankRepository rankRepository, UserRepository userRepository, CommandRepository commandRepository, SmileRepository smileRepository, DirectRepository directRepository) {
+        this.rankRepository = rankRepository;
+        this.userRepository = userRepository;
+        this.commandRepository = commandRepository;
+        this.smileRepository = smileRepository;
+        this.directRepository = directRepository;
+    }
+
     @FXML
     public void initialize() {
-        this.rankRepository = new JSONRankRepository("./data/ranks.json");
-        this.userRepository = new JSONUserRepository("./data/users.json");
-        this.smileRepository = new JSONSmileRepository("./data/smiles.json");
-        this.commandRepository = new JSONCommandRepository("./data/commands.json");
-        this.directRepository = new JSONDirectRepository("./data/directs.json");
         this.settings = AppProperty.getProperty("./settings/settings.properties");
         this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();

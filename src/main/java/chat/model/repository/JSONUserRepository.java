@@ -6,6 +6,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
+@Repository
 public class JSONUserRepository implements UserRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONUserRepository.class);
@@ -24,6 +27,10 @@ public class JSONUserRepository implements UserRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
     private String path;
+
+    public JSONUserRepository() {
+        //do nothing
+    }
 
     public JSONUserRepository(final String path) {
         this.path = path;

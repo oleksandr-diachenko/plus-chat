@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <context:component-scan base-package="chat"/>
+
+    <bean id="commandRepository" class="chat.model.repository.JSONCommandRepository">
+        <constructor-arg value=".\data\commands.json"/>
+    </bean>
+    <bean id="directRepository" class="chat.model.repository.JSONDirectRepository">
+        <constructor-arg value=".\data\directs.json"/>
+    </bean>
+    <bean id="rankRepository" class="chat.model.repository.JSONRankRepository">
+        <constructor-arg value=".\data\ranks.json"/>
+    </bean>
+    <bean id="smileRepository" class="chat.model.repository.JSONSmileRepository">
+        <constructor-arg value=".\data\smiles.json"/>
+    </bean>
+    <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
+        <constructor-arg value=".\data\users.json"/>
+    </bean>
+</beans>

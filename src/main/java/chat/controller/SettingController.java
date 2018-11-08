@@ -15,9 +15,11 @@ import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -25,7 +27,8 @@ import java.util.stream.Collectors;
 /**
  * @author Alexander Diachenko.
  */
-public class SettingController {
+@Component
+public class SettingController extends Controller {
 
     private final static Logger logger = LogManager.getLogger(SettingController.class);
 

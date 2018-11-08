@@ -4,11 +4,13 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.springframework.stereotype.Component;
 
 /**
  * @author Alexander Diachenko.
  */
-public class ConfirmController {
+@Component
+public class ConfirmController extends Controller {
 
     @FXML
     private VBox root;
