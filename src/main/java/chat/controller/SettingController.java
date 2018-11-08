@@ -81,14 +81,27 @@ public class SettingController {
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
     private Paths paths;
+    private CommandRepository commandRepository;
+    private UserRepository userRepository;
+    private RankRepository rankRepository;
+    private SmileRepository smileRepository;
+    private DirectRepository directRepository;
 
     @Autowired
-    public SettingController(final AppProperty settingsProperties,  final ConfirmDialog confirmDialog,
-                             final DataDialog dataDialog, final Paths paths) {
+    public SettingController(final AppProperty settingsProperties, final ConfirmDialog confirmDialog,
+                             final DataDialog dataDialog, final Paths paths,
+                             final CommandRepository commandRepository,
+                             final UserRepository userRepository, final RankRepository rankRepository,
+                             final SmileRepository smileRepository, final DirectRepository directRepository) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
         this.paths = paths;
+        this.commandRepository = commandRepository;
+        this.userRepository = userRepository;
+        this.rankRepository = rankRepository;
+        this.smileRepository = smileRepository;
+        this.directRepository = directRepository;
     }
 
     @FXML
@@ -323,7 +336,6 @@ public class SettingController {
         chatController.setSettings(this.settings);
         chatController.getSetting().setDisable(false);
     }
-
     private String getLanguage(final String value) {
         return this.languages.keySet()
                 .stream()
@@ -332,43 +344,32 @@ public class SettingController {
                 .orElse("en");
     }
 
-    //TODO spring inject
     public void commandsDataAction() {
-        final CRUDRepository<Command> repository = new JSONCommandRepository(
-                "./data/commands.json", this.paths);
-        final Set<Command> commands = repository.getAll();
+        final Set<Command> commands = this.commandRepository.getAll();
         final Set<String> fields = getFields(Command.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
-        final CRUDRepository<User> repository = new JSONUserRepository(
-                "./data/users.json", this.paths);
-        final Set<User> commands = repository.getAll();
+        final Set<User> commands = this.userRepository.getAll();
         final Set<String> fields = getFields(User.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
-        final CRUDRepository<Rank> repository = new JSONRankRepository(
-                "./data/ranks.json", this.paths);
-        final Set<Rank> ranks = repository.getAll();
+        final Set<Rank> ranks = this.rankRepository.getAll();
         final Set<String> fields = getFields(Rank.class.getDeclaredFields());
         openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
-        final CRUDRepository<Smile> repository = new JSONSmileRepository(
-                "./data/smiles.json", this.paths);
-        final Set<Smile> smiles = repository.getAll();
+        final Set<Smile> smiles = this.smileRepository.getAll();
         final Set<String> fields = getFields(Smile.class.getDeclaredFields());
         openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
-        final CRUDRepository<Direct> repository = new JSONDirectRepository(
-                "./data/directs.json", this.paths);
-        final Set<Direct> directs = repository.getAll();
+        final Set<Direct> directs = this.directRepository.getAll();
         final Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);
     }
