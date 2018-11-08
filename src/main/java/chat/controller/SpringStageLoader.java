@@ -48,7 +48,8 @@ public class SpringStageLoader implements ApplicationContextAware {
     public Region load(final String fxmlName) throws IOException {
         final Properties settings = this.settingsProperties.getProperty();
         final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
-        final ResourceBundle bundle = ResourceBundle.getBundle("bundles.chat", new Locale(language), new ResourceBundleControl());
+        final ResourceBundle bundle = ResourceBundle.getBundle(
+                "bundles.chat", new Locale(language), new ResourceBundleControl());
         final FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
         // setLocation необходим для корректной загрузки включенных шаблонов,

@@ -25,7 +25,8 @@ public class ConfirmController {
     }
 
     public void cancelAction() {
-        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
+        getStage().fireEvent(
+                new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     public boolean isConfirmed() {

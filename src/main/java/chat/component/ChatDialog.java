@@ -2,7 +2,7 @@ package chat.component;
 
 import chat.controller.SpringStageLoader;
 import chat.util.AppProperty;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import chat.util.Settings;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.image.Image;
@@ -27,7 +27,7 @@ public class ChatDialog {
     public static Stage chatStage;
     private AppProperty settingsProperties;
     private SpringStageLoader springStageLoader;
-    private PathsImpl paths;
+    private Paths paths;
 
     public ChatDialog() {
         //do nothing
@@ -35,7 +35,7 @@ public class ChatDialog {
 
     @Autowired
     public ChatDialog(@Qualifier("settingsProperties")final AppProperty settingsProperties,
-                      final SpringStageLoader springStageLoader, final PathsImpl paths) {
+                      final SpringStageLoader springStageLoader, final Paths paths) {
         this.settingsProperties = settingsProperties;
         this.springStageLoader = springStageLoader;
         this.paths = paths;
@@ -48,7 +48,8 @@ public class ChatDialog {
         primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
         primaryStage.getIcons().add(new Image(this.paths.getLogo()));
         try {
-            final UndecoratorScene undecorator = new UndecoratorScene(primaryStage, this.springStageLoader.load("chat"));
+            final UndecoratorScene undecorator = new UndecoratorScene(primaryStage,
+                    this.springStageLoader.load("chat"));
             stageEvents(primaryStage, undecorator);
             undecorator.getStylesheets().add(this.paths.getChatCSS());
             primaryStage.setScene(undecorator);

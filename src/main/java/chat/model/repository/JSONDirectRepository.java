@@ -2,7 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.Direct;
 import chat.util.JSONParser;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,12 +24,12 @@ public class JSONDirectRepository implements DirectRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Direct> directs;
     private String path;
-    private PathsImpl paths;
+    private Paths paths;
 
     public JSONDirectRepository() {
     }
 
-    public JSONDirectRepository(final String path, final PathsImpl paths) {
+    public JSONDirectRepository(final String path, final Paths paths) {
         this.path = path;
         this.paths = paths;
         this.directs = getAll();
@@ -38,7 +38,8 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
+            return new HashSet<>(
+                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -83,7 +84,8 @@ public class JSONDirectRepository implements DirectRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Directs failed to save. Create " + this.paths.getDirectsJson());
+                    throw new RuntimeException("Directs failed to save. Create " +
+                            this.paths.getDirectsJson());
                 }
             }
         });

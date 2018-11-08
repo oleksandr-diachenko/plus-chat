@@ -2,7 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.Command;
 import chat.util.JSONParser;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,12 +27,12 @@ public class JSONCommandRepository implements CommandRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Command> commands;
     private String path;
-    private PathsImpl paths;
+    private Paths paths;
 
     public JSONCommandRepository() {
     }
 
-    public JSONCommandRepository(final String path, final PathsImpl paths) {
+    public JSONCommandRepository(final String path, final Paths paths) {
         this.path = path;
         this.paths = paths;
         this.commands = getAll();
@@ -41,7 +41,8 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Set<Command> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
+            return new HashSet<>(
+                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -86,7 +87,8 @@ public class JSONCommandRepository implements CommandRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Commands failed to save. Create " + this.paths.getCommandJson());
+                    throw new RuntimeException("Commands failed to save. Create " +
+                            this.paths.getCommandJson());
                 }
             }
         });

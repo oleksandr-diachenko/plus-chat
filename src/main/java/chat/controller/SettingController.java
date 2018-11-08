@@ -80,11 +80,11 @@ public class SettingController {
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
-    private PathsImpl paths;
+    private Paths paths;
 
     @Autowired
     public SettingController(final AppProperty settingsProperties,  final ConfirmDialog confirmDialog,
-                             final DataDialog dataDialog, final PathsImpl paths) {
+                             final DataDialog dataDialog, final Paths paths) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -131,7 +131,8 @@ public class SettingController {
         this.languages.put("ru", "Russian");
         this.languages.put("ua", "Ukrainian");
         this.languageChoiceBox.setItems(FXCollections.observableArrayList(this.languages.values()));
-        this.languageChoiceBox.setValue(this.languages.get(this.settings.getProperty(Settings.ROOT_LANGUAGE)));
+        this.languageChoiceBox.setValue(this.languages.get(
+                this.settings.getProperty(Settings.ROOT_LANGUAGE)));
     }
 
     private void initTheme() {
@@ -153,7 +154,8 @@ public class SettingController {
     }
 
     private void initTransparencySlider() {
-        final String backgroundTransparencyValue = this.settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY);
+        final String backgroundTransparencyValue = this.settings.getProperty(
+                Settings.ROOT_BACKGROUND_TRANSPARENCY);
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
         this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -163,7 +165,8 @@ public class SettingController {
     }
 
     private void initBackGroundColorPicker() {
-        this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
+        this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+                Settings.ROOT_BACKGROUND_COLOR)));
         this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
@@ -179,7 +182,8 @@ public class SettingController {
     }
 
     private void initSeparatorColorPicker() {
-        this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR)));
+        this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+                Settings.FONT_SEPARATOR_COLOR)));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
@@ -187,7 +191,8 @@ public class SettingController {
     }
 
     private void initMessageColorPicker() {
-        this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_MESSAGE_COLOR)));
+        this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+                Settings.FONT_MESSAGE_COLOR)));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
@@ -195,7 +200,8 @@ public class SettingController {
     }
 
     private void initDirectMessageColorPicker() {
-        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR)));
+        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+                Settings.FONT_DIRECT_MESSAGE_COLOR)));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
             StyleUtil.setStyles(this.applicationStyle);
@@ -218,7 +224,8 @@ public class SettingController {
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to " + this.paths.getSoundsDirectory() +  " and restart application.");
+                    "Put your sounds to " + this.paths.getSoundsDirectory() +
+                    " and restart application.");
         }
     }
 
@@ -237,16 +244,19 @@ public class SettingController {
             final Set<String> soundNames = new HashSet<>();
             sounds.forEach(sound -> soundNames.add(sound.getName()));
             this.directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-            this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE));
+            this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(
+                    Settings.SOUND_DIRECT_MESSAGE));
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to " + this.paths.getSoundsDirectory() + " and restart application.");
+                    "Put your sounds to " + this.paths.getSoundsDirectory() +
+                    " and restart application.");
         }
     }
 
     private void initDirectMessageSoundVolume() {
-        final String directMessageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME);
+        final String directMessageSoundVolumeValue = this.settings.getProperty(
+                Settings.SOUND_DIRECT_MESSAGE_VOLUME);
         this.directMessageVolumeValue.setText(directMessageSoundVolumeValue);
         this.directMessageVolumeSlider.setValue(Double.parseDouble(directMessageSoundVolumeValue));
         this.directMessageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -285,17 +295,28 @@ public class SettingController {
         this.settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(this.languageChoiceBox.getValue()));
         this.settings.setProperty(Settings.ROOT_THEME, this.themeChoiceBox.getValue());
 
-        this.settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(this.baseColorPicker.getValue()));
-        this.settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(this.backgroundColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(this.nickColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(this.separatorColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(this.messageColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(this.directMessageColorPicker.getValue()));
-        this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(this.enableSoundCheckBox.isSelected()));
-        this.settings.setProperty(Settings.SOUND_MESSAGE, this.messageSoundChoiceBox.getValue());
-        this.settings.setProperty(Settings.SOUND_MESSAGE_VOLUME, this.messageVolumeValue.getText());
-        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE, this.directMessageSoundChoiceBox.getValue());
-        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME, this.directMessageVolumeValue.getText());
+        this.settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
+                this.baseColorPicker.getValue()));
+        this.settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
+                this.backgroundColorPicker.getValue()));
+        this.settings.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(
+                this.nickColorPicker.getValue()));
+        this.settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(
+                this.separatorColorPicker.getValue()));
+        this.settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                this.messageColorPicker.getValue()));
+        this.settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                this.directMessageColorPicker.getValue()));
+        this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
+                this.enableSoundCheckBox.isSelected()));
+        this.settings.setProperty(Settings.SOUND_MESSAGE,
+                this.messageSoundChoiceBox.getValue());
+        this.settings.setProperty(Settings.SOUND_MESSAGE_VOLUME,
+                this.messageVolumeValue.getText());
+        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE,
+                this.directMessageSoundChoiceBox.getValue());
+        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
+                this.directMessageVolumeValue.getText());
 
         this.settingsProperties.setProperties(this.settings);
         final ChatController chatController = (ChatController) this.chatRoot.getUserData();
@@ -313,35 +334,40 @@ public class SettingController {
 
     //TODO spring inject
     public void commandsDataAction() {
-        final CRUDRepository<Command> repository = new JSONCommandRepository("./data/commands.json", this.paths);
+        final CRUDRepository<Command> repository = new JSONCommandRepository(
+                "./data/commands.json", this.paths);
         final Set<Command> commands = repository.getAll();
         final Set<String> fields = getFields(Command.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
-        final CRUDRepository<User> repository = new JSONUserRepository("./data/users.json", this.paths);
+        final CRUDRepository<User> repository = new JSONUserRepository(
+                "./data/users.json", this.paths);
         final Set<User> commands = repository.getAll();
         final Set<String> fields = getFields(User.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
-        final CRUDRepository<Rank> repository = new JSONRankRepository("./data/ranks.json", this.paths);
+        final CRUDRepository<Rank> repository = new JSONRankRepository(
+                "./data/ranks.json", this.paths);
         final Set<Rank> ranks = repository.getAll();
         final Set<String> fields = getFields(Rank.class.getDeclaredFields());
         openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
-        final CRUDRepository<Smile> repository = new JSONSmileRepository("./data/smiles.json", this.paths);
+        final CRUDRepository<Smile> repository = new JSONSmileRepository(
+                "./data/smiles.json", this.paths);
         final Set<Smile> smiles = repository.getAll();
         final Set<String> fields = getFields(Smile.class.getDeclaredFields());
         openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
-        final CRUDRepository<Direct> repository = new JSONDirectRepository("./data/directs.json", this.paths);
+        final CRUDRepository<Direct> repository = new JSONDirectRepository(
+                "./data/directs.json", this.paths);
         final Set<Direct> directs = repository.getAll();
         final Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);

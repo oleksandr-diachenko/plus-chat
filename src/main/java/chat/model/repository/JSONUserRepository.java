@@ -2,7 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.User;
 import chat.util.JSONParser;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,13 +27,13 @@ public class JSONUserRepository implements UserRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
     private String path;
-    private PathsImpl paths;
+    private Paths paths;
 
     public JSONUserRepository() {
         //do nothing
     }
 
-    public JSONUserRepository(final String path, final PathsImpl paths) {
+    public JSONUserRepository(final String path, final Paths paths) {
         this.path = path;
         this.paths = paths;
         this.users = getAll();
@@ -42,7 +42,8 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getAll() {
         try {
-            return new HashSet<>(this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<User>>() {
+            return new HashSet<>(
+                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<User>>() {
             }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -86,7 +87,8 @@ public class JSONUserRepository implements UserRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Users failed to save. Create " + this.paths.getUserJso());
+                    throw new RuntimeException("Users failed to save. Create " +
+                            this.paths.getUserJso());
                 }
             }
         });

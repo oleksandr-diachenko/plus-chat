@@ -3,7 +3,7 @@ package chat.component;
 import chat.controller.ChatController;
 import chat.controller.SpringStageLoader;
 import chat.util.AppProperty;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
@@ -31,7 +31,7 @@ public class SettingsDialog {
     private AppProperty settingsProperties;
 
     private SpringStageLoader springStageLoader;
-    private PathsImpl paths;
+    private Paths paths;
 
     public SettingsDialog() {
         //do nothing
@@ -39,7 +39,7 @@ public class SettingsDialog {
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          final SpringStageLoader springStageLoader, final PathsImpl paths) {
+                          final SpringStageLoader springStageLoader, final Paths paths) {
         this.settingsProperties = settingsProperties;
         this.springStageLoader = springStageLoader;
         this.paths = paths;
@@ -54,7 +54,8 @@ public class SettingsDialog {
             final Region root = this.springStageLoader.load("settings");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             stageEvents(owner, ownerRoot, stage, settings, root);
-            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR), settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
+            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+                    settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
             stage.setScene(undecorator);
             stage.initOwner(owner);
             stage.show();
@@ -71,10 +72,12 @@ public class SettingsDialog {
         return undecorator;
     }
 
-    private void stageEvents(final Stage owner, final Node ownerRoot, final Stage stage, final Properties settings, final Region root) {
+    private void stageEvents(final Stage owner, final Node ownerRoot, final Stage stage,
+                             final Properties settings, final Region root) {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
-            labels.forEach(label -> label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
+            labels.forEach(label ->
+                    label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {

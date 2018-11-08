@@ -31,26 +31,28 @@ public class DataDialog {
     private final static Logger logger = LogManager.getLogger(DataDialog.class);
 
     private SpringStageLoader springStageLoader;
-    private PathsImpl paths;
+    private Paths paths;
 
     public DataDialog() {
         //do nothing
     }
 
     @Autowired
-    public DataDialog(final SpringStageLoader springStageLoader, final PathsImpl paths) {
+    public DataDialog(final SpringStageLoader springStageLoader, final Paths paths) {
         this.springStageLoader = springStageLoader;
         this.paths = paths;
     }
 
-    public void openDialog(final Stage owner, final Properties settings, final Color fontColor, final Color baseColor,
-                           final Color backgroundColor, final Set<Object> objects, final Set<String> fields) {
+    public void openDialog(final Stage owner, final Properties settings, final Color fontColor,
+                           final Color baseColor, final Color backgroundColor, final Set<Object> objects,
+                           final Set<String> fields) {
         final Stage stage = new Stage();
         stage.setResizable(false);
         try {
             final Region root = this.springStageLoader.load("data");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
-            StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor), ColorUtil.getHexColor(backgroundColor));
+            StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor),
+                    ColorUtil.getHexColor(backgroundColor));
             StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             final DataController dataController = (DataController) root.getUserData();
             final TableView<Object> table = dataController.getTable();
@@ -68,7 +70,8 @@ public class DataDialog {
         fields.forEach(field -> {
             final TableColumn<Object, Object> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
-            final Callback<TableColumn<Object, Object>, TableCell<Object, Object>> cellFactory = getCellFactory();
+            final Callback<TableColumn<Object, Object>,
+                    TableCell<Object, Object>> cellFactory = getCellFactory();
             column.setCellFactory(cellFactory);
             table.getColumns().add(column);
         });

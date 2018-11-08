@@ -3,7 +3,7 @@ package chat.component;
 import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
 import chat.controller.SpringStageLoader;
-import chat.util.PathsImpl;
+import chat.util.Paths;
 import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
@@ -29,26 +29,28 @@ public class ConfirmDialog {
     private Stage stage;
     private ConfirmController controller;
     private SpringStageLoader springStageLoader;
-    private PathsImpl paths;
+    private Paths paths;
 
     public ConfirmDialog() {
         //do nothing
     }
 
     @Autowired
-    public ConfirmDialog(final SpringStageLoader springStageLoader, final PathsImpl paths) {
+    public ConfirmDialog(final SpringStageLoader springStageLoader, final Paths paths) {
         this.springStageLoader = springStageLoader;
         this.paths = paths;
     }
 
-    public void openDialog(final Stage owner, final Properties settings, final ApplicationStyle applicationStyle) {
+    public void openDialog(final Stage owner, final Properties settings,
+                           final ApplicationStyle applicationStyle) {
         this.stage = new Stage();
         this.stage.setResizable(false);
         try {
             final Region root = this.springStageLoader.load("confirm");
             this.controller = (ConfirmController) root.getUserData();
             final UndecoratorScene undecorator = getScene(settings, root);
-            StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(), applicationStyle.getBackgroundColor());
+            StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
+                    applicationStyle.getBackgroundColor());
             StyleUtil.setLabelStyle(root, applicationStyle.getNickColor());
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);

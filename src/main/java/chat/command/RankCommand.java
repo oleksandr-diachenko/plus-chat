@@ -16,7 +16,8 @@ public class RankCommand implements ICommand {
     private final UserRepository userRepository;
     private final RankRepository rankRepository;
 
-    public RankCommand(final String nick, final UserRepository userRepository, final RankRepository rankRepository) {
+    public RankCommand(final String nick, final UserRepository userRepository,
+                       final RankRepository rankRepository) {
         this.nick = nick;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;

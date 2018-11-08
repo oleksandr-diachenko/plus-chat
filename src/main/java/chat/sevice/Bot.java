@@ -32,7 +32,8 @@ public class Bot extends ListenerAdapter implements Subject {
     private Properties connect;
     private LocalDateTime start;
 
-    public Bot(final Properties connect, final UserRepository userRepository, final RankRepository rankRepository, final CommandRepository commandRepository) {
+    public Bot(final Properties connect, final UserRepository userRepository,
+               final RankRepository rankRepository, final CommandRepository commandRepository) {
         this.connect = connect;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;

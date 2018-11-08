@@ -38,7 +38,7 @@
     <bean id="confirmDialog" class="chat.component.ConfirmDialog"/>
     <bean id="dataDialog" class="chat.component.DataDialog"/>
     <bean id="springStageLoader" class="chat.controller.SpringStageLoader"/>
-    <bean id="paths" class="chat.util.PathsImpl">
+    <bean id="paths" class="chat.util.Paths">
         <constructor-arg value="/img/logo.png"/>
         <constructor-arg ref="settingsProperties"/>
         <constructor-arg value="/chat.css"/>

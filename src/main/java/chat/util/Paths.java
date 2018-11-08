@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Component
-public class PathsImpl {
+public class Paths {
 
     private String logo;
     private AppProperty settingsProperties;
@@ -23,16 +23,16 @@ public class PathsImpl {
     private String smileJson;
     private String userJson;
 
-    public PathsImpl() {
+    public Paths() {
         //do nothing
     }
 
-    public PathsImpl(final String logo, final AppProperty settingsProperties,
-                     final String chatCss, final String confirmCss, final String dataCss,
-                     final String settingsCss, final String enabledPin, final String disabledPin,
-                     final String twitchProperties, final String soundDirectory, final String commandJson,
-                     final String directsJson, final String rankJson, final String smileJson,
-                     final String userJson) {
+    public Paths(final String logo, final AppProperty settingsProperties,
+                 final String chatCss, final String confirmCss, final String dataCss,
+                 final String settingsCss, final String enabledPin, final String disabledPin,
+                 final String twitchProperties, final String soundDirectory, final String commandJson,
+                 final String directsJson, final String rankJson, final String smileJson,
+                 final String userJson) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;

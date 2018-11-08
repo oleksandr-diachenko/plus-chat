@@ -69,7 +69,7 @@ public class ChatController implements Observer {
     private AppProperty settingsProperties;
     private AppProperty twitchProperties;
     private SettingsDialog settingsDialog;
-    private PathsImpl paths;
+    private Paths paths;
 
     public ChatController() {
         //do nothing
@@ -81,7 +81,7 @@ public class ChatController implements Observer {
                           final DirectRepository directRepository,
                           @Qualifier("settingsProperties") final AppProperty settingsProperties,
                           @Qualifier("twitchProperties") final AppProperty twitchProperties,
-                          final SettingsDialog settingsDialog, final PathsImpl paths) {
+                          final SettingsDialog settingsDialog, final Paths paths) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.commandRepository = commandRepository;
@@ -114,7 +114,8 @@ public class ChatController implements Observer {
     private void startBot() {
         final Thread thread = new Thread(() -> {
             final Properties connect = this.twitchProperties.getProperty();
-            final Bot listener = new Bot(connect, this.userRepository, this.rankRepository, this.commandRepository);
+            final Bot listener = new Bot(connect, this.userRepository, this.rankRepository,
+                    this.commandRepository);
             listener.addObserver(this);
             final Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("botname"))
@@ -130,7 +131,8 @@ public class ChatController implements Observer {
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
-                        "Check properties in " + this.paths.getTwitchProperties() + " and restart application.");
+                        "Check properties in " + this.paths.getTwitchProperties() + " " +
+                        "and restart application.");
             }
         });
         thread.setDaemon(true);
@@ -193,13 +195,16 @@ public class ChatController implements Observer {
         this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
 
-    private void addSeparatorToMessageContainer(final TextFlow messageContainer, final String messageSeparator) {
-        final Text separator = getText(messageSeparator, "separator", this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
+    private void addSeparatorToMessageContainer(final TextFlow messageContainer,
+                                                final String messageSeparator) {
+        final Text separator = getText(messageSeparator, "separator",
+                this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, separator);
     }
 
     private void addUserNameToMessageContainer(final TextFlow messageContainer, final String userName) {
-        final Text nick = getText(userName, "user-name", this.settings.getProperty(Settings.FONT_NICK_COLOR));
+        final Text nick = getText(userName, "user-name",
+                this.settings.getProperty(Settings.FONT_NICK_COLOR));
         addNodesToMessageContainer(messageContainer, nick);
     }
 
@@ -216,12 +221,16 @@ public class ChatController implements Observer {
         final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
         if (isDirect(message)) {
             final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
-            final double soundDirectMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + directMessageSound, isSoundEnable, soundDirectMessageVolume);
+            final double soundDirectMessageVolume = Double.valueOf(
+                    this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
+            playSound(this.paths.getSoundsDirectory() + directMessageSound, isSoundEnable,
+                    soundDirectMessageVolume);
         } else {
             final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
-            final double soundMessageVolume = Double.valueOf(this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + messageSound, isSoundEnable, soundMessageVolume);
+            final double soundMessageVolume = Double.valueOf(
+                    this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
+            playSound(this.paths.getSoundsDirectory() + messageSound, isSoundEnable,
+                    soundMessageVolume);
         }
     }
 
