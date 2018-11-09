@@ -6,24 +6,39 @@
 
     <context:component-scan base-package="chat"/>
 
+    <bean id="commandJsonPath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value=".\data\commands.json"/>
+    </bean>
+    <bean id="directsJsonPath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value=".\data\directs.json"/>
+    </bean>
+    <bean id="ranksJsonPath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value=".\data\ranks.json"/>
+    </bean>
+    <bean id="smilesJsonPath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value=".\data\smiles.json"/>
+    </bean>
+    <bean id="usersJsonPath" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value=".\data\users.json"/>
+    </bean>
     <bean id="commandRepository" class="chat.model.repository.JSONCommandRepository">
-        <constructor-arg value=".\data\commands.json"/>
+        <constructor-arg ref="commandJsonPath"/>
         <constructor-arg ref="paths"/>
     </bean>
     <bean id="directRepository" class="chat.model.repository.JSONDirectRepository">
-        <constructor-arg value=".\data\directs.json"/>
+        <constructor-arg ref="directsJsonPath"/>
         <constructor-arg ref="paths"/>
     </bean>
     <bean id="rankRepository" class="chat.model.repository.JSONRankRepository">
-        <constructor-arg value=".\data\ranks.json"/>
+        <constructor-arg ref="ranksJsonPath"/>
         <constructor-arg ref="paths"/>
     </bean>
     <bean id="smileRepository" class="chat.model.repository.JSONSmileRepository">
-        <constructor-arg value=".\data\smiles.json"/>
+        <constructor-arg ref="smilesJsonPath"/>
         <constructor-arg ref="paths"/>
     </bean>
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
-        <constructor-arg value=".\data\users.json"/>
+        <constructor-arg ref="usersJsonPath"/>
         <constructor-arg ref="paths"/>
     </bean>
 
@@ -33,11 +48,6 @@
     <bean id="settingsProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\settings.properties"/>
     </bean>
-    <bean id="chatDialog" class="chat.component.ChatDialog"/>
-    <bean id="settingsDialog" class="chat.component.SettingsDialog"/>
-    <bean id="confirmDialog" class="chat.component.ConfirmDialog"/>
-    <bean id="dataDialog" class="chat.component.DataDialog"/>
-    <bean id="springStageLoader" class="chat.controller.SpringStageLoader"/>
     <bean id="paths" class="chat.util.Paths">
         <constructor-arg name="logo" value="/img/logo.png"/>
         <constructor-arg name="settingsProperties" ref="settingsProperties"/>
@@ -49,10 +59,10 @@
         <constructor-arg name="disabledPin" value="/img/pin-disabled.png"/>
         <constructor-arg name="twitchProperties" value="/settings/twitch.properties"/>
         <constructor-arg name="soundDirectory" value="./sound/"/>
-        <constructor-arg name="commandsJson" value=".\data\commands.json"/>
-        <constructor-arg name="directsJson" value=".\data\directs.json"/>
-        <constructor-arg name="ranksJson" value=".\data\ranks.json"/>
-        <constructor-arg name="smilesJson" value=".\data\smiles.json"/>
-        <constructor-arg name="usersJson" value=".\data\users.json"/>
+        <constructor-arg name="commandsJson" ref="commandJsonPath"/>
+        <constructor-arg name="directsJson" ref="directsJsonPath"/>
+        <constructor-arg name="ranksJson" ref="ranksJsonPath"/>
+        <constructor-arg name="smilesJson" ref="smilesJsonPath"/>
+        <constructor-arg name="usersJson" ref="usersJsonPath"/>
     </bean>
 </beans>
