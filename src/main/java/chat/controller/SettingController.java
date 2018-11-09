@@ -395,16 +395,10 @@ public class SettingController {
         return fields;
     }
 
-    private void openDialog(final Set<Object> objects, final Set<String> fields) {
-        this.dataDialog.openDialog(
-                getStage(),
-                this.settings,
-                this.nickColorPicker.getValue(),
-                this.baseColorPicker.getValue(),
-                this.backgroundColorPicker.getValue(),
-                objects,
-                fields,
-                this.styleUtil);
+    private void openDialog(final Set<Object> data, final Set<String> fields) {
+        this.dataDialog.setTableFields(fields);
+        this.dataDialog.setTableData(data);
+        this.dataDialog.openDialog(getStage());
     }
 
     private Stage getStage() {

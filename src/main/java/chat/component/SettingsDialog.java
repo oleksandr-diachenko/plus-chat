@@ -1,7 +1,6 @@
 package chat.component;
 
 import chat.util.AppProperty;
-import chat.util.Paths;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import javafx.scene.Node;
@@ -23,14 +22,12 @@ public class SettingsDialog extends AbstractDialog{
 
     private AppProperty settingsProperties;
 
-    private Paths paths;
     private StyleUtil styleUtil;
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          final Paths paths, final StyleUtil styleUtil) {
+                          final StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
-        this.paths = paths;
         this.styleUtil = styleUtil;
     }
 
