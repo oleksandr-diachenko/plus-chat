@@ -23,7 +23,6 @@ public class ConfirmDialog {
     private final static Logger logger = LogManager.getLogger(ConfirmDialog.class);
 
     private Stage stage;
-    private ConfirmController controller;
     private SpringStageLoader springStageLoader;
     private Paths paths;
 
@@ -43,8 +42,7 @@ public class ConfirmDialog {
             final Region root = getRoot();
             final UndecoratorScene undecorator = getScene(root);
 
-            this.controller = (ConfirmController) root.getUserData();
-            this.stage.setResizable(false);
+            additionalStaffs(stage);
 
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
@@ -54,6 +52,10 @@ public class ConfirmDialog {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Confirm view failed to load");
         }
+    }
+
+    private void additionalStaffs(final Stage stage) {
+        stage.setResizable(false);
     }
 
     private Region getRoot() throws IOException {
@@ -68,9 +70,5 @@ public class ConfirmDialog {
 
     public Stage getStage() {
         return this.stage;
-    }
-
-    public boolean isConfirmed() {
-        return this.controller.isConfirmed();
     }
 }

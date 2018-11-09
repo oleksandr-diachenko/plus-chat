@@ -43,17 +43,17 @@ public class ChatDialog {
     }
 
     public void openDialog() {
-        final Stage primaryStage = new Stage();
-        primaryStage.getIcons().add(new Image(this.paths.getLogo()));
+        final Stage stage = new Stage();
+        stage.getIcons().add(new Image(this.paths.getLogo()));
         try {
-            final UndecoratorScene undecorator = getScene(primaryStage);
+            final UndecoratorScene undecorator = getScene(stage);
 
-            additionalStaffs(primaryStage, undecorator);
+            additionalStaffs(stage, undecorator);
 
             undecorator.getStylesheets().add(this.paths.getChatCSS());
-            primaryStage.setScene(undecorator);
-            primaryStage.setTitle("(+) chat");
-            primaryStage.show();
+            stage.setScene(undecorator);
+            stage.setTitle("(+) chat");
+            stage.show();
         } catch (IOException exception) {
             exception.printStackTrace();
             logger.error(exception.getMessage(), exception);

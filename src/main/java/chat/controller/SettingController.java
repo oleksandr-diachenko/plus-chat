@@ -77,6 +77,7 @@ public class SettingController {
     private Node chatRoot;
     private ApplicationStyle applicationStyle;
     private StyleUtil styleUtil;
+    private ConfirmController confirmController;
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
@@ -93,7 +94,8 @@ public class SettingController {
                              final CommandRepository commandRepository,
                              final UserRepository userRepository, final RankRepository rankRepository,
                              final SmileRepository smileRepository, final DirectRepository directRepository,
-                             final ApplicationStyle applicationStyle, final StyleUtil styleUtil) {
+                             final ApplicationStyle applicationStyle, final StyleUtil styleUtil,
+                             final ConfirmController confirmController) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -105,6 +107,7 @@ public class SettingController {
         this.directRepository = directRepository;
         this.applicationStyle = applicationStyle;
         this.styleUtil = styleUtil;
+        this.confirmController = confirmController;
     }
 
     @FXML
@@ -283,7 +286,7 @@ public class SettingController {
         this.confirmDialog.openDialog(getStage());
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
-            if (confirmDialog.isConfirmed()) {
+            if (this.confirmController.isConfirmed()) {
                 getOwner().close();
                 new PlusChatFX().start(getOwner());
             }
@@ -294,7 +297,7 @@ public class SettingController {
         this.confirmDialog.openDialog(getStage());
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
-            if (confirmDialog.isConfirmed()) {
+            if (this.confirmController.isConfirmed()) {
                 flushSettings();
             }
         });
