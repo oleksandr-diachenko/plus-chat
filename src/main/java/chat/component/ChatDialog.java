@@ -44,7 +44,6 @@ public class ChatDialog {
 
     public void openDialog() {
         final Stage stage = new Stage();
-        stage.getIcons().add(new Image(this.paths.getLogo()));
         try {
             final UndecoratorScene undecorator = getScene(stage);
 
@@ -63,6 +62,7 @@ public class ChatDialog {
 
     private void additionalStaffs(Stage primaryStage, UndecoratorScene undecorator) {
         chatStage = primaryStage;
+        chatStage.getIcons().add(new Image(this.paths.getLogo()));
         setAlwaysOnTop(primaryStage);
         stageEvents(primaryStage, undecorator);
     }
