@@ -10,6 +10,7 @@ import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.Node;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +25,7 @@ import java.util.Set;
  * @author Alexander Diachenko.
  */
 @Component
+@NoArgsConstructor
 public class SettingsDialog {
 
     private final static Logger logger = LogManager.getLogger(SettingsDialog.class);
@@ -33,11 +35,6 @@ public class SettingsDialog {
     private SpringStageLoader springStageLoader;
     private Paths paths;
     private StyleUtil styleUtil;
-
-
-    public SettingsDialog() {
-        //do nothing
-    }
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,

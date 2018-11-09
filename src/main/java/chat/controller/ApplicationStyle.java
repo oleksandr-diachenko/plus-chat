@@ -2,8 +2,7 @@ package chat.controller;
 
 import chat.util.AppProperty;
 import chat.util.Settings;
-import javafx.scene.Node;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
@@ -12,6 +11,7 @@ import java.util.Properties;
  * @author Alexander Diachenko.
  */
 @Component
+@NoArgsConstructor
 public class ApplicationStyle {
     private String backgroundColor;
     private String baseColor;
@@ -21,10 +21,6 @@ public class ApplicationStyle {
     private String messageColor;
     private String directColor;
     private AppProperty settingProperties;
-
-    public ApplicationStyle() {
-        //do nothing
-    }
 
     public ApplicationStyle(final AppProperty settingProperties) {
         this.settingProperties = settingProperties;

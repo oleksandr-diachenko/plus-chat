@@ -14,6 +14,7 @@ import javafx.scene.control.*;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ import java.util.*;
  * @author Alexander Diachenko.
  */
 @Controller
+@NoArgsConstructor
 public class SettingController {
 
     private final static Logger logger = LogManager.getLogger(SettingController.class);

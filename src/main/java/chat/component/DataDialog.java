@@ -14,6 +14,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,7 @@ import java.util.*;
  * @author Alexander Diachenko.
  */
 @Component
+@NoArgsConstructor
 public class DataDialog {
 
     private final static Logger logger = LogManager.getLogger(DataDialog.class);
@@ -40,10 +42,6 @@ public class DataDialog {
     private Set<Object> objects;
     private Set<String> fields;
     private StyleUtil styleUtil;
-
-    public DataDialog() {
-        //do nothing
-    }
 
     @Autowired
     public DataDialog(final SpringStageLoader springStageLoader, final Paths paths) {

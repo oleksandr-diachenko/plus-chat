@@ -1,10 +1,12 @@
 package chat.util;
 
+import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 @Component
+@NoArgsConstructor
 public class Paths {
 
     private String logo;
@@ -17,10 +19,6 @@ public class Paths {
     private String disabledPin;
     private String twitchProperties;
     private String soundDirectory;
-
-    public Paths() {
-        //do nothing
-    }
 
     public Paths(final String logo, final AppProperty settingsProperties,
                  final String chatCss, final String confirmCss, final String dataCss,

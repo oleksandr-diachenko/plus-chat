@@ -22,6 +22,7 @@ import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -42,6 +43,7 @@ import java.util.*;
  * @author Alexander Diachenko.
  */
 @Controller
+@NoArgsConstructor
 public class ChatController implements Observer {
 
     private final static Logger logger = LogManager.getLogger(ChatController.class);
@@ -71,10 +73,6 @@ public class ChatController implements Observer {
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
-
-    public ChatController() {
-        //do nothing
-    }
 
     @Autowired
     public ChatController(final RankRepository rankRepository, final UserRepository userRepository,

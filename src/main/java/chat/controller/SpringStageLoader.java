@@ -5,6 +5,7 @@ import chat.util.ResourceBundleControl;
 import chat.util.Settings;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.Region;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,6 +20,7 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 
 @Component
+@NoArgsConstructor
 public class SpringStageLoader implements ApplicationContextAware {
 
     private static ApplicationContext staticContext;
@@ -29,10 +31,6 @@ public class SpringStageLoader implements ApplicationContextAware {
     private AppProperty settingsProperties;
 
     private static final String FXML_DIR = "/view/";
-
-    public SpringStageLoader() {
-        //do nothing
-    }
 
     @Autowired
     public SpringStageLoader(@Qualifier("settingsProperties") final AppProperty settingsProperties) {

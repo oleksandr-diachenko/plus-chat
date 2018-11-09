@@ -1,5 +1,6 @@
 package chat.util;
 
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -14,15 +15,12 @@ import java.util.Properties;
  * @author Alexander Diachenko.
  */
 @Component
+@NoArgsConstructor
 public class AppProperty{
 
     private final static Logger logger = LogManager.getLogger(AppProperty.class);
 
     private String path;
-
-    public AppProperty() {
-        //do nothing
-    }
 
     public AppProperty(String path) {
         this.path = path;

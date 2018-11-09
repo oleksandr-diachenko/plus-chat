@@ -3,6 +3,7 @@ package chat.util;
 import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,13 +13,10 @@ import java.util.*;
  * @author Alexander Diachenko
  */
 @Component
+@NoArgsConstructor
 public class StyleUtil {
 
     private ApplicationStyle applicationStyle;
-
-    public StyleUtil() {
-        //do nothing
-    }
 
     @Autowired
     public StyleUtil(final ApplicationStyle applicationStyle) {

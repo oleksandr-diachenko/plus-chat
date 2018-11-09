@@ -4,8 +4,8 @@ import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import javafx.stage.WindowEvent;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -15,6 +15,7 @@ import java.util.Collections;
  * @author Alexander Diachenko.
  */
 @Controller
+@NoArgsConstructor
 public class ConfirmController {
 
     private StyleUtil styleUtil;
@@ -23,10 +24,6 @@ public class ConfirmController {
     @FXML
     private VBox root;
     private boolean confirmed = false;
-
-    public ConfirmController() {
-        //do nothing
-    }
 
     @Autowired
     public ConfirmController(final StyleUtil styleUtil, final ApplicationStyle applicationStyle) {

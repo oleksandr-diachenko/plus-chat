@@ -4,6 +4,7 @@ import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -14,13 +15,10 @@ import java.util.Properties;
  * @author Alexander Diachenko.
  */
 @Component
+@NoArgsConstructor
 public class ChatDialog extends AbstractDialog {
 
     private AppProperty settingsProperties;
-
-    public ChatDialog() {
-        //do nothing
-    }
 
     @Autowired
     public ChatDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties) {
