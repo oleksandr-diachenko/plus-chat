@@ -4,8 +4,6 @@ import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
@@ -17,8 +15,6 @@ import java.util.Properties;
  */
 @Component
 public class ChatDialog extends AbstractDialog {
-
-    private final static Logger logger = LogManager.getLogger(ChatDialog.class);
 
     private AppProperty settingsProperties;
 
@@ -32,12 +28,12 @@ public class ChatDialog extends AbstractDialog {
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
+    protected void initOwner(final Stage owner, final Stage stage) {
         //do nothing
     }
 
     @Override
-    protected void setEvents(Stage stage) {
+    protected void setEvents(final Stage stage) {
         stage.getIcons().add(new Image(this.paths.getLogo()));
         setAlwaysOnTop(stage);
         stage.setOnCloseRequest(we -> {
@@ -46,8 +42,8 @@ public class ChatDialog extends AbstractDialog {
         });
     }
 
-    private void setAlwaysOnTop(Stage primaryStage) {
-        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
+    private void setAlwaysOnTop(final Stage stage) {
+        stage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
     }
 
     private Properties getSettings() {
