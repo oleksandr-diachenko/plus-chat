@@ -277,7 +277,7 @@ public class SettingController {
     }
 
     public void reloadAction() {
-        this.confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
+        this.confirmDialog.openDialog(getStage(), this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {
@@ -288,7 +288,7 @@ public class SettingController {
     }
 
     public void confirmAction() {
-        this.confirmDialog.openDialog(getStage(), this.settings, this.applicationStyle);
+        this.confirmDialog.openDialog(getStage(), this.applicationStyle);
         final Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmDialog.isConfirmed()) {

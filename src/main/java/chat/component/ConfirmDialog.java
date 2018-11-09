@@ -16,7 +16,6 @@ import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 import java.util.Collections;
-import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.
@@ -41,17 +40,18 @@ public class ConfirmDialog {
         this.paths = paths;
     }
 
-    public void openDialog(final Stage owner, final Properties settings,
-                           final ApplicationStyle applicationStyle) {
+    public void openDialog(final Stage owner, final ApplicationStyle applicationStyle) {
         this.stage = new Stage();
-        this.stage.setResizable(false);
         try {
-            final Region root = this.springStageLoader.load("confirm");
+            final Region root = getRoot();
+            final UndecoratorScene undecorator = getScene(root);
+
             this.controller = (ConfirmController) root.getUserData();
-            final UndecoratorScene undecorator = getScene(settings, root);
+            this.stage.setResizable(false);
             StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                     applicationStyle.getBackgroundColor());
             StyleUtil.setLabelStyle(root, applicationStyle.getNickColor());
+
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
             this.stage.initOwner(owner);
@@ -62,7 +62,11 @@ public class ConfirmDialog {
         }
     }
 
-    private UndecoratorScene getScene(final Properties settings, final Region root) {
+    private Region getRoot() throws IOException {
+        return this.springStageLoader.load("confirm");
+    }
+
+    private UndecoratorScene getScene(final Region root) {
         final UndecoratorScene undecorator = new UndecoratorScene(this.stage, root);
         undecorator.getStylesheets().add(this.paths.getConfirmCSS());
         return undecorator;

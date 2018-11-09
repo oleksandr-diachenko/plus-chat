@@ -6,6 +6,7 @@ import chat.util.Paths;
 import chat.util.Settings;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.image.Image;
+import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -34,7 +35,7 @@ public class ChatDialog {
     }
 
     @Autowired
-    public ChatDialog(@Qualifier("settingsProperties")final AppProperty settingsProperties,
+    public ChatDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
                       final SpringStageLoader springStageLoader, final Paths paths) {
         this.settingsProperties = settingsProperties;
         this.springStageLoader = springStageLoader;
@@ -42,15 +43,13 @@ public class ChatDialog {
     }
 
     public void openDialog() {
-        final Properties settings = this.settingsProperties.getProperty();
         final Stage primaryStage = new Stage();
-        chatStage = primaryStage;
-        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
         primaryStage.getIcons().add(new Image(this.paths.getLogo()));
         try {
-            final UndecoratorScene undecorator = new UndecoratorScene(primaryStage,
-                    this.springStageLoader.load("chat"));
-            stageEvents(primaryStage, undecorator);
+            final UndecoratorScene undecorator = getScene(primaryStage);
+
+            additionalStaffs(primaryStage, undecorator);
+
             undecorator.getStylesheets().add(this.paths.getChatCSS());
             primaryStage.setScene(undecorator);
             primaryStage.setTitle("(+) chat");
@@ -60,6 +59,28 @@ public class ChatDialog {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Chat view failed to load");
         }
+    }
+
+    private void additionalStaffs(Stage primaryStage, UndecoratorScene undecorator) {
+        chatStage = primaryStage;
+        setAlwaysOnTop(primaryStage);
+        stageEvents(primaryStage, undecorator);
+    }
+
+    private void setAlwaysOnTop(Stage primaryStage) {
+        primaryStage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
+    }
+
+    private Properties getSettings() {
+        return this.settingsProperties.getProperty();
+    }
+
+    private UndecoratorScene getScene(final Stage stage) throws IOException {
+        return new UndecoratorScene(stage, getRoot());
+    }
+
+    private Region getRoot() throws IOException {
+        return this.springStageLoader.load("chat");
     }
 
     private static void stageEvents(final Stage primaryStage, final UndecoratorScene undecorator) {

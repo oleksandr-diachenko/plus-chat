@@ -24,6 +24,11 @@ public class ConfirmController {
         owner.close();
     }
 
+    @FXML
+    public void initialize() {
+
+    }
+
     public void cancelAction() {
         getStage().fireEvent(
                 new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
