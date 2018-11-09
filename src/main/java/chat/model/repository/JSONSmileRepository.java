@@ -2,7 +2,6 @@ package chat.model.repository;
 
 import chat.model.entity.Smile;
 import chat.util.JSONParser;
-import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,14 +23,12 @@ public class JSONSmileRepository implements SmileRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Smile> smiles;
     private String path;
-    private Paths paths;
 
     public JSONSmileRepository() {
     }
 
-    public JSONSmileRepository(final String path, final Paths paths) {
+    public JSONSmileRepository(final String path) {
         this.path = path;
-        this.paths = paths;
         this.smiles = getAll();
     }
 
@@ -85,7 +82,7 @@ public class JSONSmileRepository implements SmileRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Smiles failed to save. Create " +
-                            this.paths.getSmilesJson());
+                            this.path);
                 }
             }
         });

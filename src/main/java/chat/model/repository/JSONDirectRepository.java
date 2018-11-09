@@ -2,7 +2,6 @@ package chat.model.repository;
 
 import chat.model.entity.Direct;
 import chat.util.JSONParser;
-import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,14 +23,12 @@ public class JSONDirectRepository implements DirectRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Direct> directs;
     private String path;
-    private Paths paths;
 
     public JSONDirectRepository() {
     }
 
-    public JSONDirectRepository(final String path, final Paths paths) {
+    public JSONDirectRepository(final String path) {
         this.path = path;
-        this.paths = paths;
         this.directs = getAll();
     }
 
@@ -85,7 +82,7 @@ public class JSONDirectRepository implements DirectRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Create " +
-                            this.paths.getDirectsJson());
+                            this.path);
                 }
             }
         });

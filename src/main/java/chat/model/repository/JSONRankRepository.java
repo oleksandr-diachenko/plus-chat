@@ -2,7 +2,6 @@ package chat.model.repository;
 
 import chat.model.entity.Rank;
 import chat.util.JSONParser;
-import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -24,14 +23,12 @@ public class JSONRankRepository implements RankRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Rank> ranks;
     private String path;
-    private Paths paths;
 
     public JSONRankRepository() {
     }
 
-    public JSONRankRepository(final String path, final Paths paths) {
+    public JSONRankRepository(final String path) {
         this.path = path;
-        this.paths = paths;
         this.ranks = getAll();
     }
 
@@ -85,7 +82,7 @@ public class JSONRankRepository implements RankRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Ranks failed to save. Create " + this.paths.getRanksJson());
+                    throw new RuntimeException("Ranks failed to save. Create " + this.path);
                 }
             }
         });

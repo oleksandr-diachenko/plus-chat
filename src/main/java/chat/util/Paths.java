@@ -17,11 +17,6 @@ public class Paths {
     private String disabledPin;
     private String twitchProperties;
     private String soundDirectory;
-    private String commandsJson;
-    private String directsJson;
-    private String ranksJson;
-    private String smilesJson;
-    private String usersJson;
 
     public Paths() {
         //do nothing
@@ -30,9 +25,7 @@ public class Paths {
     public Paths(final String logo, final AppProperty settingsProperties,
                  final String chatCss, final String confirmCss, final String dataCss,
                  final String settingsCss, final String enabledPin, final String disabledPin,
-                 final String twitchProperties, final String soundDirectory, final String commandsJson,
-                 final String directsJson, final String ranksJson, final String smilesJson,
-                 final String usersJson) {
+                 final String twitchProperties, final String soundDirectory) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;
@@ -43,11 +36,6 @@ public class Paths {
         this.disabledPin = disabledPin;
         this.twitchProperties = twitchProperties;
         this.soundDirectory = soundDirectory;
-        this.commandsJson = commandsJson;
-        this.directsJson = directsJson;
-        this.ranksJson = ranksJson;
-        this.smilesJson = smilesJson;
-        this.usersJson = usersJson;
     }
 
     public String getLogo() {
@@ -88,25 +76,5 @@ public class Paths {
 
     public String getSoundsDirectory() {
         return this.soundDirectory;
-    }
-
-    public String getCommandsJson() {
-        return this.commandsJson;
-    }
-
-    public String getDirectsJson() {
-        return this.directsJson;
-    }
-
-    public String getRanksJson() {
-        return this.ranksJson;
-    }
-
-    public String getSmilesJson() {
-        return this.smilesJson;
-    }
-
-    public String getUsersJson() {
-        return this.usersJson;
     }
 }

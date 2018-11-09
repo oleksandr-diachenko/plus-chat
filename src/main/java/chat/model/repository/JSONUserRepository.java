@@ -2,7 +2,6 @@ package chat.model.repository;
 
 import chat.model.entity.User;
 import chat.util.JSONParser;
-import chat.util.Paths;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -27,15 +26,13 @@ public class JSONUserRepository implements UserRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
     private String path;
-    private Paths paths;
 
     public JSONUserRepository() {
         //do nothing
     }
 
-    public JSONUserRepository(final String path, final Paths paths) {
+    public JSONUserRepository(final String path) {
         this.path = path;
-        this.paths = paths;
         this.users = getAll();
     }
 
@@ -88,7 +85,7 @@ public class JSONUserRepository implements UserRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Users failed to save. Create " +
-                            this.paths.getUsersJson());
+                            this.path);
                 }
             }
         });

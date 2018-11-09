@@ -23,25 +23,19 @@
     </bean>
     <bean id="commandRepository" class="chat.model.repository.JSONCommandRepository">
         <constructor-arg ref="commandJsonPath"/>
-        <constructor-arg ref="paths"/>
     </bean>
     <bean id="directRepository" class="chat.model.repository.JSONDirectRepository">
         <constructor-arg ref="directsJsonPath"/>
-        <constructor-arg ref="paths"/>
     </bean>
     <bean id="rankRepository" class="chat.model.repository.JSONRankRepository">
         <constructor-arg ref="ranksJsonPath"/>
-        <constructor-arg ref="paths"/>
     </bean>
     <bean id="smileRepository" class="chat.model.repository.JSONSmileRepository">
         <constructor-arg ref="smilesJsonPath"/>
-        <constructor-arg ref="paths"/>
     </bean>
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg ref="usersJsonPath"/>
-        <constructor-arg ref="paths"/>
     </bean>
-
     <bean id="twitchProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\twitch.properties"/>
     </bean>
@@ -59,10 +53,5 @@
         <constructor-arg name="disabledPin" value="/img/pin-disabled.png"/>
         <constructor-arg name="twitchProperties" value="/settings/twitch.properties"/>
         <constructor-arg name="soundDirectory" value="./sound/"/>
-        <constructor-arg name="commandsJson" ref="commandJsonPath"/>
-        <constructor-arg name="directsJson" ref="directsJsonPath"/>
-        <constructor-arg name="ranksJson" ref="ranksJsonPath"/>
-        <constructor-arg name="smilesJson" ref="smilesJsonPath"/>
-        <constructor-arg name="usersJson" ref="usersJsonPath"/>
     </bean>
 </beans>
