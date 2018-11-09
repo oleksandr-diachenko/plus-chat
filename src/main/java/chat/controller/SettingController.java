@@ -78,6 +78,7 @@ public class SettingController {
     private ApplicationStyle applicationStyle;
     private StyleUtil styleUtil;
     private ConfirmController confirmController;
+    private ChatDialog chatDialog;
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
@@ -95,7 +96,7 @@ public class SettingController {
                              final UserRepository userRepository, final RankRepository rankRepository,
                              final SmileRepository smileRepository, final DirectRepository directRepository,
                              final ApplicationStyle applicationStyle, final StyleUtil styleUtil,
-                             final ConfirmController confirmController) {
+                             final ConfirmController confirmController, final ChatDialog chatDialog) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -108,6 +109,7 @@ public class SettingController {
         this.applicationStyle = applicationStyle;
         this.styleUtil = styleUtil;
         this.confirmController = confirmController;
+        this.chatDialog = chatDialog;
     }
 
     @FXML
@@ -406,7 +408,7 @@ public class SettingController {
     }
 
     private Stage getOwner() {
-        return ChatDialog.chatStage;
+        return this.chatDialog.getStage();
     }
 
     public Node getRoot() {

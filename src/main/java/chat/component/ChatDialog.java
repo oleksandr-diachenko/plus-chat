@@ -1,12 +1,8 @@
 package chat.component;
 
-import chat.controller.SpringStageLoader;
 import chat.util.AppProperty;
-import chat.util.Paths;
 import chat.util.Settings;
-import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.image.Image;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -14,57 +10,40 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.
  */
 @Component
-public class ChatDialog {
+public class ChatDialog extends AbstractDialog {
 
     private final static Logger logger = LogManager.getLogger(ChatDialog.class);
 
-    public static Stage chatStage;
     private AppProperty settingsProperties;
-    private SpringStageLoader springStageLoader;
-    private Paths paths;
 
     public ChatDialog() {
         //do nothing
     }
 
     @Autowired
-    public ChatDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                      final SpringStageLoader springStageLoader, final Paths paths) {
+    public ChatDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties) {
         this.settingsProperties = settingsProperties;
-        this.springStageLoader = springStageLoader;
-        this.paths = paths;
     }
 
-    public void openDialog() {
-        final Stage stage = new Stage();
-        try {
-            final UndecoratorScene undecorator = getScene(stage);
-
-            additionalStaffs(stage, undecorator);
-
-            undecorator.getStylesheets().add(this.paths.getChatCSS());
-            stage.setScene(undecorator);
-            stage.setTitle("(+) chat");
-            stage.show();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Chat view failed to load");
-        }
+    @Override
+    protected void initOwner(Stage owner, Stage stage) {
+        //do nothing
     }
 
-    private void additionalStaffs(Stage primaryStage, UndecoratorScene undecorator) {
-        chatStage = primaryStage;
-        chatStage.getIcons().add(new Image(this.paths.getLogo()));
-        setAlwaysOnTop(primaryStage);
-        stageEvents(primaryStage, undecorator);
+    @Override
+    protected void setEvents(Stage stage) {
+        stage.getIcons().add(new Image(this.paths.getLogo()));
+        setAlwaysOnTop(stage);
+        stage.setOnCloseRequest(we -> {
+            we.consume();
+            getScene().setFadeOutTransition();
+        });
     }
 
     private void setAlwaysOnTop(Stage primaryStage) {
@@ -75,18 +54,18 @@ public class ChatDialog {
         return this.settingsProperties.getProperty();
     }
 
-    private UndecoratorScene getScene(final Stage stage) throws IOException {
-        return new UndecoratorScene(stage, getRoot());
+    @Override
+    protected String getFXMLName() {
+        return "chat";
     }
 
-    private Region getRoot() throws IOException {
-        return this.springStageLoader.load("chat");
+    @Override
+    protected String getCSSName() {
+        return this.paths.getChatCSS();
     }
 
-    private static void stageEvents(final Stage primaryStage, final UndecoratorScene undecorator) {
-        primaryStage.setOnCloseRequest(we -> {
-            we.consume();
-            undecorator.setFadeOutTransition();
-        });
+    @Override
+    protected String getTitleName() {
+        return "(+) chat";
     }
 }

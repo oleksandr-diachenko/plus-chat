@@ -36,7 +36,7 @@ public class PlusChatFX extends Application {
 
     @Override
     public void start(final Stage primaryStage) {
-        PlusChatFX.chatDialog.openDialog();
+        PlusChatFX.chatDialog.openDialog(primaryStage);
     }
 
     @Override
