@@ -68,11 +68,14 @@ public class JSONRankRepository implements RankRepository {
 
     @Override
     public Rank getRankByExp(final long exp) {
-        return this.ranks
-                .stream()
-                .filter(rank -> rank.getExp() <= exp)
-                .min(Comparator.reverseOrder())
-                .orElse(new Rank());
+        Rank nearest = new Rank();
+        for (Rank rank : this.ranks) {
+            final int rankExp = rank.getExp();
+            if (rankExp <= exp) {
+                nearest = rank;
+            }
+        }
+        return nearest;
     }
 
     private void flush() {

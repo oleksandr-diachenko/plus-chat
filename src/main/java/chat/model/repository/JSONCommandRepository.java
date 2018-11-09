@@ -40,7 +40,7 @@ public class JSONCommandRepository implements CommandRepository {
         try {
             return new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
-            }));
+                    }));
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -49,10 +49,12 @@ public class JSONCommandRepository implements CommandRepository {
 
     @Override
     public Optional<Command> getCommandByName(final String name) {
-        return this.commands
-                .stream()
-                .filter(command -> command.getName().equalsIgnoreCase(name))
-                .findFirst();
+        for (Command command : this.commands) {
+            if (command.getName().equalsIgnoreCase(name)) {
+                return Optional.of(command);
+            }
+        }
+        return Optional.empty();
     }
 
     @Override
