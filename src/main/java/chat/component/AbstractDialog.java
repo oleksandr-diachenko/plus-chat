@@ -25,14 +25,14 @@ public abstract class AbstractDialog {
     private Stage stage;
 
     public void openDialog(final Stage owner) {
-        Stage stage = new Stage();
+        final Stage stage = new Stage();
         this.stage = stage;
         try {
             final UndecoratorScene undecorator = getScene(stage, getRoot());
             stage.setScene(undecorator);
 
             initOwner(owner, stage);
-
+            setStageSettings(stage);
             setEvents(stage);
 
             stage.setTitle(getTitleName());
@@ -42,6 +42,8 @@ public abstract class AbstractDialog {
             throw new RuntimeException(getFXMLName() + " view failed to load");
         }
     }
+
+    protected abstract void setStageSettings(final Stage stage);
 
     protected abstract void initOwner(final Stage owner, final Stage stage);
 

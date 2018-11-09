@@ -8,7 +8,13 @@ import org.springframework.stereotype.Component;
  * @author Alexander Diachenko.
  */
 @Component
-public class ConfirmDialog extends AbstractDialog{
+public class ConfirmDialog extends AbstractDialog {
+
+    @Override
+    protected void setStageSettings(final Stage stage) {
+        stage.initModality(Modality.WINDOW_MODAL);
+        stage.setResizable(false);
+    }
 
     @Override
     protected void initOwner(final Stage owner, final Stage stage) {
@@ -17,8 +23,7 @@ public class ConfirmDialog extends AbstractDialog{
 
     @Override
     protected void setEvents(final Stage stage) {
-        stage.initModality(Modality.WINDOW_MODAL);
-        stage.setResizable(false);
+        //do nothing
     }
 
     @Override

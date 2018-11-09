@@ -28,14 +28,18 @@ public class ChatDialog extends AbstractDialog {
     }
 
     @Override
+    protected void setStageSettings(final Stage stage) {
+        stage.getIcons().add(new Image(this.paths.getLogo()));
+        setAlwaysOnTop(stage);
+    }
+
+    @Override
     protected void initOwner(final Stage owner, final Stage stage) {
         //do nothing
     }
 
     @Override
     protected void setEvents(final Stage stage) {
-        stage.getIcons().add(new Image(this.paths.getLogo()));
-        setAlwaysOnTop(stage);
         stage.setOnCloseRequest(we -> {
             we.consume();
             getScene().setFadeOutTransition();
