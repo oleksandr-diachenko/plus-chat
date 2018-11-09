@@ -23,12 +23,13 @@ public abstract class AbstractDialog {
     protected Paths paths;
     private UndecoratorScene undecorator;
     private Stage stage;
+    private Region root;
 
     public void openDialog(final Stage owner) {
         final Stage stage = new Stage();
         this.stage = stage;
         try {
-            final UndecoratorScene undecorator = getScene(stage, getRoot());
+            final UndecoratorScene undecorator = getScene(stage, getRootRegion());
             stage.setScene(undecorator);
 
             initOwner(owner, stage);
@@ -49,8 +50,9 @@ public abstract class AbstractDialog {
 
     protected abstract void setEvents(final Stage stage);
 
-    private Region getRoot() throws IOException {
-        return this.springStageLoader.load(getFXMLName());
+    private Region getRootRegion() throws IOException {
+        this.root = this.springStageLoader.load(getFXMLName());
+        return this.root;
     }
 
     protected abstract String getFXMLName();
@@ -71,5 +73,9 @@ public abstract class AbstractDialog {
 
     public Stage getStage() {
         return this.stage;
+    }
+
+    protected Region getRoot() {
+        return this.root;
     }
 }

@@ -117,6 +117,8 @@ public class SettingController {
     @FXML
     public void initialize() {
         this.settings = settingsProperties.getProperty();
+        this.settingsRoot.setStyle(this.styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
         this.chatRoot = getChatRoot();
         initLanguage();
         initTheme();

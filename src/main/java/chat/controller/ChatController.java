@@ -140,7 +140,7 @@ public class ChatController implements Observer {
     }
 
     public void settingsOnAction() {
-        this.settingsDialog.openDialog(getStage(), this.root);
+        this.settingsDialog.openDialog(getStage());
         this.setting.setDisable(true);
     }
 

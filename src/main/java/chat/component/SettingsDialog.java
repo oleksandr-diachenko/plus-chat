@@ -1,23 +1,16 @@
 package chat.component;
 
-import chat.controller.ChatController;
-import chat.controller.SpringStageLoader;
 import chat.util.AppProperty;
 import chat.util.Paths;
 import chat.util.Settings;
 import chat.util.StyleUtil;
-import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.Node;
-import javafx.scene.layout.Region;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
-import java.io.IOException;
 import java.util.Properties;
 import java.util.Set;
 
@@ -26,66 +19,61 @@ import java.util.Set;
  */
 @Component
 @NoArgsConstructor
-public class SettingsDialog {
-
-    private final static Logger logger = LogManager.getLogger(SettingsDialog.class);
+public class SettingsDialog extends AbstractDialog{
 
     private AppProperty settingsProperties;
 
-    private SpringStageLoader springStageLoader;
     private Paths paths;
     private StyleUtil styleUtil;
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          final SpringStageLoader springStageLoader, final Paths paths,
-                          final StyleUtil styleUtil) {
+                          final Paths paths, final StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
-        this.springStageLoader = springStageLoader;
         this.paths = paths;
         this.styleUtil = styleUtil;
     }
 
-    public void openDialog(final Stage owner, final Node ownerRoot) {
-        final Stage stage = new Stage();
+    @Override
+    protected void setStageSettings(final Stage stage) {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
-        final Properties settings = this.settingsProperties.getProperty();
-        try {
-            final Region root = this.springStageLoader.load("settings");
-            final UndecoratorScene undecorator = getScene(stage, settings, root);
-            stageEvents(owner, ownerRoot, stage, settings, root);
-            root.setStyle(this.styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
-                    settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
-            stage.setScene(undecorator);
-            stage.initOwner(owner);
-            stage.show();
-        } catch (IOException exception) {
-            exception.printStackTrace();
-            logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Settings view failed to load");
-        }
     }
 
-    private UndecoratorScene getScene(final Stage stage, final Properties settings, final Region root) {
-        final UndecoratorScene undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add(this.paths.getSettingsCSS());
-        return undecorator;
+    @Override
+    protected void initOwner(final Stage owner, final Stage stage) {
+        stage.initOwner(owner);
     }
 
-    private void stageEvents(final Stage owner, final Node ownerRoot, final Stage stage,
-                             final Properties settings, final Region root) {
+    @Override
+    protected void setEvents(final Stage stage) {
+        Properties settings = this.settingsProperties.getProperty();
         stage.setOnShown(event -> {
-            final Set<Node> labels = root.lookupAll(".label");
+            final Set<Node> labels = stage.getScene().getRoot().lookupAll(".label");
             labels.forEach(label ->
                     label.setStyle(this.styleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {
-            final ChatController chatController = (ChatController) ownerRoot.getUserData();
-            chatController.getSetting().setDisable(false);
-            this.styleUtil.reverseStyle(settings, owner, ownerRoot, root);
+            final Node setting = stage.getOwner().getScene().getRoot().lookup("#setting");
+            Node chatRoot = stage.getOwner().getScene().getRoot().lookup("#root");
+            setting.setDisable(false);
+            this.styleUtil.reverseStyle(settings, (Stage) stage.getOwner(), chatRoot, getRoot());
         });
     }
 
+    @Override
+    protected String getFXMLName() {
+        return "settings";
+    }
+
+    @Override
+    protected String getCSSName() {
+        return this.paths.getSettingsCSS();
+    }
+
+    @Override
+    protected String getTitleName() {
+        return "";
+    }
 }
