@@ -28,7 +28,10 @@ public class ApplicationStyle {
 
     public ApplicationStyle(final AppProperty settingProperties) {
         this.settingProperties = settingProperties;
-        //TODO убрать в мутоды
+        reverse();
+    }
+
+    public void reverse() {
         Properties settings = settingProperties.getProperty();
         this.backgroundColor = settings.getProperty(Settings.ROOT_BACKGROUND_COLOR);
         this.baseColor = settings.getProperty(Settings.ROOT_BASE_COLOR);
@@ -38,7 +41,6 @@ public class ApplicationStyle {
         this.messageColor = settings.getProperty(Settings.FONT_MESSAGE_COLOR);
         this.directColor = settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
     }
-
     public String getBackgroundColor() {
         return this.backgroundColor;
     }

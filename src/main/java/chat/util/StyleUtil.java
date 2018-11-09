@@ -73,7 +73,8 @@ public class StyleUtil {
 
     public void reverseStyle(final Properties settings, final Stage owner,
                                     final Node chatRoot, final Node settingRoot) {
-//        StyleUtil.setStyles(new ApplicationStyle());
+        applicationStyle.reverse();
+        this.setStyles(chatRoot, settingRoot, applicationStyle);
         owner.setOpacity(Double.parseDouble(
                 settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100);
     }
