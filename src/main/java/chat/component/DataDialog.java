@@ -32,6 +32,14 @@ public class DataDialog {
 
     private SpringStageLoader springStageLoader;
     private Paths paths;
+    private Stage owner;
+    private Properties settings;
+    private Color fontColor;
+    private Color baseColor;
+    private Color backgroundColor;
+    private Set<Object> objects;
+    private Set<String> fields;
+    private StyleUtil styleUtil;
 
     public DataDialog() {
         //do nothing
@@ -45,15 +53,23 @@ public class DataDialog {
 
     public void openDialog(final Stage owner, final Properties settings, final Color fontColor,
                            final Color baseColor, final Color backgroundColor, final Set<Object> objects,
-                           final Set<String> fields) {
+                           final Set<String> fields, final StyleUtil styleUtil) {
+        this.owner = owner;
+        this.settings = settings;
+        this.fontColor = fontColor;
+        this.baseColor = baseColor;
+        this.backgroundColor = backgroundColor;
+        this.objects = objects;
+        this.fields = fields;
+        this.styleUtil = styleUtil;
         final Stage stage = new Stage();
         stage.setResizable(false);
         try {
             final Region root = this.springStageLoader.load("data");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
-            StyleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor),
+            this.styleUtil.setRootStyle(Collections.singletonList(root), ColorUtil.getHexColor(baseColor),
                     ColorUtil.getHexColor(backgroundColor));
-            StyleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
+            this.styleUtil.setLabelStyle(root, ColorUtil.getHexColor(fontColor));
             final DataController dataController = (DataController) root.getUserData();
             final TableView<Object> table = dataController.getTable();
             initData(table, objects, fields);

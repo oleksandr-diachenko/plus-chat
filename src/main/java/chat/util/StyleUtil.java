@@ -3,33 +3,45 @@ package chat.util;
 import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.*;
 
 /**
  * @author Alexander Diachenko
  */
+@Component
 public class StyleUtil {
 
-    public static String getRootStyle(final String baseColor, final String backgroundColor) {
+    private ApplicationStyle applicationStyle;
+
+    public StyleUtil() {
+        //do nothing
+    }
+
+    @Autowired
+    public StyleUtil(final ApplicationStyle applicationStyle) {
+        this.applicationStyle = applicationStyle;
+    }
+
+    public String getRootStyle(final String baseColor, final String backgroundColor) {
         return "-fx-base: " + baseColor + ";" +
                 "-fx-background: " + backgroundColor + ";";
     }
 
-    public static String getLabelStyle(final String color) {
+    public String getLabelStyle(final String color) {
         return "-fx-text-fill: " + color + ";";
     }
 
-    public static String getTextStyle(final String fontSize, final String color) {
+    public String getTextStyle(final String fontSize, final String color) {
         return "-fx-font-size: " + fontSize + "px;" +
                 "-fx-fill: " + color + ";";
     }
 
-    public static void setStyles(final ApplicationStyle applicationStyle) {
-        final Node chatRoot = applicationStyle.getChatRoot();
+    public void setStyles(final Node chatRoot, final Node settingRoot, final ApplicationStyle applicationStyle) {
         chatRoot.setStyle("-fx-base: " + applicationStyle.getBaseColor() +
                 "; -fx-background: " + applicationStyle.getBackgroundColor()+ ";");
-        final Node settingRoot = applicationStyle.getSettingRoot();
         settingRoot.setStyle("-fx-base: " + applicationStyle.getBaseColor() +
                 "; -fx-background: " + applicationStyle.getBackgroundColor()+ ";");
         final Set<Node> names = chatRoot.lookupAll("#user-name");
@@ -38,30 +50,30 @@ public class StyleUtil {
         final Set<Node> directMessages = chatRoot.lookupAll("#user-direct-message");
         final String fontSize = applicationStyle.getFontSize();
         names.iterator().forEachRemaining(node -> {
-            node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getNickColor()));
+            node.setStyle(this.getTextStyle(fontSize, applicationStyle.getNickColor()));
         });
         separators.iterator().forEachRemaining(node ->
-                node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getSeparatorColor())));
+                node.setStyle(this.getTextStyle(fontSize, applicationStyle.getSeparatorColor())));
         messages.iterator().forEachRemaining(node ->
-                node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getMessageColor())));
+                node.setStyle(this.getTextStyle(fontSize, applicationStyle.getMessageColor())));
         directMessages.iterator().forEachRemaining(node ->
-                node.setStyle(StyleUtil.getTextStyle(fontSize, applicationStyle.getDirectColor())));
+                node.setStyle(this.getTextStyle(fontSize, applicationStyle.getDirectColor())));
     }
 
-    public static void setLabelStyle(final Node settingRoot, final String color) {
+    public void setLabelStyle(final Node settingRoot, final String color) {
         final Set<Node> labels = settingRoot.lookupAll(".label");
-        labels.iterator().forEachRemaining(node -> node.setStyle(StyleUtil.getLabelStyle(color)));
+        labels.iterator().forEachRemaining(node -> node.setStyle(this.getLabelStyle(color)));
     }
 
-    public static void setRootStyle(final List<Node> roots, final String baseColor,
+    public void setRootStyle(final List<Node> roots, final String baseColor,
                                     final String backgroundColor) {
         roots.forEach(root -> root.setStyle("-fx-base: " + baseColor +
                 "; -fx-background: " + backgroundColor + ";"));
     }
 
-    public static void reverseStyle(final Properties settings, final Stage owner,
+    public void reverseStyle(final Properties settings, final Stage owner,
                                     final Node chatRoot, final Node settingRoot) {
-        StyleUtil.setStyles(new ApplicationStyle(chatRoot, settingRoot, settings));
+//        StyleUtil.setStyles(new ApplicationStyle());
         owner.setOpacity(Double.parseDouble(
                 settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100);
     }

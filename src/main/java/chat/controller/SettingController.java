@@ -76,6 +76,7 @@ public class SettingController {
     private Map<String, String> languages;
     private Node chatRoot;
     private ApplicationStyle applicationStyle;
+    private StyleUtil styleUtil;
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
@@ -91,7 +92,8 @@ public class SettingController {
                              final DataDialog dataDialog, final Paths paths,
                              final CommandRepository commandRepository,
                              final UserRepository userRepository, final RankRepository rankRepository,
-                             final SmileRepository smileRepository, final DirectRepository directRepository) {
+                             final SmileRepository smileRepository, final DirectRepository directRepository,
+                             final ApplicationStyle applicationStyle, final StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -101,13 +103,14 @@ public class SettingController {
         this.rankRepository = rankRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
+        this.applicationStyle = applicationStyle;
+        this.styleUtil = styleUtil;
     }
 
     @FXML
     public void initialize() {
         this.settings = settingsProperties.getProperty();
         this.chatRoot = getChatRoot();
-        this.applicationStyle = new ApplicationStyle(this.chatRoot, this.settingsRoot, this.settings);
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -133,7 +136,7 @@ public class SettingController {
         this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.ROOT_BASE_COLOR)));
         this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setBaseColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -161,7 +164,7 @@ public class SettingController {
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
             this.applicationStyle.setFontSize(String.valueOf(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -181,7 +184,7 @@ public class SettingController {
                 Settings.ROOT_BACKGROUND_COLOR)));
         this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -189,7 +192,7 @@ public class SettingController {
         this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_NICK_COLOR)));
         this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -198,7 +201,7 @@ public class SettingController {
                 Settings.FONT_SEPARATOR_COLOR)));
         this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -207,7 +210,7 @@ public class SettingController {
                 Settings.FONT_MESSAGE_COLOR)));
         this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -216,7 +219,7 @@ public class SettingController {
                 Settings.FONT_DIRECT_MESSAGE_COLOR)));
         this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             this.applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
-            StyleUtil.setStyles(this.applicationStyle);
+            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
         });
     }
 
@@ -391,7 +394,8 @@ public class SettingController {
                 this.baseColorPicker.getValue(),
                 this.backgroundColorPicker.getValue(),
                 objects,
-                fields);
+                fields,
+                this.styleUtil);
     }
 
     private Stage getStage() {

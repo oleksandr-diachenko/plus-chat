@@ -29,15 +29,17 @@ public class ConfirmDialog {
     private ConfirmController controller;
     private SpringStageLoader springStageLoader;
     private Paths paths;
+    private StyleUtil styleUtil;
 
     public ConfirmDialog() {
         //do nothing
     }
 
     @Autowired
-    public ConfirmDialog(final SpringStageLoader springStageLoader, final Paths paths) {
+    public ConfirmDialog(final SpringStageLoader springStageLoader, final Paths paths, final StyleUtil styleUtil) {
         this.springStageLoader = springStageLoader;
         this.paths = paths;
+        this.styleUtil = styleUtil;
     }
 
     public void openDialog(final Stage owner, final ApplicationStyle applicationStyle) {
@@ -48,9 +50,9 @@ public class ConfirmDialog {
 
             this.controller = (ConfirmController) root.getUserData();
             this.stage.setResizable(false);
-            StyleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
+            this.styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                     applicationStyle.getBackgroundColor());
-            StyleUtil.setLabelStyle(root, applicationStyle.getNickColor());
+            this.styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
 
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);

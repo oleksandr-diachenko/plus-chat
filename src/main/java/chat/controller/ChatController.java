@@ -70,6 +70,7 @@ public class ChatController implements Observer {
     private AppProperty twitchProperties;
     private SettingsDialog settingsDialog;
     private Paths paths;
+    private StyleUtil styleUtil;
 
     public ChatController() {
         //do nothing
@@ -81,7 +82,7 @@ public class ChatController implements Observer {
                           final DirectRepository directRepository,
                           @Qualifier("settingsProperties") final AppProperty settingsProperties,
                           @Qualifier("twitchProperties") final AppProperty twitchProperties,
-                          final SettingsDialog settingsDialog, final Paths paths) {
+                          final SettingsDialog settingsDialog, final Paths paths, final StyleUtil styleUtil) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.commandRepository = commandRepository;
@@ -91,6 +92,7 @@ public class ChatController implements Observer {
         this.twitchProperties = twitchProperties;
         this.settingsDialog = settingsDialog;
         this.paths = paths;
+        this.styleUtil = styleUtil;
     }
 
     @FXML
@@ -98,7 +100,7 @@ public class ChatController implements Observer {
         this.settings = this.settingsProperties.getProperty();
         this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
-        this.root.setStyle(StyleUtil.getRootStyle(
+        this.root.setStyle(this.styleUtil.getRootStyle(
                 this.settings.getProperty(Settings.ROOT_BASE_COLOR),
                 this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
         ));
@@ -323,7 +325,7 @@ public class ChatController implements Observer {
     private Text getText(final String string, final String id, final String color) {
         final Text text = new Text(StringUtil.getUTF8String(string));
         text.setId(id);
-        text.setStyle(StyleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+        text.setStyle(this.styleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
         return text;
     }
 

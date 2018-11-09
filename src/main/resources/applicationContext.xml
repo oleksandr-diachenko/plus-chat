@@ -27,6 +27,12 @@
     <bean id="settingsProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\settings.properties"/>
     </bean>
+    <bean id="applicationStyle" class="chat.controller.ApplicationStyle">
+        <constructor-arg ref="settingsProperties"/>
+    </bean>
+    <bean id="styleUtil" class="chat.util.StyleUtil">
+        <constructor-arg ref="applicationStyle"/>
+    </bean>
     <bean id="paths" class="chat.util.Paths">
         <constructor-arg name="logo" value="/img/logo.png"/>
         <constructor-arg name="settingsProperties" ref="settingsProperties"/>

@@ -1,17 +1,18 @@
 package chat.controller;
 
+import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.scene.Node;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.
  */
+@Component
 public class ApplicationStyle {
-
-    private Node chatRoot;
-    private Node settingRoot;
     private String backgroundColor;
     private String baseColor;
     private String fontSize;
@@ -19,10 +20,16 @@ public class ApplicationStyle {
     private String separatorColor;
     private String messageColor;
     private String directColor;
+    private AppProperty settingProperties;
 
-    public ApplicationStyle(final Node chatRoot, final Node settingRoot, final Properties settings) {
-        this.chatRoot = chatRoot;
-        this.settingRoot = settingRoot;
+    public ApplicationStyle() {
+        //do nothing
+    }
+
+    public ApplicationStyle(final AppProperty settingProperties) {
+        this.settingProperties = settingProperties;
+        //TODO убрать в мутоды
+        Properties settings = settingProperties.getProperty();
         this.backgroundColor = settings.getProperty(Settings.ROOT_BACKGROUND_COLOR);
         this.baseColor = settings.getProperty(Settings.ROOT_BASE_COLOR);
         this.fontSize = settings.getProperty(Settings.FONT_SIZE);
@@ -30,22 +37,6 @@ public class ApplicationStyle {
         this.separatorColor = settings.getProperty(Settings.FONT_SEPARATOR_COLOR);
         this.messageColor = settings.getProperty(Settings.FONT_MESSAGE_COLOR);
         this.directColor = settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
-    }
-
-    public Node getChatRoot() {
-        return this.chatRoot;
-    }
-
-    public void setChatRoot(final Node chatRoot) {
-        this.chatRoot = chatRoot;
-    }
-
-    public Node getSettingRoot() {
-        return settingRoot;
-    }
-
-    public void setSettingRoot(final Node settingRoot) {
-        this.settingRoot = settingRoot;
     }
 
     public String getBackgroundColor() {

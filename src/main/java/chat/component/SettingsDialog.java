@@ -32,6 +32,8 @@ public class SettingsDialog {
 
     private SpringStageLoader springStageLoader;
     private Paths paths;
+    private StyleUtil styleUtil;
+
 
     public SettingsDialog() {
         //do nothing
@@ -39,10 +41,12 @@ public class SettingsDialog {
 
     @Autowired
     public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          final SpringStageLoader springStageLoader, final Paths paths) {
+                          final SpringStageLoader springStageLoader, final Paths paths,
+                          final StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.springStageLoader = springStageLoader;
         this.paths = paths;
+        this.styleUtil = styleUtil;
     }
 
     public void openDialog(final Stage owner, final Node ownerRoot) {
@@ -54,7 +58,7 @@ public class SettingsDialog {
             final Region root = this.springStageLoader.load("settings");
             final UndecoratorScene undecorator = getScene(stage, settings, root);
             stageEvents(owner, ownerRoot, stage, settings, root);
-            root.setStyle(StyleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+            root.setStyle(this.styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                     settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
             stage.setScene(undecorator);
             stage.initOwner(owner);
@@ -77,13 +81,13 @@ public class SettingsDialog {
         stage.setOnShown(event -> {
             final Set<Node> labels = root.lookupAll(".label");
             labels.forEach(label ->
-                    label.setStyle(StyleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
+                    label.setStyle(this.styleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {
             final ChatController chatController = (ChatController) ownerRoot.getUserData();
             chatController.getSetting().setDisable(false);
-            StyleUtil.reverseStyle(settings, owner, ownerRoot, root);
+            this.styleUtil.reverseStyle(settings, owner, ownerRoot, root);
         });
     }
 
