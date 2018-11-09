@@ -21,11 +21,10 @@ import java.util.Set;
 public class SettingsDialog extends AbstractDialog{
 
     private AppProperty settingsProperties;
-
     private StyleUtil styleUtil;
 
     @Autowired
-    public SettingsDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties,
+    public SettingsDialog(final AppProperty settingsProperties,
                           final StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.styleUtil = styleUtil;
@@ -44,7 +43,7 @@ public class SettingsDialog extends AbstractDialog{
 
     @Override
     protected void setEvents(final Stage stage) {
-        Properties settings = this.settingsProperties.getProperty();
+        final Properties settings = this.settingsProperties.getProperty();
         stage.setOnShown(event -> {
             final Set<Node> labels = stage.getScene().getRoot().lookupAll(".label");
             labels.forEach(label ->
@@ -53,7 +52,7 @@ public class SettingsDialog extends AbstractDialog{
 
         stage.setOnCloseRequest(event -> {
             final Node setting = stage.getOwner().getScene().getRoot().lookup("#setting");
-            Node chatRoot = stage.getOwner().getScene().getRoot().lookup("#root");
+            final Node chatRoot = stage.getOwner().getScene().getRoot().lookup("#root");
             setting.setDisable(false);
             this.styleUtil.reverseStyle(settings, (Stage) stage.getOwner(), chatRoot, getRoot());
         });

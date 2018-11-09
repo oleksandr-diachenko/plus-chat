@@ -21,7 +21,7 @@ public class ChatDialog extends AbstractDialog {
     private AppProperty settingsProperties;
 
     @Autowired
-    public ChatDialog(@Qualifier("settingsProperties") final AppProperty settingsProperties) {
+    public ChatDialog(final AppProperty settingsProperties) {
         this.settingsProperties = settingsProperties;
     }
 
