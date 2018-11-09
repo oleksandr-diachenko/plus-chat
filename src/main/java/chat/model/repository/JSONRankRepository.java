@@ -85,7 +85,7 @@ public class JSONRankRepository implements RankRepository {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Ranks failed to save. Create " + this.path);
+                    throw new RuntimeException("Ranks failed to save. Create " + this.path, exception);
                 }
             }
         });

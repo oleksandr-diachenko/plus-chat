@@ -33,7 +33,7 @@ public class AppProperty{
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Properties " + this.path + " failed to load. \n" +
-                    "Put properties to settings/ and restart application.");
+                    "Put properties to settings/ and restart application.", exception);
         }
         return properties;
     }
@@ -44,7 +44,7 @@ public class AppProperty{
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Properties " + this.path + " failed to save. \n" +
-                    "Put properties to settings/");
+                    "Put properties to settings/", exception);
         }
         return properties;
     }

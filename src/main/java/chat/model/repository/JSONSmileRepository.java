@@ -84,7 +84,7 @@ public class JSONSmileRepository implements SmileRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Smiles failed to save. Create " +
-                            this.path);
+                            this.path, exception);
                 }
             }
         });

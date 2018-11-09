@@ -84,7 +84,7 @@ public class JSONDirectRepository implements DirectRepository {
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Create " +
-                            this.path);
+                            this.path, exception);
                 }
             }
         });

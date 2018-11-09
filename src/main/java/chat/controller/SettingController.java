@@ -249,7 +249,7 @@ public class SettingController {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
                     "Put your sounds to " + this.paths.getSoundsDirectory() +
-                    " and restart application.");
+                    " and restart application.", exception);
         }
     }
 
@@ -274,7 +274,7 @@ public class SettingController {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
                     "Put your sounds to " + this.paths.getSoundsDirectory() +
-                    " and restart application.");
+                    " and restart application.", exception);
         }
     }
 

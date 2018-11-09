@@ -132,7 +132,7 @@ public class ChatController implements Observer {
                 logger.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
                         "Check properties in " + this.paths.getTwitchProperties() + " " +
-                        "and restart application.");
+                        "and restart application.", exception);
             }
         });
         thread.setDaemon(true);

@@ -40,7 +40,7 @@ public abstract class AbstractDialog {
             stage.show();
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException(getFXMLName() + " view failed to load");
+            throw new RuntimeException(getFXMLName() + " view failed to load", exception);
         }
     }
 
