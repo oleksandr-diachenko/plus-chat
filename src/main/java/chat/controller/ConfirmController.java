@@ -1,10 +1,14 @@
 package chat.controller;
 
+import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import java.util.Collections;
 
 /**
  * @author Alexander Diachenko.
@@ -12,9 +16,22 @@ import org.springframework.stereotype.Controller;
 @Controller
 public class ConfirmController {
 
+    private StyleUtil styleUtil;
+    private ApplicationStyle applicationStyle;
+
     @FXML
     private VBox root;
     private boolean confirmed = false;
+
+    public ConfirmController() {
+        //do nothing
+    }
+
+    @Autowired
+    public ConfirmController(final StyleUtil styleUtil, final ApplicationStyle applicationStyle) {
+        this.styleUtil = styleUtil;
+        this.applicationStyle = applicationStyle;
+    }
 
     public void confirmAction() {
         this.confirmed = true;
@@ -26,7 +43,9 @@ public class ConfirmController {
 
     @FXML
     public void initialize() {
-
+        this.styleUtil.setRootStyle(Collections.singletonList(this.root), this.applicationStyle.getBaseColor(),
+                this.applicationStyle.getBackgroundColor());
+        this.styleUtil.setLabelStyle(this.root, this.applicationStyle.getNickColor());
     }
 
     public void cancelAction() {

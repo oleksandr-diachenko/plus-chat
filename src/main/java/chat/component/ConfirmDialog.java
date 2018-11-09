@@ -1,10 +1,8 @@
 package chat.component;
 
-import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
 import chat.controller.SpringStageLoader;
 import chat.util.Paths;
-import chat.util.StyleUtil;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
 import javafx.stage.Modality;
@@ -15,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
-import java.util.Collections;
 
 /**
  * @author Alexander Diachenko.
@@ -29,20 +26,18 @@ public class ConfirmDialog {
     private ConfirmController controller;
     private SpringStageLoader springStageLoader;
     private Paths paths;
-    private StyleUtil styleUtil;
 
     public ConfirmDialog() {
         //do nothing
     }
 
     @Autowired
-    public ConfirmDialog(final SpringStageLoader springStageLoader, final Paths paths, final StyleUtil styleUtil) {
+    public ConfirmDialog(final SpringStageLoader springStageLoader, final Paths paths) {
         this.springStageLoader = springStageLoader;
         this.paths = paths;
-        this.styleUtil = styleUtil;
     }
 
-    public void openDialog(final Stage owner, final ApplicationStyle applicationStyle) {
+    public void openDialog(final Stage owner) {
         this.stage = new Stage();
         try {
             final Region root = getRoot();
@@ -50,9 +45,6 @@ public class ConfirmDialog {
 
             this.controller = (ConfirmController) root.getUserData();
             this.stage.setResizable(false);
-            this.styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
-                    applicationStyle.getBackgroundColor());
-            this.styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
 
             this.stage.setScene(undecorator);
             this.stage.initModality(Modality.WINDOW_MODAL);
