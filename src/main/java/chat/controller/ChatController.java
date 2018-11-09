@@ -283,7 +283,7 @@ public class ChatController implements Observer {
 
     private Label getGraphicLabel(final Smile smile) throws FileNotFoundException {
         final Label image = new Label();
-        try(FileInputStream fis = new FileInputStream(smile.getImagePath())) {
+        try (FileInputStream fis = new FileInputStream(smile.getImagePath())) {
             final ImageView imageView = new ImageView(new Image(fis));
             image.setGraphic(imageView);
             return image;
@@ -295,9 +295,13 @@ public class ChatController implements Observer {
 
     private boolean isDirect(final String message) {
         final Set<Direct> directs = this.directRepository.getAll();
-        return directs
-                .stream()
-                .anyMatch((direct -> StringUtils.containsIgnoreCase(message, direct.getWord())));
+        for (Direct direct : directs) {
+            final String word = direct.getWord();
+            if (StringUtils.containsIgnoreCase(message, word)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private Label getRankImage(final User user) {

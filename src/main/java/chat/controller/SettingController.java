@@ -23,7 +23,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.lang.reflect.Field;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * @author Alexander Diachenko.
@@ -336,12 +335,14 @@ public class SettingController {
         chatController.setSettings(this.settings);
         chatController.getSetting().setDisable(false);
     }
+
     private String getLanguage(final String value) {
-        return this.languages.keySet()
-                .stream()
-                .filter(key -> this.languages.get(key).equals(value))
-                .findFirst()
-                .orElse("en");
+        for (String key : this.languages.keySet()) {
+            if (this.languages.get(key).equals(value)) {
+                return key;
+            }
+        }
+        return "en";
     }
 
     public void commandsDataAction() {
@@ -375,9 +376,11 @@ public class SettingController {
     }
 
     private Set<String> getFields(final Field[] declaredFields) {
-        return Arrays.stream(declaredFields)
-                .map(Field::getName)
-                .collect(Collectors.toSet());
+        final Set<String> fields = new HashSet<>();
+        for (Field field : declaredFields) {
+            fields.add(field.getName());
+        }
+        return fields;
     }
 
     private void openDialog(final Set<Object> objects, final Set<String> fields) {
