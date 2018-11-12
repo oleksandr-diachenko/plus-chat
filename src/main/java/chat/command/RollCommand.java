@@ -11,6 +11,7 @@ public class RollCommand implements ICommand {
 
     private static final int ARGUMENTS_LENGTH = 2;
     private static final int WIN_POINTS_MULTIPLIER = 2;
+    private static final int WIN_PERCENT = 75;
     private UserRepository userRepository;
     private String nick;
     private long points;
@@ -62,7 +63,7 @@ public class RollCommand implements ICommand {
     }
 
     private boolean win(final int percent) {
-        return percent < 75;
+        return percent < WIN_PERCENT;
     }
 
     private void updateUser(final User user, long points) {
