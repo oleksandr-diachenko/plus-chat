@@ -42,19 +42,30 @@ public class RollCommand implements ICommand {
         if (userByName.isPresent()) {
             final User user = userByName.get();
             long userPoints = user.getPoints();
-            if (userPoints < this.points) {
+            if (notEnoughPoints(userPoints)) {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
             }
-            if (percent < 75) {
-                user.setPoints(userPoints - this.points);
-                this.userRepository.update(user);
-                return user.getCustomName() + ", you lost =(";
+            if (win(percent)) {
+                updateUser(user, userPoints - this.points);
+                return user.getCustomName() + ", you lost (" + userPoints + ")";
             } else {
-                user.setPoints(userPoints + this.points * 2);
-                this.userRepository.update(user);
-                return user.getCustomName() + ", you win =)";
+                updateUser(user, userPoints + (this.points * 2));
+                return user.getCustomName() + ", you win (" + userPoints + ")";
             }
         }
         return "";
+    }
+
+    private boolean notEnoughPoints(final long userPoints) {
+        return userPoints < this.points;
+    }
+
+    private boolean win(final int percent) {
+        return percent < 75;
+    }
+
+    private void updateUser(final User user, long points) {
+        user.setPoints(points);
+        this.userRepository.update(user);
     }
 }
