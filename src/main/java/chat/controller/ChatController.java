@@ -192,6 +192,11 @@ public class ChatController implements Observer {
     }
 
     private void addNewMessageToContainer() {
+        if(this.messages.size() > Integer.parseInt(this.settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
+            this.messages.remove(0);
+            this.messageIndex--;
+            this.container.getChildren().remove(0);
+        }
         this.container.getChildren().add(this.messages.get(this.messageIndex++));
     }
 

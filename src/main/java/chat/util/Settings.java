@@ -20,4 +20,5 @@ public class Settings {
     public static final String SOUND_MESSAGE_VOLUME = "sound.message.volume";
     public static final String SOUND_DIRECT_MESSAGE = "sound.direct.message";
     public static final String SOUND_DIRECT_MESSAGE_VOLUME = "sound.direct.message.volume";
+    public static final String MESSAGE_MAX_DISPLAYED = "message.max.displayed";
 }
