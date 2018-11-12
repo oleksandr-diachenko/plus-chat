@@ -21,6 +21,9 @@ public class RollCommand implements ICommand {
     @Override
     public boolean canExecute(final String command) {
         final String[] parts = command.split(" ");
+        if(parts.length < 2) {
+            return false;
+        }
         if (wrongArguments(parts)) {
             return false;
         }
@@ -30,9 +33,7 @@ public class RollCommand implements ICommand {
     }
 
     private boolean wrongArguments(final String[] parts) {
-        return parts.length != 2
-                && !"!roll".equalsIgnoreCase(parts[0])
-                && !StringUtils.isNumeric(parts[1]);
+        return !"!roll".equalsIgnoreCase(parts[0]) && !StringUtils.isNumeric(parts[1]);
     }
 
     @Override
