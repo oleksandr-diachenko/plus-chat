@@ -71,11 +71,6 @@ public class DataDialog extends AbstractDialog {
     }
 
     @Override
-    protected void setEvents(final Stage stage) {
-        //do nothing
-    }
-
-    @Override
     protected String getFXMLName() {
         return "data";
     }
@@ -83,11 +78,6 @@ public class DataDialog extends AbstractDialog {
     @Override
     protected String getCSSName() {
         return this.paths.getDataCSS();
-    }
-
-    @Override
-    protected String getTitleName() {
-        return "";
     }
 
     public void setTableFields(final Set<String> fields) {

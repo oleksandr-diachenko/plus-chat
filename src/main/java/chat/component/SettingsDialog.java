@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
@@ -66,10 +65,5 @@ public class SettingsDialog extends AbstractDialog{
     @Override
     protected String getCSSName() {
         return this.paths.getSettingsCSS();
-    }
-
-    @Override
-    protected String getTitleName() {
-        return "";
     }
 }

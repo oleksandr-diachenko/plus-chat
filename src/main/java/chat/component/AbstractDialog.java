@@ -48,7 +48,9 @@ public abstract class AbstractDialog {
 
     protected abstract void initOwner(final Stage owner, final Stage stage);
 
-    protected abstract void setEvents(final Stage stage);
+    protected void setEvents(final Stage stage){
+        //do nothing
+    }
 
     private Region getRootRegion() throws IOException {
         this.root = this.springStageLoader.load(getFXMLName());
@@ -69,7 +71,9 @@ public abstract class AbstractDialog {
         return this.undecorator;
     }
 
-    protected abstract String getTitleName();
+    protected String getTitleName(){
+        return "";
+    }
 
     public Stage getStage() {
         return this.stage;
