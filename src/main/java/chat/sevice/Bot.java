@@ -1,9 +1,6 @@
 package chat.sevice;
 
-import chat.command.ICommand;
-import chat.command.JSONCommand;
-import chat.command.RankCommand;
-import chat.command.UpCommand;
+import chat.command.*;
 import chat.controller.ChatController;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
@@ -64,25 +61,13 @@ public class Bot extends ListenerAdapter implements Subject {
         final User user = updateUser(nick);
         final String message = event.getMessage();
         notifyObserver(user.getName(), message);
-        final String command = getCommandFromMessage(message);
-        if (command != null) {
-            runCommand(event.getUser().getNick(), command);
+        if (isCommand(message)) {
+            runCommand(event.getUser().getNick(), message);
         }
     }
 
-    /**
-     * The command will always be the first part of the message
-     * We can split the string into parts by spaces to get each word
-     * The first word if it starts with our command notifier "!" will get returned
-     * Otherwise it will return null
-     */
-    private String getCommandFromMessage(final String message) {
-        final String[] msgParts = message.split(" ");
-        if (msgParts[0].startsWith("!")) {
-            return msgParts[0];
-        } else {
-            return null;
-        }
+    private boolean isCommand(final String message) {
+        return message.startsWith("!");
     }
 
     private void runCommand(final String nick, final String command) {
@@ -99,6 +84,7 @@ public class Bot extends ListenerAdapter implements Subject {
         final List<ICommand> commands = new ArrayList<>();
         commands.add(new RankCommand(nick, this.userRepository, this.rankRepository));
         commands.add(new UpCommand(this.start));
+        commands.add(new RollCommand(this.userRepository, nick));
         commands.add(new JSONCommand(this.commandRepository));
         return commands;
     }
