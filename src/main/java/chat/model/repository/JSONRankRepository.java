@@ -78,6 +78,12 @@ public class JSONRankRepository implements RankRepository {
         return nearest;
     }
 
+    @Override
+    public boolean isNewRank(final long exp) {
+        final Rank rankByExp = getRankByExp(exp);
+        return rankByExp.getExp() == exp;
+    }
+
     private void flush() {
         final Thread thread = new Thread(() -> {
             synchronized (this) {

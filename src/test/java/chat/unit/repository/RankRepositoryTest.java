@@ -45,4 +45,16 @@ public class RankRepositoryTest {
         final Rank rankByExp = this.rankRepository.getRankByExp(-1);
         assertNull(rankByExp.getName());
     }
+
+    @Test
+    public void isNewRankExpTest() {
+        boolean newRank = this.rankRepository.isNewRank(10);
+        assertTrue(newRank);
+    }
+
+    @Test
+    public void isNotNewRankExpTest() {
+        boolean newRank = this.rankRepository.isNewRank(14);
+        assertFalse(newRank);
+    }
 }
