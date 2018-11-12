@@ -86,6 +86,7 @@ public class Bot extends ListenerAdapter implements Subject {
         commands.add(new UpCommand(this.start));
         commands.add(new RollCommand(this.userRepository, nick));
         commands.add(new PointsCommand(this.userRepository, nick));
+        commands.add(new GameOrderCommand(this.userRepository, nick));
         commands.add(new JSONCommand(this.commandRepository));
         return commands;
     }

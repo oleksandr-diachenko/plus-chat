@@ -5,15 +5,15 @@ import chat.model.repository.UserRepository;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;
-import java.util.Random;
 
-public class RollCommand implements ICommand {
+public class GameOrderCommand implements ICommand {
 
-    private UserRepository userRepository;
-    private String nick;
+    private final UserRepository userRepository;
+    private final String nick;
     private long points;
+    private String game;
 
-    public RollCommand(final UserRepository userRepository, final String nick) {
+    public GameOrderCommand(final UserRepository userRepository, final String nick) {
         this.userRepository = userRepository;
         this.nick = nick;
     }
@@ -25,46 +25,40 @@ public class RollCommand implements ICommand {
             return false;
         }
         this.points = Long.parseLong(parts[1]);
+        this.game = parts[2];
         return true;
     }
 
     private boolean correctArguments(final String[] parts) {
-        return parts.length >= 2
-                && "!roll".equalsIgnoreCase(parts[0])
+        return parts.length >= 3
+                && "!order".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
     }
 
     @Override
     public String execute() {
-        int percent = new Random().nextInt(100);
         final Optional<User> userByName = this.userRepository.getUserByName(this.nick);
         if (userByName.isPresent()) {
             final User user = userByName.get();
-            long userPoints = user.getPoints();
+            if (lessThanMinimalOrder()) {
+                return user.getCustomName() + ", minimal order is 1 hour (600 points)";
+            }
+            final long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
             }
-            if (win(percent)) {
-                updateUser(user, userPoints - this.points);
-                return user.getCustomName() + ", you lost (" + userPoints + ")";
-            } else {
-                updateUser(user, userPoints + (this.points * 2));
-                return user.getCustomName() + ", you win (" + userPoints + ")";
-            }
+            user.setPoints(userPoints - this.points);
+            this.userRepository.update(user);
+            return user.getCustomName() + ", your order is accepted (" + this.game + ")";
         }
         return "";
     }
 
+    private boolean lessThanMinimalOrder() {
+        return this.points < 600;
+    }
+
     private boolean notEnoughPoints(final long userPoints) {
         return userPoints < this.points;
-    }
-
-    private boolean win(final int percent) {
-        return percent < 75;
-    }
-
-    private void updateUser(final User user, long points) {
-        user.setPoints(points);
-        this.userRepository.update(user);
     }
 }
