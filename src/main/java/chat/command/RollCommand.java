@@ -9,6 +9,8 @@ import java.util.Random;
 
 public class RollCommand implements ICommand {
 
+    private static final int ARGUMENTS_LENGTH = 2;
+    private static final int WIN_POINTS_MULTIPLIER = 2;
     private UserRepository userRepository;
     private String nick;
     private long points;
@@ -29,7 +31,7 @@ public class RollCommand implements ICommand {
     }
 
     private boolean correctArguments(final String[] parts) {
-        return parts.length >= 2
+        return parts.length >= ARGUMENTS_LENGTH
                 && "!roll".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
     }
@@ -48,7 +50,7 @@ public class RollCommand implements ICommand {
                 updateUser(user, userPoints - this.points);
                 return user.getCustomName() + ", you lost (" + userPoints + ")";
             } else {
-                updateUser(user, userPoints + (this.points * 2));
+                updateUser(user, userPoints + (this.points * WIN_POINTS_MULTIPLIER));
                 return user.getCustomName() + ", you win (" + userPoints + ")";
             }
         }

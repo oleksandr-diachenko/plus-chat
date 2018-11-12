@@ -8,6 +8,8 @@ import java.util.Optional;
 
 public class GameOrderCommand implements ICommand {
 
+    private static final int MINIMAL_ORDER_POINTS = 600;
+    private static final int ARGUMENTS_LENGTH = 3;
     private final UserRepository userRepository;
     private final String nick;
     private long points;
@@ -30,7 +32,7 @@ public class GameOrderCommand implements ICommand {
     }
 
     private boolean correctArguments(final String[] parts) {
-        return parts.length >= 3
+        return parts.length >= ARGUMENTS_LENGTH
                 && "!order".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
     }
@@ -55,7 +57,7 @@ public class GameOrderCommand implements ICommand {
     }
 
     private boolean lessThanMinimalOrder() {
-        return this.points < 600;
+        return this.points < MINIMAL_ORDER_POINTS;
     }
 
     private boolean notEnoughPoints(final long userPoints) {
