@@ -62,6 +62,7 @@ public abstract class AbstractDialog {
     private UndecoratorScene getScene(final Stage stage, final Region root) {
         this.undecorator = new UndecoratorScene(stage, root);
         this.undecorator.getStylesheets().add(getCSSName());
+        this.undecorator.setBackgroundOpacity(0.2);
         return this.undecorator;
     }
 
