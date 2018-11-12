@@ -127,6 +127,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private User updateExistingUser(final User user) {
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(user.getExp() + 1);
+        user.setPoints(user.getPoints() + 10);
         return this.userRepository.update(user);
     }
 
@@ -136,6 +137,7 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setFirstMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(1);
+        user.setPoints(10);
         return this.userRepository.add(user);
     }
 
