@@ -18,6 +18,7 @@ public class User {
     private String firstMessageDate;
     private String lastMessageDate;
     private long exp;
+    private long points;
 
     @Override
     public boolean equals(final Object o) {
@@ -47,6 +48,7 @@ public class User {
                 ", firstMessageDate='" + this.firstMessageDate + '\'' +
                 ", lastMessageDate='" + this.lastMessageDate + '\'' +
                 ", exp=" + this.exp +
+                ", points=" + this.points +
                 '}';
     }
 }
