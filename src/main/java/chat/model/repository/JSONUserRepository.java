@@ -33,15 +33,16 @@ public class JSONUserRepository implements UserRepository {
 
     public JSONUserRepository(final String path) {
         this.path = path;
-        this.users = getAll();
+        getAll();
     }
 
     @Override
     public Set<User> getAll() {
         try {
-            return new HashSet<>(
+            this.users = new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<User>>() {
-            }));
+                    }));
+            return this.users;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }

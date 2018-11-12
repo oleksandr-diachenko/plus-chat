@@ -32,15 +32,16 @@ public class JSONCommandRepository implements CommandRepository {
 
     public JSONCommandRepository(final String path) {
         this.path = path;
-        this.commands = getAll();
+        getAll();
     }
 
     @Override
     public Set<Command> getAll() {
         try {
-            return new HashSet<>(
+            this.commands = new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
                     }));
+            return this.commands;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }

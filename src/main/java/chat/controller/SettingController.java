@@ -1,6 +1,5 @@
 package chat.controller;
 
-import chat.PlusChatFX;
 import chat.component.ChatDialog;
 import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
@@ -289,14 +288,11 @@ public class SettingController {
     }
 
     public void reloadAction() {
-        this.confirmDialog.openDialog(getStage());
-        final Stage stage = confirmDialog.getStage();
-        stage.setOnCloseRequest(event -> {
-            if (this.confirmController.isConfirmed()) {
-                getOwner().close();
-                new PlusChatFX().start(getOwner());
-            }
-        });
+        this.commandRepository.getAll();
+        this.directRepository.getAll();
+        this.rankRepository.getAll();
+        this.smileRepository.getAll();
+        this.userRepository.getAll();
     }
 
     public void confirmAction() {

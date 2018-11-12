@@ -29,15 +29,16 @@ public class JSONSmileRepository implements SmileRepository {
 
     public JSONSmileRepository(final String path) {
         this.path = path;
-        this.smiles = getAll();
+        getAll();
     }
 
     @Override
     public Set<Smile> getAll() {
         try {
-            return new HashSet<>(
+            this.smiles = new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Smile>>() {
-            }));
+                    }));
+            return this.smiles;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }

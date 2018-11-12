@@ -26,15 +26,16 @@ public class JSONGameRepository implements GameRepository {
 
     public JSONGameRepository(final String path) {
         this.path = path;
-        this.games = getAll();
+        getAll();
     }
 
     @Override
     public Set<Game> getAll() {
         try {
-            return new HashSet<>(
+            this.games = new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Game>>() {
                     }));
+            return this.games;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }

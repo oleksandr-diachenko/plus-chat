@@ -29,15 +29,16 @@ public class JSONDirectRepository implements DirectRepository {
 
     public JSONDirectRepository(final String path) {
         this.path = path;
-        this.directs = getAll();
+        getAll();
     }
 
     @Override
     public Set<Direct> getAll() {
         try {
-            return new HashSet<>(
+            this.directs = new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
-            }));
+                    }));
+            return this.directs;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }

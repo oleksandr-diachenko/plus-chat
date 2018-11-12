@@ -29,15 +29,16 @@ public class JSONRankRepository implements RankRepository {
 
     public JSONRankRepository(final String path) {
         this.path = path;
-        this.ranks = getAll();
+        getAll();
     }
 
     @Override
     public Set<Rank> getAll() {
         try {
-            return new TreeSet<>(new HashSet<>(
+            this.ranks = new TreeSet<>(new HashSet<>(
                     this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Rank>>() {
-            })));
+                    })));
+            return this.ranks;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
