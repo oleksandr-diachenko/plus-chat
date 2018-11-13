@@ -1,19 +1,29 @@
 package chat.component;
 
+import chat.util.Paths;
 import javafx.stage.Stage;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class RandomizerDialog extends AbstractDialog {
 
+    private Paths paths;
+
+    @Autowired
+    public RandomizerDialog(Paths paths) {
+        this.paths = paths;
+    }
+
+
     @Override
     protected void setStageSettings(Stage stage) {
-
+        //do nothing
     }
 
     @Override
     protected void initOwner(Stage owner, Stage stage) {
-        //do nothing
+        //do nothing;
     }
 
     @Override
@@ -28,6 +38,6 @@ public class RandomizerDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return null;
+        return paths.getRandomizerCSS();
     }
 }

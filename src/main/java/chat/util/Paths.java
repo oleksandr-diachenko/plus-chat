@@ -19,11 +19,12 @@ public class Paths {
     private String disabledPin;
     private String twitchProperties;
     private String soundDirectory;
+    private String randomizerCss;
 
     public Paths(String logo, AppProperty settingsProperties,
                  String chatCss, String confirmCss, String dataCss,
                  String settingsCss, String enabledPin, String disabledPin,
-                 String twitchProperties, String soundDirectory) {
+                 String twitchProperties, String soundDirectory, String randomizerCss) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;
@@ -34,6 +35,7 @@ public class Paths {
         this.disabledPin = disabledPin;
         this.twitchProperties = twitchProperties;
         this.soundDirectory = soundDirectory;
+        this.randomizerCss = randomizerCss;
     }
 
     public String getLogo() {
@@ -58,6 +60,11 @@ public class Paths {
     public String getSettingsCSS() {
         Properties settings = settingsProperties.getProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + settingsCss;
+    }
+
+    public String getRandomizerCSS() {
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + randomizerCss;
     }
 
     public String getEnabledPin() {

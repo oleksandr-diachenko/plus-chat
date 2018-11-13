@@ -47,5 +47,6 @@
         <constructor-arg name="disabledPin" value="/img/pin-disabled.png"/>
         <constructor-arg name="twitchProperties" value="/settings/twitch.properties"/>
         <constructor-arg name="soundDirectory" value="./sound/"/>
+        <constructor-arg name="randomizerCss" value="/randomizer.css"/>
     </bean>
 </beans>
