@@ -1,6 +1,5 @@
 package chat.controller.settings;
 
-import chat.component.ChatDialog;
 import chat.component.ConfirmDialog;
 import chat.controller.ChatController;
 import chat.controller.ConfirmController;

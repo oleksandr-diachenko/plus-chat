@@ -31,18 +31,15 @@ public class SettingFontController {
     @FXML
     private Slider fontSizeSlider;
     private Properties settings;
-    private SettingsDialog settingsDialog;
     private Node settingsRoot;
 
     @Autowired
     public SettingFontController(AppProperty settingsProperties, ApplicationStyle applicationStyle,
-                                 StyleUtil styleUtil, ChatDialog chatDialog,
-                                 SettingsDialog settingsDialog) {
+                                 StyleUtil styleUtil, ChatDialog chatDialog) {
         this.settingsProperties = settingsProperties;
         this.applicationStyle = applicationStyle;
         this.styleUtil = styleUtil;
         this.chatDialog = chatDialog;
-        this.settingsDialog = settingsDialog;
     }
 
     @FXML
@@ -60,11 +57,6 @@ public class SettingFontController {
             applicationStyle.setFontSize(String.valueOf(new_val));
             styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
         });
-    }
-
-    private Node getSettingsRoot() {
-        Stage owner = settingsDialog.getStage();
-        return owner.getScene().lookup("#root");
     }
 
     private Node getChatRoot() {

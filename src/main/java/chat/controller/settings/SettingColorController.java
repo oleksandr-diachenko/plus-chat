@@ -44,8 +44,7 @@ public class SettingColorController {
 
     @Autowired
     public SettingColorController(AppProperty settingsProperties, ChatDialog chatDialog,
-                                  ApplicationStyle applicationStyle,
-                                  StyleUtil styleUtil) {
+                                  ApplicationStyle applicationStyle, StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.chatDialog = chatDialog;
         this.applicationStyle = applicationStyle;
