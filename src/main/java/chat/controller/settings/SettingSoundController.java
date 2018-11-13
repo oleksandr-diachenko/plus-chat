@@ -23,8 +23,6 @@ public class SettingSoundController {
 
     private final static Logger logger = LogManager.getLogger(SettingSoundController.class);
 
-    private AppProperty settingsProperties;
-    private Paths paths;
     @FXML
     private CheckBox enableSoundCheckBox;
     @FXML
@@ -39,6 +37,8 @@ public class SettingSoundController {
     private Slider directMessageVolumeSlider;
     @FXML
     private ChoiceBox<String> directMessageSoundChoiceBox;
+    private AppProperty settingsProperties;
+    private Paths paths;
     private Properties settings;
 
     @Autowired
@@ -117,7 +117,7 @@ public class SettingSoundController {
         });
     }
 
-    public void saveSettings(Properties settings) {
+    void saveSettings(Properties settings) {
         settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
                 enableSoundCheckBox.isSelected()));
         settings.setProperty(Settings.SOUND_MESSAGE,

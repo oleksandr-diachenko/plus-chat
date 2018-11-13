@@ -22,14 +22,14 @@ import java.util.Properties;
 @Controller
 public class SettingFontController {
 
-    private AppProperty settingsProperties;
-    private ApplicationStyle applicationStyle;
-    private StyleUtil styleUtil;
-    private ChatDialog chatDialog;
     @FXML
     private Label fontSize;
     @FXML
     private Slider fontSizeSlider;
+    private AppProperty settingsProperties;
+    private ApplicationStyle applicationStyle;
+    private StyleUtil styleUtil;
+    private ChatDialog chatDialog;
     private Properties settings;
     private Node settingsRoot;
 
@@ -64,12 +64,12 @@ public class SettingFontController {
         return owner.getScene().lookup("#root");
     }
 
-    public void saveSettings(Properties settings) {
+    void saveSettings(Properties settings) {
         settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
         settingsProperties.setProperties(settings);
     }
 
-    public void setSettingsRoot(Node settingsRoot) {
+    void setSettingsRoot(Node settingsRoot) {
         this.settingsRoot = settingsRoot;
     }
 }

@@ -23,7 +23,6 @@ public class SettingController {
 
     @FXML
     public Node settingsRoot;
-
     private Properties settings;
     private AppProperty settingsProperties;
     private StyleUtil styleUtil;

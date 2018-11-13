@@ -23,10 +23,6 @@ import java.util.Properties;
 @Controller
 public class SettingColorController {
 
-    private AppProperty settingsProperties;
-    private ChatDialog chatDialog;
-    private ApplicationStyle applicationStyle;
-    private StyleUtil styleUtil;
     @FXML
     private ColorPicker baseColorPicker;
     @FXML
@@ -39,6 +35,10 @@ public class SettingColorController {
     private ColorPicker messageColorPicker;
     @FXML
     public ColorPicker directMessageColorPicker;
+    private AppProperty settingsProperties;
+    private ChatDialog chatDialog;
+    private ApplicationStyle applicationStyle;
+    private StyleUtil styleUtil;
     private Properties settings;
     private Node settingsRoot;
 
@@ -119,7 +119,7 @@ public class SettingColorController {
         return owner.getScene().lookup("#root");
     }
 
-    public void saveSettings(Properties settings) {
+    void saveSettings(Properties settings) {
         settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
                 baseColorPicker.getValue()));
         settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
@@ -135,7 +135,7 @@ public class SettingColorController {
         settingsProperties.setProperties(settings);
     }
 
-    public void setSettingsRoot(Node settingsRoot) {
+    void setSettingsRoot(Node settingsRoot) {
         this.settingsRoot = settingsRoot;
     }
 }
