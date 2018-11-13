@@ -4,7 +4,6 @@ import chat.component.DataDialog;
 import chat.component.SettingsDialog;
 import chat.model.entity.*;
 import chat.model.repository.*;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 

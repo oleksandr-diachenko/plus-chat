@@ -32,6 +32,7 @@ public class SettingFontController {
     private Slider fontSizeSlider;
     private Properties settings;
     private SettingsDialog settingsDialog;
+    private Node settingsRoot;
 
     @Autowired
     public SettingFontController(AppProperty settingsProperties, ApplicationStyle applicationStyle,
@@ -57,7 +58,7 @@ public class SettingFontController {
         fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
             applicationStyle.setFontSize(String.valueOf(new_val));
-            styleUtil.setStyles(getChatRoot(), getSettingsRoot(), applicationStyle);
+            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
         });
     }
 
@@ -74,5 +75,9 @@ public class SettingFontController {
     public void saveSettings(Properties settings) {
         settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
         settingsProperties.setProperties(settings);
+    }
+
+    public void setSettingsRoot(Node settingsRoot) {
+        this.settingsRoot = settingsRoot;
     }
 }

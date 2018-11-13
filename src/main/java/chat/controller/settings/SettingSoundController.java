@@ -1,8 +1,5 @@
 package chat.controller.settings;
 
-import chat.component.ChatDialog;
-import chat.component.SettingsDialog;
-import chat.controller.ApplicationStyle;
 import chat.util.*;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

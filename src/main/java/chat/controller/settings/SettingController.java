@@ -59,6 +59,8 @@ public class SettingController {
 
     @FXML
     public void initialize() {
+        settingColorController.setSettingsRoot(settingsRoot);
+        settingFontController.setSettingsRoot(settingsRoot);
         settings = settingsProperties.getProperty();
         settingsRoot.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
@@ -80,11 +82,6 @@ public class SettingController {
 
     public void cancelAction() {
         getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
-
-
-    public Node getSettingsRoot() {
-        return settingsRoot;
     }
 
     private void flushSettings() {
