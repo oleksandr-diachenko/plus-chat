@@ -13,19 +13,19 @@
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
     <TabPane fx:id="settingsTab" tabClosingPolicy="UNAVAILABLE">
         <Tab text="%settings.tab.general">
-            <fx:include source="settings-general.fxml" />
+            <fx:include source="settingTabs/settings-general.fxml" />
         </Tab>
         <Tab text="%settings.tab.font">
-            <fx:include source="settings-font.fxml" />
+            <fx:include source="settingTabs/settings-font.fxml" />
         </Tab>
         <Tab text="%settings.tab.color">
-            <fx:include source="settings-color.fxml" />
+            <fx:include source="settingTabs/settings-color.fxml" />
         </Tab>
         <Tab text="%settings.tab.sound">
-            <fx:include source="settings-sound.fxml" />
+            <fx:include source="settingTabs/settings-sound.fxml" />
         </Tab>
         <Tab text="%settings.tab.data">
-            <fx:include source="settings-data.fxml" />
+            <fx:include source="settingTabs/settings-data.fxml" />
         </Tab>
     </TabPane>
     <HBox alignment="CENTER_RIGHT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" spacing="40.0">
