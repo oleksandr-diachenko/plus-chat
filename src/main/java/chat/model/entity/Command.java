@@ -18,10 +18,10 @@ public class Command {
     private String response;
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Command command = (Command) o;
+        Command command = (Command) o;
         return Objects.equals(this.name, command.getName());
     }
 

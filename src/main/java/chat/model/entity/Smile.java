@@ -17,10 +17,10 @@ public class Smile {
     private String imagePath;
 
     @Override
-    public boolean equals(final Object o) {
+    public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        final Smile smile = (Smile) o;
+        Smile smile = (Smile) o;
         return Objects.equals(this.name, smile.getName());
     }
 

@@ -13,10 +13,10 @@ public class JSONParser {
 
     private final static Logger logger = LogManager.getLogger(JSONParser.class);
 
-    public static String readFile(final String fileName) {
+    public static String readFile(String fileName) {
         String result = "";
-        try (final BufferedReader br = new BufferedReader(new FileReader(fileName))) {
-            final StringBuilder sb = new StringBuilder();
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
+            StringBuilder sb = new StringBuilder();
             String line = br.readLine();
             while (line != null) {
                 sb.append(line);

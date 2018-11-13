@@ -16,14 +16,14 @@ public class RollCommand implements ICommand {
     private String nick;
     private long points;
 
-    public RollCommand(final UserRepository userRepository, final String nick) {
+    public RollCommand(UserRepository userRepository, String nick) {
         this.userRepository = userRepository;
         this.nick = nick;
     }
 
     @Override
-    public boolean canExecute(final String command) {
-        final String[] parts = command.split(" ");
+    public boolean canExecute(String command) {
+        String[] parts = command.split(" ");
         if (!correctArguments(parts)) {
             return false;
         }
@@ -31,7 +31,7 @@ public class RollCommand implements ICommand {
         return true;
     }
 
-    private boolean correctArguments(final String[] parts) {
+    private boolean correctArguments(String[] parts) {
         return parts.length >= ARGUMENTS_LENGTH
                 && "!roll".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
@@ -40,9 +40,9 @@ public class RollCommand implements ICommand {
     @Override
     public String execute() {
         int percent = new Random().nextInt(100);
-        final Optional<User> userByName = this.userRepository.getUserByName(this.nick);
+        Optional<User> userByName = this.userRepository.getUserByName(this.nick);
         if (userByName.isPresent()) {
-            final User user = userByName.get();
+            User user = userByName.get();
             long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
@@ -58,15 +58,15 @@ public class RollCommand implements ICommand {
         return "";
     }
 
-    private boolean notEnoughPoints(final long userPoints) {
+    private boolean notEnoughPoints(long userPoints) {
         return userPoints < this.points;
     }
 
-    private boolean win(final int percent) {
+    private boolean win(int percent) {
         return percent < WIN_PERCENT;
     }
 
-    private void updateUser(final User user, long points) {
+    private void updateUser(User user, long points) {
         user.setPoints(points);
         this.userRepository.update(user);
     }

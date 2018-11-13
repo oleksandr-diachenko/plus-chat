@@ -27,7 +27,7 @@ public class JSONSmileRepository implements SmileRepository {
     public JSONSmileRepository() {
     }
 
-    public JSONSmileRepository(final String path) {
+    public JSONSmileRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -46,7 +46,7 @@ public class JSONSmileRepository implements SmileRepository {
     }
 
     @Override
-    public Optional<Smile> getSmileByName(final String name) {
+    public Optional<Smile> getSmileByName(String name) {
         for (Smile smile : this.smiles) {
             if (smile.getName().equalsIgnoreCase(name)) {
                 return Optional.of(smile);
@@ -56,14 +56,14 @@ public class JSONSmileRepository implements SmileRepository {
     }
 
     @Override
-    public Smile add(final Smile smile) {
+    public Smile add(Smile smile) {
         this.smiles.add(smile);
         flush();
         return smile;
     }
 
     @Override
-    public Smile update(final Smile smile) {
+    public Smile update(Smile smile) {
         this.smiles.remove(smile);
         this.smiles.add(smile);
         flush();
@@ -71,14 +71,14 @@ public class JSONSmileRepository implements SmileRepository {
     }
 
     @Override
-    public Smile delete(final Smile smile) {
+    public Smile delete(Smile smile) {
         this.smiles.remove(smile);
         flush();
         return smile;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.smiles);

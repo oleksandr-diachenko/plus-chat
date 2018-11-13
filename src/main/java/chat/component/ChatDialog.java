@@ -20,30 +20,30 @@ public class ChatDialog extends AbstractDialog {
     private AppProperty settingsProperties;
 
     @Autowired
-    public ChatDialog(final AppProperty settingsProperties) {
+    public ChatDialog(AppProperty settingsProperties) {
         this.settingsProperties = settingsProperties;
     }
 
     @Override
-    protected void setStageSettings(final Stage stage) {
+    protected void setStageSettings(Stage stage) {
         stage.getIcons().add(new Image(this.paths.getLogo()));
         setAlwaysOnTop(stage);
     }
 
     @Override
-    protected void initOwner(final Stage owner, final Stage stage) {
+    protected void initOwner(Stage owner, Stage stage) {
         //do nothing
     }
 
     @Override
-    protected void setEvents(final Stage stage) {
+    protected void setEvents(Stage stage) {
         stage.setOnCloseRequest(we -> {
             we.consume();
             getScene().setFadeOutTransition();
         });
     }
 
-    private void setAlwaysOnTop(final Stage stage) {
+    private void setAlwaysOnTop(Stage stage) {
         stage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
     }
 

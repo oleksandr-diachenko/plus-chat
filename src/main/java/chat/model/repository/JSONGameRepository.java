@@ -24,7 +24,7 @@ public class JSONGameRepository implements GameRepository {
     public JSONGameRepository() {
     }
 
-    public JSONGameRepository(final String path) {
+    public JSONGameRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -43,7 +43,7 @@ public class JSONGameRepository implements GameRepository {
     }
 
     @Override
-    public Optional<Game> getGameByName(final String name) {
+    public Optional<Game> getGameByName(String name) {
         for (Game game : this.games) {
             if (game.getName().equalsIgnoreCase(name)) {
                 return Optional.of(game);
@@ -53,14 +53,14 @@ public class JSONGameRepository implements GameRepository {
     }
 
     @Override
-    public Game add(final Game game) {
+    public Game add(Game game) {
         this.games.add(game);
         flush();
         return game;
     }
 
     @Override
-    public Game update(final Game game) {
+    public Game update(Game game) {
         this.games.remove(game);
         this.games.add(game);
         flush();
@@ -68,14 +68,14 @@ public class JSONGameRepository implements GameRepository {
     }
 
     @Override
-    public Game delete(final Game game) {
+    public Game delete(Game game) {
         this.games.remove(game);
         flush();
         return game;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.games);

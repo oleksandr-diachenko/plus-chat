@@ -93,14 +93,14 @@ public class SettingController {
     private DirectRepository directRepository;
 
     @Autowired
-    public SettingController(final AppProperty settingsProperties, final ConfirmDialog confirmDialog,
-                             final DataDialog dataDialog, final Paths paths,
-                             final CommandRepository commandRepository,
-                             final UserRepository userRepository, final RankRepository rankRepository,
-                             final SmileRepository smileRepository, final DirectRepository directRepository,
-                             final ApplicationStyle applicationStyle, final StyleUtil styleUtil,
-                             final ConfirmController confirmController, final ChatDialog chatDialog,
-                             final RandomizerDialog randomizerDialog) {
+    public SettingController(AppProperty settingsProperties, ConfirmDialog confirmDialog,
+                             DataDialog dataDialog, Paths paths,
+                             CommandRepository commandRepository,
+                             UserRepository userRepository, RankRepository rankRepository,
+                             SmileRepository smileRepository, DirectRepository directRepository,
+                             ApplicationStyle applicationStyle, StyleUtil styleUtil,
+                             ConfirmController confirmController, ChatDialog chatDialog,
+                             RandomizerDialog randomizerDialog) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -163,14 +163,14 @@ public class SettingController {
     }
 
     private void initTheme() {
-        final List<String> list = new ArrayList<>();
+        List<String> list = new ArrayList<>();
         list.add("default");
         this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
         this.themeChoiceBox.setValue(this.settings.getProperty(Settings.ROOT_THEME));
     }
 
     private void initFontSizeSlider() {
-        final String fontSizeValue = this.settings.getProperty(Settings.FONT_SIZE);
+        String fontSizeValue = this.settings.getProperty(Settings.FONT_SIZE);
         this.fontSize.setText(fontSizeValue);
         this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
         this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -181,7 +181,7 @@ public class SettingController {
     }
 
     private void initTransparencySlider() {
-        final String backgroundTransparencyValue = this.settings.getProperty(
+        String backgroundTransparencyValue = this.settings.getProperty(
                 Settings.ROOT_BACKGROUND_TRANSPARENCY);
         this.transparencyValue.setText(backgroundTransparencyValue);
         this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
@@ -243,8 +243,8 @@ public class SettingController {
 
     private void initMessageSound() {
         try {
-            final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
-            final Set<String> soundNames = new HashSet<>();
+            Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
+            Set<String> soundNames = new HashSet<>();
             sounds.forEach(sound -> soundNames.add(sound.getName()));
             this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
             this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
@@ -257,7 +257,7 @@ public class SettingController {
     }
 
     private void initMessageSoundVolume() {
-        final String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
+        String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
         this.messageVolumeValue.setText(messageSoundVolumeValue);
         this.messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
         this.messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
@@ -267,8 +267,8 @@ public class SettingController {
 
     private void initDirectMessageSound() {
         try {
-            final Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
-            final Set<String> soundNames = new HashSet<>();
+            Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
+            Set<String> soundNames = new HashSet<>();
             sounds.forEach(sound -> soundNames.add(sound.getName()));
             this.directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
             this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(
@@ -282,7 +282,7 @@ public class SettingController {
     }
 
     private void initDirectMessageSoundVolume() {
-        final String directMessageSoundVolumeValue = this.settings.getProperty(
+        String directMessageSoundVolumeValue = this.settings.getProperty(
                 Settings.SOUND_DIRECT_MESSAGE_VOLUME);
         this.directMessageVolumeValue.setText(directMessageSoundVolumeValue);
         this.directMessageVolumeSlider.setValue(Double.parseDouble(directMessageSoundVolumeValue));
@@ -301,7 +301,7 @@ public class SettingController {
 
     public void confirmAction() {
         this.confirmDialog.openDialog(getStage());
-        final Stage stage = confirmDialog.getStage();
+        Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (this.confirmController.isConfirmed()) {
                 flushSettings();
@@ -343,12 +343,12 @@ public class SettingController {
                 this.directMessageVolumeValue.getText());
 
         this.settingsProperties.setProperties(this.settings);
-        final ChatController chatController = (ChatController) this.chatRoot.getUserData();
+        ChatController chatController = (ChatController) this.chatRoot.getUserData();
         chatController.setSettings(this.settings);
         chatController.getSetting().setDisable(false);
     }
 
-    private String getLanguage(final String value) {
+    private String getLanguage(String value) {
         for (String key : this.languages.keySet()) {
             if (this.languages.get(key).equals(value)) {
                 return key;
@@ -358,44 +358,44 @@ public class SettingController {
     }
 
     public void commandsDataAction() {
-        final Set<Command> commands = this.commandRepository.getAll();
-        final Set<String> fields = getFields(Command.class.getDeclaredFields());
+        Set<Command> commands = this.commandRepository.getAll();
+        Set<String> fields = getFields(Command.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
-        final Set<User> commands = this.userRepository.getAll();
-        final Set<String> fields = getFields(User.class.getDeclaredFields());
+        Set<User> commands = this.userRepository.getAll();
+        Set<String> fields = getFields(User.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
-        final Set<Rank> ranks = this.rankRepository.getAll();
-        final Set<String> fields = getFields(Rank.class.getDeclaredFields());
+        Set<Rank> ranks = this.rankRepository.getAll();
+        Set<String> fields = getFields(Rank.class.getDeclaredFields());
         openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
-        final Set<Smile> smiles = this.smileRepository.getAll();
-        final Set<String> fields = getFields(Smile.class.getDeclaredFields());
+        Set<Smile> smiles = this.smileRepository.getAll();
+        Set<String> fields = getFields(Smile.class.getDeclaredFields());
         openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
-        final Set<Direct> directs = this.directRepository.getAll();
-        final Set<String> fields = getFields(Direct.class.getDeclaredFields());
+        Set<Direct> directs = this.directRepository.getAll();
+        Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);
     }
 
-    private Set<String> getFields(final Field[] declaredFields) {
-        final Set<String> fields = new HashSet<>();
+    private Set<String> getFields(Field[] declaredFields) {
+        Set<String> fields = new HashSet<>();
         for (Field field : declaredFields) {
             fields.add(field.getName());
         }
         return fields;
     }
 
-    private void openDialog(final Set<Object> data, final Set<String> fields) {
+    private void openDialog(Set<Object> data, Set<String> fields) {
         this.dataDialog.setTableFields(fields);
         this.dataDialog.setTableData(data);
         this.dataDialog.openDialog(getStage());
@@ -414,7 +414,7 @@ public class SettingController {
     }
 
     private Node getChatRoot() {
-        final Stage owner = getOwner();
+        Stage owner = getOwner();
         return owner.getScene().lookup("#root");
     }
 

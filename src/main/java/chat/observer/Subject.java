@@ -5,9 +5,9 @@ package chat.observer;
  */
 public interface Subject {
 
-    void addObserver(final Observer observer);
+    void addObserver(Observer observer);
 
-    void removeObserver(final Observer observer);
+    void removeObserver(Observer observer);
 
-    void notifyObserver(final String nick, final String message);
+    void notifyObserver(String nick, String message);
 }

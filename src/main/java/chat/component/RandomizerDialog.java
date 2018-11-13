@@ -7,12 +7,12 @@ import org.springframework.stereotype.Component;
 public class RandomizerDialog extends AbstractDialog {
 
     @Override
-    protected void setStageSettings(final Stage stage) {
+    protected void setStageSettings(Stage stage) {
 
     }
 
     @Override
-    protected void initOwner(final Stage owner, final Stage stage) {
+    protected void initOwner(Stage owner, Stage stage) {
         //do nothing
     }
 

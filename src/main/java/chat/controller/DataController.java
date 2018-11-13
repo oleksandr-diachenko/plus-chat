@@ -27,7 +27,7 @@ public class DataController {
     private VBox root;
 
     @Autowired
-    public DataController(final StyleUtil styleUtil, final ApplicationStyle applicationStyle) {
+    public DataController(StyleUtil styleUtil, ApplicationStyle applicationStyle) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
     }

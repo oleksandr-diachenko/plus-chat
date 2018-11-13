@@ -21,8 +21,8 @@ public class GameOrderCommand implements ICommand {
     }
 
     @Override
-    public boolean canExecute(final String command) {
-        final String[] parts = command.split(" ");
+    public boolean canExecute(String command) {
+        String[] parts = command.split(" ");
         if (!correctArguments(parts)) {
             return false;
         }
@@ -31,7 +31,7 @@ public class GameOrderCommand implements ICommand {
         return true;
     }
 
-    private boolean correctArguments(final String[] parts) {
+    private boolean correctArguments(String[] parts) {
         return parts.length >= ARGUMENTS_LENGTH
                 && "!order".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
@@ -39,13 +39,13 @@ public class GameOrderCommand implements ICommand {
 
     @Override
     public String execute() {
-        final Optional<User> userByName = this.userRepository.getUserByName(this.nick);
+        Optional<User> userByName = this.userRepository.getUserByName(this.nick);
         if (userByName.isPresent()) {
-            final User user = userByName.get();
+            User user = userByName.get();
             if (lessThanMinimalOrder()) {
                 return user.getCustomName() + ", minimal order is 1 hour (600 points)";
             }
-            final long userPoints = user.getPoints();
+            long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
             }
@@ -60,7 +60,7 @@ public class GameOrderCommand implements ICommand {
         return this.points < MINIMAL_ORDER_POINTS;
     }
 
-    private boolean notEnoughPoints(final long userPoints) {
+    private boolean notEnoughPoints(long userPoints) {
         return userPoints < this.points;
     }
 }

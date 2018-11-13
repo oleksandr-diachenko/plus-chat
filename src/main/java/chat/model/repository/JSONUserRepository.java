@@ -31,7 +31,7 @@ public class JSONUserRepository implements UserRepository {
         //do nothing
     }
 
-    public JSONUserRepository(final String path) {
+    public JSONUserRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -50,7 +50,7 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByName(final String name) {
+    public Optional<User> getUserByName(String name) {
         for (User user : this.users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);
@@ -60,14 +60,14 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public User add(final User user) {
+    public User add(User user) {
         this.users.add(user);
         flush();
         return user;
     }
 
     @Override
-    public User update(final User user) {
+    public User update(User user) {
         this.users.remove(user);
         this.users.add(user);
         flush();
@@ -75,13 +75,13 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public User delete(final User user) {
+    public User delete(User user) {
         this.users.remove(user);
         return user;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.users);

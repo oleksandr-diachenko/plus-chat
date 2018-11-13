@@ -27,8 +27,8 @@ public class AppProperty{
     }
 
     public Properties getProperty() {
-        final Properties properties = new Properties();
-        try (final FileInputStream file = new FileInputStream(this.path)) {
+        Properties properties = new Properties();
+        try (FileInputStream file = new FileInputStream(this.path)) {
             properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
@@ -38,8 +38,8 @@ public class AppProperty{
         return properties;
     }
 
-    public Properties setProperties(final Properties properties) {
-        try (final OutputStream output = new FileOutputStream(this.path)) {
+    public Properties setProperties(Properties properties) {
+        try (OutputStream output = new FileOutputStream(this.path)) {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);

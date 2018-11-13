@@ -20,10 +20,10 @@ public class Paths {
     private String twitchProperties;
     private String soundDirectory;
 
-    public Paths(final String logo, final AppProperty settingsProperties,
-                 final String chatCss, final String confirmCss, final String dataCss,
-                 final String settingsCss, final String enabledPin, final String disabledPin,
-                 final String twitchProperties, final String soundDirectory) {
+    public Paths(String logo, AppProperty settingsProperties,
+                 String chatCss, String confirmCss, String dataCss,
+                 String settingsCss, String enabledPin, String disabledPin,
+                 String twitchProperties, String soundDirectory) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;
@@ -41,22 +41,22 @@ public class Paths {
     }
 
     public String getChatCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
+        Properties settings = this.settingsProperties.getProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.chatCss;
     }
 
     public String getConfirmCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
+        Properties settings = this.settingsProperties.getProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.confirmCss;
     }
 
     public String getDataCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
+        Properties settings = this.settingsProperties.getProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.dataCss;
     }
 
     public String getSettingsCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
+        Properties settings = this.settingsProperties.getProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.settingsCss;
     }
 

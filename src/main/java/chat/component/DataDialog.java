@@ -27,33 +27,33 @@ public class DataDialog extends AbstractDialog {
     private Set<Object> data;
 
     @Override
-    protected void setStageSettings(final Stage stage) {
+    protected void setStageSettings(Stage stage) {
         stage.setResizable(false);
-        final DataController dataController = (DataController) getRoot().getUserData();
-        final TableView<Object> table = dataController.getTable();
+        DataController dataController = (DataController) getRoot().getUserData();
+        TableView<Object> table = dataController.getTable();
         initData(table, data, fields);
     }
 
-    private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
+    private void initData(TableView<Object> table, Set<Object> objects, Set<String> fields) {
         fields.forEach(field -> {
-            final TableColumn<Object, Object> column = new TableColumn<>(field);
+            TableColumn<Object, Object> column = new TableColumn<>(field);
             column.setCellValueFactory(new PropertyValueFactory<>(field));
-            final Callback<TableColumn<Object, Object>,
+            Callback<TableColumn<Object, Object>,
                     TableCell<Object, Object>> cellFactory = getCellFactory();
             column.setCellFactory(cellFactory);
             table.getColumns().add(column);
         });
-        final ObservableList<Object> data = FXCollections.observableArrayList(objects);
+        ObservableList<Object> data = FXCollections.observableArrayList(objects);
         table.setItems(data);
     }
 
     private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory() {
         return new Callback<>() {
             @Override
-            public TableCell<Object, Object> call(final TableColumn<Object, Object> param) {
+            public TableCell<Object, Object> call(TableColumn<Object, Object> param) {
                 return new TableCell<>() {
                     @Override
-                    public void updateItem(final Object item, final boolean empty) {
+                    public void updateItem(Object item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
                             this.setTextFill(Color.web("#474747"));
@@ -66,7 +66,7 @@ public class DataDialog extends AbstractDialog {
     }
 
     @Override
-    protected void initOwner(final Stage owner, final Stage stage) {
+    protected void initOwner(Stage owner, Stage stage) {
         stage.initOwner(owner);
     }
 
@@ -80,11 +80,11 @@ public class DataDialog extends AbstractDialog {
         return this.paths.getDataCSS();
     }
 
-    public void setTableFields(final Set<String> fields) {
+    public void setTableFields(Set<String> fields) {
         this.fields = fields;
     }
 
-    public void setTableData(final Set<Object> data) {
+    public void setTableData(Set<Object> data) {
         this.data = data;
     }
 }

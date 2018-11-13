@@ -9,5 +9,5 @@ import java.util.Optional;
  */
 public interface DirectRepository extends CRUDRepository<Direct> {
 
-    Optional<Direct> getDirectByWord(final String word);
+    Optional<Direct> getDirectByWord(String word);
 }

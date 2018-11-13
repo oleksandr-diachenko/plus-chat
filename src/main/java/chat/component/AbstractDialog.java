@@ -25,11 +25,11 @@ public abstract class AbstractDialog {
     private Stage stage;
     private Region root;
 
-    public void openDialog(final Stage owner) {
-        final Stage stage = new Stage();
+    public void openDialog(Stage owner) {
+        Stage stage = new Stage();
         this.stage = stage;
         try {
-            final UndecoratorScene undecorator = getScene(stage, getRootRegion());
+            UndecoratorScene undecorator = getScene(stage, getRootRegion());
             stage.setScene(undecorator);
 
             initOwner(owner, stage);
@@ -44,11 +44,11 @@ public abstract class AbstractDialog {
         }
     }
 
-    protected abstract void setStageSettings(final Stage stage);
+    protected abstract void setStageSettings(Stage stage);
 
-    protected abstract void initOwner(final Stage owner, final Stage stage);
+    protected abstract void initOwner(Stage owner, Stage stage);
 
-    protected void setEvents(final Stage stage){
+    protected void setEvents(Stage stage) {
         //do nothing
     }
 
@@ -59,7 +59,7 @@ public abstract class AbstractDialog {
 
     protected abstract String getFXMLName();
 
-    private UndecoratorScene getScene(final Stage stage, final Region root) {
+    private UndecoratorScene getScene(Stage stage, Region root) {
         this.undecorator = new UndecoratorScene(stage, root);
         this.undecorator.getStylesheets().add(getCSSName());
         this.undecorator.setBackgroundOpacity(0.2);
@@ -72,7 +72,7 @@ public abstract class AbstractDialog {
         return this.undecorator;
     }
 
-    protected String getTitleName(){
+    protected String getTitleName() {
         return "";
     }
 

@@ -27,7 +27,7 @@ public class JSONDirectRepository implements DirectRepository {
     public JSONDirectRepository() {
     }
 
-    public JSONDirectRepository(final String path) {
+    public JSONDirectRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -46,7 +46,7 @@ public class JSONDirectRepository implements DirectRepository {
     }
 
     @Override
-    public Optional<Direct> getDirectByWord(final String word) {
+    public Optional<Direct> getDirectByWord(String word) {
         for (Direct direct : this.directs) {
             if(direct.getWord().equalsIgnoreCase(word)) {
                 return Optional.of(direct);
@@ -56,14 +56,14 @@ public class JSONDirectRepository implements DirectRepository {
     }
 
     @Override
-    public Direct add(final Direct direct) {
+    public Direct add(Direct direct) {
         this.directs.add(direct);
         flush();
         return direct;
     }
 
     @Override
-    public Direct update(final Direct direct) {
+    public Direct update(Direct direct) {
         this.directs.remove(direct);
         this.directs.add(direct);
         flush();
@@ -71,14 +71,14 @@ public class JSONDirectRepository implements DirectRepository {
     }
 
     @Override
-    public Direct delete(final Direct direct) {
+    public Direct delete(Direct direct) {
         this.directs.remove(direct);
         flush();
         return direct;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.directs);

@@ -26,13 +26,13 @@ public class ApplicationStyle {
     private String directColor;
     private AppProperty settingProperties;
 
-    public ApplicationStyle(final AppProperty settingProperties) {
+    public ApplicationStyle(AppProperty settingProperties) {
         this.settingProperties = settingProperties;
         reverse();
     }
 
     public void reverse() {
-        final Properties settings = settingProperties.getProperty();
+        Properties settings = settingProperties.getProperty();
         this.backgroundColor = settings.getProperty(Settings.ROOT_BACKGROUND_COLOR);
         this.baseColor = settings.getProperty(Settings.ROOT_BASE_COLOR);
         this.fontSize = settings.getProperty(Settings.FONT_SIZE);

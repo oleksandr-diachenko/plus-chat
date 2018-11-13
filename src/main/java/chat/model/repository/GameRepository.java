@@ -9,5 +9,5 @@ import java.util.Optional;
  */
 public interface GameRepository extends CRUDRepository<Game> {
 
-    Optional<Game> getGameByName(final String name);
+    Optional<Game> getGameByName(String name);
 }

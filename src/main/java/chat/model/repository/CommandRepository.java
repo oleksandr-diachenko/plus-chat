@@ -9,5 +9,5 @@ import java.util.Optional;
  */
 public interface CommandRepository extends CRUDRepository<Command> {
 
-    Optional<Command> getCommandByName(final String name);
+    Optional<Command> getCommandByName(String name);
 }

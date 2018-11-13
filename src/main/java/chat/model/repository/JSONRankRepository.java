@@ -27,7 +27,7 @@ public class JSONRankRepository implements RankRepository {
     public JSONRankRepository() {
     }
 
-    public JSONRankRepository(final String path) {
+    public JSONRankRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -46,14 +46,14 @@ public class JSONRankRepository implements RankRepository {
     }
 
     @Override
-    public Rank add(final Rank rank) {
+    public Rank add(Rank rank) {
         this.ranks.add(rank);
         flush();
         return rank;
     }
 
     @Override
-    public Rank update(final Rank rank) {
+    public Rank update(Rank rank) {
         this.ranks.remove(rank);
         this.ranks.add(rank);
         flush();
@@ -61,17 +61,17 @@ public class JSONRankRepository implements RankRepository {
     }
 
     @Override
-    public Rank delete(final Rank rank) {
+    public Rank delete(Rank rank) {
         this.ranks.remove(rank);
         flush();
         return rank;
     }
 
     @Override
-    public Rank getRankByExp(final long exp) {
+    public Rank getRankByExp(long exp) {
         Rank nearest = new Rank();
         for (Rank rank : this.ranks) {
-            final int rankExp = rank.getExp();
+            int rankExp = rank.getExp();
             if (rankExp <= exp) {
                 nearest = rank;
             }
@@ -80,13 +80,13 @@ public class JSONRankRepository implements RankRepository {
     }
 
     @Override
-    public boolean isNewRank(final long exp) {
-        final Rank rankByExp = getRankByExp(exp);
+    public boolean isNewRank(long exp) {
+        Rank rankByExp = getRankByExp(exp);
         return rankByExp.getExp() == exp;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);

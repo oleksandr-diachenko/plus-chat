@@ -30,7 +30,7 @@ public class JSONCommandRepository implements CommandRepository {
     public JSONCommandRepository() {
     }
 
-    public JSONCommandRepository(final String path) {
+    public JSONCommandRepository(String path) {
         this.path = path;
         getAll();
     }
@@ -49,7 +49,7 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Optional<Command> getCommandByName(final String name) {
+    public Optional<Command> getCommandByName(String name) {
         for (Command command : this.commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);
@@ -59,14 +59,14 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Command add(final Command command) {
+    public Command add(Command command) {
         this.commands.add(command);
         flush();
         return command;
     }
 
     @Override
-    public Command update(final Command command) {
+    public Command update(Command command) {
         this.commands.remove(command);
         this.commands.add(command);
         flush();
@@ -74,14 +74,14 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Command delete(final Command command) {
+    public Command delete(Command command) {
         this.commands.remove(command);
         flush();
         return command;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
                     this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
