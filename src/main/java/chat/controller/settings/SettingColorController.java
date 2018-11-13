@@ -126,7 +126,7 @@ public class SettingColorController {
         return owner.getScene().lookup("#root");
     }
 
-    public void saveSettings() {
+    public void saveSettings(Properties settings) {
         settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
                 baseColorPicker.getValue()));
         settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(

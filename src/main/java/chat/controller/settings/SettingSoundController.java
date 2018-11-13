@@ -120,7 +120,7 @@ public class SettingSoundController {
         });
     }
 
-    public void saveSettings() {
+    public void saveSettings(Properties settings) {
         settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
                 enableSoundCheckBox.isSelected()));
         settings.setProperty(Settings.SOUND_MESSAGE,

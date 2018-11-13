@@ -71,7 +71,7 @@ public class SettingFontController {
         return owner.getScene().lookup("#root");
     }
 
-    public void saveSettings() {
+    public void saveSettings(Properties settings) {
         settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
         settingsProperties.setProperties(settings);
     }

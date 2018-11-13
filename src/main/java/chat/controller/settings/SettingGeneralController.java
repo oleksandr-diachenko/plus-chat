@@ -103,7 +103,7 @@ public class SettingGeneralController {
         return chatDialog.getStage();
     }
 
-    public void saveSettings() {
+    public void saveSettings(Properties settings) {
         settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
         settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
         settings.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
