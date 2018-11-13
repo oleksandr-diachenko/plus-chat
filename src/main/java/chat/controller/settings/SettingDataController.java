@@ -83,7 +83,7 @@ public class SettingDataController {
         dataDialog.openDialog(settingsDialog.getStage());
     }
 
-    public void reload() {
+    void reload() {
         commandRepository.getAll();
         directRepository.getAll();
         rankRepository.getAll();

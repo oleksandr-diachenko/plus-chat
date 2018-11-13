@@ -22,9 +22,6 @@ import java.util.*;
 @Controller
 public class SettingGeneralController {
 
-    private AppProperty settingsProperties;
-    private ChatDialog chatDialog;
-    private final RandomizerDialog randomizerDialog;
     @FXML
     private GridPane settingsGeneralRoot;
     @FXML
@@ -35,6 +32,9 @@ public class SettingGeneralController {
     private Slider transparencySlider;
     @FXML
     private Label transparencyValue;
+    private AppProperty settingsProperties;
+    private ChatDialog chatDialog;
+    private RandomizerDialog randomizerDialog;
     private Properties settings;
     private Map<String, String> languages;
 
@@ -103,7 +103,7 @@ public class SettingGeneralController {
         return chatDialog.getStage();
     }
 
-    public void saveSettings(Properties settings) {
+    void saveSettings(Properties settings) {
         settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
         settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
         settings.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
