@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ColorPicker?>
+<GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingColorController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <opaqueInsets>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+    </opaqueInsets>
+    <Label text="%nick-color" GridPane.rowIndex="2">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%separator-color" GridPane.rowIndex="3">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%message-color" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%direct-message-color" GridPane.rowIndex="5">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%base-color" GridPane.rowIndex="0">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%background-color" GridPane.rowIndex="1">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <ColorPicker fx:id="baseColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="0">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+    <ColorPicker fx:id="backgroundColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+    <ColorPicker fx:id="nickColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+    <ColorPicker fx:id="separatorColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+    <ColorPicker fx:id="messageColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+    <ColorPicker fx:id="directMessageColorPicker" GridPane.columnIndex="1" GridPane.rowIndex="5">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ColorPicker>
+</GridPane>

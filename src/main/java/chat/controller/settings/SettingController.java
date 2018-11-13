@@ -1,0 +1,106 @@
+package chat.controller.settings;
+
+import chat.component.ChatDialog;
+import chat.component.ConfirmDialog;
+import chat.controller.ChatController;
+import chat.controller.ConfirmController;
+import chat.util.*;
+import javafx.fxml.FXML;
+import javafx.scene.Node;
+import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+import java.util.*;
+
+/**
+ * @author Alexander Diachenko.
+ */
+@Controller
+@NoArgsConstructor
+public class SettingController {
+
+    @FXML
+    public Node settingsRoot;
+
+    private Properties settings;
+    private AppProperty settingsProperties;
+    private StyleUtil styleUtil;
+    private ConfirmDialog confirmDialog;
+    private ChatDialog chatDialog;
+    private SettingDataController settingDataController;
+    private SettingColorController settingColorController;
+    private SettingFontController settingFontController;
+    private SettingGeneralController settingGeneralController;
+    private SettingSoundController settingSoundController;
+    private ChatController chatController;
+    private ConfirmController confirmController;
+
+    @Autowired
+    public SettingController(AppProperty settingsProperties, StyleUtil styleUtil,
+                             ConfirmDialog confirmDialog, ChatDialog chatDialog, SettingColorController settingColorController,
+                             SettingFontController settingFontController, SettingGeneralController settingGeneralController,
+                             SettingSoundController settingSoundController, ChatController chatController,
+                             SettingDataController settingDataController, ConfirmController confirmController) {
+        this.settingsProperties = settingsProperties;
+        this.styleUtil = styleUtil;
+        this.confirmDialog = confirmDialog;
+        this.chatDialog = chatDialog;
+        this.settingDataController = settingDataController;
+        this.settingColorController = settingColorController;
+        this.settingFontController = settingFontController;
+        this.settingGeneralController = settingGeneralController;
+        this.settingSoundController = settingSoundController;
+        this.chatController = chatController;
+        this.confirmController = confirmController;
+    }
+
+    @FXML
+    public void initialize() {
+        settings = settingsProperties.getProperty();
+        settingsRoot.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
+    }
+
+    public void reloadAction() {
+        settingDataController.reload();
+    }
+
+    public void confirmAction() {
+        confirmDialog.openDialog(getStage());
+        Stage stage = confirmDialog.getStage();
+        stage.setOnCloseRequest(event -> {
+            if (confirmController.isConfirmed()) {
+                flushSettings();
+            }
+        });
+    }
+
+    public void cancelAction() {
+        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
+    }
+
+
+    public Node getSettingsRoot() {
+        return settingsRoot;
+    }
+
+    private void flushSettings() {
+        settingColorController.saveSettings();
+        settingFontController.saveSettings();
+        settingGeneralController.saveSettings();
+        settingSoundController.saveSettings();
+        chatController.setSettings(settings);
+        chatController.getSetting().setDisable(false);
+    }
+
+    private Stage getStage() {
+        return (Stage) settingsRoot.getScene().getWindow();
+    }
+
+    public Node getRoot() {
+        return settingsRoot;
+    }
+}
