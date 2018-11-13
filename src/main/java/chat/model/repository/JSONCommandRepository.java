@@ -38,10 +38,10 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Set<Command> getAll() {
         try {
-            this.commands = new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
+            commands = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
                     }));
-            return this.commands;
+            return commands;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -50,7 +50,7 @@ public class JSONCommandRepository implements CommandRepository {
 
     @Override
     public Optional<Command> getCommandByName(String name) {
-        for (Command command : this.commands) {
+        for (Command command : commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);
             }
@@ -60,22 +60,22 @@ public class JSONCommandRepository implements CommandRepository {
 
     @Override
     public Command add(Command command) {
-        this.commands.add(command);
+        commands.add(command);
         flush();
         return command;
     }
 
     @Override
     public Command update(Command command) {
-        this.commands.remove(command);
-        this.commands.add(command);
+        commands.remove(command);
+        commands.add(command);
         flush();
         return command;
     }
 
     @Override
     public Command delete(Command command) {
-        this.commands.remove(command);
+        commands.remove(command);
         flush();
         return command;
     }
@@ -84,11 +84,11 @@ public class JSONCommandRepository implements CommandRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
+                    mapper.writeValue(new FileOutputStream(path), commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Commands failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

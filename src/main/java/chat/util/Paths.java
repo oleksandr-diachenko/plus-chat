@@ -37,42 +37,42 @@ public class Paths {
     }
 
     public String getLogo() {
-        return this.logo;
+        return logo;
     }
 
     public String getChatCSS() {
-        Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.chatCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + chatCss;
     }
 
     public String getConfirmCSS() {
-        Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.confirmCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + confirmCss;
     }
 
     public String getDataCSS() {
-        Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.dataCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + dataCss;
     }
 
     public String getSettingsCSS() {
-        Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.settingsCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + settingsCss;
     }
 
     public String getEnabledPin() {
-        return this.enabledPin;
+        return enabledPin;
     }
 
     public String getDisabledPin() {
-        return this.disabledPin;
+        return disabledPin;
     }
 
     public String getTwitchProperties() {
-        return this.twitchProperties;
+        return twitchProperties;
     }
 
     public String getSoundsDirectory() {
-        return this.soundDirectory;
+        return soundDirectory;
     }
 }

@@ -28,6 +28,6 @@ public class ConfirmDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return this.paths.getConfirmCSS();
+        return paths.getConfirmCSS();
     }
 }

@@ -21,18 +21,18 @@ public class Smile {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Smile smile = (Smile) o;
-        return Objects.equals(this.name, smile.getName());
+        return Objects.equals(name, smile.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "Smile{" +
-                "name='" + this.name + '\'' +
+                "name='" + name + '\'' +
                 '}';
     }
 }

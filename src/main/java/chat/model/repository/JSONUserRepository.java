@@ -39,10 +39,10 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getAll() {
         try {
-            this.users = new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<User>>() {
+            users = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<User>>() {
                     }));
-            return this.users;
+            return users;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -51,7 +51,7 @@ public class JSONUserRepository implements UserRepository {
 
     @Override
     public Optional<User> getUserByName(String name) {
-        for (User user : this.users) {
+        for (User user : users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);
             }
@@ -61,22 +61,22 @@ public class JSONUserRepository implements UserRepository {
 
     @Override
     public User add(User user) {
-        this.users.add(user);
+        users.add(user);
         flush();
         return user;
     }
 
     @Override
     public User update(User user) {
-        this.users.remove(user);
-        this.users.add(user);
+        users.remove(user);
+        users.add(user);
         flush();
         return user;
     }
 
     @Override
     public User delete(User user) {
-        this.users.remove(user);
+        users.remove(user);
         return user;
     }
 
@@ -84,11 +84,11 @@ public class JSONUserRepository implements UserRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.users);
+                    mapper.writeValue(new FileOutputStream(path), users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Users failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

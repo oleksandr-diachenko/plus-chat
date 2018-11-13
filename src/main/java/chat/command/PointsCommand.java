@@ -22,7 +22,7 @@ public class PointsCommand implements ICommand {
 
     @Override
     public String execute() {
-        Optional<User> userByName = this.userRepository.getUserByName(this.nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             User user = userByName.get();
             return user.getCustomName() + ", you have " + user.getPoints() + " points.";

@@ -35,10 +35,10 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getAll() {
         try {
-            this.directs = new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
+            directs = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
                     }));
-            return this.directs;
+            return directs;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -47,7 +47,7 @@ public class JSONDirectRepository implements DirectRepository {
 
     @Override
     public Optional<Direct> getDirectByWord(String word) {
-        for (Direct direct : this.directs) {
+        for (Direct direct : directs) {
             if(direct.getWord().equalsIgnoreCase(word)) {
                 return Optional.of(direct);
             }
@@ -57,22 +57,22 @@ public class JSONDirectRepository implements DirectRepository {
 
     @Override
     public Direct add(Direct direct) {
-        this.directs.add(direct);
+        directs.add(direct);
         flush();
         return direct;
     }
 
     @Override
     public Direct update(Direct direct) {
-        this.directs.remove(direct);
-        this.directs.add(direct);
+        directs.remove(direct);
+        directs.add(direct);
         flush();
         return direct;
     }
 
     @Override
     public Direct delete(Direct direct) {
-        this.directs.remove(direct);
+        directs.remove(direct);
         flush();
         return direct;
     }
@@ -81,11 +81,11 @@ public class JSONDirectRepository implements DirectRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.directs);
+                    mapper.writeValue(new FileOutputStream(path), directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

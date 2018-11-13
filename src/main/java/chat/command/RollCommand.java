@@ -27,7 +27,7 @@ public class RollCommand implements ICommand {
         if (!correctArguments(parts)) {
             return false;
         }
-        this.points = Long.parseLong(parts[1]);
+        points = Long.parseLong(parts[1]);
         return true;
     }
 
@@ -40,7 +40,7 @@ public class RollCommand implements ICommand {
     @Override
     public String execute() {
         int percent = new Random().nextInt(100);
-        Optional<User> userByName = this.userRepository.getUserByName(this.nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             User user = userByName.get();
             long userPoints = user.getPoints();
@@ -48,10 +48,10 @@ public class RollCommand implements ICommand {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
             }
             if (win(percent)) {
-                updateUser(user, userPoints - this.points);
+                updateUser(user, userPoints - points);
                 return user.getCustomName() + ", you lost (" + userPoints + ")";
             } else {
-                updateUser(user, userPoints + (this.points * WIN_POINTS_MULTIPLIER));
+                updateUser(user, userPoints + (points * WIN_POINTS_MULTIPLIER));
                 return user.getCustomName() + ", you win (" + userPoints + ")";
             }
         }
@@ -59,7 +59,7 @@ public class RollCommand implements ICommand {
     }
 
     private boolean notEnoughPoints(long userPoints) {
-        return userPoints < this.points;
+        return userPoints < points;
     }
 
     private boolean win(int percent) {
@@ -68,6 +68,6 @@ public class RollCommand implements ICommand {
 
     private void updateUser(User user, long points) {
         user.setPoints(points);
-        this.userRepository.update(user);
+        userRepository.update(user);
     }
 }

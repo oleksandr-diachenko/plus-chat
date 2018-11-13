@@ -41,18 +41,18 @@ public class SettingsDialog extends AbstractDialog{
 
     @Override
     protected void setEvents(Stage stage) {
-        Properties settings = this.settingsProperties.getProperty();
+        Properties settings = settingsProperties.getProperty();
         stage.setOnShown(event -> {
             Set<Node> labels = stage.getScene().getRoot().lookupAll(".label");
             labels.forEach(label ->
-                    label.setStyle(this.styleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
+                    label.setStyle(styleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {
             Node setting = stage.getOwner().getScene().getRoot().lookup("#setting");
             Node chatRoot = stage.getOwner().getScene().getRoot().lookup("#root");
             setting.setDisable(false);
-            this.styleUtil.reverseStyle(settings, (Stage) stage.getOwner(), chatRoot, getRoot());
+            styleUtil.reverseStyle(settings, (Stage) stage.getOwner(), chatRoot, getRoot());
         });
     }
 
@@ -63,6 +63,6 @@ public class SettingsDialog extends AbstractDialog{
 
     @Override
     protected String getCSSName() {
-        return this.paths.getSettingsCSS();
+        return paths.getSettingsCSS();
     }
 }

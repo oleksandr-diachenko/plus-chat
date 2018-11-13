@@ -39,15 +39,15 @@ public class Bot extends ListenerAdapter implements Subject {
 
     @Override
     public void onConnect(ConnectEvent event) {
-        this.start = LocalDateTime.now();
-        String botName = this.connect.getProperty("botname");
+        start = LocalDateTime.now();
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Connected!");
     }
 
     @Override
     public void onDisconnect(DisconnectEvent event) {
-        String botName = this.connect.getProperty("botname");
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Disconnected!");
     }
@@ -82,12 +82,12 @@ public class Bot extends ListenerAdapter implements Subject {
 
     private List<ICommand> getCommands(String nick) {
         List<ICommand> commands = new ArrayList<>();
-        commands.add(new RankCommand(nick, this.userRepository, this.rankRepository));
-        commands.add(new UpCommand(this.start));
-        commands.add(new RollCommand(this.userRepository, nick));
-        commands.add(new PointsCommand(this.userRepository, nick));
-        commands.add(new GameOrderCommand(this.userRepository, nick));
-        commands.add(new JSONCommand(this.commandRepository));
+        commands.add(new RankCommand(nick, userRepository, rankRepository));
+        commands.add(new UpCommand(start));
+        commands.add(new RollCommand(userRepository, nick));
+        commands.add(new PointsCommand(userRepository, nick));
+        commands.add(new GameOrderCommand(userRepository, nick));
+        commands.add(new JSONCommand(commandRepository));
         return commands;
     }
 
@@ -100,14 +100,14 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private void sendMessage(String message) {
-        String botName = this.connect.getProperty("botname");
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, message);
-        ChatController.bot.sendIRC().message("#" + this.connect.getProperty("channel"), message);
+        ChatController.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
     }
 
     private User updateUser(String nick) {
-        return this.userRepository.getUserByName(nick)
+        return userRepository.getUserByName(nick)
                 .map(this::updateExistingUser)
                 .orElseGet(() -> createNewUser(nick));
     }
@@ -116,12 +116,12 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         long exp = user.getExp() + 1;
         user.setExp(exp);
-        if (this.rankRepository.isNewRank(exp)) {
+        if (rankRepository.isNewRank(exp)) {
             user.setPoints(user.getPoints() + 500);
         }else {
             user.setPoints(user.getPoints() + 10);
         }
-        return this.userRepository.update(user);
+        return userRepository.update(user);
     }
 
     private User createNewUser(String nick) {
@@ -131,21 +131,21 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(1);
         user.setPoints(10);
-        return this.userRepository.add(user);
+        return userRepository.add(user);
     }
 
     @Override
     public void addObserver(Observer observer) {
-        this.observers.add(observer);
+        observers.add(observer);
     }
 
     @Override
     public void removeObserver(Observer observer) {
-        this.observers.remove(observer);
+        observers.remove(observer);
     }
 
     @Override
     public void notifyObserver(String nick, String message) {
-        this.observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
+        observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
     }
 }

@@ -21,7 +21,7 @@ public class UpCommand implements ICommand {
 
     @Override
     public String execute() {
-        Duration between = Duration.between(this.start, LocalDateTime.now());
+        Duration between = Duration.between(start, LocalDateTime.now());
         return String.format(
                 "%02dh %02dm %02ds",
                 between.toHours(),

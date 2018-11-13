@@ -26,7 +26,7 @@ public class ChatDialog extends AbstractDialog {
 
     @Override
     protected void setStageSettings(Stage stage) {
-        stage.getIcons().add(new Image(this.paths.getLogo()));
+        stage.getIcons().add(new Image(paths.getLogo()));
         setAlwaysOnTop(stage);
     }
 
@@ -48,7 +48,7 @@ public class ChatDialog extends AbstractDialog {
     }
 
     private Properties getSettings() {
-        return this.settingsProperties.getProperty();
+        return settingsProperties.getProperty();
     }
 
     @Override
@@ -58,7 +58,7 @@ public class ChatDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return this.paths.getChatCSS();
+        return paths.getChatCSS();
     }
 
     @Override

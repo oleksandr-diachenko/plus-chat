@@ -35,10 +35,10 @@ public class JSONSmileRepository implements SmileRepository {
     @Override
     public Set<Smile> getAll() {
         try {
-            this.smiles = new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Smile>>() {
+            smiles = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
                     }));
-            return this.smiles;
+            return smiles;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -47,7 +47,7 @@ public class JSONSmileRepository implements SmileRepository {
 
     @Override
     public Optional<Smile> getSmileByName(String name) {
-        for (Smile smile : this.smiles) {
+        for (Smile smile : smiles) {
             if (smile.getName().equalsIgnoreCase(name)) {
                 return Optional.of(smile);
             }
@@ -57,22 +57,22 @@ public class JSONSmileRepository implements SmileRepository {
 
     @Override
     public Smile add(Smile smile) {
-        this.smiles.add(smile);
+        smiles.add(smile);
         flush();
         return smile;
     }
 
     @Override
     public Smile update(Smile smile) {
-        this.smiles.remove(smile);
-        this.smiles.add(smile);
+        smiles.remove(smile);
+        smiles.add(smile);
         flush();
         return smile;
     }
 
     @Override
     public Smile delete(Smile smile) {
-        this.smiles.remove(smile);
+        smiles.remove(smile);
         flush();
         return smile;
     }
@@ -81,11 +81,11 @@ public class JSONSmileRepository implements SmileRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.smiles);
+                    mapper.writeValue(new FileOutputStream(path), smiles);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Smiles failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

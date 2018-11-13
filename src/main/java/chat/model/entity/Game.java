@@ -28,27 +28,27 @@ public class Game {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Game game = (Game) o;
-        return Objects.equals(this.name, game.name) &&
-                Objects.equals(this.platform, game.platform) &&
-                Objects.equals(this.genre, game.genre) &&
-                Objects.equals(this.release, game.release);
+        return Objects.equals(name, game.name) &&
+                Objects.equals(platform, game.platform) &&
+                Objects.equals(genre, game.genre) &&
+                Objects.equals(release, game.release);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name, this.platform, this.genre, this.release);
+        return Objects.hash(name, platform, genre, release);
     }
 
     @Override
     public String toString() {
         return "Game{" +
-                "name='" + this.name + '\'' +
-                ", platform='" + this.platform + '\'' +
-                ", genre='" + this.genre + '\'' +
-                ", description='" + this.description + '\'' +
-                ", release='" + this.release + '\'' +
-                ", startedDate='" + this.startedDate + '\'' +
-                ", passedDate='" + this.passedDate + '\'' +
+                "name='" + name + '\'' +
+                ", platform='" + platform + '\'' +
+                ", genre='" + genre + '\'' +
+                ", description='" + description + '\'' +
+                ", release='" + release + '\'' +
+                ", startedDate='" + startedDate + '\'' +
+                ", passedDate='" + passedDate + '\'' +
                 '}';
     }
 }

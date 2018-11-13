@@ -56,7 +56,7 @@ public class DataDialog extends AbstractDialog {
                     public void updateItem(Object item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
-                            this.setTextFill(Color.web("#474747"));
+                            setTextFill(Color.web("#474747"));
                             setText(StringUtil.getUTF8String(item.toString()));
                         }
                     }
@@ -77,7 +77,7 @@ public class DataDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return this.paths.getDataCSS();
+        return paths.getDataCSS();
     }
 
     public void setTableFields(Set<String> fields) {

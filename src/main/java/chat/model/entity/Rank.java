@@ -23,25 +23,25 @@ public class Rank implements Comparable<Rank> {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Rank rank = (Rank) o;
-        return Objects.equals(this.name, rank.getName());
+        return Objects.equals(name, rank.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "Rank{" +
-                "name='" + this.name + '\'' +
-                ", id=" + this.id +
-                ", exp=" + this.exp +
+                "name='" + name + '\'' +
+                ", id=" + id +
+                ", exp=" + exp +
                 '}';
     }
 
     @Override
     public int compareTo(Rank rank) {
-        return Integer.compare(this.getId(), rank.getId());
+        return Integer.compare(getId(), rank.getId());
     }
 }

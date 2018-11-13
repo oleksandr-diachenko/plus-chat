@@ -19,7 +19,7 @@ public class JSONCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        Optional<Command> commandByName = this.commandRepository.getCommandByName(command);
+        Optional<Command> commandByName = commandRepository.getCommandByName(command);
         if (commandByName.isPresent()) {
             this.command = commandByName.get();
             return true;
@@ -29,6 +29,6 @@ public class JSONCommand implements ICommand {
 
     @Override
     public String execute() {
-        return this.command.getResponse();
+        return command.getResponse();
     }
 }

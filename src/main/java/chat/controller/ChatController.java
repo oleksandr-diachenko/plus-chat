@@ -95,15 +95,15 @@ public class ChatController implements Observer {
 
     @FXML
     public void initialize() {
-        this.settings = this.settingsProperties.getProperty();
-        this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
+        settings = settingsProperties.getProperty();
+        isOnTop = Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
-        this.root.setStyle(this.styleUtil.getRootStyle(
-                this.settings.getProperty(Settings.ROOT_BASE_COLOR),
-                this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
+        root.setStyle(styleUtil.getRootStyle(
+                settings.getProperty(Settings.ROOT_BASE_COLOR),
+                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
         ));
-        this.scrollPane.prefHeightProperty().bind(this.root.heightProperty());
-        this.scrollPane.vvalueProperty().bind(this.container.heightProperty());
+        scrollPane.prefHeightProperty().bind(root.heightProperty());
+        scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
     }
 
@@ -113,9 +113,9 @@ public class ChatController implements Observer {
 
     private void startBot() {
         Thread thread = new Thread(() -> {
-            Properties connect = this.twitchProperties.getProperty();
-            Bot listener = new Bot(connect, this.userRepository, this.rankRepository,
-                    this.commandRepository);
+            Properties connect = twitchProperties.getProperty();
+            Bot listener = new Bot(connect, userRepository, rankRepository,
+                    commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("botname"))
@@ -131,7 +131,7 @@ public class ChatController implements Observer {
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
-                        "Check properties in " + this.paths.getTwitchProperties() + " " +
+                        "Check properties in " + paths.getTwitchProperties() + " " +
                         "and restart application.", exception);
             }
         });
@@ -140,34 +140,34 @@ public class ChatController implements Observer {
     }
 
     public void settingsOnAction() {
-        this.settingsDialog.openDialog(getStage());
-        this.setting.setDisable(true);
+        settingsDialog.openDialog(getStage());
+        setting.setDisable(true);
     }
 
     public void onTopOnAction() {
         reverseOnTop();
 
-        getStage().setAlwaysOnTop(this.isOnTop);
+        getStage().setAlwaysOnTop(isOnTop);
         setOnTopImage();
-        this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
-        this.settingsProperties.setProperties(this.settings);
+        settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(isOnTop));
+        settingsProperties.setProperties(settings);
     }
 
     private void reverseOnTop() {
-        this.isOnTop = !this.isOnTop;
+        isOnTop = !isOnTop;
     }
 
     private void setOnTopImage() {
         ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
-        this.onTop.setGraphic(imageView);
+        onTop.setGraphic(imageView);
     }
 
     private String getOnTopImagePath() {
-        String name = this.paths.getEnabledPin();
-        if (!this.isOnTop) {
-            name = this.paths.getDisabledPin();
+        String name = paths.getEnabledPin();
+        if (!isOnTop) {
+            name = paths.getDisabledPin();
         }
         return name;
     }
@@ -176,7 +176,7 @@ public class ChatController implements Observer {
     public void update(String nick, String message) {
         TextFlow messageContainer = new TextFlow();
         String userName = nick;
-        Optional<User> userByName = this.userRepository.getUserByName(nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             User user = userByName.get();
             userName = user.getCustomName();
@@ -186,29 +186,29 @@ public class ChatController implements Observer {
         addUserNameToMessageContainer(messageContainer, userName);
         addSeparatorToMessageContainer(messageContainer, ": ");
         addUserMessageToMessageContainer(messageContainer, message);
-        this.messages.add(messageContainer);
+        messages.add(messageContainer);
         addNewMessageToContainer();
         playSound(message);
     }
 
     private void addNewMessageToContainer() {
-        if(this.messages.size() > Integer.parseInt(this.settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
-            this.messages.remove(0);
-            this.messageIndex--;
-            this.container.getChildren().remove(0);
+        if(messages.size() > Integer.parseInt(settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
+            messages.remove(0);
+            messageIndex--;
+            container.getChildren().remove(0);
         }
-        this.container.getChildren().add(this.messages.get(this.messageIndex++));
+        container.getChildren().add(messages.get(messageIndex++));
     }
 
     private void addSeparatorToMessageContainer(TextFlow messageContainer, String messageSeparator) {
         Text separator = getText(messageSeparator, "separator",
-                this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
+                settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, separator);
     }
 
     private void addUserNameToMessageContainer(TextFlow messageContainer, String userName) {
         Text nick = getText(userName, "user-name",
-                this.settings.getProperty(Settings.FONT_NICK_COLOR));
+                settings.getProperty(Settings.FONT_NICK_COLOR));
         addNodesToMessageContainer(messageContainer, nick);
     }
 
@@ -222,18 +222,18 @@ public class ChatController implements Observer {
     }
 
     private void playSound(String message) {
-        boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
         if (isDirect(message)) {
-            String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
+            String directMessageSound = settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
             double soundDirectMessageVolume = Double.valueOf(
-                    this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + directMessageSound, isSoundEnable,
+                    settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
+            playSound(paths.getSoundsDirectory() + directMessageSound, isSoundEnable,
                     soundDirectMessageVolume);
         } else {
-            String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
+            String messageSound = settings.getProperty(Settings.SOUND_MESSAGE);
             double soundMessageVolume = Double.valueOf(
-                    this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + messageSound, isSoundEnable,
+                    settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
+            playSound(paths.getSoundsDirectory() + messageSound, isSoundEnable,
                     soundMessageVolume);
         }
     }
@@ -243,7 +243,7 @@ public class ChatController implements Observer {
         List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
             Text node = getText(word + " ", getWordId(isDirect), getWordColor(isDirect));
-            Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
+            Optional<Smile> smileByName = smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 Smile smile = smileByName.get();
                 try {
@@ -261,9 +261,9 @@ public class ChatController implements Observer {
 
     private String getWordColor(boolean isDirect) {
         if (isDirect) {
-            return this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
+            return settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
         }
-        return this.settings.getProperty(Settings.FONT_MESSAGE_COLOR);
+        return settings.getProperty(Settings.FONT_MESSAGE_COLOR);
     }
 
     private String getWordId(boolean isDirect) {
@@ -298,7 +298,7 @@ public class ChatController implements Observer {
     }
 
     private boolean isDirect(String message) {
-        Set<Direct> directs = this.directRepository.getAll();
+        Set<Direct> directs = directRepository.getAll();
         for (Direct direct : directs) {
             String word = direct.getWord();
             if (StringUtils.containsIgnoreCase(message, word)) {
@@ -310,7 +310,7 @@ public class ChatController implements Observer {
 
     private Label getRankImage(User user) {
         Label image = new Label();
-        Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        Rank rank = rankRepository.getRankByExp(user.getExp());
         image.setId("rank-image");
         try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
             ImageView imageView = new ImageView(new Image(fis));
@@ -327,7 +327,7 @@ public class ChatController implements Observer {
     private Text getText(String string, String id, String color) {
         Text text = new Text(StringUtil.getUTF8String(string));
         text.setId(id);
-        text.setStyle(this.styleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+        text.setStyle(styleUtil.getTextStyle(settings.getProperty(Settings.FONT_SIZE), color));
         return text;
     }
 
@@ -336,10 +336,10 @@ public class ChatController implements Observer {
     }
 
     public Button getSetting() {
-        return this.setting;
+        return setting;
     }
 
     private Stage getStage() {
-        return (Stage) this.container.getScene().getWindow();
+        return (Stage) container.getScene().getWindow();
     }
 }

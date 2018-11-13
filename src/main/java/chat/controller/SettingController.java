@@ -119,10 +119,10 @@ public class SettingController {
 
     @FXML
     public void initialize() {
-        this.settings = settingsProperties.getProperty();
-        this.settingsRoot.setStyle(this.styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+        settings = settingsProperties.getProperty();
+        settingsRoot.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
-        this.chatRoot = getChatRoot();
+        chatRoot = getChatRoot();
         initLanguage();
         initTheme();
         initFontSizeSlider();
@@ -141,103 +141,103 @@ public class SettingController {
     }
 
     private boolean isSoundEnable() {
-        return Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+        return Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
     }
 
     private void initBaseColorPicker() {
-        this.baseColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.ROOT_BASE_COLOR)));
-        this.baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setBaseColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        baseColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.ROOT_BASE_COLOR)));
+        baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setBaseColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initLanguage() {
-        this.languages = new HashMap<>();
-        this.languages.put("en", "English");
-        this.languages.put("ru", "Russian");
-        this.languages.put("ua", "Ukrainian");
-        this.languageChoiceBox.setItems(FXCollections.observableArrayList(this.languages.values()));
-        this.languageChoiceBox.setValue(this.languages.get(
-                this.settings.getProperty(Settings.ROOT_LANGUAGE)));
+        languages = new HashMap<>();
+        languages.put("en", "English");
+        languages.put("ru", "Russian");
+        languages.put("ua", "Ukrainian");
+        languageChoiceBox.setItems(FXCollections.observableArrayList(languages.values()));
+        languageChoiceBox.setValue(languages.get(
+                settings.getProperty(Settings.ROOT_LANGUAGE)));
     }
 
     private void initTheme() {
         List<String> list = new ArrayList<>();
         list.add("default");
-        this.themeChoiceBox.setItems(FXCollections.observableArrayList(list));
-        this.themeChoiceBox.setValue(this.settings.getProperty(Settings.ROOT_THEME));
+        themeChoiceBox.setItems(FXCollections.observableArrayList(list));
+        themeChoiceBox.setValue(settings.getProperty(Settings.ROOT_THEME));
     }
 
     private void initFontSizeSlider() {
-        String fontSizeValue = this.settings.getProperty(Settings.FONT_SIZE);
-        this.fontSize.setText(fontSizeValue);
-        this.fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
-        this.fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
-            this.applicationStyle.setFontSize(String.valueOf(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        String fontSizeValue = settings.getProperty(Settings.FONT_SIZE);
+        fontSize.setText(fontSizeValue);
+        fontSizeSlider.setValue(Double.parseDouble(fontSizeValue));
+        fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
+            applicationStyle.setFontSize(String.valueOf(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initTransparencySlider() {
-        String backgroundTransparencyValue = this.settings.getProperty(
+        String backgroundTransparencyValue = settings.getProperty(
                 Settings.ROOT_BACKGROUND_TRANSPARENCY);
-        this.transparencyValue.setText(backgroundTransparencyValue);
-        this.transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
-        this.transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
+        transparencyValue.setText(backgroundTransparencyValue);
+        transparencySlider.setValue(Long.valueOf(backgroundTransparencyValue));
+        transparencySlider.valueProperty().addListener((ov, old_val, new_val) -> {
             getOwner().setOpacity((Double) new_val / 100);
-            this.transparencyValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+            transparencyValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
 
     private void initBackGroundColorPicker() {
-        this.backgroundColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+        backgroundColorPicker.setValue(Color.valueOf(settings.getProperty(
                 Settings.ROOT_BACKGROUND_COLOR)));
-        this.backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initNickColorPicker() {
-        this.nickColorPicker.setValue(Color.valueOf(this.settings.getProperty(Settings.FONT_NICK_COLOR)));
-        this.nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        nickColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.FONT_NICK_COLOR)));
+        nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initSeparatorColorPicker() {
-        this.separatorColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+        separatorColorPicker.setValue(Color.valueOf(settings.getProperty(
                 Settings.FONT_SEPARATOR_COLOR)));
-        this.separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initMessageColorPicker() {
-        this.messageColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+        messageColorPicker.setValue(Color.valueOf(settings.getProperty(
                 Settings.FONT_MESSAGE_COLOR)));
-        this.messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initDirectMessageColorPicker() {
-        this.directMessageColorPicker.setValue(Color.valueOf(this.settings.getProperty(
+        directMessageColorPicker.setValue(Color.valueOf(settings.getProperty(
                 Settings.FONT_DIRECT_MESSAGE_COLOR)));
-        this.directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
-            this.styleUtil.setStyles(this.chatRoot, this.settingsRoot, this.applicationStyle);
+        directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
+            applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
+            styleUtil.setStyles(chatRoot, settingsRoot, applicationStyle);
         });
     }
 
     private void initEnableSound() {
         if (isSoundEnable()) {
-            this.enableSoundCheckBox.setSelected(true);
+            enableSoundCheckBox.setSelected(true);
         }
     }
 
@@ -246,22 +246,22 @@ public class SettingController {
             Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
             Set<String> soundNames = new HashSet<>();
             sounds.forEach(sound -> soundNames.add(sound.getName()));
-            this.messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-            this.messageSoundChoiceBox.setValue(this.settings.getProperty(Settings.SOUND_MESSAGE));
+            messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+            messageSoundChoiceBox.setValue(settings.getProperty(Settings.SOUND_MESSAGE));
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to " + this.paths.getSoundsDirectory() +
+                    "Put your sounds to " + paths.getSoundsDirectory() +
                     " and restart application.", exception);
         }
     }
 
     private void initMessageSoundVolume() {
-        String messageSoundVolumeValue = this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
-        this.messageVolumeValue.setText(messageSoundVolumeValue);
-        this.messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
-        this.messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.messageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+        String messageSoundVolumeValue = settings.getProperty(Settings.SOUND_MESSAGE_VOLUME);
+        messageVolumeValue.setText(messageSoundVolumeValue);
+        messageVolumeSlider.setValue(Double.parseDouble(messageSoundVolumeValue));
+        messageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            messageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
 
@@ -270,40 +270,40 @@ public class SettingController {
             Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
             Set<String> soundNames = new HashSet<>();
             sounds.forEach(sound -> soundNames.add(sound.getName()));
-            this.directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-            this.directMessageSoundChoiceBox.setValue(this.settings.getProperty(
+            directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+            directMessageSoundChoiceBox.setValue(settings.getProperty(
                     Settings.SOUND_DIRECT_MESSAGE));
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to " + this.paths.getSoundsDirectory() +
+                    "Put your sounds to " + paths.getSoundsDirectory() +
                     " and restart application.", exception);
         }
     }
 
     private void initDirectMessageSoundVolume() {
-        String directMessageSoundVolumeValue = this.settings.getProperty(
+        String directMessageSoundVolumeValue = settings.getProperty(
                 Settings.SOUND_DIRECT_MESSAGE_VOLUME);
-        this.directMessageVolumeValue.setText(directMessageSoundVolumeValue);
-        this.directMessageVolumeSlider.setValue(Double.parseDouble(directMessageSoundVolumeValue));
-        this.directMessageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
-            this.directMessageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
+        directMessageVolumeValue.setText(directMessageSoundVolumeValue);
+        directMessageVolumeSlider.setValue(Double.parseDouble(directMessageSoundVolumeValue));
+        directMessageVolumeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
+            directMessageVolumeValue.setText(String.valueOf(Math.round(new_val.doubleValue())));
         });
     }
 
     public void reloadAction() {
-        this.commandRepository.getAll();
-        this.directRepository.getAll();
-        this.rankRepository.getAll();
-        this.smileRepository.getAll();
-        this.userRepository.getAll();
+        commandRepository.getAll();
+        directRepository.getAll();
+        rankRepository.getAll();
+        smileRepository.getAll();
+        userRepository.getAll();
     }
 
     public void confirmAction() {
-        this.confirmDialog.openDialog(getStage());
+        confirmDialog.openDialog(getStage());
         Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
-            if (this.confirmController.isConfirmed()) {
+            if (confirmController.isConfirmed()) {
                 flushSettings();
             }
         });
@@ -314,43 +314,43 @@ public class SettingController {
     }
 
     private void flushSettings() {
-        this.settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, this.transparencyValue.getText());
-        this.settings.setProperty(Settings.FONT_SIZE, this.fontSize.getText());
-        this.settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(this.languageChoiceBox.getValue()));
-        this.settings.setProperty(Settings.ROOT_THEME, this.themeChoiceBox.getValue());
+        settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
+        settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
+        settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
+        settings.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
 
-        this.settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
-                this.baseColorPicker.getValue()));
-        this.settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
-                this.backgroundColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(
-                this.nickColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(
-                this.separatorColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(
-                this.messageColorPicker.getValue()));
-        this.settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
-                this.directMessageColorPicker.getValue()));
-        this.settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
-                this.enableSoundCheckBox.isSelected()));
-        this.settings.setProperty(Settings.SOUND_MESSAGE,
-                this.messageSoundChoiceBox.getValue());
-        this.settings.setProperty(Settings.SOUND_MESSAGE_VOLUME,
-                this.messageVolumeValue.getText());
-        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE,
-                this.directMessageSoundChoiceBox.getValue());
-        this.settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
-                this.directMessageVolumeValue.getText());
+        settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
+                baseColorPicker.getValue()));
+        settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
+                backgroundColorPicker.getValue()));
+        settings.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(
+                nickColorPicker.getValue()));
+        settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(
+                separatorColorPicker.getValue()));
+        settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                messageColorPicker.getValue()));
+        settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                directMessageColorPicker.getValue()));
+        settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
+                enableSoundCheckBox.isSelected()));
+        settings.setProperty(Settings.SOUND_MESSAGE,
+                messageSoundChoiceBox.getValue());
+        settings.setProperty(Settings.SOUND_MESSAGE_VOLUME,
+                messageVolumeValue.getText());
+        settings.setProperty(Settings.SOUND_DIRECT_MESSAGE,
+                directMessageSoundChoiceBox.getValue());
+        settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
+                directMessageVolumeValue.getText());
 
-        this.settingsProperties.setProperties(this.settings);
-        ChatController chatController = (ChatController) this.chatRoot.getUserData();
-        chatController.setSettings(this.settings);
+        settingsProperties.setProperties(settings);
+        ChatController chatController = (ChatController) chatRoot.getUserData();
+        chatController.setSettings(settings);
         chatController.getSetting().setDisable(false);
     }
 
     private String getLanguage(String value) {
-        for (String key : this.languages.keySet()) {
-            if (this.languages.get(key).equals(value)) {
+        for (String key : languages.keySet()) {
+            if (languages.get(key).equals(value)) {
                 return key;
             }
         }
@@ -358,31 +358,31 @@ public class SettingController {
     }
 
     public void commandsDataAction() {
-        Set<Command> commands = this.commandRepository.getAll();
+        Set<Command> commands = commandRepository.getAll();
         Set<String> fields = getFields(Command.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void usersDataAction() {
-        Set<User> commands = this.userRepository.getAll();
+        Set<User> commands = userRepository.getAll();
         Set<String> fields = getFields(User.class.getDeclaredFields());
         openDialog(new HashSet<>(commands), fields);
     }
 
     public void ranksDataAction() {
-        Set<Rank> ranks = this.rankRepository.getAll();
+        Set<Rank> ranks = rankRepository.getAll();
         Set<String> fields = getFields(Rank.class.getDeclaredFields());
         openDialog(new HashSet<>(ranks), fields);
     }
 
     public void smilesDataAction() {
-        Set<Smile> smiles = this.smileRepository.getAll();
+        Set<Smile> smiles = smileRepository.getAll();
         Set<String> fields = getFields(Smile.class.getDeclaredFields());
         openDialog(new HashSet<>(smiles), fields);
     }
 
     public void directsDataAction() {
-        Set<Direct> directs = this.directRepository.getAll();
+        Set<Direct> directs = directRepository.getAll();
         Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);
     }
@@ -396,9 +396,9 @@ public class SettingController {
     }
 
     private void openDialog(Set<Object> data, Set<String> fields) {
-        this.dataDialog.setTableFields(fields);
-        this.dataDialog.setTableData(data);
-        this.dataDialog.openDialog(getStage());
+        dataDialog.setTableFields(fields);
+        dataDialog.setTableData(data);
+        dataDialog.openDialog(getStage());
     }
 
     private Stage getStage() {
@@ -406,11 +406,11 @@ public class SettingController {
     }
 
     private Stage getOwner() {
-        return this.chatDialog.getStage();
+        return chatDialog.getStage();
     }
 
     public Node getRoot() {
-        return this.settingsRoot;
+        return settingsRoot;
     }
 
     private Node getChatRoot() {
@@ -419,6 +419,6 @@ public class SettingController {
     }
 
     public void randomAction() {
-        this.randomizerDialog.openDialog(getStage());
+        randomizerDialog.openDialog(getStage());
     }
 }

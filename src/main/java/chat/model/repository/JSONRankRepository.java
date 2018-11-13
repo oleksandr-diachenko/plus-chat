@@ -35,10 +35,10 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Set<Rank> getAll() {
         try {
-            this.ranks = new TreeSet<>(new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Rank>>() {
+            ranks = new TreeSet<>(new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
                     })));
-            return this.ranks;
+            return ranks;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -47,22 +47,22 @@ public class JSONRankRepository implements RankRepository {
 
     @Override
     public Rank add(Rank rank) {
-        this.ranks.add(rank);
+        ranks.add(rank);
         flush();
         return rank;
     }
 
     @Override
     public Rank update(Rank rank) {
-        this.ranks.remove(rank);
-        this.ranks.add(rank);
+        ranks.remove(rank);
+        ranks.add(rank);
         flush();
         return rank;
     }
 
     @Override
     public Rank delete(Rank rank) {
-        this.ranks.remove(rank);
+        ranks.remove(rank);
         flush();
         return rank;
     }
@@ -70,7 +70,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Rank getRankByExp(long exp) {
         Rank nearest = new Rank();
-        for (Rank rank : this.ranks) {
+        for (Rank rank : ranks) {
             int rankExp = rank.getExp();
             if (rankExp <= exp) {
                 nearest = rank;
@@ -89,10 +89,10 @@ public class JSONRankRepository implements RankRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);
+                    mapper.writeValue(new FileOutputStream(path), ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Ranks failed to save. Create " + this.path, exception);
+                    throw new RuntimeException("Ranks failed to save. Create " + path, exception);
                 }
             }
         });

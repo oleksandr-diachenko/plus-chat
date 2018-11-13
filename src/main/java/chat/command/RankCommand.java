@@ -30,13 +30,13 @@ public class RankCommand implements ICommand {
 
     @Override
     public String execute() {
-        Optional<User> userByName = this.userRepository.getUserByName(this.nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
         if (!userByName.isPresent()) {
             return "";
         }
         User user = userByName.get();
         String customName = user.getCustomName();
-        Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        Rank rank = rankRepository.getRankByExp(user.getExp());
         return customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)";
     }
 }

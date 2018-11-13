@@ -25,30 +25,30 @@ public class User {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         User user = (User) o;
-        return Objects.equals(this.name, user.getName());
+        return Objects.equals(name, user.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(name);
     }
 
     public String getCustomName() {
-        if (this.customName != null) {
-            return this.customName;
+        if (customName != null) {
+            return customName;
         }
-        return this.name;
+        return name;
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + this.name + '\'' +
-                ", customName='" + this.customName + '\'' +
-                ", firstMessageDate='" + this.firstMessageDate + '\'' +
-                ", lastMessageDate='" + this.lastMessageDate + '\'' +
-                ", exp=" + this.exp +
-                ", points=" + this.points +
+                "name='" + name + '\'' +
+                ", customName='" + customName + '\'' +
+                ", firstMessageDate='" + firstMessageDate + '\'' +
+                ", lastMessageDate='" + lastMessageDate + '\'' +
+                ", exp=" + exp +
+                ", points=" + points +
                 '}';
     }
 }

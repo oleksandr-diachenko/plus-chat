@@ -34,15 +34,15 @@ public class DataController {
 
     @FXML
     public void initialize() {
-        this.styleUtil.setRootStyle(Collections.singletonList(this.root),
-                this.applicationStyle.getBaseColor(),
-                this.applicationStyle.getBackgroundColor()
+        styleUtil.setRootStyle(Collections.singletonList(root),
+                applicationStyle.getBaseColor(),
+                applicationStyle.getBackgroundColor()
         );
-        this.styleUtil.setLabelStyle(this.root, this.applicationStyle.getNickColor());
+        styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
     }
 
     public TableView<Object> getTable() {
-        return this.table;
+        return table;
     }
 
     public void closeAction() {

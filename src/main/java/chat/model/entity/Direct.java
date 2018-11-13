@@ -20,18 +20,18 @@ public class Direct {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Direct direct = (Direct) o;
-        return Objects.equals(this.word, direct.getWord());
+        return Objects.equals(word, direct.getWord());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.word);
+        return Objects.hash(word);
     }
 
     @Override
     public String toString() {
         return "Direct{" +
-                "word='" + this.word + '\'' +
+                "word='" + word + '\'' +
                 '}';
     }
 }

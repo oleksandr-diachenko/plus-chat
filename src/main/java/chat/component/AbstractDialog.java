@@ -53,23 +53,23 @@ public abstract class AbstractDialog {
     }
 
     private Region getRootRegion() throws IOException {
-        this.root = this.springStageLoader.load(getFXMLName());
-        return this.root;
+        root = springStageLoader.load(getFXMLName());
+        return root;
     }
 
     protected abstract String getFXMLName();
 
     private UndecoratorScene getScene(Stage stage, Region root) {
-        this.undecorator = new UndecoratorScene(stage, root);
-        this.undecorator.getStylesheets().add(getCSSName());
-        this.undecorator.setBackgroundOpacity(0.2);
-        return this.undecorator;
+        undecorator = new UndecoratorScene(stage, root);
+        undecorator.getStylesheets().add(getCSSName());
+        undecorator.setBackgroundOpacity(0.2);
+        return undecorator;
     }
 
     protected abstract String getCSSName();
 
     protected UndecoratorScene getScene() {
-        return this.undecorator;
+        return undecorator;
     }
 
     protected String getTitleName() {
@@ -77,10 +77,10 @@ public abstract class AbstractDialog {
     }
 
     public Stage getStage() {
-        return this.stage;
+        return stage;
     }
 
     protected Region getRoot() {
-        return this.root;
+        return root;
     }
 }

@@ -32,10 +32,10 @@ public class JSONGameRepository implements GameRepository {
     @Override
     public Set<Game> getAll() {
         try {
-            this.games = new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Game>>() {
+            games = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Game>>() {
                     }));
-            return this.games;
+            return games;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -44,7 +44,7 @@ public class JSONGameRepository implements GameRepository {
 
     @Override
     public Optional<Game> getGameByName(String name) {
-        for (Game game : this.games) {
+        for (Game game : games) {
             if (game.getName().equalsIgnoreCase(name)) {
                 return Optional.of(game);
             }
@@ -54,22 +54,22 @@ public class JSONGameRepository implements GameRepository {
 
     @Override
     public Game add(Game game) {
-        this.games.add(game);
+        games.add(game);
         flush();
         return game;
     }
 
     @Override
     public Game update(Game game) {
-        this.games.remove(game);
-        this.games.add(game);
+        games.remove(game);
+        games.add(game);
         flush();
         return game;
     }
 
     @Override
     public Game delete(Game game) {
-        this.games.remove(game);
+        games.remove(game);
         flush();
         return game;
     }
@@ -78,11 +78,11 @@ public class JSONGameRepository implements GameRepository {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.games);
+                    mapper.writeValue(new FileOutputStream(path), games);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Games failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

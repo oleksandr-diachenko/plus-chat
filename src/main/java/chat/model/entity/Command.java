@@ -22,20 +22,20 @@ public class Command {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Command command = (Command) o;
-        return Objects.equals(this.name, command.getName());
+        return Objects.equals(name, command.getName());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(this.name);
+        return Objects.hash(name);
     }
 
     @Override
     public String toString() {
         return "Command{" +
-                "name='" + this.name + '\'' +
-                ", description='" + this.description + '\'' +
-                ", response='" + this.response + '\'' +
+                "name='" + name + '\'' +
+                ", description='" + description + '\'' +
+                ", response='" + response + '\'' +
                 '}';
     }
 }
