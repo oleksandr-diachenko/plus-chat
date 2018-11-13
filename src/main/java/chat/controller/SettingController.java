@@ -3,6 +3,7 @@ package chat.controller;
 import chat.component.ChatDialog;
 import chat.component.ConfirmDialog;
 import chat.component.DataDialog;
+import chat.component.RandomizerDialog;
 import chat.model.entity.*;
 import chat.model.repository.*;
 import chat.util.*;
@@ -80,6 +81,7 @@ public class SettingController {
     private StyleUtil styleUtil;
     private ConfirmController confirmController;
     private ChatDialog chatDialog;
+    private RandomizerDialog randomizerDialog;
     private AppProperty settingsProperties;
     private ConfirmDialog confirmDialog;
     private DataDialog dataDialog;
@@ -97,7 +99,8 @@ public class SettingController {
                              final UserRepository userRepository, final RankRepository rankRepository,
                              final SmileRepository smileRepository, final DirectRepository directRepository,
                              final ApplicationStyle applicationStyle, final StyleUtil styleUtil,
-                             final ConfirmController confirmController, final ChatDialog chatDialog) {
+                             final ConfirmController confirmController, final ChatDialog chatDialog,
+                             final RandomizerDialog randomizerDialog) {
         this.settingsProperties = settingsProperties;
         this.confirmDialog = confirmDialog;
         this.dataDialog = dataDialog;
@@ -111,6 +114,7 @@ public class SettingController {
         this.styleUtil = styleUtil;
         this.confirmController = confirmController;
         this.chatDialog = chatDialog;
+        this.randomizerDialog = randomizerDialog;
     }
 
     @FXML
@@ -412,5 +416,9 @@ public class SettingController {
     private Node getChatRoot() {
         final Stage owner = getOwner();
         return owner.getScene().lookup("#root");
+    }
+
+    public void randomAction() {
+        this.randomizerDialog.openDialog(getStage());
     }
 }

@@ -68,6 +68,17 @@
                         <Insets left="70.0"/>
                     </GridPane.margin>
                 </HBox>
+                <Label text="%randomizer" GridPane.rowIndex="3">
+                    <GridPane.margin>
+                        <Insets left="100.0"/>
+                    </GridPane.margin>
+                </Label>
+                <Button fx:id="random" mnemonicParsing="false" onAction="#randomAction"
+                        GridPane.columnIndex="1" GridPane.rowIndex="3">
+                    <HBox.margin>
+                        <Insets right="50.0"/>
+                    </HBox.margin>
+                </Button>
             </GridPane>
         </Tab>
         <Tab text="%settings.tab.font">
