@@ -38,11 +38,11 @@
             <Label fx:id="timer" prefHeight="66.0" prefWidth="258.0" text="Timer" GridPane.rowIndex="2"/>
             <ListView fx:id="times" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1"
                       GridPane.rowIndex="2"/>
-            <Button fx:id="Countdown" onAction="#countdownAction" GridPane.columnIndex="1"
+            <Button fx:id="start" onAction="#startAction" GridPane.columnIndex="1"
                     GridPane.rowIndex="3"/>
         </GridPane>
         <VBox layoutX="-1.0" layoutY="-2.0" prefHeight="620.0" prefWidth="442.0">
-            <Label fx:id="count" prefHeight="53.0" prefWidth="446.0"/>
+            <Label fx:id="countdown" prefHeight="53.0" prefWidth="446.0"/>
             <ScrollPane prefHeight="573.0" prefWidth="442.0"/>
         </VBox>
     </SplitPane>
