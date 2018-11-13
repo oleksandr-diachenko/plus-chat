@@ -29,7 +29,6 @@ public class SettingController {
     private AppProperty settingsProperties;
     private StyleUtil styleUtil;
     private ConfirmDialog confirmDialog;
-    private ChatDialog chatDialog;
     private SettingDataController settingDataController;
     private SettingColorController settingColorController;
     private SettingFontController settingFontController;
@@ -40,14 +39,13 @@ public class SettingController {
 
     @Autowired
     public SettingController(AppProperty settingsProperties, StyleUtil styleUtil,
-                             ConfirmDialog confirmDialog, ChatDialog chatDialog, SettingColorController settingColorController,
+                             ConfirmDialog confirmDialog, SettingColorController settingColorController,
                              SettingFontController settingFontController, SettingGeneralController settingGeneralController,
                              SettingSoundController settingSoundController, ChatController chatController,
                              SettingDataController settingDataController, ConfirmController confirmController) {
         this.settingsProperties = settingsProperties;
         this.styleUtil = styleUtil;
         this.confirmDialog = confirmDialog;
-        this.chatDialog = chatDialog;
         this.settingDataController = settingDataController;
         this.settingColorController = settingColorController;
         this.settingFontController = settingFontController;

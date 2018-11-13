@@ -27,7 +27,6 @@ public class SettingColorController {
     private ChatDialog chatDialog;
     private ApplicationStyle applicationStyle;
     private StyleUtil styleUtil;
-    private SettingsDialog settingsDialog;
     @FXML
     private ColorPicker baseColorPicker;
     @FXML
@@ -46,12 +45,11 @@ public class SettingColorController {
     @Autowired
     public SettingColorController(AppProperty settingsProperties, ChatDialog chatDialog,
                                   ApplicationStyle applicationStyle,
-                                  StyleUtil styleUtil, SettingsDialog settingsDialog) {
+                                  StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.chatDialog = chatDialog;
         this.applicationStyle = applicationStyle;
         this.styleUtil = styleUtil;
-        this.settingsDialog = settingsDialog;
     }
 
     @FXML
