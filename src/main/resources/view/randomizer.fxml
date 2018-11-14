@@ -36,7 +36,11 @@
                     <Insets left="10.0"/>
                 </GridPane.margin>
             </Label>
-            <TextField fx:id="keyWord" GridPane.columnIndex="1" alignment="CENTER"/>
+            <TextField fx:id="keyWord" GridPane.columnIndex="1" alignment="CENTER">
+                <GridPane.margin>
+                    <Insets right="10.0"/>
+                </GridPane.margin>
+            </TextField>
             <Label fx:id="case" text="%randomizer.match.case" GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets left="10.0"/>
@@ -51,13 +55,14 @@
                     <Insets left="10.0"/>
                 </GridPane.margin>
             </Label>
-            <ListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2"/>
-            <HBox GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER_LEFT" GridPane.halignment="CENTER">
+            <ListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets right="10.0"/>
+                </GridPane.margin>
+            </ListView>
+            <HBox fx:id="startStop" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER">
                 <Button fx:id="start" text="%randomizer.start" onAction="#startAction"/>
                 <Button fx:id="stop" text="%randomizer.stop" onAction="#stopAction"/>
-                <GridPane.margin>
-                    <Insets left="10.0"/>
-                </GridPane.margin>
             </HBox>
             <Button fx:id="select" text="%randomizer.select" onAction="#selectAction" GridPane.columnIndex="1"
                     GridPane.rowIndex="3" GridPane.halignment="CENTER"/>

@@ -1,3 +1,15 @@
 .label {
     -fx-font-size: 17px;
 }
+
+#startStop {
+    -fx-spacing: 20;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+}
