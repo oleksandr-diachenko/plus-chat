@@ -73,6 +73,8 @@ public class ChatController implements Observer {
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
+    private Bot listener;
+
 
     @Autowired
     public ChatController(RankRepository rankRepository, UserRepository userRepository,
@@ -114,7 +116,7 @@ public class ChatController implements Observer {
     private void startBot() {
         Thread thread = new Thread(() -> {
             Properties connect = twitchProperties.getProperty();
-            Bot listener = new Bot(connect, userRepository, rankRepository,
+            listener = new Bot(connect, userRepository, rankRepository,
                     commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
@@ -341,5 +343,9 @@ public class ChatController implements Observer {
 
     private Stage getStage() {
         return (Stage) container.getScene().getWindow();
+    }
+
+    public Bot getListener() {
+        return listener;
     }
 }

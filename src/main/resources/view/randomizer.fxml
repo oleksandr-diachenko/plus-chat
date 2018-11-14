@@ -30,7 +30,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES"/>
             </rowConstraints>
             <Label prefHeight="74.0" prefWidth="247.0" text="Key word"/>
-            <TextField GridPane.columnIndex="1"/>
+            <TextField fx:id="keyWord" GridPane.columnIndex="1"/>
             <Label fx:id="case" prefHeight="68.0" prefWidth="276.0" text="Match case" GridPane.rowIndex="1"/>
             <CheckBox fx:id="caseCheckbox" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false"
                       nodeOrientation="LEFT_TO_RIGHT"
