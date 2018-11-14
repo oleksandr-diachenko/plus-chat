@@ -10,9 +10,9 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,6 +26,10 @@ import java.util.*;
 public class RandomizerController implements Observer {
 
     @FXML
+    private VBox container;
+    @FXML
+    private ScrollPane scrollPane;
+    @FXML
     private Label winner;
     @FXML
     private TextField keyWord;
@@ -36,7 +40,7 @@ public class RandomizerController implements Observer {
     @FXML
     private GridPane grid;
     @FXML
-    private Node root;
+    private VBox root;
     @FXML
     private ListView<Integer> times;
     @FXML
@@ -47,6 +51,7 @@ public class RandomizerController implements Observer {
     private UserRepository userRepository;
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
+    private List<String> names = new LinkedList<>();
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
@@ -63,6 +68,9 @@ public class RandomizerController implements Observer {
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
         styleUtil.setLabelStyle(grid, applicationStyle.getNickColor());
+
+        scrollPane.prefHeightProperty().bind(root.heightProperty());
+        scrollPane.vvalueProperty().bind(container.heightProperty());
     }
 
     private void setTimes() {
@@ -81,6 +89,12 @@ public class RandomizerController implements Observer {
         start.disableProperty().unbind();
         start.setDisable(true);
         startTimeline(listener, selectedItem);
+        resetContainer();
+    }
+
+    private void resetContainer() {
+        container.getChildren().clear();
+        names = new LinkedList<>();
     }
 
     private void startTimeline(Bot listener, Integer selectedItem) {
@@ -102,20 +116,26 @@ public class RandomizerController implements Observer {
     public void update(String nick, String message) {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
-            userByName.ifPresent(user -> users.add(user));
+            userByName.ifPresent(user -> {
+                users.add(user);
+                if (!names.contains(user.getCustomName())) {
+                    container.getChildren().add(new Label(user.getCustomName()));
+                    names.add(user.getCustomName());
+                }
+            });
         }
     }
 
     private boolean isEquals(String message, String keyWord) {
         boolean equals = message.equalsIgnoreCase(keyWord);
-        if(caseCheckbox.isSelected()) {
+        if (caseCheckbox.isSelected()) {
             equals = message.equals(keyWord);
         }
         return equals;
     }
 
     public void stopAction() {
-        if(timeline != null) {
+        if (timeline != null) {
             timeline.stop();
         }
         start.setDisable(false);
@@ -126,7 +146,7 @@ public class RandomizerController implements Observer {
     }
 
     private User getRandomUser() {
-        if(users.isEmpty()) {
+        if (users.isEmpty()) {
             return new User();
         }
         int random = new Random().nextInt(users.size());
