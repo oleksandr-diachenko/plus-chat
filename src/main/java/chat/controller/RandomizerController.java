@@ -10,7 +10,6 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -117,17 +116,11 @@ public class RandomizerController implements Observer {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> {
-                addNewNameToContainer(user);
+                if(!users.contains(user)) {
+                    container.getChildren().add(new Label(user.getCustomName()));
+                }
                 users.add(user);
             });
-        }
-    }
-
-    private void addNewNameToContainer(User user) {
-        ObservableList<Node> names = container.getChildren();
-        Label name = new Label(user.getCustomName());
-        if (!names.contains(name)) {
-            names.add(name);
         }
     }
 
