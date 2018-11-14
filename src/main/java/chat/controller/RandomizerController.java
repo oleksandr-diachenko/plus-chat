@@ -7,6 +7,7 @@ import chat.sevice.Bot;
 import chat.util.StyleUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -56,20 +57,33 @@ public class RandomizerController implements Observer {
 
     @FXML
     public void initialize() {
-        ObservableList<Integer> data = FXCollections.observableArrayList(1, 3, 5, 10, 15, 20, 30);
-        times.setItems(data);
-        caseCheckbox.setSelected(true);
-
+        setTimes();
+        start.disableProperty().bind(getBooleanBinding());
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
         styleUtil.setLabelStyle(grid, applicationStyle.getNickColor());
     }
 
+    private BooleanBinding getBooleanBinding() {
+        return keyWord.textProperty().isEmpty();
+    }
+
+    private void setTimes() {
+        ObservableList<Integer> data = FXCollections.observableArrayList(1, 3, 5, 10, 15, 20, 30);
+        times.setItems(data);
+        times.getSelectionModel().select(0);
+        caseCheckbox.setSelected(true);
+    }
+
     public void startAction() {
         Bot listener = chatController.getListener();
+        Integer selectedItem = times.getSelectionModel().getSelectedItem();
+        if(selectedItem == null) {
+            throw new RuntimeException("Time must be selected!");
+        }
         listener.addObserver(this);
         start.setDisable(true);
-        final Integer[] time = {times.getSelectionModel().getSelectedItem() * 60};
+        final Integer[] time = {selectedItem * 60};
         Timeline timeline = new Timeline(
                 new KeyFrame(Duration.millis(1000), event -> {
                     time[0]--;
@@ -78,7 +92,6 @@ public class RandomizerController implements Observer {
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
             start.setDisable(false);
-            User winner = getRandomUser();
             listener.removeObserver(this);
         });
         timeline.play();
