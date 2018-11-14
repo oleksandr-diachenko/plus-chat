@@ -69,7 +69,6 @@ public class RandomizerController implements Observer {
         ObservableList<Integer> data = FXCollections.observableArrayList(1, 3, 5, 10, 15, 20, 30);
         times.setItems(data);
         times.getSelectionModel().select(0);
-        caseCheckbox.setSelected(true);
     }
 
     public void startAction() {
@@ -109,10 +108,18 @@ public class RandomizerController implements Observer {
 
     @Override
     public void update(String nick, String message) {
-        if (message.equalsIgnoreCase(keyWord.getText())) {
+        if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> users.add(user));
         }
+    }
+
+    private boolean isEquals(String message, String keyWord) {
+        boolean equals = message.equals(keyWord);
+        if(caseCheckbox.isSelected()) {
+            equals = message.equalsIgnoreCase(keyWord);
+        }
+        return equals;
     }
 
     public void stopAction() {
