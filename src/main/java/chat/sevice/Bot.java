@@ -8,11 +8,15 @@ import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
 import chat.observer.Subject;
+import chat.util.AppProperty;
 import chat.util.TimeUtil;
 import javafx.application.Platform;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.*;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.*;
@@ -20,6 +24,7 @@ import java.util.*;
 /**
  * @author Alexander Diachenko
  */
+@Service
 public class Bot extends ListenerAdapter implements Subject {
 
     private UserRepository userRepository;
@@ -27,11 +32,16 @@ public class Bot extends ListenerAdapter implements Subject {
     private CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
     private Properties connect;
+    private Properties commands;
     private LocalDateTime start;
 
-    public Bot(Properties connect, UserRepository userRepository,
-               RankRepository rankRepository, CommandRepository commandRepository) {
-        this.connect = connect;
+    @Autowired
+    public Bot(UserRepository userRepository, RankRepository rankRepository,
+               CommandRepository commandRepository,
+               @Qualifier("twitchProperties") AppProperty twitchProperties,
+               @Qualifier("commandsProperties") AppProperty commandsProperties) {
+        this.connect = twitchProperties.getProperty();
+        this.commands = commandsProperties.getProperty();
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.commandRepository = commandRepository;
@@ -82,13 +92,29 @@ public class Bot extends ListenerAdapter implements Subject {
 
     private List<ICommand> getCommands(String nick) {
         List<ICommand> commands = new ArrayList<>();
-        commands.add(new RankCommand(nick, userRepository, rankRepository));
-        commands.add(new UpCommand(start));
-        commands.add(new RollCommand(userRepository, nick));
-        commands.add(new PointsCommand(userRepository, nick));
-        commands.add(new GameOrderCommand(userRepository, nick));
-        commands.add(new JSONCommand(commandRepository));
+        if (isEnabled("rank")) {
+            commands.add(new RankCommand(nick, userRepository, rankRepository));
+        }
+        if (isEnabled("up")) {
+            commands.add(new UpCommand(start));
+        }
+        if (isEnabled("roll")) {
+            commands.add(new RollCommand(userRepository, nick));
+        }
+        if (isEnabled("points")) {
+            commands.add(new PointsCommand(userRepository, nick));
+        }
+        if (isEnabled("gameOrder")) {
+            commands.add(new GameOrderCommand(userRepository, nick));
+        }
+        if (isEnabled("jSON")) {
+            commands.add(new JSONCommand(commandRepository));
+        }
         return commands;
+    }
+
+    private boolean isEnabled(String commandName) {
+        return "enabled".equals(commands.getProperty(commandName));
     }
 
     /**
@@ -118,7 +144,7 @@ public class Bot extends ListenerAdapter implements Subject {
         user.setExp(exp);
         if (rankRepository.isNewRank(exp)) {
             user.setPoints(user.getPoints() + 500);
-        }else {
+        } else {
             user.setPoints(user.getPoints() + 10);
         }
         return userRepository.update(user);

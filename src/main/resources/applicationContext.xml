@@ -30,6 +30,9 @@
     <bean id="settingsProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\settings.properties"/>
     </bean>
+    <bean id="commandsProperties" class="chat.util.AppProperty">
+        <constructor-arg value=".\settings\commands.properties"/>
+    </bean>
     <bean id="applicationStyle" class="chat.controller.ApplicationStyle">
         <constructor-arg ref="settingsProperties"/>
     </bean>

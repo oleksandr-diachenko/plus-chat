@@ -63,7 +63,6 @@ public class ChatController implements Observer {
     private Properties settings;
     private RankRepository rankRepository;
     private UserRepository userRepository;
-    private CommandRepository commandRepository;
     private SmileRepository smileRepository;
     private DirectRepository directRepository;
     private int messageIndex = 0;
@@ -73,19 +72,18 @@ public class ChatController implements Observer {
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
+    @Autowired
     private Bot listener;
 
 
     @Autowired
-    public ChatController(RankRepository rankRepository, UserRepository userRepository,
-                          CommandRepository commandRepository, SmileRepository smileRepository,
+    public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
                           @Qualifier("twitchProperties") AppProperty twitchProperties,
                           SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
-        this.commandRepository = commandRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
         this.settingsProperties = settingsProperties;
@@ -116,8 +114,6 @@ public class ChatController implements Observer {
     private void startBot() {
         Thread thread = new Thread(() -> {
             Properties connect = twitchProperties.getProperty();
-            listener = new Bot(connect, userRepository, rankRepository,
-                    commandRepository);
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("botname"))
