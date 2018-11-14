@@ -6,6 +6,7 @@ import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -22,6 +23,8 @@ import java.util.*;
 @Controller
 public class SettingGeneralController {
 
+    @FXML
+    private Button random;
     @FXML
     private GridPane settingsGeneralRoot;
     @FXML
@@ -83,7 +86,10 @@ public class SettingGeneralController {
     }
 
     public void randomAction() {
+        random.setDisable(true);
         randomizerDialog.openDialog(getStage());
+        Stage stage = randomizerDialog.getStage();
+        stage.setOnCloseRequest(event -> random.setDisable(false));
     }
 
     private String getLanguage(String value) {
