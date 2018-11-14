@@ -10,6 +10,7 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -51,7 +52,6 @@ public class RandomizerController implements Observer {
     private UserRepository userRepository;
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
-    private List<String> names = new LinkedList<>();
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
@@ -89,12 +89,7 @@ public class RandomizerController implements Observer {
         start.disableProperty().unbind();
         start.setDisable(true);
         startTimeline(listener, selectedItem);
-        resetContainer();
-    }
-
-    private void resetContainer() {
-        container.getChildren().clear();
-        names = new LinkedList<>();
+        resetContainerAndUsers();
     }
 
     private void startTimeline(Bot listener, Integer selectedItem) {
@@ -112,17 +107,27 @@ public class RandomizerController implements Observer {
         timeline.play();
     }
 
+    private void resetContainerAndUsers() {
+        container.getChildren().clear();
+        users = new HashSet<>();
+    }
+
     @Override
     public void update(String nick, String message) {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> {
+                addNewNameToContainer(user);
                 users.add(user);
-                if (!names.contains(user.getCustomName())) {
-                    container.getChildren().add(new Label(user.getCustomName()));
-                    names.add(user.getCustomName());
-                }
             });
+        }
+    }
+
+    private void addNewNameToContainer(User user) {
+        ObservableList<Node> names = container.getChildren();
+        Label name = new Label(user.getCustomName());
+        if (!names.contains(name)) {
+            names.add(name);
         }
     }
 
