@@ -80,6 +80,10 @@ public class RandomizerController implements Observer {
         listener.addObserver(this);
         start.disableProperty().unbind();
         start.setDisable(true);
+        startTimeline(listener, selectedItem);
+    }
+
+    private void startTimeline(Bot listener, Integer selectedItem) {
         final Integer[] time = {selectedItem * 60};
         timeline = new Timeline(
                 new KeyFrame(Duration.millis(1000), event -> {
@@ -92,18 +96,6 @@ public class RandomizerController implements Observer {
             listener.removeObserver(this);
         });
         timeline.play();
-    }
-
-    private User getRandomUser() {
-        if(users.isEmpty()) {
-            return new User();
-        }
-        int random = new Random().nextInt(users.size());
-        Iterator<User> iterator = users.iterator();
-        for (int index = 0; index < random; index++) {
-            iterator.next();
-        }
-        return iterator.next();
     }
 
     @Override
@@ -131,5 +123,17 @@ public class RandomizerController implements Observer {
 
     public void selectAction() {
         winner.setText(getRandomUser().getCustomName());
+    }
+
+    private User getRandomUser() {
+        if(users.isEmpty()) {
+            return new User();
+        }
+        int random = new Random().nextInt(users.size());
+        Iterator<User> iterator = users.iterator();
+        for (int index = 0; index < random; index++) {
+            iterator.next();
+        }
+        return iterator.next();
     }
 }
