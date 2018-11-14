@@ -26,6 +26,8 @@ import java.util.*;
 public class RandomizerController implements Observer {
 
     @FXML
+    private Label winner;
+    @FXML
     private TextField keyWord;
     @FXML
     private Button start;
@@ -44,6 +46,7 @@ public class RandomizerController implements Observer {
     private ChatController chatController;
     private UserRepository userRepository;
     private Set<User> users = new HashSet<>();
+    private Timeline timeline;
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
@@ -72,14 +75,14 @@ public class RandomizerController implements Observer {
     public void startAction() {
         Bot listener = chatController.getListener();
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
-        if(selectedItem == null && keyWord.getText().isEmpty()) {
+        if (selectedItem == null && keyWord.getText().isEmpty()) {
             throw new RuntimeException("Time and key word must be selected!");
         }
         listener.addObserver(this);
         start.disableProperty().unbind();
         start.setDisable(true);
         final Integer[] time = {selectedItem * 60};
-        Timeline timeline = new Timeline(
+        timeline = new Timeline(
                 new KeyFrame(Duration.millis(1000), event -> {
                     time[0]--;
                     countdown.setText(String.valueOf(time[0]));
@@ -93,6 +96,9 @@ public class RandomizerController implements Observer {
     }
 
     private User getRandomUser() {
+        if(users.isEmpty()) {
+            return new User();
+        }
         int random = new Random().nextInt(users.size());
         Iterator<User> iterator = users.iterator();
         for (int index = 0; index < random; index++) {
@@ -107,5 +113,16 @@ public class RandomizerController implements Observer {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> users.add(user));
         }
+    }
+
+    public void stopAction() {
+        if(timeline != null) {
+            timeline.stop();
+        }
+        start.setDisable(false);
+    }
+
+    public void selectAction() {
+        winner.setText(getRandomUser().getCustomName());
     }
 }
