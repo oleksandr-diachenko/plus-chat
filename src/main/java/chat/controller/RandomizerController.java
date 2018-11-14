@@ -7,7 +7,6 @@ import chat.sevice.Bot;
 import chat.util.StyleUtil;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
-import javafx.beans.binding.BooleanBinding;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -58,14 +57,9 @@ public class RandomizerController implements Observer {
     @FXML
     public void initialize() {
         setTimes();
-        start.disableProperty().bind(getBooleanBinding());
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
         styleUtil.setLabelStyle(grid, applicationStyle.getNickColor());
-    }
-
-    private BooleanBinding getBooleanBinding() {
-        return keyWord.textProperty().isEmpty();
     }
 
     private void setTimes() {
@@ -78,10 +72,11 @@ public class RandomizerController implements Observer {
     public void startAction() {
         Bot listener = chatController.getListener();
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
-        if(selectedItem == null) {
-            throw new RuntimeException("Time must be selected!");
+        if(selectedItem == null && keyWord.getText().isEmpty()) {
+            throw new RuntimeException("Time and key word must be selected!");
         }
         listener.addObserver(this);
+        start.disableProperty().unbind();
         start.setDisable(true);
         final Integer[] time = {selectedItem * 60};
         Timeline timeline = new Timeline(
