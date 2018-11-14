@@ -115,9 +115,9 @@ public class RandomizerController implements Observer {
     }
 
     private boolean isEquals(String message, String keyWord) {
-        boolean equals = message.equals(keyWord);
+        boolean equals = message.equalsIgnoreCase(keyWord);
         if(caseCheckbox.isSelected()) {
-            equals = message.equalsIgnoreCase(keyWord);
+            equals = message.equals(keyWord);
         }
         return equals;
     }
