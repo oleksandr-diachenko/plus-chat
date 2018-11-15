@@ -55,7 +55,7 @@
                     <Insets left="10.0"/>
                 </GridPane.margin>
             </Label>
-            <ListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <ListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets right="10.0"/>
                 </GridPane.margin>

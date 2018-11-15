@@ -12,4 +12,8 @@
 
 .list-view {
     -fx-background-color: transparent;
+    -fx-pref-width: 80;
+    -fx-max-width: 80;
+    -fx-pref-height: 100;
+    -fx-max-height: 100;
 }
