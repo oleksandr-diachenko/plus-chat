@@ -5,11 +5,13 @@ import chat.model.repository.UserRepository;
 import chat.observer.Observer;
 import chat.sevice.Bot;
 import chat.util.StyleUtil;
+import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -81,14 +83,20 @@ public class RandomizerController implements Observer {
     public void playAction() {
         Bot listener = chatController.getListener();
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
-        if (selectedItem == null && keyWord.getText().isEmpty()) {
-            throw new RuntimeException("Time and key word must be selected!");
+        if (isEmpty(keyWord)) {
+            blink(keyWord);
+        } else if (selectedItem == null) {
+            blink(times);
+        } else {
+            listener.addObserver(this);
+            play.setDisable(true);
+            startTimeline(listener, selectedItem);
+            resetContainerAndUsers();
         }
-        listener.addObserver(this);
-        play.disableProperty().unbind();
-        play.setDisable(true);
-        startTimeline(listener, selectedItem);
-        resetContainerAndUsers();
+    }
+
+    private boolean isEmpty(TextField keyWord) {
+        return keyWord.getText().isEmpty();
     }
 
     private void startTimeline(Bot listener, Integer selectedItem) {
@@ -107,6 +115,15 @@ public class RandomizerController implements Observer {
         timeline.play();
     }
 
+    private void blink(Node node) {
+        FadeTransition blink = new FadeTransition(Duration.seconds(0.5), node);
+        blink.setFromValue(1.0);
+        blink.setToValue(0.2);
+        blink.setCycleCount(4);
+        blink.setOnFinished(event -> node.setOpacity(1));
+        blink.play();
+    }
+
     private void resetContainerAndUsers() {
         container.getChildren().clear();
         users = new HashSet<>();
@@ -117,7 +134,7 @@ public class RandomizerController implements Observer {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> {
-                if(!users.contains(user)) {
+                if (!users.contains(user)) {
                     Label userName = new Label(user.getCustomName());
                     userName.setStyle(styleUtil.getLabelStyle(applicationStyle.getMessageColor()));
                     container.getChildren().add(userName);
