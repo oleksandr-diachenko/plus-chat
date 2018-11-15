@@ -81,25 +81,37 @@ public class RandomizerController implements Observer {
     }
 
     public void playAction() {
-        Bot listener = chatController.getListener();
-        Integer selectedItem = times.getSelectionModel().getSelectedItem();
-        if (isEmpty(keyWord)) {
-            blink(keyWord);
-        } else if (selectedItem == null) {
-            blink(times);
-        } else {
+        List<Node> blankNodes = getBlankNodes(keyWord, times);
+        if(blankNodes.isEmpty()) {
+            Bot listener = chatController.getListener();
             listener.addObserver(this);
             play.setDisable(true);
-            startTimeline(listener, selectedItem);
+            startTimeline(listener);
             resetContainerAndUsers();
+        } else {
+            blink(blankNodes);
         }
     }
 
-    private boolean isEmpty(TextField keyWord) {
-        return keyWord.getText().isEmpty();
+    private List<Node> getBlankNodes(TextField keyWord, ListView<Integer> times) {
+        List<Node> blankNodes = new LinkedList<>();
+        if(keyWord.getText().isEmpty()) {
+            blankNodes.add(keyWord);
+        }
+        if(times.getSelectionModel().isEmpty()){
+            blankNodes.add(times);
+        }
+        return blankNodes;
     }
 
-    private void startTimeline(Bot listener, Integer selectedItem) {
+    private void blink(List<Node> nodes) {
+        for (Node node : nodes) {
+            blink(node);
+        }
+    }
+
+    private void startTimeline(Bot listener) {
+        Integer selectedItem = times.getSelectionModel().getSelectedItem();
         final Integer[] time = {selectedItem * 60};
         timeline = new Timeline(
                 new KeyFrame(Duration.millis(1000), event -> {
