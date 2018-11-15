@@ -97,6 +97,7 @@ public class RandomizerController implements Observer {
                 new KeyFrame(Duration.millis(1000), event -> {
                     time[0]--;
                     countdown.setText(String.valueOf(time[0]));
+                    countdown.setStyle(styleUtil.getLabelStyle(applicationStyle.getNickColor()));
                 }));
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
@@ -117,7 +118,9 @@ public class RandomizerController implements Observer {
             Optional<User> userByName = userRepository.getUserByName(nick);
             userByName.ifPresent(user -> {
                 if(!users.contains(user)) {
-                    container.getChildren().add(new Label(user.getCustomName()));
+                    Label userName = new Label(user.getCustomName());
+                    userName.setStyle(styleUtil.getLabelStyle(applicationStyle.getMessageColor()));
+                    container.getChildren().add(userName);
                 }
                 users.add(user);
             });
@@ -141,6 +144,7 @@ public class RandomizerController implements Observer {
 
     public void selectAction() {
         winner.setText(getRandomUser().getCustomName());
+        winner.setStyle(styleUtil.getLabelStyle(applicationStyle.getNickColor()));
     }
 
     private User getRandomUser() {
