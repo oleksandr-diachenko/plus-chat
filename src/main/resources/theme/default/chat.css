@@ -12,13 +12,13 @@
     -fx-background-color: null;
     -fx-pref-height: 30;
     -fx-pref-width: 30;
-    -fx-background-image: url("../../img/settings.png");
+    -fx-background-image: url("../../img/chat/settings.png");
     -fx-background-repeat: no-repeat;
 }
 
 #setting:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/settings-hover.png");
+    -fx-background-image: url("../../img/chat/settings-hover.png");
     -fx-background-repeat: no-repeat;
 }
 

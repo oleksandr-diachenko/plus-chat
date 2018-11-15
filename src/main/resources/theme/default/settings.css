@@ -17,13 +17,13 @@
     -fx-background-color: null;
     -fx-pref-height: 50;
     -fx-pref-width: 50;
-    -fx-background-image: url("../../img/reload.png");
+    -fx-background-image: url("../../img/settings/reload.png");
     -fx-background-repeat: no-repeat;
 }
 
 #reload:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/reload-hover.png");
+    -fx-background-image: url("../../img/settings/reload-hover.png");
     -fx-background-repeat: no-repeat;
 }
 
@@ -33,13 +33,13 @@
     -fx-background-color: null;
     -fx-pref-height: 50;
     -fx-pref-width: 59;
-    -fx-background-image: url("../../img/confirm.png");
+    -fx-background-image: url("../../img/settings/confirm.png");
     -fx-background-repeat: no-repeat;
 }
 
 #confirm:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/confirm-hover.png");
+    -fx-background-image: url("../../img/settings/confirm-hover.png");
     -fx-background-repeat: no-repeat;
 }
 
@@ -49,13 +49,13 @@
     -fx-background-color: null;
     -fx-pref-height: 50;
     -fx-pref-width: 50;
-    -fx-background-image: url("../../img/cancel.png");
+    -fx-background-image: url("../../img/settings/cancel.png");
     -fx-background-repeat: no-repeat;
 }
 
 #cancel:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/cancel-hover.png");
+    -fx-background-image: url("../../img/settings/cancel-hover.png");
     -fx-background-repeat: no-repeat;
 }
 
@@ -145,12 +145,12 @@
     -fx-background-color: null;
     -fx-pref-height: 50;
     -fx-pref-width: 50;
-    -fx-background-image: url("../../img/randomizer.png");
+    -fx-background-image: url("../../img/settings/randomizer.png");
     -fx-background-repeat: no-repeat;
 }
 
 #randomizer:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/randomizer-hover.png");
+    -fx-background-image: url("../../img/settings/randomizer-hover.png");
     -fx-background-repeat: no-repeat;
 }
