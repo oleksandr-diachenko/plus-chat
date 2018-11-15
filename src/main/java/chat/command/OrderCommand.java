@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import java.util.Optional;
 
-public class GameOrderCommand implements ICommand {
+public class OrderCommand implements ICommand {
 
     private static final int MINIMAL_ORDER_POINTS = 600;
     private static final int ARGUMENTS_LENGTH = 3;
@@ -15,7 +15,7 @@ public class GameOrderCommand implements ICommand {
     private long points;
     private String game;
 
-    public GameOrderCommand(final UserRepository userRepository, final String nick) {
+    public OrderCommand(final UserRepository userRepository, final String nick) {
         this.userRepository = userRepository;
         this.nick = nick;
     }

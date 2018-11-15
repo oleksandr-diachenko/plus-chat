@@ -11,6 +11,7 @@ import chat.observer.Subject;
 import chat.util.AppProperty;
 import chat.util.TimeUtil;
 import javafx.application.Platform;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.hooks.ListenerAdapter;
 import org.pircbotx.hooks.events.*;
 import org.pircbotx.hooks.types.GenericMessageEvent;
@@ -92,23 +93,22 @@ public class Bot extends ListenerAdapter implements Subject {
 
     private List<ICommand> getCommands(String nick) {
         List<ICommand> commands = new ArrayList<>();
-        if (isEnabled("rank")) {
-            commands.add(new RankCommand(nick, userRepository, rankRepository));
-        }
-        if (isEnabled("up")) {
-            commands.add(new UpCommand(start));
-        }
-        if (isEnabled("roll")) {
-            commands.add(new RollCommand(userRepository, nick));
-        }
-        if (isEnabled("points")) {
-            commands.add(new PointsCommand(userRepository, nick));
-        }
-        if (isEnabled("gameOrder")) {
-            commands.add(new GameOrderCommand(userRepository, nick));
-        }
-        if (isEnabled("jSON")) {
-            commands.add(new JSONCommand(commandRepository));
+        commands.add(new RankCommand(nick, userRepository, rankRepository));
+        commands.add(new UpCommand(start));
+        commands.add(new RollCommand(userRepository, nick));
+        commands.add(new PointsCommand(userRepository, nick));
+        commands.add(new OrderCommand(userRepository, nick));
+        commands.add(new JSONCommand(commandRepository));
+
+        for (Iterator<ICommand> iterator = commands.iterator(); iterator.hasNext(); ) {
+            ICommand command = iterator.next();
+            String className = command.getClass().getName();
+            String commandPackage = command.getClass().getPackage().getName();
+            String commandFullName = StringUtils.remove(className, commandPackage + ".");
+            String commandName = StringUtils.remove(commandFullName, "Command").toLowerCase();
+            if (!isEnabled(commandName)) {
+                iterator.remove();
+            }
         }
         return commands;
     }
