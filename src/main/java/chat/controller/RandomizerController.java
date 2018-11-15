@@ -34,7 +34,7 @@ public class RandomizerController implements Observer {
     @FXML
     private TextField keyWord;
     @FXML
-    private Button start;
+    private Button play;
     @FXML
     private Label countdown;
     @FXML
@@ -78,15 +78,15 @@ public class RandomizerController implements Observer {
         times.getSelectionModel().select(0);
     }
 
-    public void startAction() {
+    public void playAction() {
         Bot listener = chatController.getListener();
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
         if (selectedItem == null && keyWord.getText().isEmpty()) {
             throw new RuntimeException("Time and key word must be selected!");
         }
         listener.addObserver(this);
-        start.disableProperty().unbind();
-        start.setDisable(true);
+        play.disableProperty().unbind();
+        play.setDisable(true);
         startTimeline(listener, selectedItem);
         resetContainerAndUsers();
     }
@@ -100,7 +100,7 @@ public class RandomizerController implements Observer {
                 }));
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
-            start.setDisable(false);
+            play.setDisable(false);
             listener.removeObserver(this);
         });
         timeline.play();
@@ -136,7 +136,7 @@ public class RandomizerController implements Observer {
         if (timeline != null) {
             timeline.stop();
         }
-        start.setDisable(false);
+        play.setDisable(false);
     }
 
     public void selectAction() {

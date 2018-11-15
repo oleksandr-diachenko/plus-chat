@@ -24,7 +24,7 @@ import java.util.*;
 public class SettingGeneralController {
 
     @FXML
-    private Button random;
+    private Button randomizer;
     @FXML
     private GridPane settingsGeneralRoot;
     @FXML
@@ -86,10 +86,10 @@ public class SettingGeneralController {
     }
 
     public void randomAction() {
-        random.setDisable(true);
+        randomizer.setDisable(true);
         randomizerDialog.openDialog(getStage());
         Stage stage = randomizerDialog.getStage();
-        stage.setOnCloseRequest(event -> random.setDisable(false));
+        stage.setOnCloseRequest(event -> randomizer.setDisable(false));
     }
 
     private String getLanguage(String value) {

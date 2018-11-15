@@ -62,8 +62,8 @@
                 <Insets left="100.0"/>
             </GridPane.margin>
         </Label>
-        <Button fx:id="random" mnemonicParsing="false" onAction="#randomAction"
-                GridPane.columnIndex="1" GridPane.rowIndex="3">
+        <Button fx:id="randomizer" mnemonicParsing="false" onAction="#randomAction"
+                GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER">
             <HBox.margin>
                 <Insets right="50.0"/>
             </HBox.margin>

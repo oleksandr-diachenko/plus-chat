@@ -60,11 +60,11 @@
                     <Insets right="10.0"/>
                 </GridPane.margin>
             </ListView>
-            <HBox fx:id="startStop" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER">
-                <Button fx:id="start" text="%randomizer.start" onAction="#startAction"/>
-                <Button fx:id="stop" text="%randomizer.stop" onAction="#stopAction"/>
+            <HBox fx:id="playStop" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER">
+                <Button fx:id="play" onAction="#playAction"/>
+                <Button fx:id="stop" onAction="#stopAction"/>
             </HBox>
-            <Button fx:id="select" text="%randomizer.select" onAction="#selectAction" GridPane.columnIndex="1"
+            <Button fx:id="select" onAction="#selectAction" GridPane.columnIndex="1"
                     GridPane.rowIndex="3" GridPane.halignment="CENTER"/>
         </GridPane>
         <VBox alignment="CENTER">

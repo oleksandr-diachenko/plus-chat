@@ -138,3 +138,19 @@
     -fx-background-image: url("../../img/data/directs-hover.png");
     -fx-background-repeat: no-repeat;
 }
+
+#randomizer {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+    -fx-background-image: url("../../img/randomizer.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#randomizer:hover {
+    -fx-background-color: null;
+    -fx-background-image: url("../../img/randomizer-hover.png");
+    -fx-background-repeat: no-repeat;
+}
