@@ -92,25 +92,26 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private List<ICommand> getCommands(String nick) {
-        List<ICommand> commands = new ArrayList<>();
+        List<ICommand> commands = new LinkedList<>();
         commands.add(new RankCommand(nick, userRepository, rankRepository));
         commands.add(new UpCommand(start));
         commands.add(new RollCommand(userRepository, nick));
         commands.add(new PointsCommand(userRepository, nick));
         commands.add(new OrderCommand(userRepository, nick));
         commands.add(new JSONCommand(commandRepository));
+        return getEnabledCommands(commands);
+    }
 
-        for (Iterator<ICommand> iterator = commands.iterator(); iterator.hasNext(); ) {
-            ICommand command = iterator.next();
-            String className = command.getClass().getName();
-            String commandPackage = command.getClass().getPackage().getName();
-            String commandFullName = StringUtils.remove(className, commandPackage + ".");
-            String commandName = StringUtils.remove(commandFullName, "Command").toLowerCase();
-            if (!isEnabled(commandName)) {
-                iterator.remove();
+    private List<ICommand> getEnabledCommands(List<ICommand> commands) {
+        List<ICommand> result = new LinkedList<>();
+        for (ICommand command : commands) {
+            String className = command.getClass().getSimpleName();
+            String commandName = StringUtils.remove(className, "Command").toLowerCase();
+            if (isEnabled(commandName)) {
+                result.add(command);
             }
         }
-        return commands;
+        return result;
     }
 
     private boolean isEnabled(String commandName) {
