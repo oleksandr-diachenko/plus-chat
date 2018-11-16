@@ -1,23 +1,30 @@
 package chat.command;
 
+import chat.model.entity.Order;
+import chat.model.entity.OrderStatus;
 import chat.model.entity.User;
+import chat.model.repository.OrderRepository;
 import chat.model.repository.UserRepository;
+import chat.util.TimeUtil;
 import org.apache.commons.lang3.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 public class OrderCommand implements ICommand {
 
-    private static final int MINIMAL_ORDER_POINTS = 600;
     private static final int ARGUMENTS_LENGTH = 3;
     private final UserRepository userRepository;
     private final String nick;
+    private OrderRepository orderRepository;
     private long points;
-    private String game;
+    private String order;
 
-    public OrderCommand(final UserRepository userRepository, final String nick) {
+    public OrderCommand(UserRepository userRepository, String nick,
+                        OrderRepository orderRepository) {
         this.userRepository = userRepository;
         this.nick = nick;
+        this.orderRepository = orderRepository;
     }
 
     @Override
@@ -27,7 +34,11 @@ public class OrderCommand implements ICommand {
             return false;
         }
         points = Long.parseLong(parts[1]);
-        game = parts[2];
+        StringBuilder builder = new StringBuilder();
+        for (int index = 1; index < parts.length; index++) {
+            builder.append(parts[index]).append(" ");
+        }
+        order = builder.toString().trim();
         return true;
     }
 
@@ -42,22 +53,26 @@ public class OrderCommand implements ICommand {
         Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
             User user = userByName.get();
-            if (lessThanMinimalOrder()) {
-                return user.getCustomName() + ", minimal order is 1 hour (600 points)";
-            }
             long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
                 return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
             }
+            orderRepository.add(getOrder(user));
             user.setPoints(userPoints - points);
             userRepository.update(user);
-            return user.getCustomName() + ", your order is accepted (" + game + ")";
+            return user.getCustomName() + ", your order is accepted (" + order + ")";
         }
         return "";
     }
 
-    private boolean lessThanMinimalOrder() {
-        return points < MINIMAL_ORDER_POINTS;
+    private Order getOrder(User user) {
+        Order order = new Order();
+        order.setUser(user);
+        order.setPoints(points);
+        order.setOrder(this.order);
+        order.setTakenDate(TimeUtil.getDateToString(LocalDateTime.now()));
+        order.setStatus(OrderStatus.NEW);
+        return order;
     }
 
     private boolean notEnoughPoints(long userPoints) {

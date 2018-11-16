@@ -4,6 +4,7 @@ import chat.command.*;
 import chat.controller.ChatController;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
+import chat.model.repository.OrderRepository;
 import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
@@ -35,12 +36,15 @@ public class Bot extends ListenerAdapter implements Subject {
     private Properties connect;
     private Properties commands;
     private LocalDateTime start;
+    private OrderRepository orderRepository;
 
     @Autowired
     public Bot(UserRepository userRepository, RankRepository rankRepository,
                CommandRepository commandRepository,
+               OrderRepository orderRepository,
                @Qualifier("twitchProperties") AppProperty twitchProperties,
                @Qualifier("commandsProperties") AppProperty commandsProperties) {
+        this.orderRepository = orderRepository;
         this.connect = twitchProperties.getProperty();
         this.commands = commandsProperties.getProperty();
         this.userRepository = userRepository;
@@ -97,7 +101,7 @@ public class Bot extends ListenerAdapter implements Subject {
         commands.add(new UpCommand(start));
         commands.add(new RollCommand(userRepository, nick));
         commands.add(new PointsCommand(userRepository, nick));
-        commands.add(new OrderCommand(userRepository, nick));
+        commands.add(new OrderCommand(userRepository, nick, orderRepository));
         commands.add(new JSONCommand(commandRepository));
         return getEnabledCommands(commands);
     }
