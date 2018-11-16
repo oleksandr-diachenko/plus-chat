@@ -21,8 +21,8 @@
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg value=".\data\users.json"/>
     </bean>
-    <bean id="gameRepository" class="chat.model.repository.JSONGameRepository">
-        <constructor-arg value=".\data\games.json"/>
+    <bean id="orderRepository" class="chat.model.repository.JSONOrderRepository">
+        <constructor-arg value=".\data\orders.json"/>
     </bean>
     <bean id="twitchProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\twitch.properties"/>

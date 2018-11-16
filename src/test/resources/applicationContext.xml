@@ -18,8 +18,8 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg value="src\test\resources\json\users.json"/>
     </bean>
-    <bean id="gameRepository" class="chat.model.repository.JSONGameRepository">
-        <constructor-arg value="src\test\resources\json\games.json"/>
+    <bean id="orderRepository" class="chat.model.repository.JSONOrderRepository">
+        <constructor-arg value="src\test\resources\json\orders.json"/>
     </bean>
     <bean id="simpleProperties" class="chat.util.AppProperty">
         <constructor-arg value="src\test\resources\property\simplePropertyOneObject.properties"/>

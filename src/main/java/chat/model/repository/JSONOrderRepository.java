@@ -1,6 +1,6 @@
 package chat.model.repository;
 
-import chat.model.entity.Game;
+import chat.model.entity.Order;
 import chat.util.JSONParser;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,29 +13,29 @@ import java.io.IOException;
 import java.util.*;
 
 @Repository
-public class JSONGameRepository implements GameRepository {
+public class JSONOrderRepository implements OrderRepository {
 
-    private final static Logger logger = LogManager.getLogger(JSONGameRepository.class);
+    private final static Logger logger = LogManager.getLogger(JSONOrderRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
-    private Set<Game> games;
+    private Set<Order> orders;
     private String path;
 
-    public JSONGameRepository() {
+    public JSONOrderRepository() {
     }
 
-    public JSONGameRepository(String path) {
+    public JSONOrderRepository(String path) {
         this.path = path;
         getAll();
     }
 
     @Override
-    public Set<Game> getAll() {
+    public Set<Order> getAll() {
         try {
-            games = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Game>>() {
+            orders = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Order>>() {
                     }));
-            return games;
+            return orders;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -43,45 +43,35 @@ public class JSONGameRepository implements GameRepository {
     }
 
     @Override
-    public Optional<Game> getGameByName(String name) {
-        for (Game game : games) {
-            if (game.getName().equalsIgnoreCase(name)) {
-                return Optional.of(game);
-            }
-        }
-        return Optional.empty();
+    public Order add(Order order) {
+        orders.add(order);
+        flush();
+        return order;
     }
 
     @Override
-    public Game add(Game game) {
-        games.add(game);
+    public Order update(Order order) {
+        orders.remove(order);
+        orders.add(order);
         flush();
-        return game;
+        return order;
     }
 
     @Override
-    public Game update(Game game) {
-        games.remove(game);
-        games.add(game);
+    public Order delete(Order order) {
+        orders.remove(order);
         flush();
-        return game;
-    }
-
-    @Override
-    public Game delete(Game game) {
-        games.remove(game);
-        flush();
-        return game;
+        return order;
     }
 
     private void flush() {
         Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    mapper.writeValue(new FileOutputStream(path), games);
+                    mapper.writeValue(new FileOutputStream(path), orders);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Games failed to save. Create " +
+                    throw new RuntimeException("Order failed to save. Create " +
                             path, exception);
                 }
             }

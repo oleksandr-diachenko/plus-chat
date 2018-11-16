@@ -1,0 +1,16 @@
+[
+  {
+    "user": {
+      "name": "POSITIV",
+      "firstMessageDate": "01-01-1970 12:00",
+      "lastMessageDate": "01-01-1970 12:01",
+      "exp": 1,
+      "points": 1000
+    },
+    "points": 500,
+    "order": "XCOM 2: War of the Chosen",
+    "takenDate": "02-12-2016 10:30",
+    "finishedDate": "05-29-2018 10:30",
+    "status": "COMPLETED"
+  }
+]
