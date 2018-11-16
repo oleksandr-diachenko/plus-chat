@@ -72,7 +72,7 @@ public class OrderCommand implements ICommand {
 
     private Order getOrder(User user) {
         Order order = new Order();
-        order.setUser(user);
+        order.setUser(user.getCustomName());
         order.setPoints(points);
         order.setOrder(this.order);
         order.setTakenDate(TimeUtil.getDateToString(LocalDateTime.now()));

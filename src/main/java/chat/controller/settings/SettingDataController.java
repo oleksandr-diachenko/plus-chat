@@ -22,6 +22,7 @@ public class SettingDataController {
     private RankRepository rankRepository;
     private SmileRepository smileRepository;
     private DirectRepository directRepository;
+    private OrderRepository orderRepository;
     private DataDialog dataDialog;
     private SettingsDialog settingsDialog;
 
@@ -29,12 +30,14 @@ public class SettingDataController {
     public SettingDataController(CommandRepository commandRepository,
                                  UserRepository userRepository, RankRepository rankRepository,
                                  SmileRepository smileRepository, DirectRepository directRepository,
+                                 OrderRepository orderRepository,
                                  DataDialog dataDialog, SettingsDialog settingsDialog) {
         this.commandRepository = commandRepository;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
+        this.orderRepository = orderRepository;
         this.dataDialog = dataDialog;
         this.settingsDialog = settingsDialog;
     }
@@ -67,6 +70,12 @@ public class SettingDataController {
         Set<Direct> directs = directRepository.getAll();
         Set<String> fields = getFields(Direct.class.getDeclaredFields());
         openDialog(new HashSet<>(directs), fields);
+    }
+
+    public void ordersDataAction() {
+        Set<Order> orders = orderRepository.getAll();
+        Set<String> fields = getFields(Order.class.getDeclaredFields());
+        openDialog(new HashSet<>(orders), fields);
     }
 
     private Set<String> getFields(Field[] declaredFields) {

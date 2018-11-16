@@ -13,7 +13,7 @@ import java.util.Objects;
 @Setter
 public class Order {
 
-    private User user;
+    private String user;
     private long points;
     private String order;
     private String takenDate;
@@ -39,7 +39,7 @@ public class Order {
     @Override
     public String toString() {
         return "Order{" +
-                "user=" + user.getCustomName() +
+                "user=" + user +
                 ", points=" + points +
                 ", order='" + order + '\'' +
                 ", takenDate='" + takenDate + '\'' +
