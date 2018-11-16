@@ -10,7 +10,6 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -26,8 +25,12 @@ public class DataDialog extends AbstractDialog {
 
     private Set<String> fields;
     private Set<Object> data;
-    @Autowired
     private StyleUtil styleUtil;
+
+    @Autowired
+    public DataDialog(StyleUtil styleUtil) {
+        this.styleUtil = styleUtil;
+    }
 
     @Override
     protected void setStageSettings(Stage stage) {
@@ -41,7 +44,7 @@ public class DataDialog extends AbstractDialog {
         fields.forEach(field -> {
             TableColumn<Object, Object> column = new TableColumn<>(getFormatted(field));
             column.setCellValueFactory(new PropertyValueFactory<>(field));
-            column.setCellFactory(getCellFactory());
+            column.setCellFactory(cell -> getTableCell());
             table.getColumns().add(column);
         });
         ObservableList<Object> data = FXCollections.observableArrayList(objects);
@@ -57,24 +60,19 @@ public class DataDialog extends AbstractDialog {
         return builder.toString().trim();
     }
 
-    private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory() {
-        return new Callback<>() {
+    private TableCell<Object, Object> getTableCell() {
+        return new TableCell<>() {
             @Override
-            public TableCell<Object, Object> call(TableColumn<Object, Object> param) {
-                return new TableCell<>() {
-                    @Override
-                    public void updateItem(Object item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            Text text = new Text();
-                            String string = item.toString();
-                            text.setText(StringUtil.getUTF8String(string));
-                            text.setStyle(styleUtil.getTextStyle("12", "#474747"));
-                            text.setWrappingWidth(140);
-                            setGraphic(text);
-                        }
-                    }
-                };
+            public void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!isEmpty()) {
+                    Text text = new Text();
+                    String string = item.toString();
+                    text.setText(StringUtil.getUTF8String(string));
+                    text.setStyle(styleUtil.getTextStyle("12", "#474747"));
+                    text.setWrappingWidth(140);
+                    setGraphic(text);
+                }
             }
         };
     }
