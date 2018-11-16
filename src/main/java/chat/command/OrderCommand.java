@@ -13,7 +13,8 @@ import java.util.Optional;
 
 public class OrderCommand implements ICommand {
 
-    private static final int ARGUMENTS_LENGTH = 3;
+    private static final int MINIMAL_ARGUMENTS_LENGTH = 3;
+    private static final int ORDER_INDEX_FROM = 2;
     private final UserRepository userRepository;
     private final String nick;
     private OrderRepository orderRepository;
@@ -34,18 +35,22 @@ public class OrderCommand implements ICommand {
             return false;
         }
         points = Long.parseLong(parts[1]);
-        StringBuilder builder = new StringBuilder();
-        for (int index = 1; index < parts.length; index++) {
-            builder.append(parts[index]).append(" ");
-        }
-        order = builder.toString().trim();
+        order = getOrder(parts);
         return true;
     }
 
     private boolean correctArguments(String[] parts) {
-        return parts.length >= ARGUMENTS_LENGTH
+        return parts.length >= MINIMAL_ARGUMENTS_LENGTH
                 && "!order".equalsIgnoreCase(parts[0])
                 && StringUtils.isNumeric(parts[1]);
+    }
+
+    private String getOrder(String[] parts) {
+        StringBuilder builder = new StringBuilder();
+        for (int index = ORDER_INDEX_FROM; index < parts.length; index++) {
+            builder.append(parts[index]).append(" ");
+        }
+        return builder.toString().trim();
     }
 
     @Override
@@ -55,12 +60,12 @@ public class OrderCommand implements ICommand {
             User user = userByName.get();
             long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
-                return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
+                return user.getCustomName() + ", you don't have enough points! (You have " + userPoints + " points)";
             }
             orderRepository.add(getOrder(user));
             user.setPoints(userPoints - points);
             userRepository.update(user);
-            return user.getCustomName() + ", your order is accepted (" + order + ")";
+            return user.getCustomName() + ", your order is accepted (" + order + ") (" + points + " points)";
         }
         return "";
     }
