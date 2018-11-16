@@ -41,9 +41,7 @@ public class DataDialog extends AbstractDialog {
         fields.forEach(field -> {
             TableColumn<Object, Object> column = new TableColumn<>(getFormatted(field));
             column.setCellValueFactory(new PropertyValueFactory<>(field));
-            Callback<TableColumn<Object, Object>,
-                    TableCell<Object, Object>> cellFactory = getCellFactory();
-            column.setCellFactory(cellFactory);
+            column.setCellFactory(getCellFactory());
             table.getColumns().add(column);
         });
         ObservableList<Object> data = FXCollections.observableArrayList(objects);
@@ -64,15 +62,15 @@ public class DataDialog extends AbstractDialog {
             @Override
             public TableCell<Object, Object> call(TableColumn<Object, Object> param) {
                 return new TableCell<>() {
-                    Text text = new Text();
                     @Override
                     public void updateItem(Object item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
+                            Text text = new Text();
                             String string = item.toString();
                             text.setText(StringUtil.getUTF8String(string));
                             text.setStyle(styleUtil.getTextStyle("12", "#474747"));
-                            text.setWrappingWidth(600 / fields.size());
+                            text.setWrappingWidth(140);
                             setGraphic(text);
                         }
                     }
