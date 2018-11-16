@@ -36,7 +36,7 @@ public class DataDialog extends AbstractDialog {
 
     private void initData(TableView<Object> table, Set<Object> objects, Set<String> fields) {
         fields.forEach(field -> {
-            TableColumn<Object, Object> column = new TableColumn<>(field);
+            TableColumn<Object, Object> column = new TableColumn<>(getFormatted(field));
             column.setCellValueFactory(new PropertyValueFactory<>(field));
             Callback<TableColumn<Object, Object>,
                     TableCell<Object, Object>> cellFactory = getCellFactory();
@@ -45,6 +45,15 @@ public class DataDialog extends AbstractDialog {
         });
         ObservableList<Object> data = FXCollections.observableArrayList(objects);
         table.setItems(data);
+    }
+
+    private String getFormatted(String fieldName) {
+        String[] words = fieldName.split("(?=\\p{Upper})");
+        StringBuilder builder = new StringBuilder();
+        for (String word : words) {
+            builder.append(word.toLowerCase()).append(" ");
+        }
+        return builder.toString().trim();
     }
 
     private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory() {
@@ -57,7 +66,8 @@ public class DataDialog extends AbstractDialog {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
                             setTextFill(Color.web("#474747"));
-                            setText(StringUtil.getUTF8String(item.toString()));
+                            String string = item.toString();
+                            setText(StringUtil.getUTF8String(string));
                         }
                     }
                 };
