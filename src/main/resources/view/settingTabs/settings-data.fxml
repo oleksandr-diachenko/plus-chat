@@ -20,6 +20,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
         </rowConstraints>
         <opaqueInsets>
             <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
@@ -64,7 +65,7 @@
                 GridPane.halignment="CENTER" GridPane.rowIndex="3"/>
         <Button fx:id="directsData" onAction="#directsDataAction" GridPane.columnIndex="1"
                 GridPane.halignment="CENTER" GridPane.rowIndex="4"/>
-        <Button fx:id="orderData" onAction="#ordersDataAction" GridPane.columnIndex="1"
+        <Button fx:id="ordersData" onAction="#ordersDataAction" GridPane.columnIndex="1"
                 GridPane.halignment="CENTER" GridPane.rowIndex="5"/>
     </GridPane>
 </ScrollPane>
