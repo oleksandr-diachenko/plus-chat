@@ -8,10 +8,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -25,6 +26,8 @@ public class DataDialog extends AbstractDialog {
 
     private Set<String> fields;
     private Set<Object> data;
+    @Autowired
+    private StyleUtil styleUtil;
 
     @Override
     protected void setStageSettings(Stage stage) {
@@ -61,13 +64,16 @@ public class DataDialog extends AbstractDialog {
             @Override
             public TableCell<Object, Object> call(TableColumn<Object, Object> param) {
                 return new TableCell<>() {
+                    Text text = new Text();
                     @Override
                     public void updateItem(Object item, boolean empty) {
                         super.updateItem(item, empty);
                         if (!isEmpty()) {
-                            setTextFill(Color.web("#474747"));
                             String string = item.toString();
-                            setText(StringUtil.getUTF8String(string));
+                            text.setText(StringUtil.getUTF8String(string));
+                            text.setStyle(styleUtil.getTextStyle("12", "#474747"));
+                            text.setWrappingWidth(600 / fields.size());
+                            setGraphic(text);
                         }
                     }
                 };
