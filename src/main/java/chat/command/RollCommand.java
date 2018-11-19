@@ -60,7 +60,7 @@ public class RollCommand implements ICommand {
     }
 
     private long getWinPoints() {
-        double random = new Random().nextDouble() + 1;
+        float random = new Random().nextFloat() + 1;
         return (long) (points * random);
     }
 
