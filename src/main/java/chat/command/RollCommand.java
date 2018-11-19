@@ -45,17 +45,27 @@ public class RollCommand implements ICommand {
             User user = userByName.get();
             long userPoints = user.getPoints();
             if (notEnoughPoints(userPoints)) {
-                return user.getCustomName() + ", you don't have enough points! (" + userPoints + ")";
+                return user.getCustomName() + ", you don't have enough points!" + getStringPoints(userPoints);
             }
             if (win(percent)) {
-                updateUser(user, userPoints - points);
-                return user.getCustomName() + ", you lost (" + userPoints + ")";
+                userPoints += getWinPoints();
+                updateUser(user, userPoints);
+                return user.getCustomName() + ", you won" + " " + getWinPoints() + " points!" + getStringPoints(userPoints);
             } else {
-                updateUser(user, userPoints + (points * WIN_POINTS_MULTIPLIER));
-                return user.getCustomName() + ", you win (" + userPoints + ")";
+                userPoints -= points;
+                updateUser(user, userPoints);
+                return user.getCustomName() + ", you lost" + " " + points + " points!" + getStringPoints(userPoints);
             }
         }
         return "";
+    }
+
+    private long getWinPoints() {
+        return points * WIN_POINTS_MULTIPLIER;
+    }
+
+    private String getStringPoints(long userPoints) {
+        return " (You have " + userPoints + " points)";
     }
 
     private boolean notEnoughPoints(long userPoints) {
@@ -63,7 +73,7 @@ public class RollCommand implements ICommand {
     }
 
     private boolean win(int percent) {
-        return percent < WIN_PERCENT;
+        return percent > WIN_PERCENT;
     }
 
     private void updateUser(User user, long points) {
