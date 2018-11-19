@@ -2,13 +2,10 @@ package chat.unit.command;
 
 import chat.command.ICommand;
 import chat.command.OrderCommand;
-import chat.model.entity.User;
 import chat.model.repository.OrderRepository;
 import chat.model.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.util.Optional;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -25,19 +22,8 @@ public class OrderCommandTest {
         UserRepository userRepository = mock(UserRepository.class);
         OrderRepository orderRepository = mock(OrderRepository.class);
         String userName = "p0sltlv";
-        when(userRepository.getUserByName(userName)).thenReturn(Optional.of(getUser()));
+        when(userRepository.getUserByName(userName)).thenReturn(UserFactory.createUser());
         command = new OrderCommand(userRepository, userName, orderRepository);
-    }
-
-    private User getUser() {
-        User user = new User();
-        user.setName("p0sltlv");
-        user.setCustomName("POSITIV");
-        user.setFirstMessageDate("1970-01-01 12:00");
-        user.setLastMessageDate("1970-01-01 12:01");
-        user.setExp(1);
-        user.setPoints(1000);
-        return user;
     }
 
     @Test
