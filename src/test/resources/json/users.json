@@ -1,8 +1,10 @@
 [
   {
-    "name": "POSITIV",
+    "name": "p0sltlv",
+    "customName": "POSITIV",
     "firstMessageDate": "1970-01-01 12:00",
     "lastMessageDate": "1970-01-01 12:01",
-    "exp": 1
+    "exp": 1,
+    "points":1000
   }
 ]
