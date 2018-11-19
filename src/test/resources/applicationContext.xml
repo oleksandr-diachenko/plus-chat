@@ -26,4 +26,5 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     </bean>
     <bean id="userFactory" class="chat.unit.factory.UserFactory"/>
     <bean id="rankFactory" class="chat.unit.factory.RankFactory"/>
+    <bean id="jsonCommandFactory" class="chat.unit.factory.JsonCommandFactory"/>
 </beans>
