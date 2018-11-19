@@ -2,27 +2,37 @@ package chat.unit.command;
 
 import chat.command.ICommand;
 import chat.command.PointsCommand;
+import chat.model.entity.User;
 import chat.model.repository.UserRepository;
+import chat.unit.factory.AbstractFactory;
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @author Oleksandr_Diachenko
  */
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
 public class PointsCommandTest {
 
     private ICommand command;
+    @Autowired
+    private AbstractFactory<User> userFactory;
 
     @Before
     public void setup() {
         UserRepository userRepository = mock(UserRepository.class);
-        String userName = "p0sltlv";
-        when(userRepository.getUserByName(userName)).thenReturn(UserFactory.createUser());
-        command = new PointsCommand(userRepository, userName);
+        when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
+        command = new PointsCommand(userRepository, "p0sltlv");
     }
 
     @Test

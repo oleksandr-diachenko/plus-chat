@@ -31,7 +31,7 @@ public class UserRepositoryTest {
 
     @Test
     public void getUserByNameTest() {
-        final Optional<User> userByName = this.userRepository.getUserByName("POSITIV");
+        final Optional<User> userByName = this.userRepository.getUserByName("p0sltlv");
         assertTrue(userByName.isPresent());
     }
 
