@@ -26,6 +26,7 @@
         <commons-lang3>3.7</commons-lang3>
         <javafx>11</javafx>
         <spring>5.1.2.RELEASE</spring>
+        <mockito>2.23.0</mockito>
     </properties>
 
     <repositories>
@@ -119,6 +120,13 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-core</artifactId>
+            <version>${mockito}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
