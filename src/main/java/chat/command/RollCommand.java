@@ -10,7 +10,6 @@ import java.util.Random;
 public class RollCommand implements ICommand {
 
     private static final int ARGUMENTS_LENGTH = 2;
-    private static final int WIN_POINTS_MULTIPLIER = 2;
     private static final int WIN_PERCENT = 75;
     private UserRepository userRepository;
     private String nick;
@@ -61,7 +60,8 @@ public class RollCommand implements ICommand {
     }
 
     private long getWinPoints() {
-        return points * WIN_POINTS_MULTIPLIER;
+        double random = new Random().nextDouble() + 1;
+        return (long) (points * random);
     }
 
     private String getStringPoints(long userPoints) {
