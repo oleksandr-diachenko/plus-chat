@@ -2,6 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.Command;
 import chat.util.JSONParser;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -19,6 +20,7 @@ import java.util.Set;
  * @author Alexander Diachenko.
  */
 @Repository
+@NoArgsConstructor
 public class JSONCommandRepository implements CommandRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONCommandRepository.class);
@@ -26,9 +28,6 @@ public class JSONCommandRepository implements CommandRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Command> commands;
     private String path;
-
-    public JSONCommandRepository() {
-    }
 
     public JSONCommandRepository(String path) {
         this.path = path;
