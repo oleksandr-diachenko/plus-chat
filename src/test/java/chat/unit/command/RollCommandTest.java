@@ -26,7 +26,7 @@ import static org.powermock.api.mockito.PowerMockito.whenNew;
  * @author Oleksandr_Diachenko
  */
 @RunWith(PowerMockRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 @PrepareForTest(RollCommand.class)
 public class RollCommandTest {
 

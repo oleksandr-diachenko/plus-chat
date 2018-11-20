@@ -21,7 +21,7 @@ import static org.mockito.Mockito.when;
  * @author Oleksandr_Diachenko
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class PointsCommandTest {
 
     private ICommand command;

@@ -16,7 +16,7 @@ import static org.junit.Assert.assertTrue;
  * @author Alexander Diachenko.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class OrderRepositoryTest {
 
     @Autowired
