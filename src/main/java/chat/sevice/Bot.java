@@ -2,6 +2,7 @@ package chat.sevice;
 
 import chat.command.*;
 import chat.controller.ChatController;
+import chat.model.entity.Status;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
 import chat.model.repository.OrderRepository;
@@ -14,14 +15,19 @@ import chat.util.TimeUtil;
 import javafx.application.Platform;
 import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.*;
+import org.pircbotx.hooks.events.ConnectEvent;
+import org.pircbotx.hooks.events.DisconnectEvent;
+import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Alexander Diachenko
@@ -119,7 +125,13 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private boolean isEnabled(String commandName) {
-        return "enabled".equals(commands.getProperty(commandName));
+        Status status = Status.enabled;
+        try {
+            status = Status.valueOf(commands.getProperty(commandName));
+        } catch (Exception ignored) {
+            //do nothing
+        }
+        return status == Status.enabled;
     }
 
     /**

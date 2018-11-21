@@ -16,6 +16,7 @@ public class Command {
     private String name;
     private String description;
     private String response;
+    private Status status;
 
     @Override
     public boolean equals(Object o) {
@@ -36,6 +37,7 @@ public class Command {
                 "name='" + name + '\'' +
                 ", description='" + description + '\'' +
                 ", response='" + response + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

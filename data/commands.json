@@ -2,6 +2,13 @@
   {
     "name": "!info",
     "description": "Описание канала",
-    "response": "Тут должно быть описание"
+    "response": "Тут должно быть описание",
+    "status": "enabled"
+  },
+  {
+    "name": "!info2",
+    "description": "Описание канала",
+    "response": "Тут должно быть описание",
+    "status": "disabled"
   }
 ]
