@@ -125,13 +125,12 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private boolean isEnabled(String commandName) {
-        Status status = Status.enabled;
         try {
-            status = Status.valueOf(commands.getProperty(commandName));
-        } catch (Exception ignored) {
-            //do nothing
+            Status status = Status.valueOf(commands.getProperty(commandName));
+            return status == Status.enabled;
+        } catch (Exception exception) {
+            return false;
         }
-        return status == Status.enabled;
     }
 
     /**
