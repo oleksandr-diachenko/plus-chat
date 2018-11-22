@@ -129,7 +129,7 @@ public class Bot extends ListenerAdapter implements Subject {
             Status status = Status.valueOf(commands.getProperty(commandName));
             return status == Status.enabled;
         } catch (Exception exception) {
-            return false;
+            return true;
         }
     }
 
