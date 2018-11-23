@@ -5,7 +5,10 @@ import chat.model.entity.Direct;
 import chat.model.entity.Rank;
 import chat.model.entity.Smile;
 import chat.model.entity.User;
-import chat.model.repository.*;
+import chat.model.repository.DirectRepository;
+import chat.model.repository.RankRepository;
+import chat.model.repository.SmileRepository;
+import chat.model.repository.UserRepository;
 import chat.observer.Observer;
 import chat.sevice.Bot;
 import chat.util.*;
@@ -220,20 +223,20 @@ public class ChatController implements Observer {
     }
 
     private void playSound(String message) {
-        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
         if (isDirect(message)) {
-            String directMessageSound = settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
-            double soundDirectMessageVolume = Double.valueOf(
-                    settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound(paths.getSoundsDirectory() + directMessageSound, isSoundEnable,
-                    soundDirectMessageVolume);
+            play(Settings.SOUND_DIRECT_MESSAGE, Settings.SOUND_DIRECT_MESSAGE_VOLUME);
         } else {
-            String messageSound = settings.getProperty(Settings.SOUND_MESSAGE);
-            double soundMessageVolume = Double.valueOf(
-                    settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound(paths.getSoundsDirectory() + messageSound, isSoundEnable,
-                    soundMessageVolume);
+            play(Settings.SOUND_MESSAGE, Settings.SOUND_MESSAGE_VOLUME);
         }
+    }
+
+    private void play(String sound, String soundVolume) {
+        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
+        String messageSound = settings.getProperty(sound);
+        double soundDirectMessageVolume = Double.valueOf(
+                settings.getProperty(soundVolume)) / 100;
+        playSound(paths.getSoundsDirectory() + messageSound, isSoundEnable,
+                soundDirectMessageVolume);
     }
 
     private List<Node> getMessageNodes(String message) {
