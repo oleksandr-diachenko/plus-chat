@@ -215,7 +215,7 @@ public class ChatController implements Observer {
 
     private void addUserMessageToMessageContainer(TextFlow messageContainer, String message) {
         List<Node> messageNodes = getMessageNodes(message);
-        messageNodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
+        messageNodes.forEach(node -> addNodesToMessageContainer(messageContainer, node));
     }
 
     private void addNodesToMessageContainer(TextFlow textFlow, Node... nodes) {
