@@ -15,6 +15,7 @@ public class OrderCommand implements ICommand {
 
     private static final int MINIMAL_ARGUMENTS_LENGTH = 3;
     private static final int ORDER_INDEX_FROM = 2;
+    private static final String COMMAND_NAME = "!order";
     private final UserRepository userRepository;
     private final String nick;
     private OrderRepository orderRepository;
@@ -30,19 +31,19 @@ public class OrderCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        String[] parts = command.split(" ");
-        if (!correctArguments(parts)) {
+        String[] arguments = command.split(" ");
+        if (!correctArguments(arguments)) {
             return false;
         }
-        points = Long.parseLong(parts[1]);
-        order = getOrder(parts);
+        points = Long.parseLong(arguments[1]);
+        order = getOrder(arguments);
         return true;
     }
 
-    private boolean correctArguments(String[] parts) {
-        return parts.length >= MINIMAL_ARGUMENTS_LENGTH
-                && "!order".equalsIgnoreCase(parts[0])
-                && StringUtils.isNumeric(parts[1]);
+    private boolean correctArguments(String[] arguments) {
+        return arguments.length >= MINIMAL_ARGUMENTS_LENGTH
+                && COMMAND_NAME.equalsIgnoreCase(arguments[0])
+                && StringUtils.isNumeric(arguments[1]);
     }
 
     private String getOrder(String[] parts) {
