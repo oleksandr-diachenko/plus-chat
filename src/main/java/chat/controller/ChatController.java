@@ -38,7 +38,6 @@ import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -193,7 +192,7 @@ public class ChatController implements Observer {
     }
 
     private void addNewMessageToContainer() {
-        if(messages.size() > Integer.parseInt(settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
+        if (messages.size() > Integer.parseInt(settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
             messages.remove(0);
             messageIndex--;
             container.getChildren().remove(0);
@@ -243,18 +242,12 @@ public class ChatController implements Observer {
         boolean isDirect = isDirect(message);
         List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            Text node = getText(word + " ", getWordId(isDirect), getWordColor(isDirect));
             Optional<Smile> smileByName = smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
                 Smile smile = smileByName.get();
-                try {
-                    nodes.add(getGraphicLabel(smile));
-                } catch (FileNotFoundException exception) {
-                    logger.error(exception.getMessage(), exception);
-                    nodes.add(node);
-                }
+                nodes.add(getGraphicLabel(smile));
             } else {
-                nodes.add(node);
+                nodes.add(getText(word + " ", getWordId(isDirect), getWordColor(isDirect)));
             }
         }
         return nodes;
@@ -286,7 +279,7 @@ public class ChatController implements Observer {
         mediaPlayer.play();
     }
 
-    private Label getGraphicLabel(Smile smile) throws FileNotFoundException {
+    private Label getGraphicLabel(Smile smile) {
         Label image = new Label();
         try (FileInputStream fis = new FileInputStream(smile.getImagePath())) {
             ImageView imageView = new ImageView(new Image(fis));
@@ -294,7 +287,7 @@ public class ChatController implements Observer {
             return image;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new FileNotFoundException(exception.getMessage());
+            return new Label(smile.getName());
         }
     }
 
