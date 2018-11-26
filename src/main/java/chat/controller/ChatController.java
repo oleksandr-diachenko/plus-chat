@@ -230,12 +230,9 @@ public class ChatController implements Observer {
     }
 
     private void play(String sound, String soundVolume) {
-        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
         String messageSound = settings.getProperty(sound);
-        double soundDirectMessageVolume = Double.valueOf(
-                settings.getProperty(soundVolume)) / 100;
-        playSound(paths.getSoundsDirectory() + messageSound, isSoundEnable,
-                soundDirectMessageVolume);
+        double soundDirectMessageVolume = Double.valueOf(settings.getProperty(soundVolume)) / 100;
+        playSound(paths.getSoundsDirectory() + messageSound, soundDirectMessageVolume);
     }
 
     private List<Node> getMessageNodes(String message) {
@@ -270,9 +267,10 @@ public class ChatController implements Observer {
         return message.split(" ");
     }
 
-    private void playSound(String path, boolean isSoundEnable, double volume) {
+    private void playSound(String path, double volume) {
         Media sound = new Media(new File(path).toURI().toString());
         MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
         mediaPlayer.setMute(!isSoundEnable);
         mediaPlayer.setVolume(volume);
         mediaPlayer.play();
