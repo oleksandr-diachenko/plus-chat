@@ -37,8 +37,8 @@ public class ChatDialog extends AbstractDialog {
 
     @Override
     protected void setEvents(Stage stage) {
-        stage.setOnCloseRequest(we -> {
-            we.consume();
+        stage.setOnCloseRequest(event -> {
+            event.consume();
             getScene().setFadeOutTransition();
         });
     }

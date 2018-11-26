@@ -1,9 +1,9 @@
 package chat.component;
 
 import chat.controller.DataController;
-import chat.util.*;
+import chat.util.StringUtil;
+import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * @author Alexander Diachenko.
@@ -23,36 +23,39 @@ import java.util.*;
 @NoArgsConstructor
 public class DataDialog extends AbstractDialog {
 
+    private static final String FONT_SIZE = "12";
+    private static final String FONT_COLOR = "#474747";
+    private static final int WRAPPING_WIDTH = 140;
     private Set<String> fields;
     private Set<Object> data;
     private StyleUtil styleUtil;
+    private DataController dataController;
 
     @Autowired
-    public DataDialog(StyleUtil styleUtil) {
+    public DataDialog(StyleUtil styleUtil, DataController dataController) {
         this.styleUtil = styleUtil;
+        this.dataController = dataController;
     }
 
     @Override
     protected void setStageSettings(Stage stage) {
         stage.setResizable(false);
-        DataController dataController = (DataController) getRoot().getUserData();
         TableView<Object> table = dataController.getTable();
-        initData(table, data, fields);
+        initData(table);
     }
 
-    private void initData(TableView<Object> table, Set<Object> objects, Set<String> fields) {
+    private void initData(TableView<Object> table) {
         fields.forEach(field -> {
             TableColumn<Object, Object> column = new TableColumn<>(getFormatted(field));
             column.setCellValueFactory(new PropertyValueFactory<>(field));
             column.setCellFactory(cell -> getTableCell());
             table.getColumns().add(column);
         });
-        ObservableList<Object> data = FXCollections.observableArrayList(objects);
-        table.setItems(data);
+        table.setItems(FXCollections.observableArrayList(data));
     }
 
-    private String getFormatted(String fieldName) {
-        String[] words = fieldName.split("(?=\\p{Upper})");
+    private String getFormatted(String field) {
+        String[] words = field.split("(?=\\p{Upper})");
         StringBuilder builder = new StringBuilder();
         for (String word : words) {
             builder.append(word.toLowerCase()).append(" ");
@@ -69,8 +72,8 @@ public class DataDialog extends AbstractDialog {
                     Text text = new Text();
                     String string = item.toString();
                     text.setText(StringUtil.getUTF8String(string));
-                    text.setStyle(styleUtil.getTextStyle("12", "#474747"));
-                    text.setWrappingWidth(140);
+                    text.setStyle(styleUtil.getTextStyle(FONT_SIZE, FONT_COLOR));
+                    text.setWrappingWidth(WRAPPING_WIDTH);
                     setGraphic(text);
                 }
             }
