@@ -8,6 +8,7 @@ import java.time.LocalDateTime;
  */
 public class UpCommand implements ICommand {
 
+    private static final String COMMAND_NAME = "!up";
     private LocalDateTime start;
 
     public UpCommand(LocalDateTime start) {
@@ -16,7 +17,7 @@ public class UpCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        return "!up".equalsIgnoreCase(command);
+        return COMMAND_NAME.equalsIgnoreCase(command);
     }
 
     @Override

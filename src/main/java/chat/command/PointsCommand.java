@@ -7,6 +7,7 @@ import java.util.Optional;
 
 public class PointsCommand implements ICommand {
 
+    private static final String COMMAND_NAME = "!points";
     private UserRepository userRepository;
     private String nick;
 
@@ -17,16 +18,16 @@ public class PointsCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        return "!points".equalsIgnoreCase(command);
+        return COMMAND_NAME.equalsIgnoreCase(command);
     }
 
     @Override
     public String execute() {
         Optional<User> userByName = userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            User user = userByName.get();
-            return user.getCustomName() + ", you have " + user.getPoints() + " points.";
+        if (userByName.isEmpty()) {
+            return "";
         }
-        return "";
+        User user = userByName.get();
+        return user.getCustomName() + ", you have " + user.getPoints() + " points.";
     }
 }

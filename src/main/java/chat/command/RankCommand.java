@@ -12,6 +12,7 @@ import java.util.Optional;
  */
 public class RankCommand implements ICommand {
 
+    private static final String COMMAND_NAME = "!rank";
     private String nick;
     private UserRepository userRepository;
     private RankRepository rankRepository;
@@ -25,13 +26,13 @@ public class RankCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        return "!rank".equalsIgnoreCase(command);
+        return COMMAND_NAME.equalsIgnoreCase(command);
     }
 
     @Override
     public String execute() {
         Optional<User> userByName = userRepository.getUserByName(nick);
-        if (!userByName.isPresent()) {
+        if (userByName.isEmpty()) {
             return "";
         }
         User user = userByName.get();

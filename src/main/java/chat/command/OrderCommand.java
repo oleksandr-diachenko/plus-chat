@@ -57,18 +57,18 @@ public class OrderCommand implements ICommand {
     @Override
     public String execute() {
         Optional<User> userByName = userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            User user = userByName.get();
-            long userPoints = user.getPoints();
-            if (notEnoughPoints(userPoints)) {
-                return user.getCustomName() + ", you don't have enough points! (You have " + userPoints + " points)";
-            }
-            orderRepository.add(getOrder(user));
-            user.setPoints(userPoints - points);
-            userRepository.update(user);
-            return user.getCustomName() + ", your order is accepted (" + order + ") (" + points + " points)";
+        if (userByName.isEmpty()) {
+            return "";
         }
-        return "";
+        User user = userByName.get();
+        long userPoints = user.getPoints();
+        if (notEnoughPoints(userPoints)) {
+            return user.getCustomName() + ", you don't have enough points! (You have " + userPoints + " points)";
+        }
+        orderRepository.add(getOrder(user));
+        user.setPoints(userPoints - points);
+        userRepository.update(user);
+        return user.getCustomName() + ", your order is accepted (" + order + ") (" + points + " points)";
     }
 
     private Order getOrder(User user) {

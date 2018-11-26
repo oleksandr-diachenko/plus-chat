@@ -11,6 +11,7 @@ public class RollCommand implements ICommand {
 
     private static final int ARGUMENTS_LENGTH = 2;
     private static final int WIN_PERCENT = 75;
+    private static final String COMMAND_NAME = "!roll";
     private UserRepository userRepository;
     private String nick;
     private long points;
@@ -22,41 +23,44 @@ public class RollCommand implements ICommand {
 
     @Override
     public boolean canExecute(String command) {
-        String[] parts = command.split(" ");
-        if (!correctArguments(parts)) {
+        String[] arguments = command.split(" ");
+        if (!correctArguments(arguments)) {
             return false;
         }
-        points = Long.parseLong(parts[1]);
+        points = Long.parseLong(arguments[1]);
         return true;
     }
 
-    private boolean correctArguments(String[] parts) {
-        return parts.length >= ARGUMENTS_LENGTH
-                && "!roll".equalsIgnoreCase(parts[0])
-                && StringUtils.isNumeric(parts[1]);
+    private boolean correctArguments(String[] arguments) {
+        return arguments.length >= ARGUMENTS_LENGTH
+                && COMMAND_NAME.equalsIgnoreCase(arguments[0])
+                && StringUtils.isNumeric(arguments[1]);
     }
 
     @Override
     public String execute() {
-        int percent = new Random().nextInt(100);
         Optional<User> userByName = userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            User user = userByName.get();
-            long userPoints = user.getPoints();
-            if (notEnoughPoints(userPoints)) {
-                return user.getCustomName() + ", you don't have enough points!" + getStringPoints(userPoints);
-            }
-            if (win(percent)) {
-                userPoints += getWinPoints();
-                updateUser(user, userPoints);
-                return user.getCustomName() + ", you won" + " " + getWinPoints() + " points!" + getStringPoints(userPoints);
-            } else {
-                userPoints -= points;
-                updateUser(user, userPoints);
-                return user.getCustomName() + ", you lost" + " " + points + " points!" + getStringPoints(userPoints);
-            }
+        if (userByName.isEmpty()) {
+            return "";
         }
-        return "";
+        User user = userByName.get();
+        long userPoints = user.getPoints();
+        if (notEnoughPoints(userPoints)) {
+            return user.getCustomName() + ", you don't have enough points!" + getStringPoints(userPoints);
+        }
+        if (win(getPercent())) {
+            userPoints += getWinPoints();
+            updateUser(user, userPoints);
+            return user.getCustomName() + ", you won" + " " + getWinPoints() + " points!" + getStringPoints(userPoints);
+        } else {
+            userPoints -= points;
+            updateUser(user, userPoints);
+            return user.getCustomName() + ", you lost" + " " + points + " points!" + getStringPoints(userPoints);
+        }
+    }
+
+    private int getPercent() {
+        return new Random().nextInt(100);
     }
 
     private long getWinPoints() {
