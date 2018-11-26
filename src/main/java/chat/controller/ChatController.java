@@ -244,8 +244,7 @@ public class ChatController implements Observer {
         for (String word : getWords(message)) {
             Optional<Smile> smileByName = smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
-                Smile smile = smileByName.get();
-                nodes.add(getGraphicLabel(smile));
+                nodes.add(getSmileLabel(smileByName.get()));
             } else {
                 nodes.add(getText(word + " ", getWordId(isDirect), getWordColor(isDirect)));
             }
@@ -279,7 +278,7 @@ public class ChatController implements Observer {
         mediaPlayer.play();
     }
 
-    private Label getGraphicLabel(Smile smile) {
+    private Label getSmileLabel(Smile smile) {
         Label image = new Label();
         try (FileInputStream fis = new FileInputStream(smile.getImagePath())) {
             ImageView imageView = new ImageView(new Image(fis));
