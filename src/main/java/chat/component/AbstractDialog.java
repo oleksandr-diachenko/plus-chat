@@ -18,10 +18,10 @@ public abstract class AbstractDialog {
     private final static Logger logger = LogManager.getLogger(AbstractDialog.class);
 
     @Autowired
-    protected SpringStageLoader springStageLoader;
+    private SpringStageLoader springStageLoader;
     @Autowired
     protected Paths paths;
-    private UndecoratorScene undecorator;
+    private UndecoratorScene scene;
     private Stage stage;
     private Region root;
 
@@ -29,8 +29,8 @@ public abstract class AbstractDialog {
         Stage stage = new Stage();
         this.stage = stage;
         try {
-            UndecoratorScene undecorator = getScene(stage, getRootRegion());
-            stage.setScene(undecorator);
+            UndecoratorScene scene = getScene(stage, getRootRegion());
+            stage.setScene(scene);
 
             initOwner(owner, stage);
             setStageSettings(stage);
@@ -60,16 +60,16 @@ public abstract class AbstractDialog {
     protected abstract String getFXMLName();
 
     private UndecoratorScene getScene(Stage stage, Region root) {
-        undecorator = new UndecoratorScene(stage, root);
-        undecorator.getStylesheets().add(getCSSName());
-        undecorator.setBackgroundOpacity(0.2);
-        return undecorator;
+        scene = new UndecoratorScene(stage, root);
+        scene.getStylesheets().add(getCSSName());
+        scene.setBackgroundOpacity(0.2);
+        return scene;
     }
 
     protected abstract String getCSSName();
 
     protected UndecoratorScene getScene() {
-        return undecorator;
+        return scene;
     }
 
     protected String getTitleName() {
