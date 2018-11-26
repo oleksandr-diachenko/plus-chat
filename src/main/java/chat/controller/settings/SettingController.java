@@ -3,7 +3,9 @@ package chat.controller.settings;
 import chat.component.ConfirmDialog;
 import chat.controller.ChatController;
 import chat.controller.ConfirmController;
-import chat.util.*;
+import chat.util.AppProperty;
+import chat.util.Settings;
+import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.stage.Stage;
@@ -12,7 +14,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
-import java.util.*;
+import java.util.Properties;
 
 /**
  * @author Alexander Diachenko.
@@ -22,7 +24,7 @@ import java.util.*;
 public class SettingController {
 
     @FXML
-    public Node settingsRoot;
+    public Node root;
     private Properties settings;
     private AppProperty settingsProperties;
     private StyleUtil styleUtil;
@@ -55,10 +57,10 @@ public class SettingController {
 
     @FXML
     public void initialize() {
-        settingColorController.setSettingsRoot(settingsRoot);
-        settingFontController.setSettingsRoot(settingsRoot);
+        settingColorController.setRoot(root);
+        settingFontController.setRoot(root);
         settings = settingsProperties.getProperty();
-        settingsRoot.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
+        root.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
     }
 
@@ -90,10 +92,6 @@ public class SettingController {
     }
 
     private Stage getStage() {
-        return (Stage) settingsRoot.getScene().getWindow();
-    }
-
-    public Node getRoot() {
-        return settingsRoot;
+        return (Stage) root.getScene().getWindow();
     }
 }

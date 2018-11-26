@@ -1,9 +1,15 @@
 package chat.controller.settings;
 
-import chat.util.*;
+import chat.util.AppProperty;
+import chat.util.FileUtil;
+import chat.util.Paths;
+import chat.util.Settings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,18 +74,10 @@ public class SettingSoundController {
     }
 
     private void initMessageSound() {
-        try {
-            Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
-            Set<String> soundNames = new HashSet<>();
-            sounds.forEach(sound -> soundNames.add(sound.getName()));
-            messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-            messageSoundChoiceBox.setValue(settings.getProperty(Settings.SOUND_MESSAGE));
-        } catch (FileNotFoundException exception) {
-            logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Sound directory not found.\n " +
-                    "Put your sounds to " + paths.getSoundsDirectory() +
-                    " and restart application.", exception);
-        }
+        Set<String> soundNames = new HashSet<>();
+        getSounds().forEach(sound -> soundNames.add(sound.getName()));
+        messageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+        messageSoundChoiceBox.setValue(settings.getProperty(Settings.SOUND_MESSAGE));
     }
 
     private void initMessageSoundVolume() {
@@ -92,13 +90,16 @@ public class SettingSoundController {
     }
 
     private void initDirectMessageSound() {
+        Set<String> soundNames = new HashSet<>();
+        getSounds().forEach(sound -> soundNames.add(sound.getName()));
+        directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
+        directMessageSoundChoiceBox.setValue(settings.getProperty(
+                Settings.SOUND_DIRECT_MESSAGE));
+    }
+
+    private Set<File> getSounds() {
         try {
-            Set<File> sounds = FileUtil.getFilesFromFolder("./sound/");
-            Set<String> soundNames = new HashSet<>();
-            sounds.forEach(sound -> soundNames.add(sound.getName()));
-            directMessageSoundChoiceBox.setItems(FXCollections.observableArrayList(soundNames));
-            directMessageSoundChoiceBox.setValue(settings.getProperty(
-                    Settings.SOUND_DIRECT_MESSAGE));
+            return FileUtil.getFilesFromFolder(paths.getSoundsDirectory());
         } catch (FileNotFoundException exception) {
             logger.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +

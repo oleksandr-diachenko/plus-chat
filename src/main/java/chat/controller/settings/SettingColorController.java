@@ -1,7 +1,6 @@
 package chat.controller.settings;
 
 import chat.component.ChatDialog;
-import chat.component.SettingsDialog;
 import chat.controller.ApplicationStyle;
 import chat.util.AppProperty;
 import chat.util.ColorUtil;
@@ -40,7 +39,7 @@ public class SettingColorController {
     private ApplicationStyle applicationStyle;
     private StyleUtil styleUtil;
     private Properties settings;
-    private Node settingsRoot;
+    private Node root;
 
     @Autowired
     public SettingColorController(AppProperty settingsProperties, ChatDialog chatDialog,
@@ -66,7 +65,7 @@ public class SettingColorController {
         baseColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.ROOT_BASE_COLOR)));
         baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setBaseColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -75,7 +74,7 @@ public class SettingColorController {
                 Settings.ROOT_BACKGROUND_COLOR)));
         backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -83,7 +82,7 @@ public class SettingColorController {
         nickColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.FONT_NICK_COLOR)));
         nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -92,7 +91,7 @@ public class SettingColorController {
                 Settings.FONT_SEPARATOR_COLOR)));
         separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -101,7 +100,7 @@ public class SettingColorController {
                 Settings.FONT_MESSAGE_COLOR)));
         messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -110,7 +109,7 @@ public class SettingColorController {
                 Settings.FONT_DIRECT_MESSAGE_COLOR)));
         directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -135,7 +134,7 @@ public class SettingColorController {
         settingsProperties.setProperties(settings);
     }
 
-    void setSettingsRoot(Node settingsRoot) {
-        this.settingsRoot = settingsRoot;
+    void setRoot(Node root) {
+        this.root = root;
     }
 }

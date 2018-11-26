@@ -10,7 +10,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -25,8 +24,6 @@ public class SettingGeneralController {
 
     @FXML
     private Button randomizer;
-    @FXML
-    private GridPane settingsGeneralRoot;
     @FXML
     private ChoiceBox<String> languageChoiceBox;
     @FXML
@@ -87,7 +84,7 @@ public class SettingGeneralController {
 
     public void randomAction() {
         randomizer.setDisable(true);
-        randomizerDialog.openDialog(getStage());
+        randomizerDialog.openDialog(new Stage());
         Stage stage = randomizerDialog.getStage();
         stage.setOnCloseRequest(event -> randomizer.setDisable(false));
     }
@@ -99,10 +96,6 @@ public class SettingGeneralController {
             }
         }
         return "en";
-    }
-
-    private Stage getStage() {
-        return (Stage) settingsGeneralRoot.getScene().getWindow();
     }
 
     private Stage getOwner() {

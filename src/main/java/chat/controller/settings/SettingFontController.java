@@ -1,7 +1,6 @@
 package chat.controller.settings;
 
 import chat.component.ChatDialog;
-import chat.component.SettingsDialog;
 import chat.controller.ApplicationStyle;
 import chat.util.AppProperty;
 import chat.util.Settings;
@@ -31,7 +30,7 @@ public class SettingFontController {
     private StyleUtil styleUtil;
     private ChatDialog chatDialog;
     private Properties settings;
-    private Node settingsRoot;
+    private Node root;
 
     @Autowired
     public SettingFontController(AppProperty settingsProperties, ApplicationStyle applicationStyle,
@@ -55,7 +54,7 @@ public class SettingFontController {
         fontSizeSlider.valueProperty().addListener((ov, old_val, new_val) -> {
             fontSize.setText(String.valueOf(Math.round(new_val.doubleValue())));
             applicationStyle.setFontSize(String.valueOf(new_val));
-            styleUtil.setStyles(getChatRoot(), settingsRoot, applicationStyle);
+            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
         });
     }
 
@@ -69,7 +68,7 @@ public class SettingFontController {
         settingsProperties.setProperties(settings);
     }
 
-    void setSettingsRoot(Node settingsRoot) {
-        this.settingsRoot = settingsRoot;
+    void setRoot(Node root) {
+        this.root = root;
     }
 }
