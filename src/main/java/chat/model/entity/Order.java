@@ -3,7 +3,6 @@ package chat.model.entity;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.Comparator;
 
 /**
  * @author Alexander Diachenko.
@@ -25,10 +24,6 @@ public class Order implements Comparable<Order>, Serializable {
 
     @Override
     public int compareTo(Order order) {
-        return Comparator.comparing(Order::getUser)
-                .thenComparingLong(Order::getPoints)
-                .thenComparing(Order::getOrder)
-                .thenComparing(Order::getTakenDate)
-                .compare(this, order);
+        return user.compareTo(order.getUser());
     }
 }
