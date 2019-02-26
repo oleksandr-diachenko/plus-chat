@@ -32,14 +32,12 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getAll() {
         try {
-            directs = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
-                    }));
+            directs = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Direct>>() {});
             return directs;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);
         }
-        return new TreeSet<>();
+        return new HashSet<>();
     }
 
     @Override

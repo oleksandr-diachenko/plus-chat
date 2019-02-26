@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -32,9 +30,7 @@ public class JSONOrderRepository implements OrderRepository {
     @Override
     public Set<Order> getAll() {
         try {
-            orders = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Order>>() {
-                    }));
+            orders = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Order>>() {});
             return orders;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

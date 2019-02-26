@@ -32,14 +32,12 @@ public class JSONSmileRepository implements SmileRepository {
     @Override
     public Set<Smile> getAll() {
         try {
-            smiles = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Smile>>() {
-                    }));
+            smiles = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Smile>>() {});
             return smiles;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);
         }
-        return new TreeSet<>();
+        return new HashSet<>();
     }
 
     @Override

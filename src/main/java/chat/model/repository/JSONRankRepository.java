@@ -10,8 +10,6 @@ import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
@@ -35,9 +33,8 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Set<Rank> getAll() {
         try {
-            ranks = new TreeSet<>(new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
-                    })));
+            ranks = mapper.readValue(JSONParser.readFile(path), new TypeReference<TreeSet<Rank>>() {});
+            System.out.println(ranks);
             return ranks;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

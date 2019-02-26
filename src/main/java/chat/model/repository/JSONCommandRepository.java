@@ -4,8 +4,6 @@ import chat.model.entity.Command;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Repository;
@@ -13,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -37,9 +34,7 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Set<Command> getAll() {
         try {
-            commands = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
-                    }));
+            commands = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Command>>() {});
             return commands;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

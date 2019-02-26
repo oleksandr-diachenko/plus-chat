@@ -11,7 +11,6 @@ import org.springframework.stereotype.Repository;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -35,9 +34,7 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getAll() {
         try {
-            users = new HashSet<>(
-                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<User>>() {
-                    }));
+            users =  mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<User>>() {});
             return users;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);
