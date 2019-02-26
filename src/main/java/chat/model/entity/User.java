@@ -20,6 +20,7 @@ public class User implements Comparable<User>, Serializable {
     private String firstMessageDate;
     private String lastMessageDate;
     private long exp;
+    private long points;
 
     public String getCustomName() {
         if (customName != null) {

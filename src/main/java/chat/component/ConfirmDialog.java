@@ -11,19 +11,14 @@ import org.springframework.stereotype.Component;
 public class ConfirmDialog extends AbstractDialog {
 
     @Override
-    protected void setStageSettings(final Stage stage) {
+    protected void setStageSettings(Stage stage) {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
     }
 
     @Override
-    protected void initOwner(final Stage owner, final Stage stage) {
+    protected void initOwner(Stage owner, Stage stage) {
         stage.initOwner(owner);
-    }
-
-    @Override
-    protected void setEvents(final Stage stage) {
-        //do nothing
     }
 
     @Override
@@ -33,11 +28,6 @@ public class ConfirmDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return this.paths.getConfirmCSS();
-    }
-
-    @Override
-    protected String getTitleName() {
-        return "";
+        return paths.getConfirmCSS();
     }
 }

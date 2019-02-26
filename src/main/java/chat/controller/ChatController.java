@@ -5,7 +5,10 @@ import chat.model.entity.Direct;
 import chat.model.entity.Rank;
 import chat.model.entity.Smile;
 import chat.model.entity.User;
-import chat.model.repository.*;
+import chat.model.repository.DirectRepository;
+import chat.model.repository.RankRepository;
+import chat.model.repository.SmileRepository;
+import chat.model.repository.UserRepository;
 import chat.observer.Observer;
 import chat.sevice.Bot;
 import chat.util.*;
@@ -35,7 +38,6 @@ import org.springframework.stereotype.Controller;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.*;
 
@@ -63,7 +65,6 @@ public class ChatController implements Observer {
     private Properties settings;
     private RankRepository rankRepository;
     private UserRepository userRepository;
-    private CommandRepository commandRepository;
     private SmileRepository smileRepository;
     private DirectRepository directRepository;
     private int messageIndex = 0;
@@ -73,17 +74,18 @@ public class ChatController implements Observer {
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
+    @Autowired
+    private Bot listener;
+
 
     @Autowired
-    public ChatController(final RankRepository rankRepository, final UserRepository userRepository,
-                          final CommandRepository commandRepository, final SmileRepository smileRepository,
-                          final DirectRepository directRepository,
-                          @Qualifier("settingsProperties") final AppProperty settingsProperties,
-                          @Qualifier("twitchProperties") final AppProperty twitchProperties,
-                          final SettingsDialog settingsDialog, final Paths paths, final StyleUtil styleUtil) {
+    public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
+                          DirectRepository directRepository,
+                          @Qualifier("settingsProperties") AppProperty settingsProperties,
+                          @Qualifier("twitchProperties") AppProperty twitchProperties,
+                          SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
-        this.commandRepository = commandRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
         this.settingsProperties = settingsProperties;
@@ -95,15 +97,15 @@ public class ChatController implements Observer {
 
     @FXML
     public void initialize() {
-        this.settings = this.settingsProperties.getProperty();
-        this.isOnTop = Boolean.parseBoolean(this.settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
+        settings = settingsProperties.getProperty();
+        isOnTop = Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
-        this.root.setStyle(this.styleUtil.getRootStyle(
-                this.settings.getProperty(Settings.ROOT_BASE_COLOR),
-                this.settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
+        root.setStyle(styleUtil.getRootStyle(
+                settings.getProperty(Settings.ROOT_BASE_COLOR),
+                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
         ));
-        this.scrollPane.prefHeightProperty().bind(this.root.heightProperty());
-        this.scrollPane.vvalueProperty().bind(this.container.heightProperty());
+        scrollPane.prefHeightProperty().bind(root.heightProperty());
+        scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
     }
 
@@ -112,12 +114,10 @@ public class ChatController implements Observer {
     }
 
     private void startBot() {
-        final Thread thread = new Thread(() -> {
-            final Properties connect = this.twitchProperties.getProperty();
-            final Bot listener = new Bot(connect, this.userRepository, this.rankRepository,
-                    this.commandRepository);
+        Thread thread = new Thread(() -> {
+            Properties connect = twitchProperties.getProperty();
             listener.addObserver(this);
-            final Configuration config = new Configuration.Builder()
+            Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("botname"))
                     .addServer("irc.chat.twitch.tv", 6667)
                     .setServerPassword(connect.getProperty("oauth"))
@@ -131,7 +131,7 @@ public class ChatController implements Observer {
             } catch (IOException | IrcException exception) {
                 logger.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
-                        "Check properties in " + this.paths.getTwitchProperties() + " " +
+                        "Check properties in " + paths.getTwitchProperties() + " " +
                         "and restart application.", exception);
             }
         });
@@ -140,163 +140,158 @@ public class ChatController implements Observer {
     }
 
     public void settingsOnAction() {
-        this.settingsDialog.openDialog(getStage());
-        this.setting.setDisable(true);
+        settingsDialog.openDialog(getStage());
+        setting.setDisable(true);
     }
 
     public void onTopOnAction() {
         reverseOnTop();
 
-        getStage().setAlwaysOnTop(this.isOnTop);
+        getStage().setAlwaysOnTop(isOnTop);
         setOnTopImage();
-        this.settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(this.isOnTop));
-        this.settingsProperties.setProperties(this.settings);
+        settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(isOnTop));
+        settingsProperties.setProperties(settings);
     }
 
     private void reverseOnTop() {
-        this.isOnTop = !this.isOnTop;
+        isOnTop = !isOnTop;
     }
 
     private void setOnTopImage() {
-        final ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
+        ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
-        this.onTop.setGraphic(imageView);
+        onTop.setGraphic(imageView);
     }
 
     private String getOnTopImagePath() {
-        String name = this.paths.getEnabledPin();
-        if (!this.isOnTop) {
-            name = this.paths.getDisabledPin();
+        String name = paths.getEnabledPin();
+        if (!isOnTop) {
+            name = paths.getDisabledPin();
         }
         return name;
     }
 
     @Override
-    public void update(final String nick, final String message) {
-        final TextFlow messageContainer = new TextFlow();
+    public void update(String nick, String message) {
+        TextFlow messageContainer = new TextFlow();
         String userName = nick;
-        final Optional<User> userByName = this.userRepository.getUserByName(nick);
+        Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isPresent()) {
-            final User user = userByName.get();
+            User user = userByName.get();
             userName = user.getCustomName();
-            final Label rankImage = getRankImage(user);
+            Label rankImage = getRankImage(user);
             addNodesToMessageContainer(messageContainer, rankImage);
         }
         addUserNameToMessageContainer(messageContainer, userName);
         addSeparatorToMessageContainer(messageContainer, ": ");
         addUserMessageToMessageContainer(messageContainer, message);
-        this.messages.add(messageContainer);
+        messages.add(messageContainer);
         addNewMessageToContainer();
         playSound(message);
     }
 
     private void addNewMessageToContainer() {
-        this.container.getChildren().add(this.messages.get(this.messageIndex++));
+        if (messages.size() > Integer.parseInt(settings.getProperty(Settings.MESSAGE_MAX_DISPLAYED))) {
+            messages.remove(0);
+            messageIndex--;
+            container.getChildren().remove(0);
+        }
+        container.getChildren().add(messages.get(messageIndex++));
     }
 
-    private void addSeparatorToMessageContainer(final TextFlow messageContainer,
-                                                final String messageSeparator) {
-        final Text separator = getText(messageSeparator, "separator",
-                this.settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
+    private void addSeparatorToMessageContainer(TextFlow messageContainer, String messageSeparator) {
+        Text separator = getText(messageSeparator, "separator",
+                settings.getProperty(Settings.FONT_SEPARATOR_COLOR));
         addNodesToMessageContainer(messageContainer, separator);
     }
 
-    private void addUserNameToMessageContainer(final TextFlow messageContainer, final String userName) {
-        final Text nick = getText(userName, "user-name",
-                this.settings.getProperty(Settings.FONT_NICK_COLOR));
+    private void addUserNameToMessageContainer(TextFlow messageContainer, String userName) {
+        Text nick = getText(userName, "user-name",
+                settings.getProperty(Settings.FONT_NICK_COLOR));
         addNodesToMessageContainer(messageContainer, nick);
     }
 
-    private void addUserMessageToMessageContainer(final TextFlow messageContainer, final String message) {
-        final List<Node> messageNodes = getMessageNodes(message);
-        messageNodes.iterator().forEachRemaining(node -> addNodesToMessageContainer(messageContainer, node));
+    private void addUserMessageToMessageContainer(TextFlow messageContainer, String message) {
+        List<Node> messageNodes = getMessageNodes(message);
+        messageNodes.forEach(node -> addNodesToMessageContainer(messageContainer, node));
     }
 
-    private void addNodesToMessageContainer(final TextFlow textFlow, final Node... nodes) {
+    private void addNodesToMessageContainer(TextFlow textFlow, Node... nodes) {
         textFlow.getChildren().addAll(nodes);
     }
 
-    private void playSound(final String message) {
-        final boolean isSoundEnable = Boolean.parseBoolean(this.settings.getProperty(Settings.SOUND_ENABLE));
+    private void playSound(String message) {
         if (isDirect(message)) {
-            final String directMessageSound = this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE);
-            final double soundDirectMessageVolume = Double.valueOf(
-                    this.settings.getProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + directMessageSound, isSoundEnable,
-                    soundDirectMessageVolume);
+            play(Settings.SOUND_DIRECT_MESSAGE, Settings.SOUND_DIRECT_MESSAGE_VOLUME);
         } else {
-            final String messageSound = this.settings.getProperty(Settings.SOUND_MESSAGE);
-            final double soundMessageVolume = Double.valueOf(
-                    this.settings.getProperty(Settings.SOUND_MESSAGE_VOLUME)) / 100;
-            playSound(this.paths.getSoundsDirectory() + messageSound, isSoundEnable,
-                    soundMessageVolume);
+            play(Settings.SOUND_MESSAGE, Settings.SOUND_MESSAGE_VOLUME);
         }
     }
 
-    private List<Node> getMessageNodes(final String message) {
-        final boolean isDirect = isDirect(message);
-        final List<Node> nodes = new ArrayList<>();
+    private void play(String sound, String soundVolume) {
+        String messageSound = settings.getProperty(sound);
+        double soundDirectMessageVolume = Double.valueOf(settings.getProperty(soundVolume)) / 100;
+        playSound(paths.getSoundsDirectory() + messageSound, soundDirectMessageVolume);
+    }
+
+    private List<Node> getMessageNodes(String message) {
+        boolean isDirect = isDirect(message);
+        List<Node> nodes = new ArrayList<>();
         for (String word : getWords(message)) {
-            final Text node = getText(word + " ", getWordId(isDirect), getWordColor(isDirect));
-            final Optional<Smile> smileByName = this.smileRepository.getSmileByName(word);
+            Optional<Smile> smileByName = smileRepository.getSmileByName(word);
             if (smileByName.isPresent()) {
-                final Smile smile = smileByName.get();
-                try {
-                    nodes.add(getGraphicLabel(smile));
-                } catch (FileNotFoundException exception) {
-                    logger.error(exception.getMessage(), exception);
-                    nodes.add(node);
-                }
+                nodes.add(getSmileLabel(smileByName.get()));
             } else {
-                nodes.add(node);
+                nodes.add(getText(word + " ", getWordId(isDirect), getWordColor(isDirect)));
             }
         }
         return nodes;
     }
 
-    private String getWordColor(final boolean isDirect) {
+    private String getWordColor(boolean isDirect) {
         if (isDirect) {
-            return this.settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
+            return settings.getProperty(Settings.FONT_DIRECT_MESSAGE_COLOR);
         }
-        return this.settings.getProperty(Settings.FONT_MESSAGE_COLOR);
+        return settings.getProperty(Settings.FONT_MESSAGE_COLOR);
     }
 
-    private String getWordId(final boolean isDirect) {
+    private String getWordId(boolean isDirect) {
         if (isDirect) {
             return "user-direct-message";
         }
         return "user-message";
     }
 
-    private String[] getWords(final String message) {
+    private String[] getWords(String message) {
         return message.split(" ");
     }
 
-    private void playSound(final String path, final boolean isSoundEnable, final double volume) {
-        final Media sound = new Media(new File(path).toURI().toString());
-        final MediaPlayer mediaPlayer = new MediaPlayer(sound);
+    private void playSound(String path, double volume) {
+        Media sound = new Media(new File(path).toURI().toString());
+        MediaPlayer mediaPlayer = new MediaPlayer(sound);
+        boolean isSoundEnable = Boolean.parseBoolean(settings.getProperty(Settings.SOUND_ENABLE));
         mediaPlayer.setMute(!isSoundEnable);
         mediaPlayer.setVolume(volume);
         mediaPlayer.play();
     }
 
-    private Label getGraphicLabel(final Smile smile) throws FileNotFoundException {
-        final Label image = new Label();
+    private Label getSmileLabel(Smile smile) {
+        Label image = new Label();
         try (FileInputStream fis = new FileInputStream(smile.getImagePath())) {
-            final ImageView imageView = new ImageView(new Image(fis));
+            ImageView imageView = new ImageView(new Image(fis));
             image.setGraphic(imageView);
             return image;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new FileNotFoundException(exception.getMessage());
+            return new Label(smile.getName());
         }
     }
 
-    private boolean isDirect(final String message) {
-        final Set<Direct> directs = this.directRepository.getAll();
+    private boolean isDirect(String message) {
+        Set<Direct> directs = directRepository.getAll();
         for (Direct direct : directs) {
-            final String word = direct.getWord();
+            String word = direct.getWord();
             if (StringUtils.containsIgnoreCase(message, word)) {
                 return true;
             }
@@ -304,12 +299,12 @@ public class ChatController implements Observer {
         return false;
     }
 
-    private Label getRankImage(final User user) {
-        final Label image = new Label();
-        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+    private Label getRankImage(User user) {
+        Label image = new Label();
+        Rank rank = rankRepository.getRankByExp(user.getExp());
         image.setId("rank-image");
-        try (final FileInputStream fis = new FileInputStream(rank.getImagePath())) {
-            final ImageView imageView = new ImageView(new Image(fis));
+        try (FileInputStream fis = new FileInputStream(rank.getImagePath())) {
+            ImageView imageView = new ImageView(new Image(fis));
             imageView.setFitHeight(20);
             imageView.setFitWidth(20);
             image.setGraphic(imageView);
@@ -320,22 +315,26 @@ public class ChatController implements Observer {
         return new Label();
     }
 
-    private Text getText(final String string, final String id, final String color) {
-        final Text text = new Text(StringUtil.getUTF8String(string));
+    private Text getText(String string, String id, String color) {
+        Text text = new Text(StringUtil.getUTF8String(string));
         text.setId(id);
-        text.setStyle(this.styleUtil.getTextStyle(this.settings.getProperty(Settings.FONT_SIZE), color));
+        text.setStyle(styleUtil.getTextStyle(settings.getProperty(Settings.FONT_SIZE), color));
         return text;
     }
 
-    public void setSettings(final Properties settings) {
+    public void setSettings(Properties settings) {
         this.settings = settings;
     }
 
     public Button getSetting() {
-        return this.setting;
+        return setting;
     }
 
     private Stage getStage() {
-        return (Stage) this.container.getScene().getWindow();
+        return (Stage) container.getScene().getWindow();
+    }
+
+    public Bot getListener() {
+        return listener;
     }
 }

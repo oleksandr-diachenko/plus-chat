@@ -1,6 +1,7 @@
 package chat.command;
 
 import chat.model.entity.Command;
+import chat.model.entity.Status;
 import chat.model.repository.CommandRepository;
 
 import java.util.Optional;
@@ -10,25 +11,29 @@ import java.util.Optional;
  */
 public class JSONCommand implements ICommand {
 
-    private final CommandRepository commandRepository;
+    private CommandRepository commandRepository;
     private Command command;
 
-    public JSONCommand(final CommandRepository commandRepository) {
+    public JSONCommand(CommandRepository commandRepository) {
         this.commandRepository = commandRepository;
     }
 
     @Override
-    public boolean canExecute(final String command) {
-        final Optional<Command> commandByName = this.commandRepository.getCommandByName(command);
-        if(commandByName.isPresent()) {
+    public boolean canExecute(String command) {
+        Optional<Command> commandByName = commandRepository.getCommandByName(command);
+        if (commandByName.isPresent()) {
             this.command = commandByName.get();
-            return true;
+            return isEnabled();
         }
         return false;
     }
 
+    private boolean isEnabled() {
+        return command.getStatus() == Status.enabled;
+    }
+
     @Override
     public String execute() {
-        return this.command.getResponse();
+        return command.getResponse();
     }
 }

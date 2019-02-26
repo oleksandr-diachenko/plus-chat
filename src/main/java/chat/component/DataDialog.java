@@ -1,20 +1,20 @@
 package chat.component;
 
 import chat.controller.DataController;
-import chat.util.*;
+import chat.util.StringUtil;
+import chat.util.StyleUtil;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.Set;
 
 /**
  * @author Alexander Diachenko.
@@ -23,56 +23,66 @@ import java.util.*;
 @NoArgsConstructor
 public class DataDialog extends AbstractDialog {
 
+    private static final String FONT_SIZE = "12";
+    private static final String FONT_COLOR = "#474747";
+    private static final int WRAPPING_WIDTH = 140;
     private Set<String> fields;
     private Set<Object> data;
+    private StyleUtil styleUtil;
+    private DataController dataController;
+
+    @Autowired
+    public DataDialog(StyleUtil styleUtil, DataController dataController) {
+        this.styleUtil = styleUtil;
+        this.dataController = dataController;
+    }
 
     @Override
-    protected void setStageSettings(final Stage stage) {
+    protected void setStageSettings(Stage stage) {
         stage.setResizable(false);
-        final DataController dataController = (DataController) getRoot().getUserData();
-        final TableView<Object> table = dataController.getTable();
-        initData(table, data, fields);
+        TableView<Object> table = dataController.getTable();
+        initData(table);
     }
 
-    private void initData(final TableView<Object> table, final Set<Object> objects, final Set<String> fields) {
+    private void initData(TableView<Object> table) {
         fields.forEach(field -> {
-            final TableColumn<Object, Object> column = new TableColumn<>(field);
+            TableColumn<Object, Object> column = new TableColumn<>(getFormatted(field));
             column.setCellValueFactory(new PropertyValueFactory<>(field));
-            final Callback<TableColumn<Object, Object>,
-                    TableCell<Object, Object>> cellFactory = getCellFactory();
-            column.setCellFactory(cellFactory);
+            column.setCellFactory(cell -> getTableCell());
             table.getColumns().add(column);
         });
-        final ObservableList<Object> data = FXCollections.observableArrayList(objects);
-        table.setItems(data);
+        table.setItems(FXCollections.observableArrayList(data));
     }
 
-    private Callback<TableColumn<Object, Object>, TableCell<Object, Object>> getCellFactory() {
-        return new Callback<>() {
+    private String getFormatted(String field) {
+        String[] words = field.split("(?=\\p{Upper})");
+        StringBuilder builder = new StringBuilder();
+        for (String word : words) {
+            builder.append(word.toLowerCase()).append(" ");
+        }
+        return builder.toString().trim();
+    }
+
+    private TableCell<Object, Object> getTableCell() {
+        return new TableCell<>() {
             @Override
-            public TableCell<Object, Object> call(final TableColumn<Object, Object> param) {
-                return new TableCell<>() {
-                    @Override
-                    public void updateItem(final Object item, final boolean empty) {
-                        super.updateItem(item, empty);
-                        if (!isEmpty()) {
-                            this.setTextFill(Color.web("#474747"));
-                            setText(StringUtil.getUTF8String(item.toString()));
-                        }
-                    }
-                };
+            public void updateItem(Object item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!isEmpty()) {
+                    Text text = new Text();
+                    String string = item.toString();
+                    text.setText(StringUtil.getUTF8String(string));
+                    text.setStyle(styleUtil.getTextStyle(FONT_SIZE, FONT_COLOR));
+                    text.setWrappingWidth(WRAPPING_WIDTH);
+                    setGraphic(text);
+                }
             }
         };
     }
 
     @Override
-    protected void initOwner(final Stage owner, final Stage stage) {
+    protected void initOwner(Stage owner, Stage stage) {
         stage.initOwner(owner);
-    }
-
-    @Override
-    protected void setEvents(final Stage stage) {
-        //do nothing
     }
 
     @Override
@@ -82,19 +92,14 @@ public class DataDialog extends AbstractDialog {
 
     @Override
     protected String getCSSName() {
-        return this.paths.getDataCSS();
+        return paths.getDataCSS();
     }
 
-    @Override
-    protected String getTitleName() {
-        return "";
-    }
-
-    public void setTableFields(final Set<String> fields) {
+    public void setTableFields(Set<String> fields) {
         this.fields = fields;
     }
 
-    public void setTableData(final Set<Object> data) {
+    public void setTableData(Set<Object> data) {
         this.data = data;
     }
 }

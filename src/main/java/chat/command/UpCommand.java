@@ -8,20 +8,21 @@ import java.time.LocalDateTime;
  */
 public class UpCommand implements ICommand {
 
+    private static final String COMMAND_NAME = "!up";
     private LocalDateTime start;
 
-    public UpCommand(final LocalDateTime start) {
+    public UpCommand(LocalDateTime start) {
         this.start = start;
     }
 
     @Override
-    public boolean canExecute(final String command) {
-        return "!up".equalsIgnoreCase(command);
+    public boolean canExecute(String command) {
+        return COMMAND_NAME.equalsIgnoreCase(command);
     }
 
     @Override
     public String execute() {
-        final Duration between = Duration.between(this.start, LocalDateTime.now());
+        Duration between = Duration.between(start, LocalDateTime.now());
         return String.format(
                 "%02dh %02dm %02ds",
                 between.toHours(),

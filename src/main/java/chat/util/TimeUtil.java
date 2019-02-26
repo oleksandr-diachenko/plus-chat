@@ -14,7 +14,7 @@ public class TimeUtil {
      * @param date
      * @return String in dd-MM-yyyy HH:mm:ss format
      */
-    public static String getDateToString(final LocalDateTime date) {
+    public static String getDateToString(LocalDateTime date) {
         return date.format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 }

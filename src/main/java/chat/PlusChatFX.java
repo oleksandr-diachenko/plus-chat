@@ -19,7 +19,7 @@ public class PlusChatFX extends Application {
     private static ChatDialog chatDialog;
 
     @Autowired
-    public PlusChatFX(final ChatDialog chatDialog) {
+    public PlusChatFX(ChatDialog chatDialog) {
         PlusChatFX.chatDialog = chatDialog;
     }
 
@@ -33,7 +33,7 @@ public class PlusChatFX extends Application {
     }
 
     @Override
-    public void start(final Stage primaryStage) {
+    public void start(Stage primaryStage) {
         PlusChatFX.chatDialog.openDialog(primaryStage);
     }
 

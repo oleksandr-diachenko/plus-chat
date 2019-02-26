@@ -33,7 +33,7 @@ public class SpringStageLoader implements ApplicationContextAware {
     private static final String FXML_DIR = "/view/";
 
     @Autowired
-    public SpringStageLoader(@Qualifier("settingsProperties") final AppProperty settingsProperties) {
+    public SpringStageLoader(@Qualifier("settingsProperties") AppProperty settingsProperties) {
         this.settingsProperties = settingsProperties;
     }
 
@@ -43,12 +43,12 @@ public class SpringStageLoader implements ApplicationContextAware {
      * @return объект типа Region
      * @throws IOException бросает исключение ввода-вывода
      */
-    public Region load(final String fxmlName) throws IOException {
-        final Properties settings = this.settingsProperties.getProperty();
-        final String language = settings.getProperty(Settings.ROOT_LANGUAGE);
-        final ResourceBundle bundle = ResourceBundle.getBundle(
+    public Region load(String fxmlName) throws IOException {
+        Properties settings = settingsProperties.getProperty();
+        String language = settings.getProperty(Settings.ROOT_LANGUAGE);
+        ResourceBundle bundle = ResourceBundle.getBundle(
                 "bundles.chat", new Locale(language), new ResourceBundleControl());
-        final FXMLLoader loader = new FXMLLoader();
+        FXMLLoader loader = new FXMLLoader();
         loader.setResources(bundle);
         // setLocation необходим для корректной загрузки включенных шаблонов,
         // без этого получим исключение javafx.fxml.LoadException: Base location is undefined.
@@ -64,7 +64,7 @@ public class SpringStageLoader implements ApplicationContextAware {
      т.к. методы их использующие тоже статические
      */
     @Override
-    public void setApplicationContext(final ApplicationContext context) throws BeansException {
+    public void setApplicationContext(ApplicationContext context) throws BeansException {
         SpringStageLoader.staticContext = context;
         SpringStageLoader.staticTitle = appTitle;
     }

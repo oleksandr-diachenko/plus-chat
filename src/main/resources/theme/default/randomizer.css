@@ -1,0 +1,63 @@
+.label {
+    -fx-font-size: 17px;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+}
+
+.list-view {
+    -fx-background-color: transparent;
+    -fx-pref-width: 80;
+    -fx-max-width: 80;
+    -fx-pref-height: 100;
+    -fx-max-height: 100;
+}
+
+#play {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+    -fx-background-image: url("../../img/randomizer/play.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#play:hover{
+    -fx-background-color: null;
+    -fx-background-image: url("../../img/randomizer/play-hover.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#stop {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+    -fx-background-image: url("../../img/randomizer/stop.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#stop:hover{
+    -fx-background-color: null;
+    -fx-background-image: url("../../img/randomizer/stop-hover.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#select {
+    -fx-background-radius: 0;
+    -fx-border-style: null;
+    -fx-background-color: null;
+    -fx-pref-height: 50;
+    -fx-pref-width: 50;
+    -fx-background-image: url("../../img/randomizer/select.png");
+    -fx-background-repeat: no-repeat;
+}
+
+#select:hover{
+    -fx-background-color: null;
+    -fx-background-image: url("../../img/randomizer/select-hover.png");
+    -fx-background-repeat: no-repeat;
+}

@@ -19,11 +19,12 @@ public class Paths {
     private String disabledPin;
     private String twitchProperties;
     private String soundDirectory;
+    private String randomizerCss;
 
-    public Paths(final String logo, final AppProperty settingsProperties,
-                 final String chatCss, final String confirmCss, final String dataCss,
-                 final String settingsCss, final String enabledPin, final String disabledPin,
-                 final String twitchProperties, final String soundDirectory) {
+    public Paths(String logo, AppProperty settingsProperties,
+                 String chatCss, String confirmCss, String dataCss,
+                 String settingsCss, String enabledPin, String disabledPin,
+                 String twitchProperties, String soundDirectory, String randomizerCss) {
         this.logo = logo;
         this.settingsProperties = settingsProperties;
         this.chatCss = chatCss;
@@ -34,45 +35,51 @@ public class Paths {
         this.disabledPin = disabledPin;
         this.twitchProperties = twitchProperties;
         this.soundDirectory = soundDirectory;
+        this.randomizerCss = randomizerCss;
     }
 
     public String getLogo() {
-        return this.logo;
+        return logo;
     }
 
     public String getChatCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.chatCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + chatCss;
     }
 
     public String getConfirmCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.confirmCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + confirmCss;
     }
 
     public String getDataCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.dataCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + dataCss;
     }
 
     public String getSettingsCSS() {
-        final Properties settings = this.settingsProperties.getProperty();
-        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + this.settingsCss;
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + settingsCss;
+    }
+
+    public String getRandomizerCSS() {
+        Properties settings = settingsProperties.getProperty();
+        return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + randomizerCss;
     }
 
     public String getEnabledPin() {
-        return this.enabledPin;
+        return enabledPin;
     }
 
     public String getDisabledPin() {
-        return this.disabledPin;
+        return disabledPin;
     }
 
     public String getTwitchProperties() {
-        return this.twitchProperties;
+        return twitchProperties;
     }
 
     public String getSoundsDirectory() {
-        return this.soundDirectory;
+        return soundDirectory;
     }
 }

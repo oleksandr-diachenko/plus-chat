@@ -18,6 +18,7 @@ public class Command implements Comparable<Command>, Serializable {
     private String name;
     private String description;
     private String response;
+    private Status status;
 
     @Override
     public int compareTo(Command command) {

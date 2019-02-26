@@ -9,5 +9,5 @@ import java.util.Optional;
  */
 public interface SmileRepository extends CRUDRepository<Smile> {
 
-    Optional<Smile> getSmileByName(final String name);
+    Optional<Smile> getSmileByName(String name);
 }

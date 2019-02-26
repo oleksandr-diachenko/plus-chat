@@ -19,7 +19,7 @@
 #cancel {
     -fx-pref-height: 50;
     -fx-pref-width: 50;
-    -fx-background-image: url("../../img/cancel.png");
+    -fx-background-image: url("../../img/settings/cancel.png");
     -fx-background-size: 40 40;
     -fx-background-color: transparent;
     -fx-background-repeat: no-repeat;
@@ -30,6 +30,6 @@
 
 #cancel:hover {
     -fx-background-color: null;
-    -fx-background-image: url("../../img/cancel-hover.png");
+    -fx-background-image: url("../../img/settings/cancel-hover.png");
     -fx-background-repeat: no-repeat;
 }

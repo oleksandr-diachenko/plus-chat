@@ -21,11 +21,17 @@
     <bean id="userRepository" class="chat.model.repository.JSONUserRepository">
         <constructor-arg value=".\data\users.json"/>
     </bean>
+    <bean id="orderRepository" class="chat.model.repository.JSONOrderRepository">
+        <constructor-arg value=".\data\orders.json"/>
+    </bean>
     <bean id="twitchProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\twitch.properties"/>
     </bean>
     <bean id="settingsProperties" class="chat.util.AppProperty">
         <constructor-arg value=".\settings\settings.properties"/>
+    </bean>
+    <bean id="commandsProperties" class="chat.util.AppProperty">
+        <constructor-arg value=".\settings\commands.properties"/>
     </bean>
     <bean id="applicationStyle" class="chat.controller.ApplicationStyle">
         <constructor-arg ref="settingsProperties"/>
@@ -34,15 +40,16 @@
         <constructor-arg ref="applicationStyle"/>
     </bean>
     <bean id="paths" class="chat.util.Paths">
-        <constructor-arg name="logo" value="/img/logo.png"/>
+        <constructor-arg name="logo" value="/img/chat/logo.png"/>
         <constructor-arg name="settingsProperties" ref="settingsProperties"/>
         <constructor-arg name="chatCss" value="/chat.css"/>
         <constructor-arg name="confirmCss" value="/confirm.css"/>
         <constructor-arg name="dataCss" value="/data.css"/>
         <constructor-arg name="settingsCss" value="/settings.css"/>
-        <constructor-arg name="enabledPin" value="/img/pin-enabled.png"/>
-        <constructor-arg name="disabledPin" value="/img/pin-disabled.png"/>
+        <constructor-arg name="enabledPin" value="/img/chat/pin-enabled.png"/>
+        <constructor-arg name="disabledPin" value="/img/chat/pin-disabled.png"/>
         <constructor-arg name="twitchProperties" value="/settings/twitch.properties"/>
         <constructor-arg name="soundDirectory" value="./sound/"/>
+        <constructor-arg name="randomizerCss" value="/randomizer.css"/>
     </bean>
 </beans>

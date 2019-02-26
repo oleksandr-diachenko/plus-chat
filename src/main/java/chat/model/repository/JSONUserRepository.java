@@ -19,8 +19,8 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
-@NoArgsConstructor
 @Repository
+@NoArgsConstructor
 public class JSONUserRepository implements UserRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONUserRepository.class);
@@ -29,17 +29,18 @@ public class JSONUserRepository implements UserRepository {
     private Set<User> users;
     private String path;
 
-    public JSONUserRepository(final String path) {
+    public JSONUserRepository(String path) {
         this.path = path;
-        this.users = getAll();
+        getAll();
     }
 
     @Override
     public Set<User> getAll() {
         try {
-            return new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<User>>() {
-            }));
+            users = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<User>>() {
+                    }));
+            return users;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -47,8 +48,8 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public Optional<User> getUserByName(final String name) {
-        for (User user : this.users) {
+    public Optional<User> getUserByName(String name) {
+        for (User user : users) {
             if (user.getName().equalsIgnoreCase(name)) {
                 return Optional.of(user);
             }
@@ -57,35 +58,35 @@ public class JSONUserRepository implements UserRepository {
     }
 
     @Override
-    public User add(final User user) {
-        this.users.add(user);
+    public User add(User user) {
+        users.add(user);
         flush();
         return user;
     }
 
     @Override
-    public User update(final User user) {
-        this.users.remove(user);
-        this.users.add(user);
+    public User update(User user) {
+        users.remove(user);
+        users.add(user);
         flush();
         return user;
     }
 
     @Override
-    public User delete(final User user) {
-        this.users.remove(user);
+    public User delete(User user) {
+        users.remove(user);
         return user;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.users);
+                    mapper.writeValue(new FileOutputStream(path), users);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Users failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

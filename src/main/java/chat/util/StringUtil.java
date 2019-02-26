@@ -13,8 +13,8 @@ public class StringUtil {
      * @param string
      * @return string in UTF-8
      */
-    public static String getUTF8String(final String string) {
-        final byte bytes[] = string.getBytes();
+    public static String getUTF8String(String string) {
+        byte bytes[] = string.getBytes();
         return new String(bytes, StandardCharsets.UTF_8);
     }
 }

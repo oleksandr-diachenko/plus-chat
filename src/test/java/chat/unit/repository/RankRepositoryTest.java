@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author Alexander Diachenko.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class RankRepositoryTest {
 
     @Autowired
@@ -44,5 +44,17 @@ public class RankRepositoryTest {
     public void getRankByNegativeExpTest() {
         final Rank rankByExp = this.rankRepository.getRankByExp(-1);
         assertNull(rankByExp.getName());
+    }
+
+    @Test
+    public void isNewRankExpTest() {
+        boolean newRank = this.rankRepository.isNewRank(10);
+        assertTrue(newRank);
+    }
+
+    @Test
+    public void isNotNewRankExpTest() {
+        boolean newRank = this.rankRepository.isNewRank(14);
+        assertFalse(newRank);
     }
 }

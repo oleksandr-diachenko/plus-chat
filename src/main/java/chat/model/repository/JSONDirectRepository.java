@@ -16,8 +16,8 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
-@NoArgsConstructor
 @Repository
+@NoArgsConstructor
 public class JSONDirectRepository implements DirectRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONDirectRepository.class);
@@ -26,17 +26,18 @@ public class JSONDirectRepository implements DirectRepository {
     private Set<Direct> directs;
     private String path;
 
-    public JSONDirectRepository(final String path) {
+    public JSONDirectRepository(String path) {
         this.path = path;
-        this.directs = getAll();
+        getAll();
     }
 
     @Override
     public Set<Direct> getAll() {
         try {
-            return new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Direct>>() {
-            }));
+            directs = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Direct>>() {
+                    }));
+            return directs;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -44,8 +45,8 @@ public class JSONDirectRepository implements DirectRepository {
     }
 
     @Override
-    public Optional<Direct> getDirectByWord(final String word) {
-        for (Direct direct : this.directs) {
+    public Optional<Direct> getDirectByWord(String word) {
+        for (Direct direct : directs) {
             if(direct.getWord().equalsIgnoreCase(word)) {
                 return Optional.of(direct);
             }
@@ -54,36 +55,36 @@ public class JSONDirectRepository implements DirectRepository {
     }
 
     @Override
-    public Direct add(final Direct direct) {
-        this.directs.add(direct);
+    public Direct add(Direct direct) {
+        directs.add(direct);
         flush();
         return direct;
     }
 
     @Override
-    public Direct update(final Direct direct) {
-        this.directs.remove(direct);
-        this.directs.add(direct);
+    public Direct update(Direct direct) {
+        directs.remove(direct);
+        directs.add(direct);
         flush();
         return direct;
     }
 
     @Override
-    public Direct delete(final Direct direct) {
-        this.directs.remove(direct);
+    public Direct delete(Direct direct) {
+        directs.remove(direct);
         flush();
         return direct;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.directs);
+                    mapper.writeValue(new FileOutputStream(path), directs);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

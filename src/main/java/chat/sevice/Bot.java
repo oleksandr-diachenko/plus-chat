@@ -1,56 +1,74 @@
 package chat.sevice;
 
-import chat.command.ICommand;
-import chat.command.JSONCommand;
-import chat.command.RankCommand;
-import chat.command.UpCommand;
+import chat.command.*;
 import chat.controller.ChatController;
+import chat.model.entity.Status;
 import chat.model.entity.User;
 import chat.model.repository.CommandRepository;
+import chat.model.repository.OrderRepository;
 import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
 import chat.observer.Subject;
+import chat.util.AppProperty;
 import chat.util.TimeUtil;
 import javafx.application.Platform;
+import org.apache.commons.lang3.StringUtils;
 import org.pircbotx.hooks.ListenerAdapter;
-import org.pircbotx.hooks.events.*;
+import org.pircbotx.hooks.events.ConnectEvent;
+import org.pircbotx.hooks.events.DisconnectEvent;
+import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
 
 /**
  * @author Alexander Diachenko
  */
+@Service
 public class Bot extends ListenerAdapter implements Subject {
 
-    private final UserRepository userRepository;
-    private final RankRepository rankRepository;
-    private final CommandRepository commandRepository;
+    private UserRepository userRepository;
+    private RankRepository rankRepository;
+    private CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
     private Properties connect;
+    private Properties commands;
     private LocalDateTime start;
+    private OrderRepository orderRepository;
 
-    public Bot(final Properties connect, final UserRepository userRepository,
-               final RankRepository rankRepository, final CommandRepository commandRepository) {
-        this.connect = connect;
+    @Autowired
+    public Bot(UserRepository userRepository, RankRepository rankRepository,
+               CommandRepository commandRepository,
+               OrderRepository orderRepository,
+               @Qualifier("twitchProperties") AppProperty twitchProperties,
+               @Qualifier("commandsProperties") AppProperty commandsProperties) {
+        this.orderRepository = orderRepository;
+        this.connect = twitchProperties.getProperty();
+        this.commands = commandsProperties.getProperty();
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.commandRepository = commandRepository;
     }
 
     @Override
-    public void onConnect(final ConnectEvent event) {
-        this.start = LocalDateTime.now();
-        final String botName = this.connect.getProperty("botname");
+    public void onConnect(ConnectEvent event) {
+        start = LocalDateTime.now();
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Connected!");
     }
 
     @Override
-    public void onDisconnect(final DisconnectEvent event) {
-        final String botName = this.connect.getProperty("botname");
+    public void onDisconnect(DisconnectEvent event) {
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, "Disconnected!");
     }
@@ -59,34 +77,22 @@ public class Bot extends ListenerAdapter implements Subject {
      * PircBotx will return the exact message sent and not the raw line
      */
     @Override
-    public void onGenericMessage(final GenericMessageEvent event) {
-        final String nick = event.getUser().getNick();
-        final User user = updateUser(nick);
-        final String message = event.getMessage();
+    public void onGenericMessage(GenericMessageEvent event) {
+        String nick = event.getUser().getNick();
+        User user = updateUser(nick);
+        String message = event.getMessage();
         notifyObserver(user.getName(), message);
-        final String command = getCommandFromMessage(message);
-        if (command != null) {
-            runCommand(event.getUser().getNick(), command);
+        if (isCommand(message)) {
+            runCommand(event.getUser().getNick(), message);
         }
     }
 
-    /**
-     * The command will always be the first part of the message
-     * We can split the string into parts by spaces to get each word
-     * The first word if it starts with our command notifier "!" will get returned
-     * Otherwise it will return null
-     */
-    private String getCommandFromMessage(final String message) {
-        final String[] msgParts = message.split(" ");
-        if (msgParts[0].startsWith("!")) {
-            return msgParts[0];
-        } else {
-            return null;
-        }
+    private boolean isCommand(String message) {
+        return message.startsWith("!");
     }
 
-    private void runCommand(final String nick, final String command) {
-        final List<ICommand> commands = getCommands(nick);
+    private void runCommand(String nick, String command) {
+        List<ICommand> commands = getCommands(nick);
         for (ICommand comm : commands) {
             if (comm.canExecute(command)) {
                 sendMessage(comm.execute());
@@ -95,62 +101,93 @@ public class Bot extends ListenerAdapter implements Subject {
         }
     }
 
-    private List<ICommand> getCommands(final String nick) {
-        final List<ICommand> commands = new ArrayList<>();
-        commands.add(new RankCommand(nick, this.userRepository, this.rankRepository));
-        commands.add(new UpCommand(this.start));
-        commands.add(new JSONCommand(this.commandRepository));
-        return commands;
+    private List<ICommand> getCommands(String nick) {
+        List<ICommand> commands = new LinkedList<>();
+        commands.add(new RankCommand(nick, userRepository, rankRepository));
+        commands.add(new UpCommand(start));
+        commands.add(new RollCommand(userRepository, nick));
+        commands.add(new PointsCommand(userRepository, nick));
+        commands.add(new OrderCommand(userRepository, nick, orderRepository));
+        commands.add(new JSONCommand(commandRepository));
+        return getEnabledCommands(commands);
+    }
+
+    private List<ICommand> getEnabledCommands(List<ICommand> commands) {
+        List<ICommand> result = new LinkedList<>();
+        for (ICommand command : commands) {
+            String className = command.getClass().getSimpleName();
+            String commandName = StringUtils.remove(className, "Command").toLowerCase();
+            if (isEnabled(commandName)) {
+                result.add(command);
+            }
+        }
+        return result;
+    }
+
+    private boolean isEnabled(String commandName) {
+        try {
+            Status status = Status.valueOf(commands.getProperty(commandName));
+            return status == Status.enabled;
+        } catch (Exception exception) {
+            return true;
+        }
     }
 
     /**
      * We MUST respond to this or else we will get kicked
      */
     @Override
-    public void onPing(final PingEvent event) {
+    public void onPing(PingEvent event) {
         ChatController.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
     }
 
-    private void sendMessage(final String message) {
-        final String botName = this.connect.getProperty("botname");
+    private void sendMessage(String message) {
+        String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, message);
-        ChatController.bot.sendIRC().message("#" + this.connect.getProperty("channel"), message);
+        ChatController.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
     }
 
-    private User updateUser(final String nick) {
-        return this.userRepository.getUserByName(nick)
+    private User updateUser(String nick) {
+        return userRepository.getUserByName(nick)
                 .map(this::updateExistingUser)
                 .orElseGet(() -> createNewUser(nick));
     }
 
-    private User updateExistingUser(final User user) {
+    private User updateExistingUser(User user) {
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
-        user.setExp(user.getExp() + 1);
-        return this.userRepository.update(user);
+        long exp = user.getExp() + 1;
+        user.setExp(exp);
+        if (rankRepository.isNewRank(exp)) {
+            user.setPoints(user.getPoints() + 500);
+        } else {
+            user.setPoints(user.getPoints() + 10);
+        }
+        return userRepository.update(user);
     }
 
-    private User createNewUser(final String nick) {
-        final User user = new User();
+    private User createNewUser(String nick) {
+        User user = new User();
         user.setName(nick);
         user.setFirstMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
         user.setExp(1);
-        return this.userRepository.add(user);
+        user.setPoints(10);
+        return userRepository.add(user);
     }
 
     @Override
-    public void addObserver(final Observer observer) {
-        this.observers.add(observer);
+    public void addObserver(Observer observer) {
+        observers.add(observer);
     }
 
     @Override
-    public void removeObserver(final Observer observer) {
-        this.observers.remove(observer);
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
     }
 
     @Override
-    public void notifyObserver(final String nick, final String message) {
-        this.observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
+    public void notifyObserver(String nick, String message) {
+        observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
     }
 }

@@ -18,19 +18,19 @@ public abstract class AbstractDialog {
     private final static Logger logger = LogManager.getLogger(AbstractDialog.class);
 
     @Autowired
-    protected SpringStageLoader springStageLoader;
+    private SpringStageLoader springStageLoader;
     @Autowired
     protected Paths paths;
-    private UndecoratorScene undecorator;
+    private UndecoratorScene scene;
     private Stage stage;
     private Region root;
 
-    public void openDialog(final Stage owner) {
-        final Stage stage = new Stage();
+    public void openDialog(Stage owner) {
+        Stage stage = new Stage();
         this.stage = stage;
         try {
-            final UndecoratorScene undecorator = getScene(stage, getRootRegion());
-            stage.setScene(undecorator);
+            UndecoratorScene scene = getScene(stage, getRootRegion());
+            stage.setScene(scene);
 
             initOwner(owner, stage);
             setStageSettings(stage);
@@ -44,38 +44,43 @@ public abstract class AbstractDialog {
         }
     }
 
-    protected abstract void setStageSettings(final Stage stage);
+    protected abstract void setStageSettings(Stage stage);
 
-    protected abstract void initOwner(final Stage owner, final Stage stage);
+    protected abstract void initOwner(Stage owner, Stage stage);
 
-    protected abstract void setEvents(final Stage stage);
+    protected void setEvents(Stage stage) {
+        //do nothing
+    }
 
     private Region getRootRegion() throws IOException {
-        this.root = this.springStageLoader.load(getFXMLName());
-        return this.root;
+        root = springStageLoader.load(getFXMLName());
+        return root;
     }
 
     protected abstract String getFXMLName();
 
-    private UndecoratorScene getScene(final Stage stage, final Region root) {
-        this.undecorator = new UndecoratorScene(stage, root);
-        this.undecorator.getStylesheets().add(getCSSName());
-        return this.undecorator;
+    private UndecoratorScene getScene(Stage stage, Region root) {
+        scene = new UndecoratorScene(stage, root);
+        scene.getStylesheets().add(getCSSName());
+        scene.setBackgroundOpacity(0.2);
+        return scene;
     }
 
     protected abstract String getCSSName();
 
     protected UndecoratorScene getScene() {
-        return this.undecorator;
+        return scene;
     }
 
-    protected abstract String getTitleName();
+    protected String getTitleName() {
+        return "";
+    }
 
     public Stage getStage() {
-        return this.stage;
+        return stage;
     }
 
     protected Region getRoot() {
-        return this.root;
+        return root;
     }
 }

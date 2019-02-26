@@ -27,23 +27,23 @@ public class AppProperty{
     }
 
     public Properties getProperty() {
-        final Properties properties = new Properties();
-        try (final FileInputStream file = new FileInputStream(this.path)) {
+        Properties properties = new Properties();
+        try (FileInputStream file = new FileInputStream(path)) {
             properties.load(file);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Properties " + this.path + " failed to load. \n" +
+            throw new RuntimeException("Properties " + path + " failed to load. \n" +
                     "Put properties to settings/ and restart application.", exception);
         }
         return properties;
     }
 
-    public Properties setProperties(final Properties properties) {
-        try (final OutputStream output = new FileOutputStream(this.path)) {
+    public Properties setProperties(Properties properties) {
+        try (OutputStream output = new FileOutputStream(path)) {
             properties.store(output, null);
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
-            throw new RuntimeException("Properties " + this.path + " failed to save. \n" +
+            throw new RuntimeException("Properties " + path + " failed to save. \n" +
                     "Put properties to settings/", exception);
         }
         return properties;

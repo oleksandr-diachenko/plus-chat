@@ -10,10 +10,10 @@ import java.util.Set;
  */
 public class FileUtil {
 
-    public static Set<File> getFilesFromFolder(final String path) throws FileNotFoundException {
-        final Set<File> result = new HashSet<>();
-        final File folder = new File(path);
-        final File[] files = folder.listFiles();
+    public static Set<File> getFilesFromFolder(String path) throws FileNotFoundException {
+        Set<File> result = new HashSet<>();
+        File folder = new File(path);
+        File[] files = folder.listFiles();
         if (files == null) {
             throw new FileNotFoundException("Folder " + path + " not found.");
         }

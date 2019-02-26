@@ -15,7 +15,7 @@ import static org.junit.Assert.assertEquals;
  * @author Alexander Diachenko
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:applicationContext.xml"})
+@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
 public class AppPropertyTest {
 
     @Autowired

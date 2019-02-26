@@ -26,24 +26,24 @@ public class ConfirmController {
     private boolean confirmed = false;
 
     @Autowired
-    public ConfirmController(final StyleUtil styleUtil, final ApplicationStyle applicationStyle) {
+    public ConfirmController(StyleUtil styleUtil, ApplicationStyle applicationStyle) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
     }
 
     public void confirmAction() {
-        this.confirmed = true;
-        final Stage stage = getStage();
-        final Stage owner = getOwner();
+        confirmed = true;
+        Stage stage = getStage();
+        Stage owner = getOwner();
         stage.fireEvent(new WindowEvent(stage, WindowEvent.WINDOW_CLOSE_REQUEST));
         owner.close();
     }
 
     @FXML
     public void initialize() {
-        this.styleUtil.setRootStyle(Collections.singletonList(this.root), this.applicationStyle.getBaseColor(),
-                this.applicationStyle.getBackgroundColor());
-        this.styleUtil.setLabelStyle(this.root, this.applicationStyle.getNickColor());
+        styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
+                applicationStyle.getBackgroundColor());
+        styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
     }
 
     public void cancelAction() {
@@ -52,11 +52,11 @@ public class ConfirmController {
     }
 
     public boolean isConfirmed() {
-        return this.confirmed;
+        return confirmed;
     }
 
     private Stage getStage() {
-        return (Stage) this.root.getScene().getWindow();
+        return (Stage) root.getScene().getWindow();
     }
 
     private Stage getOwner() {

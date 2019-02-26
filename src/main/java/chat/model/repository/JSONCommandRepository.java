@@ -19,8 +19,8 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
-@NoArgsConstructor
 @Repository
+@NoArgsConstructor
 public class JSONCommandRepository implements CommandRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONCommandRepository.class);
@@ -29,17 +29,18 @@ public class JSONCommandRepository implements CommandRepository {
     private Set<Command> commands;
     private String path;
 
-    public JSONCommandRepository(final String path) {
+    public JSONCommandRepository(String path) {
         this.path = path;
-        this.commands = getAll();
+        getAll();
     }
 
     @Override
     public Set<Command> getAll() {
         try {
-            return new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Command>>() {
+            commands = new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Command>>() {
                     }));
+            return commands;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -47,8 +48,8 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Optional<Command> getCommandByName(final String name) {
-        for (Command command : this.commands) {
+    public Optional<Command> getCommandByName(String name) {
+        for (Command command : commands) {
             if (command.getName().equalsIgnoreCase(name)) {
                 return Optional.of(command);
             }
@@ -57,36 +58,36 @@ public class JSONCommandRepository implements CommandRepository {
     }
 
     @Override
-    public Command add(final Command command) {
-        this.commands.add(command);
+    public Command add(Command command) {
+        commands.add(command);
         flush();
         return command;
     }
 
     @Override
-    public Command update(final Command command) {
-        this.commands.remove(command);
-        this.commands.add(command);
+    public Command update(Command command) {
+        commands.remove(command);
+        commands.add(command);
         flush();
         return command;
     }
 
     @Override
-    public Command delete(final Command command) {
-        this.commands.remove(command);
+    public Command delete(Command command) {
+        commands.remove(command);
         flush();
         return command;
     }
 
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.commands);
+                    mapper.writeValue(new FileOutputStream(path), commands);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
                     throw new RuntimeException("Commands failed to save. Create " +
-                            this.path, exception);
+                            path, exception);
                 }
             }
         });

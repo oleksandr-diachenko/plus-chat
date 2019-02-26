@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.CheckBox?>
+<GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingSoundController">
+    <columnConstraints>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+        <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
+    </columnConstraints>
+    <rowConstraints>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="ALWAYS"/>
+    </rowConstraints>
+    <opaqueInsets>
+        <Insets bottom="50.0" left="50.0" right="50.0" top="50.0"/>
+    </opaqueInsets>
+    <Label text="%enable-sound">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <CheckBox fx:id="enableSoundCheckBox" mnemonicParsing="false" GridPane.columnIndex="1">
+        <GridPane.margin>
+            <Insets left="135.0"/>
+        </GridPane.margin>
+    </CheckBox>
+    <Label text="%message-sound" GridPane.rowIndex="1">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%message-sound-volume" GridPane.rowIndex="2">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%direct-message-sound" GridPane.rowIndex="3">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <Label text="%direct-message-sound-volume" GridPane.rowIndex="4">
+        <GridPane.margin>
+            <Insets left="100.0"/>
+        </GridPane.margin>
+    </Label>
+    <ChoiceBox fx:id="messageSoundChoiceBox" prefWidth="150.0" GridPane.columnIndex="1"
+               GridPane.rowIndex="1">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ChoiceBox>
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="2">
+        <Slider fx:id="messageVolumeSlider"/>
+        <Label fx:id="messageVolumeValue"/>
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </HBox>
+    <ChoiceBox fx:id="directMessageSoundChoiceBox" prefWidth="150.0" GridPane.columnIndex="1"
+               GridPane.rowIndex="3">
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </ChoiceBox>
+    <HBox alignment="CENTER_LEFT" GridPane.columnIndex="1" GridPane.rowIndex="4">
+        <Slider fx:id="directMessageVolumeSlider"/>
+        <Label fx:id="directMessageVolumeValue"/>
+        <GridPane.margin>
+            <Insets left="70.0"/>
+        </GridPane.margin>
+    </HBox>
+</GridPane>

@@ -12,31 +12,32 @@ import java.util.Optional;
  */
 public class RankCommand implements ICommand {
 
+    private static final String COMMAND_NAME = "!rank";
     private String nick;
-    private final UserRepository userRepository;
-    private final RankRepository rankRepository;
+    private UserRepository userRepository;
+    private RankRepository rankRepository;
 
-    public RankCommand(final String nick, final UserRepository userRepository,
-                       final RankRepository rankRepository) {
+    public RankCommand(String nick, UserRepository userRepository,
+                       RankRepository rankRepository) {
         this.nick = nick;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
     }
 
     @Override
-    public boolean canExecute(final String command) {
-        return "!rank".equalsIgnoreCase(command);
+    public boolean canExecute(String command) {
+        return COMMAND_NAME.equalsIgnoreCase(command);
     }
 
     @Override
     public String execute() {
-        final Optional<User> userByName = this.userRepository.getUserByName(this.nick);
-        if (!userByName.isPresent()) {
+        Optional<User> userByName = userRepository.getUserByName(nick);
+        if (userByName.isEmpty()) {
             return "";
         }
-        final User user = userByName.get();
-        final String customName = user.getCustomName();
-        final Rank rank = this.rankRepository.getRankByExp(user.getExp());
+        User user = userByName.get();
+        String customName = user.getCustomName();
+        Rank rank = rankRepository.getRankByExp(user.getExp());
         return customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)";
     }
 }

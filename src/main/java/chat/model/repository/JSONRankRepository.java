@@ -11,13 +11,16 @@ import org.springframework.stereotype.Repository;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * @author Alexander Diachenko.
  */
-@NoArgsConstructor
 @Repository
+@NoArgsConstructor
 public class JSONRankRepository implements RankRepository {
 
     private final static Logger logger = LogManager.getLogger(JSONRankRepository.class);
@@ -26,17 +29,18 @@ public class JSONRankRepository implements RankRepository {
     private Set<Rank> ranks;
     private String path;
 
-    public JSONRankRepository(final String path) {
+    public JSONRankRepository(String path) {
         this.path = path;
-        this.ranks = getAll();
+        getAll();
     }
 
     @Override
     public Set<Rank> getAll() {
         try {
-            return new TreeSet<>(new HashSet<>(
-                    this.mapper.readValue(JSONParser.readFile(this.path), new TypeReference<List<Rank>>() {
-            })));
+            ranks = new TreeSet<>(new HashSet<>(
+                    mapper.readValue(JSONParser.readFile(path), new TypeReference<List<Rank>>() {
+                    })));
+            return ranks;
         } catch (IOException exception) {
             logger.error(exception.getMessage(), exception);
         }
@@ -44,32 +48,32 @@ public class JSONRankRepository implements RankRepository {
     }
 
     @Override
-    public Rank add(final Rank rank) {
-        this.ranks.add(rank);
+    public Rank add(Rank rank) {
+        ranks.add(rank);
         flush();
         return rank;
     }
 
     @Override
-    public Rank update(final Rank rank) {
-        this.ranks.remove(rank);
-        this.ranks.add(rank);
+    public Rank update(Rank rank) {
+        ranks.remove(rank);
+        ranks.add(rank);
         flush();
         return rank;
     }
 
     @Override
-    public Rank delete(final Rank rank) {
-        this.ranks.remove(rank);
+    public Rank delete(Rank rank) {
+        ranks.remove(rank);
         flush();
         return rank;
     }
 
     @Override
-    public Rank getRankByExp(final long exp) {
+    public Rank getRankByExp(long exp) {
         Rank nearest = new Rank();
-        for (Rank rank : this.ranks) {
-            final int rankExp = rank.getExp();
+        for (Rank rank : ranks) {
+            int rankExp = rank.getExp();
             if (rankExp <= exp) {
                 nearest = rank;
             }
@@ -77,14 +81,20 @@ public class JSONRankRepository implements RankRepository {
         return nearest;
     }
 
+    @Override
+    public boolean isNewRank(long exp) {
+        Rank rankByExp = getRankByExp(exp);
+        return rankByExp.getExp() == exp;
+    }
+
     private void flush() {
-        final Thread thread = new Thread(() -> {
+        Thread thread = new Thread(() -> {
             synchronized (this) {
                 try {
-                    this.mapper.writeValue(new FileOutputStream(this.path), this.ranks);
+                    mapper.writeValue(new FileOutputStream(path), ranks);
                 } catch (IOException exception) {
                     logger.error(exception.getMessage(), exception);
-                    throw new RuntimeException("Ranks failed to save. Create " + this.path, exception);
+                    throw new RuntimeException("Ranks failed to save. Create " + path, exception);
                 }
             }
         });
