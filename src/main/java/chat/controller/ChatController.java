@@ -26,9 +26,8 @@ import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -46,9 +45,8 @@ import java.util.*;
  */
 @Controller
 @NoArgsConstructor
+@Log4j2
 public class ChatController implements Observer {
-
-    private final static Logger logger = LogManager.getLogger(ChatController.class);
 
     public static PircBotX bot;
     @FXML
@@ -129,7 +127,7 @@ public class ChatController implements Observer {
             try {
                 bot.startBot();
             } catch (IOException | IrcException exception) {
-                logger.error(exception.getMessage(), exception);
+                log.error(exception.getMessage(), exception);
                 throw new RuntimeException("Bot failed to start.\n " +
                         "Check properties in " + paths.getTwitchProperties() + " " +
                         "and restart application.", exception);
@@ -283,7 +281,7 @@ public class ChatController implements Observer {
             image.setGraphic(imageView);
             return image;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
             return new Label(smile.getName());
         }
     }
@@ -310,7 +308,7 @@ public class ChatController implements Observer {
             image.setGraphic(imageView);
             return image;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new Label();
     }

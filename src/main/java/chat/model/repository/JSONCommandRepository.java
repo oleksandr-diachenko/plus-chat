@@ -3,6 +3,7 @@ package chat.model.repository;
 import chat.model.entity.Command;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -21,9 +22,8 @@ import java.util.Set;
  */
 @Repository
 @NoArgsConstructor
+@Log4j2
 public class JSONCommandRepository implements CommandRepository {
-
-    private final static Logger logger = LogManager.getLogger(JSONCommandRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Command> commands;
@@ -42,7 +42,7 @@ public class JSONCommandRepository implements CommandRepository {
                     }));
             return commands;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new HashSet<>();
     }
@@ -85,7 +85,7 @@ public class JSONCommandRepository implements CommandRepository {
                 try {
                     mapper.writeValue(new FileOutputStream(path), commands);
                 } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
+                    log.error(exception.getMessage(), exception);
                     throw new RuntimeException("Commands failed to save. Create " +
                             path, exception);
                 }

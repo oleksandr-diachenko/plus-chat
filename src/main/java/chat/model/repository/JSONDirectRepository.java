@@ -3,8 +3,7 @@ package chat.model.repository;
 import chat.model.entity.Direct;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Repository;
@@ -18,9 +17,8 @@ import java.util.*;
  */
 @Repository
 @NoArgsConstructor
+@Log4j2
 public class JSONDirectRepository implements DirectRepository {
-
-    private final static Logger logger = LogManager.getLogger(JSONDirectRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Direct> directs;
@@ -39,7 +37,7 @@ public class JSONDirectRepository implements DirectRepository {
                     }));
             return directs;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new TreeSet<>();
     }
@@ -82,7 +80,7 @@ public class JSONDirectRepository implements DirectRepository {
                 try {
                     mapper.writeValue(new FileOutputStream(path), directs);
                 } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
+                    log.error(exception.getMessage(), exception);
                     throw new RuntimeException("Directs failed to save. Create " +
                             path, exception);
                 }

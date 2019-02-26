@@ -3,8 +3,7 @@ package chat.model.repository;
 import chat.model.entity.User;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Repository;
@@ -21,9 +20,8 @@ import java.util.Set;
  */
 @Repository
 @NoArgsConstructor
+@Log4j2
 public class JSONUserRepository implements UserRepository {
-
-    private final static Logger logger = LogManager.getLogger(JSONUserRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
@@ -42,7 +40,7 @@ public class JSONUserRepository implements UserRepository {
                     }));
             return users;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new HashSet<>();
     }
@@ -84,7 +82,7 @@ public class JSONUserRepository implements UserRepository {
                 try {
                     mapper.writeValue(new FileOutputStream(path), users);
                 } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
+                    log.error(exception.getMessage(), exception);
                     throw new RuntimeException("Users failed to save. Create " +
                             path, exception);
                 }

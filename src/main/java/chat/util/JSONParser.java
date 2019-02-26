@@ -1,7 +1,6 @@
 package chat.util;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -9,9 +8,8 @@ import java.io.FileReader;
 /**
  * @author Alexander Diachenko
  */
+@Log4j2
 public class JSONParser {
-
-    private final static Logger logger = LogManager.getLogger(JSONParser.class);
 
     public static String readFile(String fileName) {
         String result = "";
@@ -24,7 +22,7 @@ public class JSONParser {
             }
             result = sb.toString();
         } catch (Exception exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return result;
     }

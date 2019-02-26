@@ -18,8 +18,7 @@ package chat.util;
  */
 //package com.aionemu.commons.utils.i18n;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -58,9 +57,8 @@ import java.util.ResourceBundle;
  *
  * @author SoulKeeper
  */
+@Log4j2
 public class ResourceBundleControl extends ResourceBundle.Control {
-
-    private final static Logger logger = LogManager.getLogger(ResourceBundleControl.class);
 
     /**
      * Encoding which will be used to read resource bundle, by defaults it's 8859_1
@@ -138,7 +136,7 @@ public class ResourceBundleControl extends ResourceBundle.Control {
                     isr = new InputStreamReader(stream, encoding);
                 }
             } catch (PrivilegedActionException e) {
-                logger.error(e.getMessage(), e);
+                log.error(e.getMessage(), e);
                 throw (IOException) e.getException();
             }
             if (isr != null) {

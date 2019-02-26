@@ -3,8 +3,7 @@ package chat.model.repository;
 import chat.model.entity.Rank;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Repository;
@@ -21,9 +20,8 @@ import java.util.TreeSet;
  */
 @Repository
 @NoArgsConstructor
+@Log4j2
 public class JSONRankRepository implements RankRepository {
-
-    private final static Logger logger = LogManager.getLogger(JSONRankRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Rank> ranks;
@@ -42,7 +40,7 @@ public class JSONRankRepository implements RankRepository {
                     })));
             return ranks;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new TreeSet<>();
     }
@@ -93,7 +91,7 @@ public class JSONRankRepository implements RankRepository {
                 try {
                     mapper.writeValue(new FileOutputStream(path), ranks);
                 } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
+                    log.error(exception.getMessage(), exception);
                     throw new RuntimeException("Ranks failed to save. Create " + path, exception);
                 }
             }

@@ -10,8 +10,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -25,9 +24,8 @@ import java.util.Set;
  * @author Oleksandr_Diachenko
  */
 @Controller
+@Log4j2
 public class SettingSoundController {
-
-    private final static Logger logger = LogManager.getLogger(SettingSoundController.class);
 
     @FXML
     private CheckBox enableSoundCheckBox;
@@ -101,7 +99,7 @@ public class SettingSoundController {
         try {
             return FileUtil.getFilesFromFolder(paths.getSoundsDirectory());
         } catch (FileNotFoundException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
             throw new RuntimeException("Sound directory not found.\n " +
                     "Put your sounds to " + paths.getSoundsDirectory() +
                     " and restart application.", exception);

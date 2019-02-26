@@ -5,17 +5,15 @@ import chat.util.Paths;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
 import javafx.stage.Stage;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Component
+@Log4j2
 public abstract class AbstractDialog {
-
-    private final static Logger logger = LogManager.getLogger(AbstractDialog.class);
 
     @Autowired
     private SpringStageLoader springStageLoader;
@@ -39,7 +37,7 @@ public abstract class AbstractDialog {
             stage.setTitle(getTitleName());
             stage.show();
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
             throw new RuntimeException(getFXMLName() + " view failed to load", exception);
         }
     }

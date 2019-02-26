@@ -3,8 +3,7 @@ package chat.model.repository;
 import chat.model.entity.Order;
 import chat.util.JSONParser;
 import lombok.NoArgsConstructor;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
+import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
 import org.springframework.stereotype.Repository;
@@ -18,9 +17,8 @@ import java.util.TreeSet;
 
 @Repository
 @NoArgsConstructor
+@Log4j2
 public class JSONOrderRepository implements OrderRepository {
-
-    private final static Logger logger = LogManager.getLogger(JSONOrderRepository.class);
 
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Order> orders;
@@ -39,7 +37,7 @@ public class JSONOrderRepository implements OrderRepository {
                     }));
             return orders;
         } catch (IOException exception) {
-            logger.error(exception.getMessage(), exception);
+            log.error(exception.getMessage(), exception);
         }
         return new TreeSet<>();
     }
@@ -72,7 +70,7 @@ public class JSONOrderRepository implements OrderRepository {
                 try {
                     mapper.writeValue(new FileOutputStream(path), orders);
                 } catch (IOException exception) {
-                    logger.error(exception.getMessage(), exception);
+                    log.error(exception.getMessage(), exception);
                     throw new RuntimeException("Order failed to save. Create " +
                             path, exception);
                 }
