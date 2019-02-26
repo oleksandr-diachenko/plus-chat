@@ -2,6 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.Direct;
 import chat.util.JSONParser;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -15,6 +16,7 @@ import java.util.*;
 /**
  * @author Alexander Diachenko.
  */
+@NoArgsConstructor
 @Repository
 public class JSONDirectRepository implements DirectRepository {
 
@@ -23,9 +25,6 @@ public class JSONDirectRepository implements DirectRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<Direct> directs;
     private String path;
-
-    public JSONDirectRepository() {
-    }
 
     public JSONDirectRepository(final String path) {
         this.path = path;

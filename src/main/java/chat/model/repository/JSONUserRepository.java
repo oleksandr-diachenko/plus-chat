@@ -2,6 +2,7 @@ package chat.model.repository;
 
 import chat.model.entity.User;
 import chat.util.JSONParser;
+import lombok.NoArgsConstructor;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -18,6 +19,7 @@ import java.util.Set;
 /**
  * @author Alexander Diachenko.
  */
+@NoArgsConstructor
 @Repository
 public class JSONUserRepository implements UserRepository {
 
@@ -26,10 +28,6 @@ public class JSONUserRepository implements UserRepository {
     private ObjectMapper mapper = new ObjectMapper();
     private Set<User> users;
     private String path;
-
-    public JSONUserRepository() {
-        //do nothing
-    }
 
     public JSONUserRepository(final String path) {
         this.path = path;
