@@ -1,17 +1,19 @@
 package chat.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Objects;
-
+import java.io.Serializable;
 
 /**
  * @author Alexander Diachenko.
  */
 @Getter
 @Setter
-public class Rank implements Comparable<Rank> {
+@ToString(exclude = "imagePath")
+@EqualsAndHashCode(of = "name")
+@AllArgsConstructor
+@NoArgsConstructor
+public class Rank implements Comparable<Rank>, Serializable {
 
     private String name;
     private int id;
@@ -19,29 +21,7 @@ public class Rank implements Comparable<Rank> {
     private String imagePath;
 
     @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final Rank rank = (Rank) o;
-        return Objects.equals(this.name, rank.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
-    }
-
-    @Override
-    public String toString() {
-        return "Rank{" +
-                "name='" + this.name + '\'' +
-                ", id=" + this.id +
-                ", exp=" + this.exp +
-                '}';
-    }
-
-    @Override
     public int compareTo(final Rank rank) {
-        return Integer.compare(this.getId(), rank.getId());
+        return Integer.compare(id, rank.getId());
     }
 }

@@ -1,17 +1,19 @@
 package chat.model.entity;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
-import java.util.Objects;
-
+import java.io.Serializable;
 
 /**
  * @author Alexander Diachenko.
  */
 @Getter
 @Setter
-public class User {
+@ToString
+@EqualsAndHashCode(of = "name")
+@AllArgsConstructor
+@NoArgsConstructor
+public class User implements Comparable<User>, Serializable {
 
     private String name;
     private String customName;
@@ -19,34 +21,15 @@ public class User {
     private String lastMessageDate;
     private long exp;
 
-    @Override
-    public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final User user = (User) o;
-        return Objects.equals(this.name, user.getName());
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(this.name);
-    }
-
     public String getCustomName() {
-        if (this.customName != null) {
-            return this.customName;
+        if (customName != null) {
+            return customName;
         }
-        return this.name;
+        return name;
     }
 
     @Override
-    public String toString() {
-        return "User{" +
-                "name='" + this.name + '\'' +
-                ", customName='" + this.customName + '\'' +
-                ", firstMessageDate='" + this.firstMessageDate + '\'' +
-                ", lastMessageDate='" + this.lastMessageDate + '\'' +
-                ", exp=" + this.exp +
-                '}';
+    public int compareTo(User user) {
+        return name.compareTo(user.getName());
     }
 }
