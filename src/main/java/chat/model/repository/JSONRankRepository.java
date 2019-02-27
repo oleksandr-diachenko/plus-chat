@@ -34,7 +34,6 @@ public class JSONRankRepository implements RankRepository {
     public Set<Rank> getAll() {
         try {
             ranks = mapper.readValue(JSONParser.readFile(path), new TypeReference<TreeSet<Rank>>() {});
-            System.out.println(ranks);
             return ranks;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);
