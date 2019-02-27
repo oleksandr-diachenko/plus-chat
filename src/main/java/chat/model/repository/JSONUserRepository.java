@@ -70,6 +70,7 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public User delete(User user) {
         users.remove(user);
+        flush();
         return user;
     }
 
