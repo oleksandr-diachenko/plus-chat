@@ -14,11 +14,13 @@ public class RollCommand implements ICommand {
     private static final String COMMAND_NAME = "!roll";
     private UserRepository userRepository;
     private String nick;
+    private Random random;
     private long points;
 
-    public RollCommand(UserRepository userRepository, String nick) {
+    public RollCommand(UserRepository userRepository, String nick, Random random) {
         this.userRepository = userRepository;
         this.nick = nick;
+        this.random = random;
     }
 
     @Override
@@ -60,12 +62,11 @@ public class RollCommand implements ICommand {
     }
 
     private int getPercent() {
-        return new Random().nextInt(100);
+        return random.nextInt(100);
     }
 
     private long getWinPoints() {
-        float random = new Random().nextFloat() + 1;
-        return (long) (points * random);
+        return (long) (points * (random.nextFloat() + 1));
     }
 
     private String getStringPoints(long userPoints) {

@@ -9,39 +9,34 @@ import chat.unit.factory.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.powermock.core.classloader.annotations.PrepareForTest;
-import org.powermock.modules.junit4.PowerMockRunner;
-import org.springframework.test.context.ContextConfiguration;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Random;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
-import static org.powermock.api.mockito.PowerMockito.whenNew;
 
 /**
  * @author Oleksandr_Diachenko
  */
-@RunWith(PowerMockRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
-@PrepareForTest(RollCommand.class)
+@RunWith(MockitoJUnitRunner.class)
 public class RollCommandTest {
 
     private ICommand command;
-    //TODO подружить PowerMockRunner и SpringJUnit4ClassRunner
-    private AbstractFactory<User> userFactory = new UserFactory();
+
+    @Mock
     private Random random;
+    @Mock
+    private UserRepository userRepository;
 
     @Before
-    public void setup() throws Exception {
-        UserRepository userRepository = mock(UserRepository.class);
+    public void setup() {
+        AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
-        random = mock(Random.class);
-        whenNew(Random.class).withNoArguments().thenReturn(random);
-        command = new RollCommand(userRepository, "p0sltlv");
+        command = new RollCommand(userRepository, "p0sltlv", random);
     }
 
     @Test

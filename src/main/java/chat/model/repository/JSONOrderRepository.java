@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.Order;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -30,7 +30,7 @@ public class JSONOrderRepository implements OrderRepository {
     @Override
     public Set<Order> getAll() {
         try {
-            orders = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Order>>() {});
+            orders = mapper.readValue(FileUtil.readFile(path), new TypeReference<Set<Order>>() {});
             return orders;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

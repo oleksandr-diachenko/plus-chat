@@ -1,16 +1,20 @@
 package chat.unit.util;
 
 import chat.util.FileUtil;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.net.URI;
+import java.net.URISyntaxException;
+import java.nio.file.*;
+import java.nio.file.attribute.BasicFileAttributes;
 import java.util.Set;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
@@ -26,10 +30,42 @@ public class FileUtilTest {
         Files.createTempFile(temp, "pref_", "_suffix");
     }
 
+    @Test
+    public void readJsonFileTest() throws URISyntaxException {
+        String jsonString = FileUtil.readFile(getResource("\\json\\simpleJsonOneObject.json"));
+        assertEquals("" +
+                "{\r\n" +
+                "  \"name\": \"Alex\",\r\n" +
+                "  \"nick\": \"POSITIV\",\r\n" +
+                "  \"birthday\": 1989\r\n" +
+                "}", jsonString);
+    }
 
     @Test
     public void getFilesFromFolder() throws FileNotFoundException {
         Set<File> files = FileUtil.getFilesFromFolder(temp.toAbsolutePath().toString());
         assertFalse(files.isEmpty());
+    }
+
+    private String getResource(final String path) throws URISyntaxException {
+        URI uri = ClassLoader.getSystemResource(path).toURI();
+        return Paths.get(uri).toString();
+    }
+
+    @After
+    public void cleanup() throws IOException {
+        Files.walkFileTree(temp, new SimpleFileVisitor<>() {
+            @Override
+            public FileVisitResult visitFile(Path file, BasicFileAttributes attributes) throws IOException {
+                Files.delete(file);
+                return FileVisitResult.CONTINUE;
+            }
+
+            @Override
+            public FileVisitResult postVisitDirectory(Path dir, IOException exc) throws IOException {
+                Files.delete(dir);
+                return FileVisitResult.CONTINUE;
+            }
+        });
     }
 }

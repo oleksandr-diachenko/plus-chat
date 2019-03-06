@@ -6,12 +6,12 @@ import chat.model.entity.User;
 import chat.model.repository.OrderRepository;
 import chat.model.repository.UserRepository;
 import chat.unit.factory.AbstractFactory;
+import chat.unit.factory.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -19,18 +19,19 @@ import static org.mockito.Mockito.*;
 /**
  * @author Oleksandr_Diachenko
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
+@RunWith(MockitoJUnitRunner.class)
 public class OrderCommandTest {
 
     private ICommand command;
-    @Autowired
-    private AbstractFactory<User> userFactory;
+
+    @Mock
+    private UserRepository userRepository;
+    @Mock
+    private OrderRepository orderRepository;
 
     @Before
     public void setup() {
-        UserRepository userRepository = mock(UserRepository.class);
-        OrderRepository orderRepository = mock(OrderRepository.class);
+        AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
         command = new OrderCommand(userRepository, "p0sltlv", orderRepository);
     }

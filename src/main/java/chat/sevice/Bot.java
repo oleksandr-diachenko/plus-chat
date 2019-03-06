@@ -24,10 +24,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Properties;
+import java.util.*;
 
 /**
  * @author Alexander Diachenko
@@ -105,7 +102,7 @@ public class Bot extends ListenerAdapter implements Subject {
         List<ICommand> commands = new LinkedList<>();
         commands.add(new RankCommand(nick, userRepository, rankRepository));
         commands.add(new UpCommand(start));
-        commands.add(new RollCommand(userRepository, nick));
+        commands.add(new RollCommand(userRepository, nick, new Random()));
         commands.add(new PointsCommand(userRepository, nick));
         commands.add(new OrderCommand(userRepository, nick, orderRepository));
         commands.add(new JSONCommand(commandRepository));

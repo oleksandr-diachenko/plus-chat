@@ -1,13 +1,19 @@
 package chat.util;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.HashSet;
 import java.util.Set;
 
 /**
  * @author Alexander Diachenko
  */
+@Log4j2
 public class FileUtil {
 
     public static Set<File> getFilesFromFolder(String path) throws FileNotFoundException {
@@ -23,5 +29,14 @@ public class FileUtil {
             }
         }
         return result;
+    }
+
+    public static String readFile(String path) {
+        try {
+            return new String(Files.readAllBytes(Paths.get(path)));
+        } catch (IOException exception) {
+            log.error(exception.getMessage(), exception);
+        }
+        return "";
     }
 }

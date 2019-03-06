@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.Direct;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -32,7 +32,7 @@ public class JSONDirectRepository implements DirectRepository {
     @Override
     public Set<Direct> getAll() {
         try {
-            directs = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Direct>>() {});
+            directs = mapper.readValue(FileUtil.readFile(path), new TypeReference<Set<Direct>>() {});
             return directs;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

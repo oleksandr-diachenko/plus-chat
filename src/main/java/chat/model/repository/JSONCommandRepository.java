@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.Command;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -34,7 +34,7 @@ public class JSONCommandRepository implements CommandRepository {
     @Override
     public Set<Command> getAll() {
         try {
-            commands = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Command>>() {});
+            commands = mapper.readValue(FileUtil.readFile(path), new TypeReference<Set<Command>>() {});
             return commands;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

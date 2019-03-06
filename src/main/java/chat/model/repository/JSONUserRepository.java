@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.User;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -34,7 +34,7 @@ public class JSONUserRepository implements UserRepository {
     @Override
     public Set<User> getAll() {
         try {
-            users =  mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<User>>() {});
+            users =  mapper.readValue(FileUtil.readFile(path), new TypeReference<Set<User>>() {});
             return users;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

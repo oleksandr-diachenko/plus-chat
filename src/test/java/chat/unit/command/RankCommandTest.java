@@ -7,38 +7,37 @@ import chat.model.entity.User;
 import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
 import chat.unit.factory.AbstractFactory;
+import chat.unit.factory.RankFactory;
+import chat.unit.factory.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 /**
  * @author Oleksandr_Diachenko
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
+@RunWith(MockitoJUnitRunner.class)
 public class RankCommandTest {
 
     private ICommand command;
-    @Autowired
-    private AbstractFactory<User> userFactory;
-    @Autowired
-    private AbstractFactory<Rank> rankFactory;
 
+    @Mock
+    private RankRepository rankRepository;
+    @Mock
+    private UserRepository userRepository;
 
     @Before
     public void setup() {
-        UserRepository userRepository = mock(UserRepository.class);
+        AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
-        RankRepository rankRepository = mock(RankRepository.class);
+        AbstractFactory<Rank> rankFactory = new RankFactory();
         when(rankRepository.getRankByExp(anyLong())).thenReturn(rankFactory.create().get());
         command = new RankCommand("p0sltlv", userRepository, rankRepository);
     }

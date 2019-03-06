@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.Smile;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -32,7 +32,7 @@ public class JSONSmileRepository implements SmileRepository {
     @Override
     public Set<Smile> getAll() {
         try {
-            smiles = mapper.readValue(JSONParser.readFile(path), new TypeReference<Set<Smile>>() {});
+            smiles = mapper.readValue(FileUtil.readFile(path), new TypeReference<Set<Smile>>() {});
             return smiles;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);

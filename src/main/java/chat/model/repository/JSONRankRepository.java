@@ -1,7 +1,7 @@
 package chat.model.repository;
 
 import chat.model.entity.Rank;
-import chat.util.JSONParser;
+import chat.util.FileUtil;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.codehaus.jackson.map.ObjectMapper;
@@ -33,7 +33,7 @@ public class JSONRankRepository implements RankRepository {
     @Override
     public Set<Rank> getAll() {
         try {
-            ranks = mapper.readValue(JSONParser.readFile(path), new TypeReference<TreeSet<Rank>>() {});
+            ranks = mapper.readValue(FileUtil.readFile(path), new TypeReference<TreeSet<Rank>>() {});
             return ranks;
         } catch (IOException exception) {
             log.error(exception.getMessage(), exception);
