@@ -83,11 +83,11 @@ public class SettingController {
     }
 
     private void flushSettings() {
-        settingColorController.saveSettings(settings);
-        settingFontController.saveSettings(settings);
-        settingGeneralController.saveSettings(settings);
-        settingSoundController.saveSettings(settings);
-        chatController.setSettings(settings);
+        settingColorController.storeSettingProperty(settings);
+        settingFontController.storeSettingProperty(settings);
+        settingGeneralController.storeSettingProperty(settings);
+        settingSoundController.storeSettingProperty(settings);
+        chatController.storeSettingProperty(settings);
         chatController.getSetting().setDisable(false);
     }
 

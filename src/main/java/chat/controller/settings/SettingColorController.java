@@ -62,55 +62,59 @@ public class SettingColorController {
     }
 
     private void initBaseColorPicker() {
-        baseColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.ROOT_BASE_COLOR)));
+        baseColorPicker.setValue(getColor(Settings.ROOT_BASE_COLOR));
         baseColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setBaseColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
     }
 
     private void initBackGroundColorPicker() {
-        backgroundColorPicker.setValue(Color.valueOf(settings.getProperty(
-                Settings.ROOT_BACKGROUND_COLOR)));
+        backgroundColorPicker.setValue(getColor(Settings.ROOT_BACKGROUND_COLOR));
         backgroundColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setBackgroundColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
     }
 
     private void initNickColorPicker() {
-        nickColorPicker.setValue(Color.valueOf(settings.getProperty(Settings.FONT_NICK_COLOR)));
+        nickColorPicker.setValue(getColor(Settings.FONT_NICK_COLOR));
         nickColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setNickColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
     }
 
     private void initSeparatorColorPicker() {
-        separatorColorPicker.setValue(Color.valueOf(settings.getProperty(
-                Settings.FONT_SEPARATOR_COLOR)));
+        separatorColorPicker.setValue(getColor(Settings.FONT_SEPARATOR_COLOR));
         separatorColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setSeparatorColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
     }
 
     private void initMessageColorPicker() {
-        messageColorPicker.setValue(Color.valueOf(settings.getProperty(
-                Settings.FONT_MESSAGE_COLOR)));
+        messageColorPicker.setValue(getColor(Settings.FONT_MESSAGE_COLOR));
         messageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setMessageColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
     }
 
     private void initDirectMessageColorPicker() {
-        directMessageColorPicker.setValue(Color.valueOf(settings.getProperty(
-                Settings.FONT_DIRECT_MESSAGE_COLOR)));
+        directMessageColorPicker.setValue(getColor(Settings.FONT_DIRECT_MESSAGE_COLOR));
         directMessageColorPicker.valueProperty().addListener((ov, old_val, new_val) -> {
             applicationStyle.setDirectColor(ColorUtil.getHexColor(new_val));
-            styleUtil.setStyles(getChatRoot(), root, applicationStyle);
+            setRootStyle();
         });
+    }
+
+    private Color getColor(String rootBaseColor) {
+        return Color.valueOf(settings.getProperty(rootBaseColor));
+    }
+
+    private void setRootStyle() {
+        styleUtil.setStyles(getChatRoot(), root, applicationStyle);
     }
 
     private Node getChatRoot() {
@@ -118,7 +122,7 @@ public class SettingColorController {
         return owner.getScene().lookup("#root");
     }
 
-    void saveSettings(Properties settings) {
+    void storeSettingProperty(Properties settings) {
         settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
                 baseColorPicker.getValue()));
         settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(

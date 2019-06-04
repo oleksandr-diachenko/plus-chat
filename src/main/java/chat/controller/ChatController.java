@@ -320,7 +320,7 @@ public class ChatController implements Observer {
         return text;
     }
 
-    public void setSettings(Properties settings) {
+    public void storeSettingProperty(Properties settings) {
         this.settings = settings;
     }
 
