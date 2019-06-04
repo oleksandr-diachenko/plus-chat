@@ -25,14 +25,19 @@ public class ChatDialog extends AbstractDialog {
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
-        stage.getIcons().add(new Image(paths.getLogo()));
-        setAlwaysOnTop(stage);
+    protected String getCSSName() {
+        return paths.getChatCSS();
     }
 
     @Override
     protected void initOwner(Stage owner, Stage stage) {
         //do nothing
+    }
+
+    @Override
+    protected void setStageSettings(Stage stage) {
+        stage.getIcons().add(new Image(paths.getLogo()));
+        setAlwaysOnTop(stage);
     }
 
     @Override
@@ -43,12 +48,9 @@ public class ChatDialog extends AbstractDialog {
         });
     }
 
-    private void setAlwaysOnTop(Stage stage) {
-        stage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
-    }
-
-    private Properties getSettings() {
-        return settingsProperties.getProperty();
+    @Override
+    protected String getTitleName() {
+        return "(+) chat";
     }
 
     @Override
@@ -56,13 +58,11 @@ public class ChatDialog extends AbstractDialog {
         return "chat";
     }
 
-    @Override
-    protected String getCSSName() {
-        return paths.getChatCSS();
+    private void setAlwaysOnTop(Stage stage) {
+        stage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
     }
 
-    @Override
-    protected String getTitleName() {
-        return "(+) chat";
+    private Properties getSettings() {
+        return settingsProperties.getProperty();
     }
 }

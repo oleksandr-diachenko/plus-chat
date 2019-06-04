@@ -38,10 +38,25 @@ public class DataDialog extends AbstractDialog {
     }
 
     @Override
+    protected void initOwner(Stage owner, Stage stage) {
+        stage.initOwner(owner);
+    }
+
+    @Override
     protected void setStageSettings(Stage stage) {
         stage.setResizable(false);
         TableView<Object> table = dataController.getTable();
         initData(table);
+    }
+
+    @Override
+    protected String getFXMLName() {
+        return "data";
+    }
+
+    @Override
+    protected String getCSSName() {
+        return paths.getDataCSS();
     }
 
     private void initData(TableView<Object> table) {
@@ -78,21 +93,6 @@ public class DataDialog extends AbstractDialog {
                 }
             }
         };
-    }
-
-    @Override
-    protected void initOwner(Stage owner, Stage stage) {
-        stage.initOwner(owner);
-    }
-
-    @Override
-    protected String getFXMLName() {
-        return "data";
-    }
-
-    @Override
-    protected String getCSSName() {
-        return paths.getDataCSS();
     }
 
     public void setTableFields(Set<String> fields) {

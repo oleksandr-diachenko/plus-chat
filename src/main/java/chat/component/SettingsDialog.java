@@ -29,14 +29,19 @@ public class SettingsDialog extends AbstractDialog{
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
-        stage.setAlwaysOnTop(true);
-        stage.setResizable(false);
+    protected String getCSSName() {
+        return paths.getSettingsCSS();
     }
 
     @Override
     protected void initOwner(Stage owner, Stage stage) {
         stage.initOwner(owner);
+    }
+
+    @Override
+    protected void setStageSettings(Stage stage) {
+        stage.setAlwaysOnTop(true);
+        stage.setResizable(false);
     }
 
     @Override
@@ -59,10 +64,5 @@ public class SettingsDialog extends AbstractDialog{
     @Override
     protected String getFXMLName() {
         return "settings";
-    }
-
-    @Override
-    protected String getCSSName() {
-        return paths.getSettingsCSS();
     }
 }

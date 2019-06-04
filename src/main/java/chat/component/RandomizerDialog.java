@@ -17,13 +17,18 @@ public class RandomizerDialog extends AbstractDialog {
 
 
     @Override
-    protected void setStageSettings(Stage stage) {
-        //do nothing
+    protected String getCSSName() {
+        return paths.getRandomizerCSS();
     }
 
     @Override
     protected void initOwner(Stage owner, Stage stage) {
         //do nothing;
+    }
+
+    @Override
+    protected void setStageSettings(Stage stage) {
+        //do nothing
     }
 
     @Override
@@ -34,10 +39,5 @@ public class RandomizerDialog extends AbstractDialog {
     @Override
     protected String getFXMLName() {
         return "randomizer";
-    }
-
-    @Override
-    protected String getCSSName() {
-        return paths.getRandomizerCSS();
     }
 }

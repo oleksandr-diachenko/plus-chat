@@ -11,23 +11,23 @@ import org.springframework.stereotype.Component;
 public class ConfirmDialog extends AbstractDialog {
 
     @Override
+    protected void initOwner(Stage owner, Stage stage) {
+        stage.initOwner(owner);
+    }
+
+    @Override
     protected void setStageSettings(Stage stage) {
         stage.initModality(Modality.WINDOW_MODAL);
         stage.setResizable(false);
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
-        stage.initOwner(owner);
+    protected String getCSSName() {
+        return paths.getConfirmCSS();
     }
 
     @Override
     protected String getFXMLName() {
         return "confirm";
-    }
-
-    @Override
-    protected String getCSSName() {
-        return paths.getConfirmCSS();
     }
 }
