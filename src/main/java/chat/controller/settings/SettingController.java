@@ -3,6 +3,7 @@ package chat.controller.settings;
 import chat.component.ConfirmDialog;
 import chat.controller.ChatController;
 import chat.controller.ConfirmController;
+import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.Settings;
 import chat.util.StyleUtil;
@@ -14,6 +15,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -29,43 +31,40 @@ public class SettingController {
     private AppProperty settingsProperties;
     private StyleUtil styleUtil;
     private ConfirmDialog confirmDialog;
-    private SettingDataController settingDataController;
-    private SettingColorController settingColorController;
-    private SettingFontController settingFontController;
-    private SettingGeneralController settingGeneralController;
-    private SettingSoundController settingSoundController;
+    private SettingDataTabController settingDataTabController;
+    private SettingColorTabController settingColorTabController;
+    private SettingFontTabController settingFontTabController;
     private ChatController chatController;
     private ConfirmController confirmController;
+    private List<Customizable> controllers;
 
     @Autowired
     public SettingController(AppProperty settingsProperties, StyleUtil styleUtil,
-                             ConfirmDialog confirmDialog, SettingColorController settingColorController,
-                             SettingFontController settingFontController, SettingGeneralController settingGeneralController,
-                             SettingSoundController settingSoundController, ChatController chatController,
-                             SettingDataController settingDataController, ConfirmController confirmController) {
+                             ConfirmDialog confirmDialog, SettingColorTabController settingColorTabController,
+                             SettingFontTabController settingFontTabController, ChatController chatController,
+                             SettingDataTabController settingDataTabController, ConfirmController confirmController, List<Customizable> controllers) {
         this.settingsProperties = settingsProperties;
         this.styleUtil = styleUtil;
         this.confirmDialog = confirmDialog;
-        this.settingDataController = settingDataController;
-        this.settingColorController = settingColorController;
-        this.settingFontController = settingFontController;
-        this.settingGeneralController = settingGeneralController;
-        this.settingSoundController = settingSoundController;
+        this.settingDataTabController = settingDataTabController;
+        this.settingColorTabController = settingColorTabController;
+        this.settingFontTabController = settingFontTabController;
         this.chatController = chatController;
         this.confirmController = confirmController;
+        this.controllers = controllers;
     }
 
     @FXML
     public void initialize() {
-        settingColorController.setRoot(root);
-        settingFontController.setRoot(root);
+        settingColorTabController.setRoot(root);
+        settingFontTabController.setRoot(root);
         settings = settingsProperties.loadProperty();
         root.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
     }
 
     public void reloadAction() {
-        settingDataController.reload();
+        settingDataTabController.reload();
     }
 
     public void confirmAction() {
@@ -73,19 +72,17 @@ public class SettingController {
         Stage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmController.isConfirmed()) {
-                flushSettings();
+                flushSettings(settings);
                 chatController.setSettings(settings);
                 chatController.enableSettingsButton();
             }
         });
     }
 
-    private void flushSettings() {
-        settingsProperties.storeProperties(settings);
-        settingGeneralController.storeSettingProperty(settings);
-        settingSoundController.storeSettingProperty(settings);
-        settingColorController.storeSettingProperty(settings);
-        settingFontController.storeSettingProperty(settings);
+    private void flushSettings(Properties settings) {
+        for (Customizable controller : controllers) {
+            controller.customize(settings);
+        }
     }
 
     public void cancelAction() {

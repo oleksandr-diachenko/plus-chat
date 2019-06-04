@@ -2,6 +2,7 @@ package chat.controller.settings;
 
 import chat.component.ChatDialog;
 import chat.controller.ApplicationStyle;
+import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.Settings;
 import chat.util.StyleUtil;
@@ -19,7 +20,7 @@ import java.util.Properties;
  * @author Oleksandr_Diachenko
  */
 @Controller
-public class SettingFontController {
+public class SettingFontTabController implements Customizable {
 
     @FXML
     private Label fontSize;
@@ -33,8 +34,8 @@ public class SettingFontController {
     private Node root;
 
     @Autowired
-    public SettingFontController(AppProperty settingsProperties, ApplicationStyle applicationStyle,
-                                 StyleUtil styleUtil, ChatDialog chatDialog) {
+    public SettingFontTabController(AppProperty settingsProperties, ApplicationStyle applicationStyle,
+                                    StyleUtil styleUtil, ChatDialog chatDialog) {
         this.settingsProperties = settingsProperties;
         this.applicationStyle = applicationStyle;
         this.styleUtil = styleUtil;
@@ -63,12 +64,13 @@ public class SettingFontController {
         return owner.getScene().lookup("#root");
     }
 
-    void storeSettingProperty(Properties settings) {
-        settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
-        settingsProperties.storeProperties(settings);
-    }
-
     void setRoot(Node root) {
         this.root = root;
+    }
+
+    @Override
+    public void customize(Properties properties) {
+        properties.setProperty(Settings.FONT_SIZE, fontSize.getText());
+        settingsProperties.storeProperties(properties);
     }
 }

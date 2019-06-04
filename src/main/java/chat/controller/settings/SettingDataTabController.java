@@ -16,7 +16,7 @@ import java.util.Set;
  * @author Oleksandr_Diachenko
  */
 @Controller
-public class SettingDataController {
+public class SettingDataTabController {
 
     private CommandRepository commandRepository;
     private UserRepository userRepository;
@@ -28,11 +28,11 @@ public class SettingDataController {
     private SettingsDialog settingsDialog;
 
     @Autowired
-    public SettingDataController(CommandRepository commandRepository,
-                                 UserRepository userRepository, RankRepository rankRepository,
-                                 SmileRepository smileRepository, DirectRepository directRepository,
-                                 OrderRepository orderRepository,
-                                 DataDialog dataDialog, SettingsDialog settingsDialog) {
+    public SettingDataTabController(CommandRepository commandRepository,
+                                    UserRepository userRepository, RankRepository rankRepository,
+                                    SmileRepository smileRepository, DirectRepository directRepository,
+                                    OrderRepository orderRepository,
+                                    DataDialog dataDialog, SettingsDialog settingsDialog) {
         this.commandRepository = commandRepository;
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;

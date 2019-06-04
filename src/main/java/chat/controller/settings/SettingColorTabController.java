@@ -2,6 +2,7 @@ package chat.controller.settings;
 
 import chat.component.ChatDialog;
 import chat.controller.ApplicationStyle;
+import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.ColorUtil;
 import chat.util.Settings;
@@ -20,7 +21,7 @@ import java.util.Properties;
  * @author Oleksandr_Diachenko
  */
 @Controller
-public class SettingColorController {
+public class SettingColorTabController implements Customizable {
 
     @FXML
     private ColorPicker baseColorPicker;
@@ -42,8 +43,8 @@ public class SettingColorController {
     private Node root;
 
     @Autowired
-    public SettingColorController(AppProperty settingsProperties, ChatDialog chatDialog,
-                                  ApplicationStyle applicationStyle, StyleUtil styleUtil) {
+    public SettingColorTabController(AppProperty settingsProperties, ChatDialog chatDialog,
+                                     ApplicationStyle applicationStyle, StyleUtil styleUtil) {
         this.settingsProperties = settingsProperties;
         this.chatDialog = chatDialog;
         this.applicationStyle = applicationStyle;
@@ -122,23 +123,24 @@ public class SettingColorController {
         return owner.getScene().lookup("#root");
     }
 
-    void storeSettingProperty(Properties settings) {
-        settings.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
-                baseColorPicker.getValue()));
-        settings.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
-                backgroundColorPicker.getValue()));
-        settings.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(
-                nickColorPicker.getValue()));
-        settings.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(
-                separatorColorPicker.getValue()));
-        settings.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(
-                messageColorPicker.getValue()));
-        settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
-                directMessageColorPicker.getValue()));
-        settingsProperties.storeProperties(settings);
-    }
-
     void setRoot(Node root) {
         this.root = root;
+    }
+
+    @Override
+    public void customize(Properties properties) {
+        properties.setProperty(Settings.ROOT_BASE_COLOR, ColorUtil.getHexColor(
+                baseColorPicker.getValue()));
+        properties.setProperty(Settings.ROOT_BACKGROUND_COLOR, ColorUtil.getHexColor(
+                backgroundColorPicker.getValue()));
+        properties.setProperty(Settings.FONT_NICK_COLOR, ColorUtil.getHexColor(
+                nickColorPicker.getValue()));
+        properties.setProperty(Settings.FONT_SEPARATOR_COLOR, ColorUtil.getHexColor(
+                separatorColorPicker.getValue()));
+        properties.setProperty(Settings.FONT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                messageColorPicker.getValue()));
+        properties.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
+                directMessageColorPicker.getValue()));
+        settingsProperties.storeProperties(properties);
     }
 }

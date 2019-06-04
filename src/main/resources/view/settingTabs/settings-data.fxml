@@ -8,7 +8,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ScrollPane?>
 <ScrollPane prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
-            xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingDataController">
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingDataTabController">
     <GridPane prefHeight="455.0" prefWidth="600.0" gridLinesVisible="true">
         <columnConstraints>
             <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>

@@ -2,6 +2,7 @@ package chat.controller.settings;
 
 import chat.component.ChatDialog;
 import chat.component.RandomizerDialog;
+import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.collections.FXCollections;
@@ -20,7 +21,7 @@ import java.util.*;
  * @author Oleksandr_Diachenko
  */
 @Controller
-public class SettingGeneralController {
+public class SettingGeneralTabController implements Customizable {
 
     @FXML
     private Button randomizer;
@@ -39,8 +40,8 @@ public class SettingGeneralController {
     private Map<String, String> languages;
 
     @Autowired
-    public SettingGeneralController(AppProperty settingsProperties, ChatDialog chatDialog,
-                                    RandomizerDialog randomizerDialog) {
+    public SettingGeneralTabController(AppProperty settingsProperties, ChatDialog chatDialog,
+                                       RandomizerDialog randomizerDialog) {
         this.settingsProperties = settingsProperties;
         this.chatDialog = chatDialog;
         this.randomizerDialog = randomizerDialog;
@@ -102,10 +103,11 @@ public class SettingGeneralController {
         return chatDialog.getStage();
     }
 
-    void storeSettingProperty(Properties settings) {
-        settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
-        settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
-        settings.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
-        settingsProperties.storeProperties(settings);
+    @Override
+    public void customize(Properties properties) {
+        properties.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
+        properties.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
+        properties.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
+        settingsProperties.storeProperties(properties);
     }
 }

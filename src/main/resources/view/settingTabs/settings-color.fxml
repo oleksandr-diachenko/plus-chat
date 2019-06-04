@@ -7,7 +7,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ColorPicker?>
 <GridPane gridLinesVisible="true" prefHeight="365.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121"
-          xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingColorController">
+          xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.settings.SettingColorTabController">
     <columnConstraints>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>
         <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" prefWidth="100.0"/>

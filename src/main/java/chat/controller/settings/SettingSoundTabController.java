@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.FileUtil;
 import chat.util.Paths;
@@ -25,7 +26,7 @@ import java.util.Set;
  */
 @Controller
 @Log4j2
-public class SettingSoundController {
+public class SettingSoundTabController implements Customizable {
 
     @FXML
     private CheckBox enableSoundCheckBox;
@@ -46,7 +47,7 @@ public class SettingSoundController {
     private Properties settings;
 
     @Autowired
-    public SettingSoundController(AppProperty settingsProperties, Paths paths) {
+    public SettingSoundTabController(AppProperty settingsProperties, Paths paths) {
         this.settingsProperties = settingsProperties;
         this.paths = paths;
     }
@@ -116,17 +117,18 @@ public class SettingSoundController {
         });
     }
 
-    void storeSettingProperty(Properties settings) {
-        settings.setProperty(Settings.SOUND_ENABLE, String.valueOf(
+    @Override
+    public void customize(Properties properties) {
+        properties.setProperty(Settings.SOUND_ENABLE, String.valueOf(
                 enableSoundCheckBox.isSelected()));
-        settings.setProperty(Settings.SOUND_MESSAGE,
+        properties.setProperty(Settings.SOUND_MESSAGE,
                 messageSoundChoiceBox.getValue());
-        settings.setProperty(Settings.SOUND_MESSAGE_VOLUME,
+        properties.setProperty(Settings.SOUND_MESSAGE_VOLUME,
                 messageVolumeValue.getText());
-        settings.setProperty(Settings.SOUND_DIRECT_MESSAGE,
+        properties.setProperty(Settings.SOUND_DIRECT_MESSAGE,
                 directMessageSoundChoiceBox.getValue());
-        settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
+        properties.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
                 directMessageVolumeValue.getText());
-        settingsProperties.storeProperties(settings);
+        settingsProperties.storeProperties(properties);
     }
 }
