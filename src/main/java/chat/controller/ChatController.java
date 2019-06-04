@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.component.ChatDialog;
 import chat.component.SettingsDialog;
 import chat.model.entity.Direct;
 import chat.model.entity.Rank;
@@ -72,6 +73,7 @@ public class ChatController implements Observer {
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
+    private ChatDialog chatDialog;
     @Autowired
     private Bot listener;
 
@@ -81,7 +83,7 @@ public class ChatController implements Observer {
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
                           @Qualifier("twitchProperties") AppProperty twitchProperties,
-                          SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil) {
+                          SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.smileRepository = smileRepository;
@@ -91,6 +93,7 @@ public class ChatController implements Observer {
         this.settingsDialog = settingsDialog;
         this.paths = paths;
         this.styleUtil = styleUtil;
+        this.chatDialog = chatDialog;
     }
 
     @FXML
@@ -102,9 +105,14 @@ public class ChatController implements Observer {
                 settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
         ));
+        chatDialog.setOpacity(getOpacity());
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
         startBot();
+    }
+
+    private double getOpacity() {
+        return Double.parseDouble(settings.getProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY)) / 100;
     }
 
     private void onTopInit() {

@@ -66,4 +66,8 @@ public class ChatDialog extends AbstractDialog {
     private Properties getSettings() {
         return settingsProperties.loadProperty();
     }
+
+    public void setOpacity(double opacity) {
+        getStage().setOpacity(opacity);
+    }
 }
