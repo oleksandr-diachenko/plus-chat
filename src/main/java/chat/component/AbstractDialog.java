@@ -27,19 +27,28 @@ public abstract class AbstractDialog {
         Stage stage = new Stage();
         this.stage = stage;
         try {
-            UndecoratorScene scene = getScene(stage, getRootRegion());
-            stage.setScene(scene);
-
-            initOwner(owner, stage);
-            setStageSettings(stage);
-            setEvents(stage);
-
-            stage.setTitle(getTitleName());
-            stage.show();
+            showStage(owner, stage);
         } catch (IOException exception) {
-            log.error(exception.getMessage(), exception);
-            throw new RuntimeException(getFXMLName() + " view failed to load", exception);
+            log(exception);
         }
+    }
+
+    private void log(IOException exception) {
+        log.error(exception.getMessage(), exception);
+        throw new RuntimeException(getFXMLName() + " view failed to load", exception);
+    }
+
+    private void showStage(Stage owner, Stage stage) throws IOException {
+        loadRoot();
+        createScene(stage, root);
+        stage.setScene(scene);
+
+        initOwner(owner, stage);
+        setStageSettings(stage);
+        setEvents(stage);
+
+        stage.setTitle(getTitleName());
+        stage.show();
     }
 
     protected UndecoratorScene getScene() {
@@ -70,15 +79,13 @@ public abstract class AbstractDialog {
         return root;
     }
 
-    private Region getRootRegion() throws IOException {
+    private void loadRoot() throws IOException {
         root = springStageLoader.load(getFXMLName());
-        return root;
     }
 
-    private UndecoratorScene getScene(Stage stage, Region root) {
+    private void createScene(Stage stage, Region root) {
         scene = new UndecoratorScene(stage, root);
         scene.getStylesheets().add(getCSSName());
         scene.setBackgroundOpacity(0.2);
-        return scene;
     }
 }
