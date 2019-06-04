@@ -320,19 +320,19 @@ public class ChatController implements Observer {
         return text;
     }
 
-    public void storeSettingProperty(Properties settings) {
-        this.settings = settings;
-    }
-
-    public Button getSetting() {
-        return setting;
-    }
-
     private Stage getStage() {
         return (Stage) container.getScene().getWindow();
     }
 
     public Bot getListener() {
         return listener;
+    }
+
+    public void enableSettingsButton() {
+        setting.setDisable(false);
+    }
+
+    public void setSettings(Properties settings) {
+        this.settings = settings;
     }
 }

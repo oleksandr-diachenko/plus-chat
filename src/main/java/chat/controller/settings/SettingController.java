@@ -74,21 +74,22 @@ public class SettingController {
         stage.setOnCloseRequest(event -> {
             if (confirmController.isConfirmed()) {
                 flushSettings();
+                chatController.setSettings(settings);
+                chatController.enableSettingsButton();
             }
         });
     }
 
-    public void cancelAction() {
-        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
-    }
-
     private void flushSettings() {
-        settingColorController.storeSettingProperty(settings);
-        settingFontController.storeSettingProperty(settings);
+        settingsProperties.storeProperties(settings);
         settingGeneralController.storeSettingProperty(settings);
         settingSoundController.storeSettingProperty(settings);
-        chatController.storeSettingProperty(settings);
-        chatController.getSetting().setDisable(false);
+        settingColorController.storeSettingProperty(settings);
+        settingFontController.storeSettingProperty(settings);
+    }
+
+    public void cancelAction() {
+        getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
     private Stage getStage() {
