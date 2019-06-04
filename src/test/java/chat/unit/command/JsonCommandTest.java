@@ -12,8 +12,9 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import java.util.Optional;
+
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
 /**
@@ -38,6 +39,13 @@ public class JsonCommandTest {
     public void shouldExecuteWhenJsonCommandCorrect() {
         boolean canExecute = command.canExecute("!fire");
         assertTrue(canExecute);
+    }
+
+    @Test
+    public void shouldNotExecuteWhenJsonCommandIncorrect() {
+        when(commandRepository.getCommandByName(anyString())).thenReturn(Optional.empty());
+        boolean canExecute = command.canExecute("!qwe");
+        assertFalse(canExecute);
     }
 
     @Test

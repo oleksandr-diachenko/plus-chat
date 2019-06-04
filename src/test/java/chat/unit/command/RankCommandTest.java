@@ -15,6 +15,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -59,5 +61,12 @@ public class RankCommandTest {
         command.canExecute("!rank");
         String execute = command.execute();
         assertEquals("POSITIV, your rank Pro (10 exp)", execute);
+    }
+
+    @Test
+    public void shouldReturnResponseEmptyWhenUserNotFound() {
+        when(userRepository.getUserByName(anyString())).thenReturn(Optional.empty());
+        String execute = command.execute();
+        assertEquals("", execute);
     }
 }

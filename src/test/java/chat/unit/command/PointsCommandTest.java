@@ -12,6 +12,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
@@ -51,5 +53,12 @@ public class PointsCommandTest {
         command.canExecute("p0sltlv");
         String execute = command.execute();
         assertEquals("POSITIV, you have 1000 points.", execute);
+    }
+
+    @Test
+    public void shouldReturnResponseEmptyWhenUserNotFound() {
+        when(userRepository.getUserByName(anyString())).thenReturn(Optional.empty());
+        String execute = command.execute();
+        assertEquals("", execute);
     }
 }

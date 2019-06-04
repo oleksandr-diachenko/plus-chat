@@ -12,6 +12,7 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
 import java.util.Random;
 
 import static org.junit.Assert.*;
@@ -89,5 +90,19 @@ public class RollCommandTest {
         when(random.nextFloat()).thenReturn((float) 0.5);
         String execute = command.execute();
         assertEquals("POSITIV, you won 150 points! (You have 1150 points)", execute);
+    }
+
+    @Test
+    public void shouldReturnResponseNotEnoughPointsWhenRollCommandRolledMoreThanUserHave() {
+        command.canExecute("!roll 2000");
+        String execute = command.execute();
+        assertEquals("POSITIV, you don't have enough points! (You have 1000 points)", execute);
+    }
+
+    @Test
+    public void shouldReturnResponseEmptyWhenUserNotFound() {
+        when(userRepository.getUserByName(anyString())).thenReturn(Optional.empty());
+        String execute = command.execute();
+        assertEquals("", execute);
     }
 }

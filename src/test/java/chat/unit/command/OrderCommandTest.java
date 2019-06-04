@@ -13,6 +13,8 @@ import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Optional;
+
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
 
@@ -84,5 +86,12 @@ public class OrderCommandTest {
         command.canExecute("!order 10000 order");
         String execute = command.execute();
         assertEquals("POSITIV, you don't have enough points! (You have 1000 points)", execute);
+    }
+
+    @Test
+    public void shouldReturnResponseEmptyWhenUserNotFound() {
+        when(userRepository.getUserByName(anyString())).thenReturn(Optional.empty());
+        String execute = command.execute();
+        assertEquals("", execute);
     }
 }

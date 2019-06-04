@@ -36,7 +36,7 @@ public class AppProperty{
         return properties;
     }
 
-    public Properties setProperties(Properties properties) {
+    public void setProperties(Properties properties) {
         try (OutputStream output = new FileOutputStream(path)) {
             properties.store(output, null);
         } catch (IOException exception) {
@@ -44,6 +44,5 @@ public class AppProperty{
             throw new RuntimeException("Properties " + path + " failed to save. \n" +
                     "Put properties to settings/", exception);
         }
-        return properties;
     }
 }
