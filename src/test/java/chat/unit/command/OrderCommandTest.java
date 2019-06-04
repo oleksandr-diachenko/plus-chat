@@ -37,50 +37,50 @@ public class OrderCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenOrderCommandCorrect() {
         boolean canExecute = command.canExecute("!order 100 order");
         assertTrue(canExecute);
     }
 
     @Test
-    public void canExecute_wrongCommandTest() {
+    public void shouldNotExecuteWhenOrderCommandIncorrect() {
         boolean canExecute = command.canExecute("!qwe 100 order");
         assertFalse(canExecute);
     }
 
     @Test
-    public void canExecute_wrongArgumentCount_oneArgumentTest() {
+    public void shouldNotExecuteWhenOrderCommandWithoutArguments() {
         boolean canExecute = command.canExecute("!order");
         assertFalse(canExecute);
     }
 
     @Test
-    public void canExecute_wrongArgumentCount_twoArgumentTest() {
+    public void shouldNotExecuteWhenOrderCommandWithIncorrectArgumentsCount() {
         boolean canExecute = command.canExecute("!order 100");
         assertFalse(canExecute);
     }
 
     @Test
-    public void canExecute_wrongArgument_secondArgumentNotNumericTest() {
+    public void shouldNotExecuteWhenOrderCommandWithIncorrectSecondArgument() {
         boolean canExecute = command.canExecute("!order qwe order");
         assertFalse(canExecute);
     }
 
     @Test
-    public void canExecute_fourArgumentTest() {
+    public void shouldExecuteWhenOrderCommandMoreThanThreeArguments() {
         boolean canExecute = command.canExecute("!order 100 order qwe");
         assertTrue(canExecute);
     }
 
     @Test
-    public void executeTest() {
+    public void shouldReturnResponseWhenOrderCommandCorrect() {
         command.canExecute("!order 100 order");
         String execute = command.execute();
         assertEquals("POSITIV, your order is accepted (order) (100 points)", execute);
     }
 
     @Test
-    public void execute_notEnoughPointsTest() {
+    public void shouldReturnResponseNotEnoughPointsWhenUserDontHaveEnoughPoints() {
         command.canExecute("!order 10000 order");
         String execute = command.execute();
         assertEquals("POSITIV, you don't have enough points! (You have 1000 points)", execute);

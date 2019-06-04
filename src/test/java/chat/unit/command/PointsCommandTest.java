@@ -35,19 +35,19 @@ public class PointsCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenPointsCommandCorrect() {
         boolean canExecute = command.canExecute("!points");
         assertTrue(canExecute);
     }
 
     @Test
-    public void canExecute_wrongCommandTest() {
+    public void shouldNotExecuteWhenPointsCommandIncorrect() {
         boolean canExecute = command.canExecute("!qwe");
         assertFalse(canExecute);
     }
 
     @Test
-    public void executeTest() {
+    public void shouldReturnResponseWhenPointsCommandCorrect() {
         command.canExecute("p0sltlv");
         String execute = command.execute();
         assertEquals("POSITIV, you have 1000 points.", execute);

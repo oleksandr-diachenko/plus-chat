@@ -43,19 +43,19 @@ public class RankCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenRankCommandCorrect() {
         boolean canExecute = command.canExecute("!rank");
         assertTrue(canExecute);
     }
 
     @Test
-    public void canExecute_wrongCommandTest() {
+    public void shouldNotExecuteWhenRankCommandIncorrect() {
         boolean canExecute = command.canExecute("!qwe");
         assertFalse(canExecute);
     }
 
     @Test
-    public void executeTest() {
+    public void shouldReturnResponseWhenRankCommandCorrect() {
         command.canExecute("!rank");
         String execute = command.execute();
         assertEquals("POSITIV, your rank Pro (10 exp)", execute);

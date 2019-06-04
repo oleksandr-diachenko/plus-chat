@@ -22,19 +22,19 @@ public class UpCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenUpCommandCorrect() {
         boolean canExecute = command.canExecute("!up");
         assertTrue(canExecute);
     }
 
     @Test
-    public void canExecute_wrongCommandTest() {
+    public void shouldNotExecuteWhenUpCommandIncorrect() {
         boolean canExecute = command.canExecute("!qwe");
         assertFalse(canExecute);
     }
 
     @Test
-    public void executeTest() {
+    public void shouldReturnResponseWhenUpCommandCorrect() {
         String execute = command.execute();
         assertEquals("00h 00m 00s", execute);
     }

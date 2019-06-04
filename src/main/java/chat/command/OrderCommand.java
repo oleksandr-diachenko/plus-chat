@@ -76,7 +76,7 @@ public class OrderCommand implements ICommand {
         order.setUser(user.getCustomName());
         order.setPoints(points);
         order.setOrder(this.order);
-        order.setTakenDate(TimeUtil.getDateToString(LocalDateTime.now()));
+        order.setTakenDate(TimeUtil.formatDate(LocalDateTime.now()));
         order.setStatus(OrderStatus.NEW);
         return order;
     }

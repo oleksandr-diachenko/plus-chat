@@ -31,7 +31,7 @@ public class FileUtilTest {
     }
 
     @Test
-    public void readJsonFileTest() throws URISyntaxException {
+    public void shouldReturnJsonStringWhenFilePathCorrect() throws URISyntaxException {
         String jsonString = FileUtil.readFile(getResource("\\json\\simpleJsonOneObject.json"));
         assertEquals("" +
                 "{\r\n" +
@@ -42,9 +42,20 @@ public class FileUtilTest {
     }
 
     @Test
-    public void getFilesFromFolder() throws FileNotFoundException {
+    public void shouldReturnEmptyStringWhenFilePathIncorrect() {
+        String jsonString = FileUtil.readFile("qwe.json");
+        assertEquals("", jsonString);
+    }
+
+    @Test
+    public void shouldReturnFilesWhenFilePathCorrect() throws FileNotFoundException {
         Set<File> files = FileUtil.getFilesFromFolder(temp.toAbsolutePath().toString());
         assertFalse(files.isEmpty());
+    }
+
+    @Test(expected = FileNotFoundException.class)
+    public void shouldThrowExceptionWhenFilePathIncorrect() throws FileNotFoundException {
+        FileUtil.getFilesFromFolder("qwe");
     }
 
     private String getResource(final String path) throws URISyntaxException {

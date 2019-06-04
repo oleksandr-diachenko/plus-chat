@@ -10,7 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Set;
 
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertFalse;
 
 /**
  * @author Alexander Diachenko.
@@ -23,8 +23,8 @@ public class OrderRepositoryTest {
     private OrderRepository orderRepository;
 
     @Test
-    public void getAllOrdersTest() {
-        final Set<Order> orders = this.orderRepository.getAll();
-        assertTrue(!orders.isEmpty());
+    public void shouldReturnAllOrders() {
+        Set<Order> orders = orderRepository.getAll();
+        assertFalse(orders.isEmpty());
     }
 }

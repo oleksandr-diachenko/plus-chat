@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,20 +25,20 @@ public class SmileRepositoryTest {
     private SmileRepository smileRepository;
 
     @Test
-    public void getAllSmilesTest() {
-        final Set<Smile> smiles = this.smileRepository.getAll();
-        assertTrue(!smiles.isEmpty());
+    public void shouldReturnAllSmiles() {
+        Set<Smile> smiles = smileRepository.getAll();
+        assertFalse(smiles.isEmpty());
     }
 
     @Test
-    public void getSmileByNameTest() {
-        final Optional<Smile> smileByName = this.smileRepository.getSmileByName(":)");
+    public void shouldReturnSmileWhenSmileNameCorrect() {
+        Optional<Smile> smileByName = smileRepository.getSmileByName(":)");
         assertTrue(smileByName.isPresent());
     }
 
     @Test
-    public void getSmileByIncorrectNameTest() {
-        final Optional<Smile> smileByName = this.smileRepository.getSmileByName("QWE");
-        assertTrue(!smileByName.isPresent());
+    public void shouldNotReturnSmileWhenSmileNameIncorrect() {
+        Optional<Smile> smileByName = smileRepository.getSmileByName("QWE");
+        assertFalse(smileByName.isPresent());
     }
 }

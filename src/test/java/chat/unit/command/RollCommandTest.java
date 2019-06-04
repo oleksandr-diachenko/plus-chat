@@ -40,25 +40,25 @@ public class RollCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenRollCommandCorrect() {
         boolean canExecute = command.canExecute("!roll 10");
         assertTrue(canExecute);
     }
 
     @Test
-    public void canExecute_wrongArgumentCount_oneArgumentTest() {
+    public void shouldNotExecuteWhenRollCommandWithoutArguments() {
         boolean canExecute = command.canExecute("!roll");
         assertFalse(canExecute);
     }
 
     @Test
-    public void canExecute_wrongArgument_secondArgumentNotNumericTest() {
+    public void shouldNotExecuteWhenRollCommandWithIncorrectSecondArgument() {
         boolean canExecute = command.canExecute("!roll qwe");
         assertFalse(canExecute);
     }
 
     @Test
-    public void executeTest_randomTenLost() {
+    public void shouldReturnResponseYouLostWhenRollCommandRolledTen() {
         command.canExecute("!roll 10");
         when(random.nextInt(anyInt())).thenReturn(10);
         String execute = command.execute();
@@ -66,7 +66,7 @@ public class RollCommandTest {
     }
 
     @Test
-    public void executeTest_random100Won() {
+    public void shouldReturnResponseYouWonWhenRollCommandRolledHundred() {
         command.canExecute("!roll 30");
         when(random.nextInt(anyInt())).thenReturn(100);
         when(random.nextFloat()).thenReturn((float) 0.5);
@@ -75,7 +75,7 @@ public class RollCommandTest {
     }
 
     @Test
-    public void executeTest_random75Lost() {
+    public void shouldReturnResponseYouLostWhenRollCommandRolledSeventyFive() {
         command.canExecute("!roll 100");
         when(random.nextInt(anyInt())).thenReturn(75);
         String execute = command.execute();
@@ -83,7 +83,7 @@ public class RollCommandTest {
     }
 
     @Test
-    public void executeTest_random76Won() {
+    public void shouldReturnResponseYouWonWhenRollCommandRolledSeventySix() {
         command.canExecute("!roll 100");
         when(random.nextInt(anyInt())).thenReturn(76);
         when(random.nextFloat()).thenReturn((float) 0.5);

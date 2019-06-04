@@ -35,13 +35,13 @@ public class JsonCommandTest {
     }
 
     @Test
-    public void canExecuteTest() {
+    public void shouldExecuteWhenJsonCommandCorrect() {
         boolean canExecute = command.canExecute("!fire");
         assertTrue(canExecute);
     }
 
     @Test
-    public void executeTest() {
+    public void shouldReturnResponseWhenJsonCommandCorrect() {
         command.canExecute("!fire");
         String execute = command.execute();
         assertEquals("Fire in the hall!", execute);

@@ -152,7 +152,7 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private User updateExistingUser(User user) {
-        user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
+        user.setLastMessageDate(TimeUtil.formatDate(LocalDateTime.now()));
         long exp = user.getExp() + 1;
         user.setExp(exp);
         if (rankRepository.isNewRank(exp)) {
@@ -166,8 +166,8 @@ public class Bot extends ListenerAdapter implements Subject {
     private User createNewUser(String nick) {
         User user = new User();
         user.setName(nick);
-        user.setFirstMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
-        user.setLastMessageDate(TimeUtil.getDateToString(LocalDateTime.now()));
+        user.setFirstMessageDate(TimeUtil.formatDate(LocalDateTime.now()));
+        user.setLastMessageDate(TimeUtil.formatDate(LocalDateTime.now()));
         user.setExp(1);
         user.setPoints(10);
         return userRepository.add(user);

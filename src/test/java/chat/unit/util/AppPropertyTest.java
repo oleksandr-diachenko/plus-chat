@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Properties;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
 
 /**
  * @author Alexander Diachenko
@@ -22,11 +23,16 @@ public class AppPropertyTest {
     private AppProperty simpleProperties;
 
     @Test
-    public void readPropertiesTest() {
-        final Properties properties = this.simpleProperties.getProperty();
-
-        final String name = properties.getProperty("name");
-
+    public void shouldReturnNameWhenPropertyCorrect() {
+        Properties properties = simpleProperties.getProperty();
+        String name = properties.getProperty("name");
         assertEquals("alex", name);
+    }
+
+    @Test
+    public void shouldReturnNullWhenPropertyIncorrect() {
+        Properties properties = simpleProperties.getProperty();
+        String name = properties.getProperty("qwe");
+        assertNull(name);
     }
 }

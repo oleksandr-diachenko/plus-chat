@@ -23,38 +23,38 @@ public class RankRepositoryTest {
     private RankRepository rankRepository;
 
     @Test
-    public void getAllRanksTest() {
-        final Set<Rank> ranks = this.rankRepository.getAll();
-        assertTrue(!ranks.isEmpty());
+    public void shouldReturnAllRanks() {
+        Set<Rank> ranks = rankRepository.getAll();
+        assertFalse(ranks.isEmpty());
     }
 
     @Test
-    public void getRankByExpProTest() {
-        final Rank rankByExp = this.rankRepository.getRankByExp(10);
+    public void shouldReturnProRankWhenRequestedRanksExpTen() {
+        Rank rankByExp = rankRepository.getRankByExp(10);
         assertEquals("Pro", rankByExp.getName());
     }
 
     @Test
-    public void getRankByExpNoobTest() {
-        final Rank rankByExp = this.rankRepository.getRankByExp(9);
+    public void shouldReturnNoobRankWhenRequestedRanksExpNine() {
+        Rank rankByExp = rankRepository.getRankByExp(9);
         assertEquals("Noob", rankByExp.getName());
     }
 
     @Test
-    public void getRankByNegativeExpTest() {
-        final Rank rankByExp = this.rankRepository.getRankByExp(-1);
+    public void shouldReturnNullWhenRequestedRanksExpNegative() {
+        Rank rankByExp = rankRepository.getRankByExp(-1);
         assertNull(rankByExp.getName());
     }
 
     @Test
-    public void isNewRankExpTest() {
-        boolean newRank = this.rankRepository.isNewRank(10);
+    public void shouldNewRankWhenRequestedRanksExpTen() {
+        boolean newRank = rankRepository.isNewRank(10);
         assertTrue(newRank);
     }
 
     @Test
-    public void isNotNewRankExpTest() {
-        boolean newRank = this.rankRepository.isNewRank(14);
+    public void shouldNotNewRankWhenRequestedRanksExpFourteen() {
+        boolean newRank = rankRepository.isNewRank(14);
         assertFalse(newRank);
     }
 }

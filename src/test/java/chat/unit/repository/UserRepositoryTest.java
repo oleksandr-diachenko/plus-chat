@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,20 +25,20 @@ public class UserRepositoryTest {
     private UserRepository userRepository;
 
     @Test
-    public void getAllUsersTest() {
-        final Set<User> users = this.userRepository.getAll();
-        assertTrue(!users.isEmpty());
+    public void shouldReturnAllUserCommands() {
+        Set<User> users = userRepository.getAll();
+        assertFalse(users.isEmpty());
     }
 
     @Test
-    public void getUserByNameTest() {
-        final Optional<User> userByName = this.userRepository.getUserByName("p0sltlv");
+    public void shouldReturnUserWhenUserNameCorrect() {
+        Optional<User> userByName = userRepository.getUserByName("p0sltlv");
         assertTrue(userByName.isPresent());
     }
 
     @Test
-    public void getUserByIncorrectNameTest() {
-        final Optional<User> userByName = this.userRepository.getUserByName("QWE");
-        assertTrue(!userByName.isPresent());
+    public void shouldNotReturnUserWhenUserNameIncorrect() {
+        Optional<User> userByName = userRepository.getUserByName("QWE");
+        assertFalse(userByName.isPresent());
     }
 }

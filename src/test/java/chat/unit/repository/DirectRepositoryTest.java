@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,20 +25,20 @@ public class DirectRepositoryTest {
     private DirectRepository directRepository;
 
     @Test
-    public void getAllDirectsTest() {
-        final Set<Direct> directs = this.directRepository.getAll();
-        assertTrue(!directs.isEmpty());
+    public void shouldReturnAllDirects() {
+        Set<Direct> directs = directRepository.getAll();
+        assertFalse(directs.isEmpty());
     }
 
     @Test
-    public void getDirectByWordTest() {
-        final Optional<Direct> directByWord = this.directRepository.getDirectByWord("POSITIV");
+    public void shouldReturnDirectWhenWordCorrect() {
+        Optional<Direct> directByWord = directRepository.getDirectByWord("POSITIV");
         assertTrue(directByWord.isPresent());
     }
 
     @Test
-    public void getDirectByIncorrectWordTest() {
-        final Optional<Direct> directByName = this.directRepository.getDirectByWord("QWE");
-        assertTrue(!directByName.isPresent());
+    public void shouldNotReturnDirectWhenWordIncorrect() {
+        Optional<Direct> directByName = directRepository.getDirectByWord("QWE");
+        assertFalse(directByName.isPresent());
     }
 }

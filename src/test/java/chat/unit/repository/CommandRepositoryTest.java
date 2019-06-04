@@ -11,6 +11,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import java.util.Optional;
 import java.util.Set;
 
+import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 /**
@@ -24,20 +25,20 @@ public class CommandRepositoryTest {
     private CommandRepository commandRepository;
 
     @Test
-    public void getAllCommandsTest() {
-        final Set<Command> commands = this.commandRepository.getAll();
-        assertTrue(!commands.isEmpty());
+    public void shouldReturnAllJsons() {
+        Set<Command> commands = commandRepository.getAll();
+        assertFalse(commands.isEmpty());
     }
 
     @Test
-    public void getCommandByNameTest() {
-        final Optional<Command> commandByName = this.commandRepository.getCommandByName("!info");
+    public void shouldReturnJsonWhenCommandNameCorrect() {
+        Optional<Command> commandByName = commandRepository.getCommandByName("!info");
         assertTrue(commandByName.isPresent());
     }
 
     @Test
-    public void getCommandByIncorrectNameTest() {
-        final Optional<Command> commandByName = this.commandRepository.getCommandByName("!QWE");
-        assertTrue(!commandByName.isPresent());
+    public void shouldNotReturnJsonWhenCommandNameIncorrect() {
+        Optional<Command> commandByName = commandRepository.getCommandByName("!QWE");
+        assertFalse(commandByName.isPresent());
     }
 }
