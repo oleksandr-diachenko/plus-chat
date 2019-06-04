@@ -53,7 +53,7 @@ public class SettingSoundController {
 
     @FXML
     public void initialize() {
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         initEnableSound();
         initMessageSound();
         initMessageSoundVolume();
@@ -127,6 +127,6 @@ public class SettingSoundController {
                 directMessageSoundChoiceBox.getValue());
         settings.setProperty(Settings.SOUND_DIRECT_MESSAGE_VOLUME,
                 directMessageVolumeValue.getText());
-        settingsProperties.setProperties(settings);
+        settingsProperties.storeProperties(settings);
     }
 }

@@ -95,7 +95,7 @@ public class ChatController implements Observer {
 
     @FXML
     public void initialize() {
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         isOnTop = Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
         root.setStyle(styleUtil.getRootStyle(
@@ -113,7 +113,7 @@ public class ChatController implements Observer {
 
     private void startBot() {
         Thread thread = new Thread(() -> {
-            Properties connect = twitchProperties.getProperty();
+            Properties connect = twitchProperties.loadProperty();
             listener.addObserver(this);
             Configuration config = new Configuration.Builder()
                     .setName(connect.getProperty("botname"))
@@ -148,7 +148,7 @@ public class ChatController implements Observer {
         getStage().setAlwaysOnTop(isOnTop);
         setOnTopImage();
         settings.setProperty(Settings.ROOT_ALWAYS_ON_TOP, String.valueOf(isOnTop));
-        settingsProperties.setProperties(settings);
+        settingsProperties.storeProperties(settings);
     }
 
     private void reverseOnTop() {

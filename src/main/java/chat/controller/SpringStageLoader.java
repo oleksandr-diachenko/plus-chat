@@ -44,7 +44,7 @@ public class SpringStageLoader implements ApplicationContextAware {
      * @throws IOException бросает исключение ввода-вывода
      */
     public Region load(String fxmlName) throws IOException {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         String language = settings.getProperty(Settings.ROOT_LANGUAGE);
         ResourceBundle bundle = ResourceBundle.getBundle(
                 "bundles.chat", new Locale(language), new ResourceBundleControl());

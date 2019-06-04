@@ -43,27 +43,27 @@ public class Paths {
     }
 
     public String getChatCSS() {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + chatCss;
     }
 
     public String getConfirmCSS() {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + confirmCss;
     }
 
     public String getDataCSS() {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + dataCss;
     }
 
     public String getSettingsCSS() {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + settingsCss;
     }
 
     public String getRandomizerCSS() {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         return "/theme/" + settings.getProperty(Settings.ROOT_THEME) + randomizerCss;
     }
 

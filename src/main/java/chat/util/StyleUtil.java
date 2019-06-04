@@ -3,6 +3,8 @@ package chat.util;
 import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import javafx.stage.Window;
+import javafx.stage.WindowEvent;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -69,7 +71,7 @@ public class StyleUtil {
                 "; -fx-background: " + backgroundColor + ";"));
     }
 
-    public void reverseStyle(Properties settings, Stage owner,
+    public void reverseStyle(Properties settings, Window owner,
                                     Node chatRoot, Node settingRoot) {
         applicationStyle.reverse();
         setStyles(chatRoot, settingRoot, applicationStyle);

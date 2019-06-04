@@ -24,7 +24,7 @@ public class AppProperty{
         this.path = path;
     }
 
-    public Properties getProperty() {
+    public Properties loadProperty() {
         Properties properties = new Properties();
         try (FileInputStream file = new FileInputStream(path)) {
             properties.load(file);
@@ -36,7 +36,7 @@ public class AppProperty{
         return properties;
     }
 
-    public void setProperties(Properties properties) {
+    public void storeProperties(Properties properties) {
         try (OutputStream output = new FileOutputStream(path)) {
             properties.store(output, null);
         } catch (IOException exception) {

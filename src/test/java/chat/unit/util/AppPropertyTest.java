@@ -24,14 +24,14 @@ public class AppPropertyTest {
 
     @Test
     public void shouldReturnNameWhenPropertyCorrect() {
-        Properties properties = simpleProperties.getProperty();
+        Properties properties = simpleProperties.loadProperty();
         String name = properties.getProperty("name");
         assertEquals("alex", name);
     }
 
     @Test
     public void shouldReturnNullWhenPropertyIncorrect() {
-        Properties properties = simpleProperties.getProperty();
+        Properties properties = simpleProperties.loadProperty();
         String name = properties.getProperty("qwe");
         assertNull(name);
     }

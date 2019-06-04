@@ -5,6 +5,7 @@ import chat.util.Settings;
 import chat.util.StyleUtil;
 import javafx.scene.Node;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -46,19 +47,27 @@ public class SettingsDialog extends AbstractDialog{
 
     @Override
     protected void setEvents(Stage stage) {
-        Properties settings = settingsProperties.getProperty();
+        Properties settings = settingsProperties.loadProperty();
         stage.setOnShown(event -> {
-            Set<Node> labels = stage.getScene().getRoot().lookupAll(".label");
+            Set<Node> labels = getAllLabels(stage);
             labels.forEach(label ->
                     label.setStyle(styleUtil.getLabelStyle(settings.getProperty(Settings.FONT_NICK_COLOR))));
         });
 
         stage.setOnCloseRequest(event -> {
-            Node setting = stage.getOwner().getScene().getRoot().lookup("#setting");
-            Node chatRoot = stage.getOwner().getScene().getRoot().lookup("#root");
+            Node setting = getOwnersNode(stage.getOwner(), "#setting");
+            Node chatRoot = getOwnersNode(stage.getOwner(), "#root");
             setting.setDisable(false);
-            styleUtil.reverseStyle(settings, (Stage) stage.getOwner(), chatRoot, getRoot());
+            styleUtil.reverseStyle(settings, stage.getOwner(), chatRoot, getRoot());
         });
+    }
+
+    private Node getOwnersNode(Window owner, String nodeId) {
+        return owner.getScene().getRoot().lookup(nodeId);
+    }
+
+    private Set<Node> getAllLabels(Stage stage) {
+        return stage.getScene().getRoot().lookupAll(".label");
     }
 
     @Override

@@ -52,7 +52,7 @@ public class SettingColorController {
 
     @FXML
     public void initialize() {
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         initBaseColorPicker();
         initBackGroundColorPicker();
         initNickColorPicker();
@@ -131,7 +131,7 @@ public class SettingColorController {
                 messageColorPicker.getValue()));
         settings.setProperty(Settings.FONT_DIRECT_MESSAGE_COLOR, ColorUtil.getHexColor(
                 directMessageColorPicker.getValue()));
-        settingsProperties.setProperties(settings);
+        settingsProperties.storeProperties(settings);
     }
 
     void setRoot(Node root) {

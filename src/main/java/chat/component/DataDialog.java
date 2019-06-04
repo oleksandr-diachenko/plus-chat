@@ -70,12 +70,16 @@ public class DataDialog extends AbstractDialog {
     }
 
     private String getFormatted(String field) {
-        String[] words = field.split("(?=\\p{Upper})");
+        String[] words = getWordsByUpperCaseSplit(field);
         StringBuilder builder = new StringBuilder();
         for (String word : words) {
             builder.append(word.toLowerCase()).append(" ");
         }
         return builder.toString().trim();
+    }
+
+    private String[] getWordsByUpperCaseSplit(String field) {
+        return field.split("(?=\\p{Upper})");
     }
 
     private TableCell<Object, Object> getTableCell() {

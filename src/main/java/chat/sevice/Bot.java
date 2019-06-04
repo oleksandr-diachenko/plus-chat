@@ -48,8 +48,8 @@ public class Bot extends ListenerAdapter implements Subject {
                @Qualifier("twitchProperties") AppProperty twitchProperties,
                @Qualifier("commandsProperties") AppProperty commandsProperties) {
         this.orderRepository = orderRepository;
-        this.connect = twitchProperties.getProperty();
-        this.commands = commandsProperties.getProperty();
+        this.connect = twitchProperties.loadProperty();
+        this.commands = commandsProperties.loadProperty();
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.commandRepository = commandRepository;

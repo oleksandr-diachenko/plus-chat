@@ -48,7 +48,7 @@ public class SettingGeneralController {
 
     @FXML
     public void initialize() {
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         initLanguage();
         initTheme();
         initTransparencySlider();
@@ -106,6 +106,6 @@ public class SettingGeneralController {
         settings.setProperty(Settings.ROOT_BACKGROUND_TRANSPARENCY, transparencyValue.getText());
         settings.setProperty(Settings.ROOT_LANGUAGE, getLanguage(languageChoiceBox.getValue()));
         settings.setProperty(Settings.ROOT_THEME, themeChoiceBox.getValue());
-        settingsProperties.setProperties(settings);
+        settingsProperties.storeProperties(settings);
     }
 }

@@ -43,7 +43,7 @@ public class SettingFontController {
 
     @FXML
     public void initialize() {
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         initFontSizeSlider();
     }
 
@@ -65,7 +65,7 @@ public class SettingFontController {
 
     void saveSettings(Properties settings) {
         settings.setProperty(Settings.FONT_SIZE, fontSize.getText());
-        settingsProperties.setProperties(settings);
+        settingsProperties.storeProperties(settings);
     }
 
     void setRoot(Node root) {

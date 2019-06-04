@@ -59,7 +59,7 @@ public class SettingController {
     public void initialize() {
         settingColorController.setRoot(root);
         settingFontController.setRoot(root);
-        settings = settingsProperties.getProperty();
+        settings = settingsProperties.loadProperty();
         root.setStyle(styleUtil.getRootStyle(settings.getProperty(Settings.ROOT_BASE_COLOR),
                 settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)));
     }

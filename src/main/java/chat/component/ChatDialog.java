@@ -59,10 +59,11 @@ public class ChatDialog extends AbstractDialog {
     }
 
     private void setAlwaysOnTop(Stage stage) {
-        stage.setAlwaysOnTop(Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP)));
+        boolean isOnTop = Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP));
+        stage.setAlwaysOnTop(isOnTop);
     }
 
     private Properties getSettings() {
-        return settingsProperties.getProperty();
+        return settingsProperties.loadProperty();
     }
 }

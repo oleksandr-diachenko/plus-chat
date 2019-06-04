@@ -32,7 +32,7 @@ public class ApplicationStyle {
     }
 
     public void reverse() {
-        Properties settings = settingProperties.getProperty();
+        Properties settings = settingProperties.loadProperty();
         backgroundColor = settings.getProperty(Settings.ROOT_BACKGROUND_COLOR);
         baseColor = settings.getProperty(Settings.ROOT_BASE_COLOR);
         fontSize = settings.getProperty(Settings.FONT_SIZE);
