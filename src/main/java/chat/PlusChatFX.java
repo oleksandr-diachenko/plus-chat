@@ -17,6 +17,7 @@ public class PlusChatFX extends Application {
 
     private static ClassPathXmlApplicationContext context;
     private static ChatDialog chatDialog;
+    private static String appContextLocation;
 
     @Autowired
     public PlusChatFX(ChatDialog chatDialog) {
@@ -25,10 +26,11 @@ public class PlusChatFX extends Application {
 
     @Override
     public void init() {
-        context = new ClassPathXmlApplicationContext("applicationContext.xml");
+        context = new ClassPathXmlApplicationContext(appContextLocation);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args, String appContextLocation) {
+        PlusChatFX.appContextLocation = appContextLocation;
         launch(args);
     }
 

@@ -1,6 +1,10 @@
 [
   {
     "name": ":)",
-    "imagePath": ""
+    "imagePath": "img/smiles/twitch/0.png"
+  },
+  {
+    "name": "SMOrc",
+    "imagePath": "img/smiles/twitch/SMOrc.png"
   }
 ]
