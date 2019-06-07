@@ -3,12 +3,12 @@
     "name": "Noob",
     "id": 0,
     "exp": 0,
-    "imagePath": "img/ranks/0.png"
+    "imagePath": ""
   },
   {
     "name": "Pro",
     "id": 1,
     "exp": 10,
-    "imagePath": "img/ranks/1.png"
+    "imagePath": ""
   }
 ]

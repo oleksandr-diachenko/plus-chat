@@ -1,11 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
-
-    <context:component-scan base-package="chat"/>
-
+       xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.0.xsd">
     <bean id="commandRepository" class="chat.model.repository.JSONCommandRepository">
         <constructor-arg value="src\test\resources\json\commands.json"/>
     </bean>
@@ -26,34 +23,6 @@
     </bean>
     <bean id="simpleProperties" class="chat.util.AppProperty">
         <constructor-arg value="src\test\resources\property\simplePropertyOneObject.properties"/>
-    </bean>
-    <bean id="settingsProperties" class="chat.util.AppProperty">
-        <constructor-arg value="src\test\resources\settings\settings.properties"/>
-    </bean>
-    <bean id="twitchProperties" class="chat.util.AppProperty">
-        <constructor-arg value="src\test\resources\settings\twitch.properties"/>
-    </bean>
-    <bean id="commandsProperties" class="chat.util.AppProperty">
-        <constructor-arg value="src\test\resources\settings\commands.properties"/>
-    </bean>
-    <bean id="applicationStyle" class="chat.controller.ApplicationStyle">
-        <constructor-arg ref="settingsProperties"/>
-    </bean>
-    <bean id="styleUtil" class="chat.util.StyleUtil">
-        <constructor-arg ref="applicationStyle"/>
-    </bean>
-    <bean id="paths" class="chat.util.Paths">
-        <constructor-arg name="logo" value="/img/chat/logo.png"/>
-        <constructor-arg name="settingsProperties" ref="settingsProperties"/>
-        <constructor-arg name="chatCss" value="/chat.css"/>
-        <constructor-arg name="confirmCss" value="/confirm.css"/>
-        <constructor-arg name="dataCss" value="/data.css"/>
-        <constructor-arg name="settingsCss" value="/settings.css"/>
-        <constructor-arg name="enabledPin" value="/img/chat/pin-enabled.png"/>
-        <constructor-arg name="disabledPin" value="/img/chat/pin-disabled.png"/>
-        <constructor-arg name="twitchProperties" value="/settings/twitch.properties"/>
-        <constructor-arg name="soundDirectory" value="./sound/"/>
-        <constructor-arg name="randomizerCss" value="/randomizer.css"/>
     </bean>
     <bean id="userFactory" class="chat.unit.factory.UserFactory"/>
     <bean id="rankFactory" class="chat.unit.factory.RankFactory"/>
