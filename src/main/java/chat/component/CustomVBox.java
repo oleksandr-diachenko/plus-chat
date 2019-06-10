@@ -1,6 +1,5 @@
 package chat.component;
 
-import chat.component.dialog.CustomStage;
 import javafx.scene.layout.VBox;
 
 public class CustomVBox extends VBox {

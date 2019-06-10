@@ -1,7 +1,7 @@
 package chat.component.dialog;
 
+import chat.component.CustomStage;
 import chat.util.Paths;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,12 +22,12 @@ public class RandomizerDialog extends AbstractDialog {
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
+    protected void initOwner(CustomStage owner, CustomStage stage) {
         //do nothing;
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
+    protected void setStageSettings(CustomStage stage) {
         //do nothing
     }
 

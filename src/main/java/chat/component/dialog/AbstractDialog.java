@@ -1,10 +1,10 @@
 package chat.component.dialog;
 
+import chat.component.CustomStage;
 import chat.controller.SpringStageLoader;
 import chat.util.Paths;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
-import javafx.stage.Stage;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,11 +20,11 @@ public abstract class AbstractDialog {
     @Autowired
     protected Paths paths;
     private UndecoratorScene scene;
-    private Stage stage;
+    private CustomStage stage;
     private Region root;
 
-    public void openDialog(Stage owner) {
-        Stage stage = new Stage();
+    public void openDialog(CustomStage owner) {
+        CustomStage stage = new CustomStage();
         this.stage = stage;
         try {
             showStage(owner, stage);
@@ -38,7 +38,7 @@ public abstract class AbstractDialog {
         throw new RuntimeException(getFXMLName() + " view failed to load", exception);
     }
 
-    private void showStage(Stage owner, Stage stage) throws IOException {
+    private void showStage(CustomStage owner, CustomStage stage) throws IOException {
         loadRoot();
         createScene(stage, root);
         stage.setScene(scene);
@@ -57,11 +57,11 @@ public abstract class AbstractDialog {
 
     protected abstract String getCSSName();
 
-    protected abstract void initOwner(Stage owner, Stage stage);
+    protected abstract void initOwner(CustomStage owner, CustomStage stage);
 
-    protected abstract void setStageSettings(Stage stage);
+    protected abstract void setStageSettings(CustomStage stage);
 
-    protected void setEvents(Stage stage) {
+    protected void setEvents(CustomStage stage) {
         //do nothing
     }
 
@@ -71,7 +71,7 @@ public abstract class AbstractDialog {
 
     protected abstract String getFXMLName();
 
-    public Stage getStage() {
+    public CustomStage getStage() {
         return stage;
     }
 
@@ -83,7 +83,7 @@ public abstract class AbstractDialog {
         root = springStageLoader.load(getFXMLName());
     }
 
-    private void createScene(Stage stage, Region root) {
+    private void createScene(CustomStage stage, Region root) {
         scene = new UndecoratorScene(stage, root);
         scene.getStylesheets().add(getCSSName());
         scene.setBackgroundOpacity(0.2);

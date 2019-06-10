@@ -1,7 +1,7 @@
 package chat.unit.controller;
 
+import chat.component.CustomStage;
 import chat.component.CustomVBox;
-import chat.component.dialog.CustomStage;
 import chat.controller.ApplicationStyle;
 import chat.controller.DataController;
 import chat.util.StyleUtil;

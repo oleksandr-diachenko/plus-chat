@@ -1,5 +1,6 @@
 package chat;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -34,7 +35,7 @@ public class PlusChatFX extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        PlusChatFX.chatDialog.openDialog(primaryStage);
+        PlusChatFX.chatDialog.openDialog(new CustomStage());
     }
 
     @Override

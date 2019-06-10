@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.controller.ApplicationStyle;
 import chat.controller.Customizable;
@@ -10,7 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -60,7 +60,7 @@ public class SettingFontTabController implements Customizable {
     }
 
     private Node getChatRoot() {
-        Stage owner = chatDialog.getStage();
+        CustomStage owner = chatDialog.getStage();
         return owner.getScene().lookup("#root");
     }
 

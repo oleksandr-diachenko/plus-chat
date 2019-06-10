@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.controller.ApplicationStyle;
 import chat.controller.Customizable;
@@ -11,7 +12,6 @@ import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.paint.Color;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -119,7 +119,7 @@ public class SettingColorTabController implements Customizable {
     }
 
     private Node getChatRoot() {
-        Stage owner = chatDialog.getStage();
+        CustomStage owner = chatDialog.getStage();
         return owner.getScene().lookup("#root");
     }
 

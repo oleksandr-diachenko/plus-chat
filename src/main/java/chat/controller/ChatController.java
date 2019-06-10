@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.SettingsDialog;
 import chat.model.entity.Direct;
@@ -25,7 +26,6 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
 import javafx.scene.text.TextFlow;
-import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
@@ -328,8 +328,8 @@ public class ChatController implements Observer {
         return text;
     }
 
-    private Stage getStage() {
-        return (Stage) container.getScene().getWindow();
+    private CustomStage getStage() {
+        return (CustomStage) container.getScene().getWindow();
     }
 
     public Bot getListener() {

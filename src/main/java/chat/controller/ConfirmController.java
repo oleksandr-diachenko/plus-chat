@@ -1,7 +1,7 @@
 package chat.controller;
 
+import chat.component.CustomStage;
 import chat.component.CustomVBox;
-import chat.component.dialog.CustomStage;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import lombok.NoArgsConstructor;

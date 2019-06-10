@@ -1,4 +1,4 @@
-package chat.component.dialog;
+package chat.component;
 
 import javafx.stage.Stage;
 import javafx.stage.WindowEvent;

@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ConfirmDialog;
 import chat.controller.ChatController;
 import chat.controller.ConfirmController;
@@ -9,7 +10,6 @@ import chat.util.Settings;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 import javafx.stage.WindowEvent;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +69,7 @@ public class SettingController {
 
     public void confirmAction() {
         confirmDialog.openDialog(getStage());
-        Stage stage = confirmDialog.getStage();
+        CustomStage stage = confirmDialog.getStage();
         stage.setOnCloseRequest(event -> {
             if (confirmController.isConfirmed()) {
                 flushSettings(settings);
@@ -89,7 +89,7 @@ public class SettingController {
         getStage().fireEvent(new WindowEvent(getStage(), WindowEvent.WINDOW_CLOSE_REQUEST));
     }
 
-    private Stage getStage() {
-        return (Stage) root.getScene().getWindow();
+    private CustomStage getStage() {
+        return (CustomStage) root.getScene().getWindow();
     }
 }

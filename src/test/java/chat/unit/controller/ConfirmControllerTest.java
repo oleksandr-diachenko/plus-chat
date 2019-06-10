@@ -1,7 +1,7 @@
 package chat.unit.controller;
 
+import chat.component.CustomStage;
 import chat.component.CustomVBox;
-import chat.component.dialog.CustomStage;
 import chat.controller.ApplicationStyle;
 import chat.controller.ConfirmController;
 import chat.util.StyleUtil;
@@ -69,7 +69,6 @@ public class ConfirmControllerTest {
     @Test
     public void shouldFireCloseEventWhenCloseActionCalled() {
         when(root.getStage()).thenReturn(stage);
-        when(root.getOwner()).thenReturn(owner);
         doNothing().when(stage).fireCloseEvent();
 
         controller.cancelAction();

@@ -1,11 +1,10 @@
 package chat.component.dialog;
 
+import chat.component.CustomStage;
 import chat.util.AppProperty;
 import chat.util.Settings;
 import chat.util.StyleUtil;
 import javafx.scene.Node;
-import javafx.stage.Stage;
-import javafx.stage.Window;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -35,18 +34,18 @@ public class SettingsDialog extends AbstractDialog{
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
+    protected void initOwner(CustomStage owner, CustomStage stage) {
         stage.initOwner(owner);
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
+    protected void setStageSettings(CustomStage stage) {
         stage.setAlwaysOnTop(true);
         stage.setResizable(false);
     }
 
     @Override
-    protected void setEvents(Stage stage) {
+    protected void setEvents(CustomStage stage) {
         Properties settings = settingsProperties.loadProperty();
         stage.setOnShown(event -> {
             Set<Node> labels = getAllLabels(stage);
@@ -55,18 +54,18 @@ public class SettingsDialog extends AbstractDialog{
         });
 
         stage.setOnCloseRequest(event -> {
-            Node setting = getOwnersNode(stage.getOwner(), "#setting");
-            Node chatRoot = getOwnersNode(stage.getOwner(), "#root");
+            Node setting = getOwnersNode((CustomStage) stage.getOwner(), "#setting");
+            Node chatRoot = getOwnersNode((CustomStage) stage.getOwner(), "#root");
             setting.setDisable(false);
             styleUtil.reverseStyle(settings, stage.getOwner(), chatRoot, getRoot());
         });
     }
 
-    private Node getOwnersNode(Window owner, String nodeId) {
+    private Node getOwnersNode(CustomStage owner, String nodeId) {
         return owner.getScene().getRoot().lookup(nodeId);
     }
 
-    private Set<Node> getAllLabels(Stage stage) {
+    private Set<Node> getAllLabels(CustomStage stage) {
         return stage.getScene().getRoot().lookupAll(".label");
     }
 

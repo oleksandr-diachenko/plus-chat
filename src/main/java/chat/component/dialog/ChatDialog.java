@@ -1,9 +1,9 @@
 package chat.component.dialog;
 
+import chat.component.CustomStage;
 import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.scene.image.Image;
-import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -30,18 +30,18 @@ public class ChatDialog extends AbstractDialog {
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
+    protected void initOwner(CustomStage owner, CustomStage stage) {
         //do nothing
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
+    protected void setStageSettings(CustomStage stage) {
         stage.getIcons().add(new Image(paths.getLogo()));
         setAlwaysOnTop(stage);
     }
 
     @Override
-    protected void setEvents(Stage stage) {
+    protected void setEvents(CustomStage stage) {
         stage.setOnCloseRequest(event -> {
             event.consume();
             getScene().setFadeOutTransition();
@@ -58,7 +58,7 @@ public class ChatDialog extends AbstractDialog {
         return "chat";
     }
 
-    private void setAlwaysOnTop(Stage stage) {
+    private void setAlwaysOnTop(CustomStage stage) {
         boolean isOnTop = Boolean.parseBoolean(getSettings().getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         stage.setAlwaysOnTop(isOnTop);
     }

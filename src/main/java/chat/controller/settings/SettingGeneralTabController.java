@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.RandomizerDialog;
 import chat.controller.Customizable;
@@ -11,7 +12,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
-import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
@@ -85,8 +85,8 @@ public class SettingGeneralTabController implements Customizable {
 
     public void randomAction() {
         randomizer.setDisable(true);
-        randomizerDialog.openDialog(new Stage());
-        Stage stage = randomizerDialog.getStage();
+        CustomStage stage = new CustomStage();
+        randomizerDialog.openDialog(stage);
         stage.setOnCloseRequest(event -> randomizer.setDisable(false));
     }
 
@@ -99,7 +99,7 @@ public class SettingGeneralTabController implements Customizable {
         return "en";
     }
 
-    private Stage getOwner() {
+    private CustomStage getOwner() {
         return chatDialog.getStage();
     }
 

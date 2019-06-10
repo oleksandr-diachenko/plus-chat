@@ -1,5 +1,6 @@
 package chat.component.dialog;
 
+import chat.component.CustomStage;
 import chat.controller.DataController;
 import chat.util.StringUtil;
 import chat.util.StyleUtil;
@@ -9,7 +10,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
-import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -38,12 +38,12 @@ public class DataDialog extends AbstractDialog {
     }
 
     @Override
-    protected void initOwner(Stage owner, Stage stage) {
+    protected void initOwner(CustomStage owner, CustomStage stage) {
         stage.initOwner(owner);
     }
 
     @Override
-    protected void setStageSettings(Stage stage) {
+    protected void setStageSettings(CustomStage stage) {
         stage.setResizable(false);
         TableView<Object> table = dataController.getTable();
         initData(table);
