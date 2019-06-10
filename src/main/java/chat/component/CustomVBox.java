@@ -1,11 +1,15 @@
 package chat.component;
 
+import chat.component.dialog.CustomStage;
 import javafx.scene.layout.VBox;
-import javafx.stage.Stage;
 
 public class CustomVBox extends VBox {
 
-    public Stage getStage() {
-        return (Stage) getScene().getWindow();
+    public CustomStage getStage() {
+        return (CustomStage) getScene().getWindow();
+    }
+
+    public CustomStage getOwner() {
+        return (CustomStage) getStage().getOwner();
     }
 }

@@ -3,7 +3,7 @@ package chat.unit.controller;
 import chat.component.CustomVBox;
 import chat.component.dialog.CustomStage;
 import chat.controller.ApplicationStyle;
-import chat.controller.DataController;
+import chat.controller.ConfirmController;
 import chat.util.StyleUtil;
 import org.junit.Before;
 import org.junit.Test;
@@ -13,25 +13,28 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Collections;
 
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static junit.framework.TestCase.assertFalse;
+import static junit.framework.TestCase.assertTrue;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
-public class DataControllerTest {
+public class ConfirmControllerTest {
 
-    private DataController controller;
-    @Mock
-    private ApplicationStyle applicationStyle;
+    private ConfirmController controller;
     @Mock
     private StyleUtil styleUtil;
+    @Mock
+    private ApplicationStyle applicationStyle;
     @Mock
     private CustomVBox root;
     @Mock
     private CustomStage stage;
+    @Mock
+    private CustomStage owner;
 
     @Before
     public void setup() {
-        controller = new DataController(styleUtil, applicationStyle);
+        controller = new ConfirmController(styleUtil, applicationStyle);
         controller.setRoot(root);
         when(applicationStyle.getBaseColor()).thenReturn("#424242");
         when(applicationStyle.getBackgroundColor()).thenReturn("#212121");
@@ -51,11 +54,27 @@ public class DataControllerTest {
     }
 
     @Test
-    public void shouldCloseStageWhenCloseActionCalled() {
+    public void shouldConfirmAndFireCloseEventAndCloseOwnerWhenConfirmActionCalled() {
         when(root.getStage()).thenReturn(stage);
+        when(root.getOwner()).thenReturn(owner);
+        doNothing().when(stage).fireCloseEvent();
 
-        controller.closeAction();
+        controller.confirmAction();
 
-        verify(stage).close();
+        assertTrue(controller.isConfirmed());
+        verify(stage).fireCloseEvent();
+        verify(owner).close();
+    }
+
+    @Test
+    public void shouldFireCloseEventWhenCloseActionCalled() {
+        when(root.getStage()).thenReturn(stage);
+        when(root.getOwner()).thenReturn(owner);
+        doNothing().when(stage).fireCloseEvent();
+
+        controller.cancelAction();
+
+        assertFalse(controller.isConfirmed());
+        verify(stage).fireCloseEvent();
     }
 }
