@@ -1,26 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.CheckBox?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
-
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.layout.HBox?>
-<?import javafx.geometry.Insets?>
-<VBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1"
-      xmlns="http://javafx.com/javafx/10.0.1" fx:controller="chat.controller.RandomizerController">
+<?import chat.component.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<CustomVBox fx:id="root" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+            minWidth="-Infinity" prefHeight="600.0" prefWidth="700.0" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/10.0.1" fx:controller="chat.controller.RandomizerController">
     <Pane maxHeight="35.0" minHeight="35.0" prefHeight="35.0"/>
     <SplitPane fx:id="split" dividerPositions="0.520066889632107">
-        <GridPane fx:id="grid">
+        <GridPane fx:id="gridPane">
             <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0"/>
@@ -55,11 +44,11 @@
                     <Insets left="10.0"/>
                 </GridPane.margin>
             </Label>
-            <ListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER">
+            <CustomListView fx:id="times" GridPane.columnIndex="1" GridPane.rowIndex="2" GridPane.halignment="CENTER">
                 <GridPane.margin>
                     <Insets right="10.0"/>
                 </GridPane.margin>
-            </ListView>
+            </CustomListView>
             <HBox fx:id="playStop" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER">
                 <Button fx:id="play" onAction="#playAction"/>
                 <Button fx:id="stop" onAction="#stopAction"/>
@@ -67,12 +56,12 @@
             <Button fx:id="select" onAction="#selectAction" GridPane.columnIndex="1"
                     GridPane.rowIndex="3" GridPane.halignment="CENTER"/>
         </GridPane>
-        <VBox alignment="CENTER">
+        <CustomVBox alignment="CENTER">
             <Label fx:id="countdown"/>
             <Label fx:id="winner"/>
-            <ScrollPane fx:id="scrollPane">
-                <VBox fx:id="container"/>
-            </ScrollPane>
-        </VBox>
+            <CustomScrollPane fx:id="scrollPane">
+                <CustomVBox fx:id="container"/>
+            </CustomScrollPane>
+        </CustomVBox>
     </SplitPane>
-</VBox>
+</CustomVBox>

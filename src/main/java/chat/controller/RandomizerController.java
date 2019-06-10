@@ -1,5 +1,8 @@
 package chat.controller;
 
+import chat.component.CustomListView;
+import chat.component.CustomScrollPane;
+import chat.component.CustomVBox;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
@@ -9,12 +12,10 @@ import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,9 +29,9 @@ import java.util.*;
 public class RandomizerController implements Observer {
 
     @FXML
-    private VBox container;
+    private CustomVBox container;
     @FXML
-    private ScrollPane scrollPane;
+    private CustomScrollPane scrollPane;
     @FXML
     private Label winner;
     @FXML
@@ -40,11 +41,11 @@ public class RandomizerController implements Observer {
     @FXML
     private Label countdown;
     @FXML
-    private GridPane grid;
+    private GridPane gridPane;
     @FXML
-    private VBox root;
+    private CustomVBox root;
     @FXML
-    private ListView<Integer> times;
+    private CustomListView<Integer> times;
     @FXML
     private CheckBox caseCheckbox;
     private StyleUtil styleUtil;
@@ -66,18 +67,24 @@ public class RandomizerController implements Observer {
     @FXML
     public void initialize() {
         setTimes();
-        styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
-                applicationStyle.getBackgroundColor());
-        styleUtil.setLabelsStyle(grid, applicationStyle.getNickColor());
-
-        scrollPane.prefHeightProperty().bind(root.heightProperty());
-        scrollPane.vvalueProperty().bind(container.heightProperty());
+        setStyles();
+        setHeights();
     }
 
     private void setTimes() {
-        ObservableList<Integer> data = FXCollections.observableArrayList(1, 3, 5, 10, 15, 20, 30);
-        times.setItems(data);
-        times.getSelectionModel().select(0);
+        times.setData(FXCollections.observableArrayList(1, 3, 5, 10, 15, 20, 30));
+        times.setSelected(0);
+    }
+
+    private void setStyles() {
+        styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
+                applicationStyle.getBackgroundColor());
+        styleUtil.setLabelsStyle(gridPane, applicationStyle.getNickColor());
+    }
+
+    private void setHeights() {
+        scrollPane.bindPrefHeightProperty(root.getHeightProperty());
+        scrollPane.bindValueProperty(container.getHeightProperty());
     }
 
     public void playAction() {
@@ -186,5 +193,29 @@ public class RandomizerController implements Observer {
             iterator.next();
         }
         return iterator.next();
+    }
+
+    public void setTimesView(CustomListView<Integer> times) {
+        this.times = times;
+    }
+
+    public void setRoot(CustomVBox root) {
+        this.root = root;
+    }
+
+    public CustomVBox getRoot() {
+        return root;
+    }
+
+    public void setContainer(CustomVBox container) {
+        this.container = container;
+    }
+
+    public void setScrollPane(CustomScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+    }
+
+    public void setGridPane(GridPane gridPane) {
+        this.gridPane = gridPane;
     }
 }
