@@ -2,14 +2,14 @@ package chat.util;
 
 import chat.controller.ApplicationStyle;
 import javafx.scene.Node;
-import javafx.stage.Stage;
 import javafx.stage.Window;
-import javafx.stage.WindowEvent;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.*;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
 
 /**
  * @author Alexander Diachenko
@@ -60,15 +60,15 @@ public class StyleUtil {
                 node.setStyle(getTextStyle(fontSize, applicationStyle.getDirectColor())));
     }
 
-    public void setLabelStyle(Node settingRoot, String color) {
-        Set<Node> labels = settingRoot.lookupAll(".label");
+    public void setLabelsStyle(Node root, String color) {
+        Set<Node> labels = root.lookupAll(".label");
         labels.iterator().forEachRemaining(node -> node.setStyle(getLabelStyle(color)));
     }
 
-    public void setRootStyle(List<Node> roots, String baseColor,
-                                    String backgroundColor) {
-        roots.forEach(root -> root.setStyle("-fx-base: " + baseColor +
-                "; -fx-background: " + backgroundColor + ";"));
+    public void setRootStyle(List<Node> roots, String baseColor, String backgroundColor) {
+        for (Node root : roots) {
+            root.setStyle("-fx-base: " + baseColor + "; -fx-background: " + backgroundColor + ";");
+        }
     }
 
     public void reverseStyle(Properties settings, Window owner,

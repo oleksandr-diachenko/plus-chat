@@ -68,7 +68,7 @@ public class RandomizerController implements Observer {
         setTimes();
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
-        styleUtil.setLabelStyle(grid, applicationStyle.getNickColor());
+        styleUtil.setLabelsStyle(grid, applicationStyle.getNickColor());
 
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());

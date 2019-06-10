@@ -1,9 +1,9 @@
 package chat.controller;
 
+import chat.component.MyVBox;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class DataController {
     @FXML
     private TableView<Object> table;
     @FXML
-    private VBox root;
+    private MyVBox root;
 
     @Autowired
     public DataController(StyleUtil styleUtil, ApplicationStyle applicationStyle) {
@@ -38,7 +38,7 @@ public class DataController {
                 applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor()
         );
-        styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
+        styleUtil.setLabelsStyle(root, applicationStyle.getNickColor());
     }
 
     public TableView<Object> getTable() {
@@ -49,7 +49,15 @@ public class DataController {
         getStage().close();
     }
 
-    private Stage getStage() {
-        return (Stage) root.getScene().getWindow();
+    public Stage getStage() {
+        return root.getStage();
+    }
+
+    public MyVBox getRoot() {
+        return root;
+    }
+
+    public void setRoot(MyVBox root) {
+        this.root = root;
     }
 }

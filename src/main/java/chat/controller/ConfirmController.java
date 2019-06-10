@@ -43,7 +43,7 @@ public class ConfirmController {
     public void initialize() {
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
-        styleUtil.setLabelStyle(root, applicationStyle.getNickColor());
+        styleUtil.setLabelsStyle(root, applicationStyle.getNickColor());
     }
 
     public void cancelAction() {
