@@ -1,10 +1,9 @@
 package chat.controller;
 
-import chat.component.MyVBox;
+import chat.component.CustomVBox;
 import chat.util.StyleUtil;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
-import javafx.stage.Stage;
 import lombok.NoArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,7 +23,7 @@ public class DataController {
     @FXML
     private TableView<Object> table;
     @FXML
-    private MyVBox root;
+    private CustomVBox root;
 
     @Autowired
     public DataController(StyleUtil styleUtil, ApplicationStyle applicationStyle) {
@@ -46,18 +45,14 @@ public class DataController {
     }
 
     public void closeAction() {
-        getStage().close();
+        root.getStage().close();
     }
 
-    public Stage getStage() {
-        return root.getStage();
-    }
-
-    public MyVBox getRoot() {
+    public CustomVBox getRoot() {
         return root;
     }
 
-    public void setRoot(MyVBox root) {
+    public void setRoot(CustomVBox root) {
         this.root = root;
     }
 }

@@ -1,4 +1,4 @@
-package chat.component;
+package chat.component.dialog;
 
 import chat.util.Paths;
 import javafx.stage.Stage;

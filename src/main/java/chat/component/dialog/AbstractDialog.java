@@ -1,4 +1,4 @@
-package chat.component;
+package chat.component.dialog;
 
 import chat.controller.SpringStageLoader;
 import chat.util.Paths;

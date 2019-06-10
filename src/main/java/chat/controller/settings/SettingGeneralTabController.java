@@ -1,7 +1,7 @@
 package chat.controller.settings;
 
-import chat.component.ChatDialog;
-import chat.component.RandomizerDialog;
+import chat.component.dialog.ChatDialog;
+import chat.component.dialog.RandomizerDialog;
 import chat.controller.Customizable;
 import chat.util.AppProperty;
 import chat.util.Settings;

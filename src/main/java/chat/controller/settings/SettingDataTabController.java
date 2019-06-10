@@ -1,7 +1,7 @@
 package chat.controller.settings;
 
-import chat.component.DataDialog;
-import chat.component.SettingsDialog;
+import chat.component.dialog.DataDialog;
+import chat.component.dialog.SettingsDialog;
 import chat.model.entity.*;
 import chat.model.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;

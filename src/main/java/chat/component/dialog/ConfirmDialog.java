@@ -1,4 +1,4 @@
-package chat.component;
+package chat.component.dialog;
 
 import javafx.stage.Modality;
 import javafx.stage.Stage;

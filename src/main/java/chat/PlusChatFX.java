@@ -1,6 +1,6 @@
 package chat;
 
-import chat.component.ChatDialog;
+import chat.component.dialog.ChatDialog;
 import javafx.application.Application;
 import javafx.stage.Stage;
 import lombok.NoArgsConstructor;

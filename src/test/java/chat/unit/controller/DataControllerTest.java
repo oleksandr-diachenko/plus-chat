@@ -1,6 +1,6 @@
 package chat.unit.controller;
 
-import chat.component.MyVBox;
+import chat.component.CustomVBox;
 import chat.controller.ApplicationStyle;
 import chat.controller.DataController;
 import chat.util.StyleUtil;
@@ -25,7 +25,7 @@ public class DataControllerTest {
     @Mock
     private StyleUtil styleUtil;
     @Mock
-    private MyVBox root;
+    private CustomVBox root;
     @Mock
     private Stage stage;
 

@@ -1,4 +1,4 @@
-package chat.component;
+package chat.component.dialog;
 
 import chat.util.AppProperty;
 import chat.util.Settings;

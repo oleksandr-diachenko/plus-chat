@@ -1,4 +1,4 @@
-package chat.component;
+package chat.component.dialog;
 
 import chat.controller.DataController;
 import chat.util.StringUtil;

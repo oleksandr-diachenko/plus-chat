@@ -1,6 +1,6 @@
 package chat.controller.settings;
 
-import chat.component.ChatDialog;
+import chat.component.dialog.ChatDialog;
 import chat.controller.ApplicationStyle;
 import chat.controller.Customizable;
 import chat.util.AppProperty;

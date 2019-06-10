@@ -1,7 +1,7 @@
 package chat.controller;
 
-import chat.component.ChatDialog;
-import chat.component.SettingsDialog;
+import chat.component.dialog.ChatDialog;
+import chat.component.dialog.SettingsDialog;
 import chat.model.entity.Direct;
 import chat.model.entity.Rank;
 import chat.model.entity.Smile;
