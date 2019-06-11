@@ -53,11 +53,11 @@ public class ConfirmController {
         return confirmed;
     }
 
-    public void setRoot(CustomVBox root) {
+    protected void setRoot(CustomVBox root) {
         this.root = root;
     }
 
-    public CustomVBox getRoot() {
+    protected CustomVBox getRoot() {
         return root;
     }
 }

@@ -48,11 +48,11 @@ public class DataController {
         root.getStage().close();
     }
 
-    public CustomVBox getRoot() {
+    protected CustomVBox getRoot() {
         return root;
     }
 
-    public void setRoot(CustomVBox root) {
+    protected void setRoot(CustomVBox root) {
         this.root = root;
     }
 }

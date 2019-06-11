@@ -197,43 +197,43 @@ public class RandomizerController implements Observer {
         return iterator.next();
     }
 
-    public void setTimesView(CustomListView<Integer> times) {
+    protected void setTimesView(CustomListView<Integer> times) {
         this.times = times;
     }
 
-    public void setRoot(CustomVBox root) {
+    protected void setRoot(CustomVBox root) {
         this.root = root;
     }
 
-    public CustomVBox getRoot() {
+    protected CustomVBox getRoot() {
         return root;
     }
 
-    public void setContainer(CustomVBox container) {
+    protected void setContainer(CustomVBox container) {
         this.container = container;
     }
 
-    public void setScrollPane(CustomScrollPane scrollPane) {
+    protected void setScrollPane(CustomScrollPane scrollPane) {
         this.scrollPane = scrollPane;
     }
 
-    public void setGridPane(GridPane gridPane) {
+    protected void setGridPane(GridPane gridPane) {
         this.gridPane = gridPane;
     }
 
-    public void setPlay(Button play) {
+    protected void setPlay(Button play) {
         this.play = play;
     }
 
-    public void setTimeline(Timeline timeline) {
+    protected void setTimeline(Timeline timeline) {
         this.timeline = timeline;
     }
 
-    public void setWinner(Label winner) {
+    protected void setWinner(Label winner) {
         this.winner = winner;
     }
 
-    public void setUsers(Set<User> users) {
+    protected void setUsers(Set<User> users) {
         this.users = users;
     }
 }
