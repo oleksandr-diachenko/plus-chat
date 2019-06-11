@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.bot.Startable;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
@@ -50,19 +51,19 @@ public class RandomizerController implements Observer {
     private CheckBox caseCheckbox;
     private StyleUtil styleUtil;
     private ApplicationStyle applicationStyle;
-    private ChatController chatController;
     private UserRepository userRepository;
+    private Set<Startable> startables;
     private Random random = new Random();
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
-                                ChatController chatController, UserRepository userRepository) {
+                                UserRepository userRepository, Set<Startable> startables) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
-        this.chatController = chatController;
         this.userRepository = userRepository;
+        this.startables = startables;
     }
 
     @FXML
@@ -90,11 +91,13 @@ public class RandomizerController implements Observer {
 
     public void playAction() {
         List<Node> blankNodes = getBlankNodes(keyWord, times);
-        if(blankNodes.isEmpty()) {
-            Bot listener = chatController.getTwitchBotStarter().getListener();
-            listener.addObserver(this);
+        if (blankNodes.isEmpty()) {
+            for (Startable starter : startables) {
+                Bot listener = starter.getListener();
+                listener.addObserver(this);
+            }
             play.setDisable(true);
-            startTimeline(listener);
+            startTimeline(startables);
             resetContainerAndUsers();
         } else {
             blink(blankNodes);
@@ -103,10 +106,10 @@ public class RandomizerController implements Observer {
 
     private List<Node> getBlankNodes(TextField keyWord, ListView<Integer> times) {
         List<Node> blankNodes = new LinkedList<>();
-        if(keyWord.getText().isEmpty()) {
+        if (keyWord.getText().isEmpty()) {
             blankNodes.add(keyWord);
         }
-        if(times.getSelectionModel().isEmpty()){
+        if (times.getSelectionModel().isEmpty()) {
             blankNodes.add(times);
         }
         return blankNodes;
@@ -118,7 +121,7 @@ public class RandomizerController implements Observer {
         }
     }
 
-    private void startTimeline(Bot listener) {
+    private void startTimeline(Set<Startable> startables) {
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
         final Integer[] time = {selectedItem * 60};
         timeline = new Timeline(
@@ -130,7 +133,10 @@ public class RandomizerController implements Observer {
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
             play.setDisable(false);
-            listener.removeObserver(this);
+            for (Startable startable : startables) {
+                Bot listener = startable.getListener();
+                listener.removeObserver(this);
+            }
         });
         timeline.play();
     }
@@ -153,7 +159,7 @@ public class RandomizerController implements Observer {
     public void update(String nick, String message) {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
-            if(userByName.isPresent()){
+            if (userByName.isPresent()) {
                 User user = userByName.get();
                 if (!users.contains(user)) {
                     Label userName = getUserName(user.getCustomName());

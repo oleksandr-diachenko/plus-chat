@@ -1,6 +1,6 @@
 package chat.controller;
 
-import chat.bot.TwitchBotStarter;
+import chat.bot.Startable;
 import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.SettingsDialog;
@@ -13,6 +13,7 @@ import chat.model.repository.RankRepository;
 import chat.model.repository.SmileRepository;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
+import chat.sevice.Bot;
 import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -69,14 +70,14 @@ public class ChatController implements Observer {
     private Paths paths;
     private StyleUtil styleUtil;
     private ChatDialog chatDialog;
-    private TwitchBotStarter twitchBotStarter;
+    private Set<Startable> startables;
 
     @Autowired
     public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
                           SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog,
-                          TwitchBotStarter twitchBotStarter) {
+                          Set<Startable> startables) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.smileRepository = smileRepository;
@@ -86,7 +87,7 @@ public class ChatController implements Observer {
         this.paths = paths;
         this.styleUtil = styleUtil;
         this.chatDialog = chatDialog;
-        this.twitchBotStarter = twitchBotStarter;
+        this.startables = startables;
     }
 
     @FXML
@@ -113,8 +114,11 @@ public class ChatController implements Observer {
     }
 
     private void startBot() {
-        twitchBotStarter.start();
-        twitchBotStarter.getListener().addObserver(this);
+        for (Startable startable : startables) {
+            startable.start();
+            Bot listener = startable.getListener();
+            listener.addObserver(this);
+        }
     }
 
     public void settingsOnAction() {
@@ -310,9 +314,5 @@ public class ChatController implements Observer {
 
     public void setSettings(Properties settings) {
         this.settings = settings;
-    }
-
-    public TwitchBotStarter getTwitchBotStarter() {
-        return twitchBotStarter;
     }
 }

@@ -19,7 +19,7 @@ import java.util.Properties;
 @Getter
 @Setter
 @Component
-public class TwitchBotStarter {
+public class TwitchBotStarter implements Startable {
 
     public static PircBotX bot;
     @Autowired
@@ -52,5 +52,10 @@ public class TwitchBotStarter {
         });
         thread.setDaemon(true);
         thread.start();
+    }
+
+    @Override
+    public Bot getListener() {
+        return listener;
     }
 }

@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.bot.Startable;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
@@ -48,8 +49,6 @@ public class RandomizerControllerTest {
     @Mock
     private ApplicationStyle applicationStyle;
     @Mock
-    private ChatController chatController;
-    @Mock
     private UserRepository userRepository;
     @Mock
     private Random random;
@@ -75,10 +74,11 @@ public class RandomizerControllerTest {
     private TextField keyWord;
     @Mock
     private CheckBox caseCheckbox;
+    private Set<Startable> startables = new HashSet<>();
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, chatController, userRepository);
+        controller = new RandomizerController(styleUtil, applicationStyle, userRepository, startables);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
