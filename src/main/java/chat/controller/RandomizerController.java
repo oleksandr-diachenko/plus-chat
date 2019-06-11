@@ -91,7 +91,7 @@ public class RandomizerController implements Observer {
     public void playAction() {
         List<Node> blankNodes = getBlankNodes(keyWord, times);
         if(blankNodes.isEmpty()) {
-            Bot listener = chatController.getListener();
+            Bot listener = chatController.getTwitchBotStarter().getListener();
             listener.addObserver(this);
             play.setDisable(true);
             startTimeline(listener);

@@ -1,5 +1,6 @@
 package chat.controller;
 
+import chat.bot.TwitchBotStarter;
 import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.SettingsDialog;
@@ -12,7 +13,6 @@ import chat.model.repository.RankRepository;
 import chat.model.repository.SmileRepository;
 import chat.model.repository.UserRepository;
 import chat.observer.Observer;
-import chat.sevice.Bot;
 import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -29,9 +29,6 @@ import javafx.scene.text.TextFlow;
 import lombok.NoArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
-import org.pircbotx.Configuration;
-import org.pircbotx.PircBotX;
-import org.pircbotx.exception.IrcException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -49,7 +46,6 @@ import java.util.*;
 @Log4j2
 public class ChatController implements Observer {
 
-    public static PircBotX bot;
     @FXML
     private Button onTop;
     @FXML
@@ -69,31 +65,28 @@ public class ChatController implements Observer {
     private int messageIndex = 0;
     private boolean isOnTop;
     private AppProperty settingsProperties;
-    private AppProperty twitchProperties;
     private SettingsDialog settingsDialog;
     private Paths paths;
     private StyleUtil styleUtil;
     private ChatDialog chatDialog;
-    @Autowired
-    private Bot listener;
-
+    private TwitchBotStarter twitchBotStarter;
 
     @Autowired
     public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
-                          @Qualifier("twitchProperties") AppProperty twitchProperties,
-                          SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog) {
+                          SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog,
+                          TwitchBotStarter twitchBotStarter) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.smileRepository = smileRepository;
         this.directRepository = directRepository;
         this.settingsProperties = settingsProperties;
-        this.twitchProperties = twitchProperties;
         this.settingsDialog = settingsDialog;
         this.paths = paths;
         this.styleUtil = styleUtil;
         this.chatDialog = chatDialog;
+        this.twitchBotStarter = twitchBotStarter;
     }
 
     @FXML
@@ -120,29 +113,8 @@ public class ChatController implements Observer {
     }
 
     private void startBot() {
-        Thread thread = new Thread(() -> {
-            Properties connect = twitchProperties.loadProperty();
-            listener.addObserver(this);
-            Configuration config = new Configuration.Builder()
-                    .setName(connect.getProperty("botname"))
-                    .addServer("irc.chat.twitch.tv", 6667)
-                    .setServerPassword(connect.getProperty("oauth"))
-                    .setAutoReconnect(true)
-                    .addListener(listener)
-                    .addAutoJoinChannel("#" + connect.getProperty("channel"))
-                    .buildConfiguration();
-            bot = new PircBotX(config);
-            try {
-                bot.startBot();
-            } catch (IOException | IrcException exception) {
-                log.error(exception.getMessage(), exception);
-                throw new RuntimeException("Bot failed to start.\n " +
-                        "Check properties in " + paths.getTwitchProperties() + " " +
-                        "and restart application.", exception);
-            }
-        });
-        thread.setDaemon(true);
-        thread.start();
+        twitchBotStarter.start();
+        twitchBotStarter.getListener().addObserver(this);
     }
 
     public void settingsOnAction() {
@@ -332,15 +304,15 @@ public class ChatController implements Observer {
         return (CustomStage) container.getScene().getWindow();
     }
 
-    public Bot getListener() {
-        return listener;
-    }
-
     public void enableSettingsButton() {
         setting.setDisable(false);
     }
 
     public void setSettings(Properties settings) {
         this.settings = settings;
+    }
+
+    public TwitchBotStarter getTwitchBotStarter() {
+        return twitchBotStarter;
     }
 }
