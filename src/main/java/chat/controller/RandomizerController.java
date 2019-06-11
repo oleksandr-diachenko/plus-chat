@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.bot.Startable;
+import chat.component.CustomButton;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
@@ -15,7 +16,10 @@ import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.*;
+import javafx.scene.control.CheckBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +42,7 @@ public class RandomizerController implements Observer {
     @FXML
     private TextField keyWord;
     @FXML
-    private Button play;
+    private CustomButton play;
     @FXML
     private Label countdown;
     @FXML
@@ -92,15 +96,19 @@ public class RandomizerController implements Observer {
     public void playAction() {
         List<Node> blankNodes = getBlankNodes(keyWord, times);
         if (blankNodes.isEmpty()) {
-            for (Startable starter : startables) {
-                Bot listener = starter.getListener();
-                listener.addObserver(this);
-            }
-            play.setDisable(true);
-            startTimeline(startables);
+            addSubjects();
+            play.disable();
             resetContainerAndUsers();
+            startTimeline(startables);
         } else {
             blink(blankNodes);
+        }
+    }
+
+    private void addSubjects() {
+        for (Startable starter : startables) {
+            Bot listener = starter.getListener();
+            listener.addObserver(this);
         }
     }
 
@@ -132,7 +140,7 @@ public class RandomizerController implements Observer {
                 }));
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
-            play.setDisable(false);
+            play.enable();
             for (Startable startable : startables) {
                 Bot listener = startable.getListener();
                 listener.removeObserver(this);
@@ -189,7 +197,7 @@ public class RandomizerController implements Observer {
         if (timeline != null) {
             timeline.stop();
         }
-        play.setDisable(false);
+        play.disable();
     }
 
     public void selectAction() {
@@ -233,7 +241,7 @@ public class RandomizerController implements Observer {
         this.gridPane = gridPane;
     }
 
-    protected void setPlay(Button play) {
+    protected void setPlay(CustomButton play) {
         this.play = play;
     }
 

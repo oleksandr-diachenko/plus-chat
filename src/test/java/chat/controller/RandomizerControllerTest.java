@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.bot.Startable;
+import chat.component.CustomButton;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
@@ -10,7 +11,6 @@ import chat.util.StyleUtil;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -65,7 +65,7 @@ public class RandomizerControllerTest {
     @Mock
     private GridPane gridPane;
     @Mock
-    private Button play;
+    private CustomButton play;
     @Mock
     private Timeline timeline;
     @Mock

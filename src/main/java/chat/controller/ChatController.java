@@ -1,6 +1,7 @@
 package chat.controller;
 
 import chat.bot.Startable;
+import chat.component.CustomButton;
 import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.SettingsDialog;
@@ -17,7 +18,6 @@ import chat.sevice.Bot;
 import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
@@ -48,9 +48,9 @@ import java.util.*;
 public class ChatController implements Observer {
 
     @FXML
-    private Button onTop;
+    private CustomButton onTop;
     @FXML
-    private Button setting;
+    private CustomButton setting;
     @FXML
     private VBox container;
     @FXML

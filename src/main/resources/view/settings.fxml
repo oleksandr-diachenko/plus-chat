@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import chat.component.CustomButton?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -24,16 +25,16 @@
         </Tab>
     </TabPane>
     <HBox alignment="CENTER_RIGHT" maxHeight="60.0" minHeight="60.0" prefHeight="60.0" spacing="40.0">
-        <Button fx:id="reload" onAction="#reloadAction">
+        <CustomButton fx:id="reload" onAction="#reloadAction">
             <HBox.margin>
                 <Insets right="300.0"/>
             </HBox.margin>
-        </Button>
-        <Button fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction"/>
-        <Button fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction">
+        </CustomButton>
+        <CustomButton fx:id="confirm" mnemonicParsing="false" onAction="#confirmAction"/>
+        <CustomButton fx:id="cancel" mnemonicParsing="false" onAction="#cancelAction">
             <HBox.margin>
                 <Insets right="50.0"/>
             </HBox.margin>
-        </Button>
+        </CustomButton>
     </HBox>
 </VBox>

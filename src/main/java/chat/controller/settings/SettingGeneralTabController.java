@@ -1,5 +1,6 @@
 package chat.controller.settings;
 
+import chat.component.CustomButton;
 import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.RandomizerDialog;
@@ -8,7 +9,6 @@ import chat.util.AppProperty;
 import chat.util.Settings;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
@@ -24,7 +24,7 @@ import java.util.*;
 public class SettingGeneralTabController implements Customizable {
 
     @FXML
-    private Button randomizer;
+    private CustomButton randomizer;
     @FXML
     private ChoiceBox<String> languageChoiceBox;
     @FXML

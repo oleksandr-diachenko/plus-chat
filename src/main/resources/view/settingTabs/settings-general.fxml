@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import chat.component.CustomButton?>
 <?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
@@ -57,10 +58,10 @@
             <Insets left="100.0"/>
         </GridPane.margin>
     </Label>
-    <Button fx:id="randomizer" mnemonicParsing="false" onAction="#randomAction"
-            GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER">
+    <CustomButton fx:id="randomizer" mnemonicParsing="false" onAction="#randomAction"
+                  GridPane.columnIndex="1" GridPane.rowIndex="3" GridPane.halignment="CENTER">
         <HBox.margin>
             <Insets right="50.0"/>
         </HBox.margin>
-    </Button>
+    </CustomButton>
 </GridPane>

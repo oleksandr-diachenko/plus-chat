@@ -50,10 +50,10 @@
                 </GridPane.margin>
             </CustomListView>
             <HBox fx:id="playStop" GridPane.columnIndex="0" GridPane.rowIndex="3" alignment="CENTER">
-                <Button fx:id="play" onAction="#playAction"/>
-                <Button fx:id="stop" onAction="#stopAction"/>
+                <CustomButton fx:id="play" onAction="#playAction"/>
+                <CustomButton fx:id="stop" onAction="#stopAction"/>
             </HBox>
-            <Button fx:id="select" onAction="#selectAction" GridPane.columnIndex="1"
+            <CustomButton fx:id="select" onAction="#selectAction" GridPane.columnIndex="1"
                     GridPane.rowIndex="3" GridPane.halignment="CENTER"/>
         </GridPane>
         <CustomVBox alignment="CENTER">

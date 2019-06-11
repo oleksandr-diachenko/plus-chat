@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import chat.component.CustomButton?>
 <?import chat.component.CustomVBox?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -17,11 +17,11 @@
         </columnResizePolicy>
     </TableView>
     <HBox alignment="CENTER_RIGHT" minHeight="50.0" prefHeight="50.0" maxHeight="50.0" spacing="40.0">
-        <Button fx:id="cancel" mnemonicParsing="false" onAction="#closeAction">
+        <CustomButton fx:id="cancel" mnemonicParsing="false" onAction="#closeAction">
             <HBox.margin>
                 <Insets right="50.0"/>
             </HBox.margin>
-        </Button>
+        </CustomButton>
     </HBox>
     <userData>
         <fx:reference source="controller"/>

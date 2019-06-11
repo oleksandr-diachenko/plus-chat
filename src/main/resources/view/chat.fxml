@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
+<?import chat.component.CustomButton?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
@@ -9,8 +9,8 @@
       xmlns:fx="http://javafx.com/fxml/1" fx:controller="chat.controller.ChatController">
     <Pane minHeight="30.0" prefHeight="30.0" maxHeight="30.0">
         <HBox fx:id="actions" layoutX="40">
-            <Button fx:id="setting" onAction="#settingsOnAction" mnemonicParsing="false"/>
-            <Button fx:id="onTop" onAction="#onTopOnAction" mnemonicParsing="false"/>
+            <CustomButton fx:id="setting" onAction="#settingsOnAction" mnemonicParsing="false"/>
+            <CustomButton fx:id="onTop" onAction="#onTopOnAction" mnemonicParsing="false"/>
         </HBox>
     </Pane>
     <ScrollPane fx:id="scrollPane" fitToWidth="true">
