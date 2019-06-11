@@ -123,7 +123,7 @@ public class RandomizerController implements Observer {
         return blankNodes;
     }
 
-    private void blink(List<Node> nodes) {
+    protected void blink(List<Node> nodes) {
         for (Node node : nodes) {
             blink(node);
         }

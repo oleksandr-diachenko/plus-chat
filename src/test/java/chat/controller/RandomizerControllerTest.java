@@ -1,10 +1,7 @@
 package chat.controller;
 
 import chat.bot.Startable;
-import chat.component.CustomButton;
-import chat.component.CustomListView;
-import chat.component.CustomScrollPane;
-import chat.component.CustomVBox;
+import chat.component.*;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
 import chat.util.StyleUtil;
@@ -15,6 +12,7 @@ import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -139,7 +137,7 @@ public class RandomizerControllerTest {
     }
 
     @Test
-    public void shouldAddUserToContainerAndSetStyleWhenUpdateCalledWithNewUser() {
+    public void shouldAddUserToContainerAndSetStyleWhenUpdateActionCalledWithNewUser() {
         when(keyWord.getText()).thenReturn("!key");
         when(caseCheckbox.isSelected()).thenReturn(true);
         when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
@@ -153,7 +151,7 @@ public class RandomizerControllerTest {
     }
 
     @Test
-    public void shouldNotAddUserToContainerWhenUpdateCalledWithExistingUser() {
+    public void shouldNotAddUserToContainerWhenUpdateActionCalledWithExistingUser() {
         when(keyWord.getText()).thenReturn("!key");
         when(caseCheckbox.isSelected()).thenReturn(true);
         when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
@@ -162,6 +160,17 @@ public class RandomizerControllerTest {
         controller.update("positiv", "!key");
 
         verify(container, never()).addNode(any(Label.class));
+    }
+
+    @Test
+    public void shouldBlinkEmptyNodesWhenPlayActionCalledAndNodesAreEmpty() {
+        RandomizerController spy = spy(controller);
+        when(keyWord.getText()).thenReturn(StringUtils.EMPTY);
+        when(times.getSelectionModel()).thenReturn(new SimpleMultipleSelectionModel<>());
+
+        spy.playAction();
+
+        verify(spy).blink(Arrays.asList(keyWord, times));
     }
 
     private Set<User> getUsers() {
