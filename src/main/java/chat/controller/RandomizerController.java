@@ -255,7 +255,7 @@ public class RandomizerController implements Observer {
         this.random = random;
     }
 
-    public Set<User> getUsers() {
+    protected Set<User> getUsers() {
         return users;
     }
 }

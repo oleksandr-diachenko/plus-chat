@@ -152,6 +152,18 @@ public class RandomizerControllerTest {
         assertFalse(controller.getUsers().isEmpty());
     }
 
+    @Test
+    public void shouldNotAddUserToContainerWhenUpdateCalledWithExistingUser() {
+        when(keyWord.getText()).thenReturn("!key");
+        when(caseCheckbox.isSelected()).thenReturn(true);
+        when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
+        controller.setUsers(getUsers());
+
+        controller.update("positiv", "!key");
+
+        verify(container, never()).addNode(any(Label.class));
+    }
+
     private Set<User> getUsers() {
         Set<User> users = new LinkedHashSet<>();
         users.add(getPositiv());
