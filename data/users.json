@@ -1,18 +1,1 @@
-[
-  {
-    "name": "NoLogic_bot",
-    "customName": "NoLogic",
-    "firstMessageDate": "2018-07-17 15:20",
-    "lastMessageDate": "2018-11-12 10:14:27",
-    "exp": 41,
-    "points": 340
-  },
-  {
-    "name": "p0sltlv",
-    "customName": "POSITIV",
-    "firstMessageDate": "2018-11-12 09:11:58",
-    "lastMessageDate": "2018-11-12 10:14:27",
-    "exp": 38,
-    "points": 995240
-  }
-]
+[{"name":"NoLogic_bot","customName":"NoLogic","firstMessageDate":"2018-07-17 15:20","lastMessageDate":"2019-06-10 15:58:21","exp":44,"points":370},{"name":"p0sltlv","customName":"POSITIV","firstMessageDate":"2018-11-12 09:11:58","lastMessageDate":"2018-11-12 10:14:27","exp":38,"points":995240}]

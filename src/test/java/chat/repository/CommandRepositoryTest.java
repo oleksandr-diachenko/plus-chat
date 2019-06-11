@@ -1,4 +1,4 @@
-package chat.unit.repository;
+package chat.repository;
 
 import chat.model.entity.Command;
 import chat.model.repository.CommandRepository;

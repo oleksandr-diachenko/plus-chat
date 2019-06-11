@@ -1,4 +1,4 @@
-package chat.unit.repository;
+package chat.repository;
 
 import chat.model.entity.Smile;
 import chat.model.repository.SmileRepository;

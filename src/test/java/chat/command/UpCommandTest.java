@@ -1,7 +1,5 @@
-package chat.unit.command;
+package chat.command;
 
-import chat.command.ICommand;
-import chat.command.UpCommand;
 import org.junit.Before;
 import org.junit.Test;
 

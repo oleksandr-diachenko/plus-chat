@@ -1,6 +1,5 @@
-package chat.unit.util;
+package chat.util;
 
-import chat.util.TimeUtil;
 import org.junit.Test;
 
 import java.time.LocalDateTime;

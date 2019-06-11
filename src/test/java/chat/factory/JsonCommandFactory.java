@@ -1,4 +1,4 @@
-package chat.unit.factory;
+package chat.factory;
 
 import chat.model.entity.Command;
 import chat.model.entity.Status;

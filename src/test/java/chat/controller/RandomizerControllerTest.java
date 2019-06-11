@@ -1,11 +1,8 @@
-package chat.unit.controller;
+package chat.controller;
 
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
-import chat.controller.ApplicationStyle;
-import chat.controller.ChatController;
-import chat.controller.RandomizerController;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
 import chat.util.StyleUtil;

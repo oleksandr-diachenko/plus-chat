@@ -1,4 +1,4 @@
-package chat.unit.factory;
+package chat.factory;
 
 import chat.model.entity.User;
 

@@ -1,11 +1,9 @@
-package chat.unit.command;
+package chat.command;
 
-import chat.command.ICommand;
-import chat.command.RollCommand;
+import chat.factory.AbstractFactory;
+import chat.factory.UserFactory;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
-import chat.unit.factory.AbstractFactory;
-import chat.unit.factory.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;

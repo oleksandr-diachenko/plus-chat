@@ -1,4 +1,4 @@
-package chat.unit.repository;
+package chat.repository;
 
 import chat.model.entity.Direct;
 import chat.model.repository.DirectRepository;

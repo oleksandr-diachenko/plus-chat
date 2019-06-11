@@ -1,11 +1,9 @@
-package chat.unit.command;
+package chat.command;
 
-import chat.command.ICommand;
-import chat.command.JSONCommand;
+import chat.factory.AbstractFactory;
+import chat.factory.JsonCommandFactory;
 import chat.model.entity.Command;
 import chat.model.repository.CommandRepository;
-import chat.unit.factory.AbstractFactory;
-import chat.unit.factory.JsonCommandFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -15,7 +13,8 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyString;
+import static org.mockito.Mockito.when;
 
 /**
  * @author Oleksandr_Diachenko

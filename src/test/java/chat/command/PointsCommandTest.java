@@ -1,14 +1,9 @@
-package chat.unit.command;
+package chat.command;
 
-import chat.command.ICommand;
-import chat.command.RankCommand;
-import chat.model.entity.Rank;
+import chat.factory.AbstractFactory;
+import chat.factory.UserFactory;
 import chat.model.entity.User;
-import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
-import chat.unit.factory.AbstractFactory;
-import chat.unit.factory.RankFactory;
-import chat.unit.factory.UserFactory;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +13,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.Optional;
 
 import static org.junit.Assert.*;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.when;
 
@@ -26,12 +20,10 @@ import static org.mockito.Mockito.when;
  * @author Oleksandr_Diachenko
  */
 @RunWith(MockitoJUnitRunner.class)
-public class RankCommandTest {
+public class PointsCommandTest {
 
     private ICommand command;
 
-    @Mock
-    private RankRepository rankRepository;
     @Mock
     private UserRepository userRepository;
 
@@ -39,28 +31,26 @@ public class RankCommandTest {
     public void setup() {
         AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
-        AbstractFactory<Rank> rankFactory = new RankFactory();
-        when(rankRepository.getRankByExp(anyLong())).thenReturn(rankFactory.create().get());
-        command = new RankCommand("p0sltlv", userRepository, rankRepository);
+        command = new PointsCommand(userRepository, "p0sltlv");
     }
 
     @Test
-    public void shouldExecuteWhenRankCommandCorrect() {
-        boolean canExecute = command.canExecute("!rank");
+    public void shouldExecuteWhenPointsCommandCorrect() {
+        boolean canExecute = command.canExecute("!points");
         assertTrue(canExecute);
     }
 
     @Test
-    public void shouldNotExecuteWhenRankCommandIncorrect() {
+    public void shouldNotExecuteWhenPointsCommandIncorrect() {
         boolean canExecute = command.canExecute("!qwe");
         assertFalse(canExecute);
     }
 
     @Test
-    public void shouldReturnResponseWhenRankCommandCorrect() {
-        command.canExecute("!rank");
+    public void shouldReturnResponseWhenPointsCommandCorrect() {
+        command.canExecute("p0sltlv");
         String execute = command.execute();
-        assertEquals("POSITIV, your rank Pro (10 exp)", execute);
+        assertEquals("POSITIV, you have 1000 points.", execute);
     }
 
     @Test

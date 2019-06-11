@@ -24,7 +24,7 @@ http://www.springframework.org/schema/beans http://www.springframework.org/schem
     <bean id="simpleProperties" class="chat.util.AppProperty">
         <constructor-arg value="src\test\resources\property\simplePropertyOneObject.properties"/>
     </bean>
-    <bean id="userFactory" class="chat.unit.factory.UserFactory"/>
-    <bean id="rankFactory" class="chat.unit.factory.RankFactory"/>
-    <bean id="jsonCommandFactory" class="chat.unit.factory.JsonCommandFactory"/>
+    <bean id="userFactory" class="chat.factory.UserFactory"/>
+    <bean id="rankFactory" class="chat.factory.RankFactory"/>
+    <bean id="jsonCommandFactory" class="chat.factory.JsonCommandFactory"/>
 </beans>
