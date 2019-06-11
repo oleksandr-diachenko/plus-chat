@@ -154,15 +154,22 @@ public class RandomizerController implements Observer {
     public void update(String nick, String message) {
         if (isEquals(message, keyWord.getText())) {
             Optional<User> userByName = userRepository.getUserByName(nick);
-            userByName.ifPresent(user -> {
+            if(userByName.isPresent()){
+                User user = userByName.get();
                 if (!users.contains(user)) {
-                    Label userName = new Label(user.getCustomName());
-                    userName.setStyle(styleUtil.getLabelStyle(applicationStyle.getMessageColor()));
-                    container.getChildren().add(userName);
+                    Label userName = getUserName(user);
+                    container.addNode(userName);
                 }
                 users.add(user);
-            });
+            }
         }
+    }
+
+    protected Label getUserName(User user) {
+        Label userName = new Label(user.getCustomName());
+        userName.setId(user.getCustomName());
+        userName.setStyle(styleUtil.getLabelStyle(applicationStyle.getMessageColor()));
+        return userName;
     }
 
     private boolean isEquals(String message, String keyWord) {
@@ -235,5 +242,13 @@ public class RandomizerController implements Observer {
 
     protected void setUsers(Set<User> users) {
         this.users = users;
+    }
+
+    protected void setKeyWord(TextField keyWord) {
+        this.keyWord = keyWord;
+    }
+
+    protected void setCaseCheckbox(CheckBox caseCheckbox) {
+        this.caseCheckbox = caseCheckbox;
     }
 }

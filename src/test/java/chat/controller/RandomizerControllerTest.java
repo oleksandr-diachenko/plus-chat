@@ -10,7 +10,9 @@ import de.saxsys.javafx.test.JfxRunner;
 import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.junit.Before;
 import org.junit.Rule;
@@ -20,23 +22,21 @@ import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
-import java.util.Collections;
-import java.util.LinkedHashSet;
-import java.util.Random;
-import java.util.Set;
+import java.util.*;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(JfxRunner.class)
 public class RandomizerControllerTest {
 
-    private static final String LABEL_COLOR_NICK = "-fx-text-fill: #819FF7;";
     private static final String BASE_COLOR = "#424242";
     private static final String BACKGROUND_COLOR = "#212121";
     private static final String NICK_COLOR = "#819FF7";
+    private static final String MESSAGE_COLOR = "#9E9E9E";
+    private static final String LABEL_COLOR_NICK = "-fx-text-fill: #819FF7;";
+    private static final String LABEL_COLOR_MESSAGE = "-fx-text-fill: #9E9E9E;";
 
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
@@ -70,6 +70,10 @@ public class RandomizerControllerTest {
     private Timeline timeline;
     @Mock
     private Label winner;
+    @Mock
+    private TextField keyWord;
+    @Mock
+    private CheckBox caseCheckbox;
 
     @Before
     public void setup() {
@@ -82,10 +86,14 @@ public class RandomizerControllerTest {
         controller.setPlay(play);
         controller.setTimeline(timeline);
         controller.setWinner(winner);
+        controller.setKeyWord(keyWord);
+        controller.setCaseCheckbox(caseCheckbox);
         when(applicationStyle.getBaseColor()).thenReturn(BASE_COLOR);
         when(applicationStyle.getBackgroundColor()).thenReturn(BACKGROUND_COLOR);
         when(applicationStyle.getNickColor()).thenReturn(NICK_COLOR);
+        when(applicationStyle.getMessageColor()).thenReturn(MESSAGE_COLOR);
         when(styleUtil.getLabelStyle(NICK_COLOR)).thenReturn(LABEL_COLOR_NICK);
+        when(styleUtil.getLabelStyle(MESSAGE_COLOR)).thenReturn(LABEL_COLOR_MESSAGE);
     }
 
     @Test
@@ -124,16 +132,36 @@ public class RandomizerControllerTest {
 
         controller.selectAction();
 
-        verify(winner).setText("customName2");
+        verify(winner).setText("Greyphan");
         verify(winner).setStyle(LABEL_COLOR_NICK);
+    }
+
+    @Test
+    public void shouldAddUserToContainerAndSetStyleWhenUpdateCalledWithNewUser() {
+        when(keyWord.getText()).thenReturn("!key");
+        when(caseCheckbox.isSelected()).thenReturn(true);
+        when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
+        when(container.contains("POSITIV")).thenReturn(true);
+
+        controller.update("positiv", "!key");
+
+        Label userName = controller.getUserName(getPositiv());
+        assertEquals(LABEL_COLOR_MESSAGE, userName.getStyle());
+        assertTrue(container.contains("POSITIV"));
     }
 
     private Set<User> getUsers() {
         Set<User> users = new LinkedHashSet<>();
-        User user1 = new User("name1", "customName1", "firstDateMessage1", "lastDateMessage1", 0, 10);
-        User user2 = new User("name2", "customName2", "firstDateMessage2", "lastDateMessage2", 15, 250);
-        users.add(user1);
-        users.add(user2);
+        users.add(getPositiv());
+        users.add(getGreyphan());
         return users;
+    }
+
+    private User getGreyphan() {
+        return new User("greyphan", "Greyphan", "firstDateMessage2", "lastDateMessage2", 15, 250);
+    }
+
+    private User getPositiv() {
+        return new User("positiv", "POSITIV", "firstDateMessage1", "lastDateMessage1", 0, 10);
     }
 }
