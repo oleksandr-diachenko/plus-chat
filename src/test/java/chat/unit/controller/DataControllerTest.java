@@ -19,6 +19,10 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class DataControllerTest {
 
+    private static final String BASE_COLOR = "#424242";
+    private static final String BACKGROUND_COLOR = "#212121";
+    private static final String NICK_COLOR = "#819FF7";
+
     private DataController controller;
     @Mock
     private ApplicationStyle applicationStyle;
@@ -33,9 +37,9 @@ public class DataControllerTest {
     public void setup() {
         controller = new DataController(styleUtil, applicationStyle);
         controller.setRoot(root);
-        when(applicationStyle.getBaseColor()).thenReturn("#424242");
-        when(applicationStyle.getBackgroundColor()).thenReturn("#212121");
-        when(applicationStyle.getNickColor()).thenReturn("#819FF7");
+        when(applicationStyle.getBaseColor()).thenReturn(BASE_COLOR);
+        when(applicationStyle.getBackgroundColor()).thenReturn(BACKGROUND_COLOR);
+        when(applicationStyle.getNickColor()).thenReturn(NICK_COLOR);
     }
 
     @Test
@@ -44,10 +48,10 @@ public class DataControllerTest {
 
         verify(styleUtil).setRootStyle(
                 Collections.singletonList(controller.getRoot()),
-                applicationStyle.getBaseColor(),
-                applicationStyle.getBackgroundColor()
+                BASE_COLOR,
+                BACKGROUND_COLOR
         );
-        verify(styleUtil).setLabelsStyle(root, applicationStyle.getNickColor());
+        verify(styleUtil).setLabelsStyle(root, NICK_COLOR);
     }
 
     @Test

@@ -6,12 +6,14 @@ import chat.component.CustomVBox;
 import chat.controller.ApplicationStyle;
 import chat.controller.ChatController;
 import chat.controller.RandomizerController;
+import chat.model.entity.User;
 import chat.model.repository.UserRepository;
 import chat.util.StyleUtil;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,6 +24,9 @@ import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
 
 import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.Random;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -30,6 +35,11 @@ import static org.mockito.Mockito.*;
 
 @RunWith(JfxRunner.class)
 public class RandomizerControllerTest {
+
+    private static final String LABEL_COLOR_NICK = "-fx-text-fill: #819FF7;";
+    private static final String BASE_COLOR = "#424242";
+    private static final String BACKGROUND_COLOR = "#212121";
+    private static final String NICK_COLOR = "#819FF7";
 
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
@@ -43,6 +53,8 @@ public class RandomizerControllerTest {
     private ChatController chatController;
     @Mock
     private UserRepository userRepository;
+    @Mock
+    private Random random;
     @Mock
     private CustomVBox container;
     @Mock
@@ -59,10 +71,12 @@ public class RandomizerControllerTest {
     private Button play;
     @Mock
     private Timeline timeline;
+    @Mock
+    private Label winner;
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, chatController, userRepository);
+        controller = new RandomizerController(styleUtil, applicationStyle, chatController, userRepository, random);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
@@ -70,9 +84,11 @@ public class RandomizerControllerTest {
         controller.setGridPane(gridPane);
         controller.setPlay(play);
         controller.setTimeline(timeline);
-        when(applicationStyle.getBaseColor()).thenReturn("#424242");
-        when(applicationStyle.getBackgroundColor()).thenReturn("#212121");
-        when(applicationStyle.getNickColor()).thenReturn("#819FF7");
+        controller.setWinner(winner);
+        when(applicationStyle.getBaseColor()).thenReturn(BASE_COLOR);
+        when(applicationStyle.getBackgroundColor()).thenReturn(BACKGROUND_COLOR);
+        when(applicationStyle.getNickColor()).thenReturn(NICK_COLOR);
+        when(styleUtil.getLabelStyle(NICK_COLOR)).thenReturn(LABEL_COLOR_NICK);
     }
 
     @Test
@@ -102,5 +118,25 @@ public class RandomizerControllerTest {
 
         verify(timeline).stop();
         assertFalse(play.isDisable());
+    }
+
+    @Test
+    public void shouldSetRandomUserAndSetStyleForUserWhenSelectActionCalled() {
+        controller.setUsers(getUsers());
+        when(random.nextInt(anyInt())).thenReturn(1);
+
+        controller.selectAction();
+
+        verify(winner).setText("customName2");
+        verify(winner).setStyle(LABEL_COLOR_NICK);
+    }
+
+    private Set<User> getUsers() {
+        Set<User> users = new LinkedHashSet<>();
+        User user1 = new User("name1", "customName1", "firstDateMessage1", "lastDateMessage1", 0, 10);
+        User user2 = new User("name2", "customName2", "firstDateMessage2", "lastDateMessage2", 15, 250);
+        users.add(user1);
+        users.add(user2);
+        return users;
     }
 }

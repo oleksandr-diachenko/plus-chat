@@ -52,16 +52,18 @@ public class RandomizerController implements Observer {
     private ApplicationStyle applicationStyle;
     private ChatController chatController;
     private UserRepository userRepository;
+    private Random random;
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
-                                ChatController chatController, UserRepository userRepository) {
+                                ChatController chatController, UserRepository userRepository, Random random) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
         this.chatController = chatController;
         this.userRepository = userRepository;
+        this.random = random;
     }
 
     @FXML
@@ -187,9 +189,9 @@ public class RandomizerController implements Observer {
         if (users.isEmpty()) {
             return new User();
         }
-        int random = new Random().nextInt(users.size());
+        int randomNumber = random.nextInt(users.size());
         Iterator<User> iterator = users.iterator();
-        for (int index = 0; index < random; index++) {
+        for (int index = 0; index < randomNumber; index++) {
             iterator.next();
         }
         return iterator.next();
@@ -225,5 +227,13 @@ public class RandomizerController implements Observer {
 
     public void setTimeline(Timeline timeline) {
         this.timeline = timeline;
+    }
+
+    public void setWinner(Label winner) {
+        this.winner = winner;
+    }
+
+    public void setUsers(Set<User> users) {
+        this.users = users;
     }
 }
