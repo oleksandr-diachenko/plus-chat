@@ -24,7 +24,8 @@ import org.mockito.junit.MockitoRule;
 
 import java.util.*;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -77,7 +78,7 @@ public class RandomizerControllerTest {
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, chatController, userRepository, random);
+        controller = new RandomizerController(styleUtil, applicationStyle, chatController, userRepository);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
@@ -88,6 +89,7 @@ public class RandomizerControllerTest {
         controller.setWinner(winner);
         controller.setKeyWord(keyWord);
         controller.setCaseCheckbox(caseCheckbox);
+        controller.setRandom(random);
         when(applicationStyle.getBaseColor()).thenReturn(BASE_COLOR);
         when(applicationStyle.getBackgroundColor()).thenReturn(BACKGROUND_COLOR);
         when(applicationStyle.getNickColor()).thenReturn(NICK_COLOR);
@@ -141,13 +143,13 @@ public class RandomizerControllerTest {
         when(keyWord.getText()).thenReturn("!key");
         when(caseCheckbox.isSelected()).thenReturn(true);
         when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
-        when(container.contains("POSITIV")).thenReturn(true);
 
         controller.update("positiv", "!key");
 
-        Label userName = controller.getUserName(getPositiv());
+        Label userName = controller.getUserName(getPositiv().getCustomName());
         assertEquals(LABEL_COLOR_MESSAGE, userName.getStyle());
-        assertTrue(container.contains("POSITIV"));
+        verify(container).addNode(any(Label.class));
+        assertFalse(controller.getUsers().isEmpty());
     }
 
     private Set<User> getUsers() {

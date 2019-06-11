@@ -52,18 +52,17 @@ public class RandomizerController implements Observer {
     private ApplicationStyle applicationStyle;
     private ChatController chatController;
     private UserRepository userRepository;
-    private Random random;
+    private Random random = new Random();
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
-                                ChatController chatController, UserRepository userRepository, Random random) {
+                                ChatController chatController, UserRepository userRepository) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
         this.chatController = chatController;
         this.userRepository = userRepository;
-        this.random = random;
     }
 
     @FXML
@@ -157,7 +156,7 @@ public class RandomizerController implements Observer {
             if(userByName.isPresent()){
                 User user = userByName.get();
                 if (!users.contains(user)) {
-                    Label userName = getUserName(user);
+                    Label userName = getUserName(user.getCustomName());
                     container.addNode(userName);
                 }
                 users.add(user);
@@ -165,9 +164,9 @@ public class RandomizerController implements Observer {
         }
     }
 
-    protected Label getUserName(User user) {
-        Label userName = new Label(user.getCustomName());
-        userName.setId(user.getCustomName());
+    protected Label getUserName(String customName) {
+        Label userName = new Label();
+        userName.setText(customName);
         userName.setStyle(styleUtil.getLabelStyle(applicationStyle.getMessageColor()));
         return userName;
     }
@@ -250,5 +249,13 @@ public class RandomizerController implements Observer {
 
     protected void setCaseCheckbox(CheckBox caseCheckbox) {
         this.caseCheckbox = caseCheckbox;
+    }
+
+    protected void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public Set<User> getUsers() {
+        return users;
     }
 }

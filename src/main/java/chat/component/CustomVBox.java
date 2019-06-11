@@ -21,13 +21,4 @@ public class CustomVBox extends VBox {
     public void addNode(Node node) {
         getChildren().add(node);
     }
-
-    public boolean contains(String id) {
-        for (Node node : getChildren()) {
-            if(node.getId().equals(id)) {
-                return true;
-            }
-        }
-        return false;
-    }
 }
