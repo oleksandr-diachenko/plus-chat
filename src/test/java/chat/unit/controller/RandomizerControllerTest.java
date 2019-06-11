@@ -9,7 +9,9 @@ import chat.controller.RandomizerController;
 import chat.model.repository.UserRepository;
 import chat.util.StyleUtil;
 import de.saxsys.javafx.test.JfxRunner;
+import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.scene.control.Button;
 import javafx.scene.layout.GridPane;
 import org.junit.Before;
 import org.junit.Rule;
@@ -22,6 +24,7 @@ import org.mockito.junit.MockitoRule;
 import java.util.Collections;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
@@ -52,6 +55,10 @@ public class RandomizerControllerTest {
     private ReadOnlyDoubleProperty roDoubleProperty;
     @Mock
     private GridPane gridPane;
+    @Mock
+    private Button play;
+    @Mock
+    private Timeline timeline;
 
     @Before
     public void setup() {
@@ -61,6 +68,8 @@ public class RandomizerControllerTest {
         controller.setContainer(container);
         controller.setScrollPane(scrollPane);
         controller.setGridPane(gridPane);
+        controller.setPlay(play);
+        controller.setTimeline(timeline);
         when(applicationStyle.getBaseColor()).thenReturn("#424242");
         when(applicationStyle.getBackgroundColor()).thenReturn("#212121");
         when(applicationStyle.getNickColor()).thenReturn("#819FF7");
@@ -85,5 +94,13 @@ public class RandomizerControllerTest {
         verify(styleUtil).setLabelsStyle(gridPane, applicationStyle.getNickColor());
         verify(scrollPane).bindPrefHeightProperty(roDoubleProperty);
         verify(scrollPane).bindValueProperty(roDoubleProperty);
+    }
+
+    @Test
+    public void shouldStopTimelineWhenStopActionCalled() {
+        controller.stopAction();
+
+        verify(timeline).stop();
+        assertFalse(play.isDisable());
     }
 }

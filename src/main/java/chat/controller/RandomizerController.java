@@ -218,4 +218,12 @@ public class RandomizerController implements Observer {
     public void setGridPane(GridPane gridPane) {
         this.gridPane = gridPane;
     }
+
+    public void setPlay(Button play) {
+        this.play = play;
+    }
+
+    public void setTimeline(Timeline timeline) {
+        this.timeline = timeline;
+    }
 }
