@@ -1,6 +1,6 @@
 package chat.sevice;
 
-import chat.bot.TwitchBotStarter;
+import chat.bot.AbstractBotStarter;
 import chat.command.*;
 import chat.model.entity.Status;
 import chat.model.entity.User;
@@ -135,14 +135,14 @@ public class Bot extends ListenerAdapter implements Subject {
      */
     @Override
     public void onPing(PingEvent event) {
-        TwitchBotStarter.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
+        AbstractBotStarter.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
     }
 
     private void sendMessage(String message) {
         String botName = connect.getProperty("botname");
         updateUser(botName);
         notifyObserver(botName, message);
-        TwitchBotStarter.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
+        AbstractBotStarter.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
     }
 
     private User updateUser(String nick) {
