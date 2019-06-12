@@ -3,6 +3,7 @@ package chat.controller;
 import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
 import chat.component.CustomStage;
+import chat.component.CustomVBox;
 import chat.component.dialog.ChatDialog;
 import chat.component.dialog.SettingsDialog;
 import chat.model.entity.Direct;
@@ -22,7 +23,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.text.Text;
@@ -52,9 +52,9 @@ public class ChatController implements Observer {
     @FXML
     private CustomButton setting;
     @FXML
-    private VBox container;
+    private CustomVBox container;
     @FXML
-    private VBox root;
+    private CustomVBox root;
     @FXML
     private ScrollPane scrollPane;
     private List<TextFlow> messages = new ArrayList<>();
@@ -71,13 +71,14 @@ public class ChatController implements Observer {
     private StyleUtil styleUtil;
     private ChatDialog chatDialog;
     private Set<AbstractBotStarter> botStarters;
+    private ApplicationStyle applicationStyle;
 
     @Autowired
     public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
                           SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog,
-                          Set<AbstractBotStarter> botStarters) {
+                          Set<AbstractBotStarter> botStarters, ApplicationStyle applicationStyle) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.smileRepository = smileRepository;
@@ -88,6 +89,7 @@ public class ChatController implements Observer {
         this.styleUtil = styleUtil;
         this.chatDialog = chatDialog;
         this.botStarters = botStarters;
+        this.applicationStyle = applicationStyle;
     }
 
     @FXML
@@ -95,14 +97,12 @@ public class ChatController implements Observer {
         settings = settingsProperties.loadProperty();
         isOnTop = Boolean.parseBoolean(settings.getProperty(Settings.ROOT_ALWAYS_ON_TOP));
         onTopInit();
-        root.setStyle(styleUtil.getRootStyle(
-                settings.getProperty(Settings.ROOT_BASE_COLOR),
-                settings.getProperty(Settings.ROOT_BACKGROUND_COLOR)
-        ));
+        styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
+                applicationStyle.getBackgroundColor());
         chatDialog.setOpacity(getOpacity());
         scrollPane.prefHeightProperty().bind(root.heightProperty());
         scrollPane.vvalueProperty().bind(container.heightProperty());
-        startBot();
+        startBots();
     }
 
     private double getOpacity() {
@@ -113,7 +113,7 @@ public class ChatController implements Observer {
         setOnTopImage();
     }
 
-    private void startBot() {
+    private void startBots() {
         for (AbstractBotStarter botStarter : botStarters) {
             botStarter.start();
             Bot listener = botStarter.getListener();
@@ -314,5 +314,9 @@ public class ChatController implements Observer {
 
     public void setSettings(Properties settings) {
         this.settings = settings;
+    }
+
+    protected void setRoot(CustomVBox root) {
+        this.root = root;
     }
 }
