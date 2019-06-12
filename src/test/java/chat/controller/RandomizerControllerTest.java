@@ -104,11 +104,8 @@ public class RandomizerControllerTest {
 
     @Test
     public void shouldSetRootAndLabelStyleAndBindingWhenInitialize() {
-        doNothing().when(times).setData(any());
         when(root.getHeightProperty()).thenReturn(roDoubleProperty);
-        doNothing().when(scrollPane).bindPrefHeightProperty(roDoubleProperty);
         when(container.getHeightProperty()).thenReturn(roDoubleProperty);
-        doNothing().when(scrollPane).bindValueProperty(roDoubleProperty);
 
         controller.initialize();
 

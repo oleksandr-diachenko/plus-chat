@@ -13,7 +13,8 @@ import java.util.Collections;
 
 import static junit.framework.TestCase.assertFalse;
 import static junit.framework.TestCase.assertTrue;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ConfirmControllerTest {
@@ -59,7 +60,6 @@ public class ConfirmControllerTest {
     public void shouldConfirmAndFireCloseEventAndCloseOwnerWhenConfirmActionCalled() {
         when(root.getStage()).thenReturn(stage);
         when(root.getOwner()).thenReturn(owner);
-        doNothing().when(stage).fireCloseEvent();
 
         controller.confirmAction();
 
@@ -71,7 +71,6 @@ public class ConfirmControllerTest {
     @Test
     public void shouldFireCloseEventWhenCloseActionCalled() {
         when(root.getStage()).thenReturn(stage);
-        doNothing().when(stage).fireCloseEvent();
 
         controller.cancelAction();
 
