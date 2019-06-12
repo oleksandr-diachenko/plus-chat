@@ -1,4 +1,4 @@
-package chat.component;
+package chat.controller;
 
 import com.sun.javafx.collections.ImmutableObservableList;
 import javafx.collections.ObservableList;
