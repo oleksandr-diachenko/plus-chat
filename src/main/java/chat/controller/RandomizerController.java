@@ -1,6 +1,6 @@
 package chat.controller;
 
-import chat.bot.Startable;
+import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
@@ -56,18 +56,18 @@ public class RandomizerController implements Observer {
     private StyleUtil styleUtil;
     private ApplicationStyle applicationStyle;
     private UserRepository userRepository;
-    private Set<Startable> startables;
+    private Set<AbstractBotStarter> botStarters;
     private Random random = new Random();
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
 
     @Autowired
     public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
-                                UserRepository userRepository, Set<Startable> startables) {
+                                UserRepository userRepository, Set<AbstractBotStarter> botStarters) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
         this.userRepository = userRepository;
-        this.startables = startables;
+        this.botStarters = botStarters;
     }
 
     @FXML
@@ -99,15 +99,15 @@ public class RandomizerController implements Observer {
             addSubjects();
             play.disable();
             resetContainerAndUsers();
-            startTimeline(startables);
+            startTimeline(botStarters);
         } else {
             blink(blankNodes);
         }
     }
 
     private void addSubjects() {
-        for (Startable starter : startables) {
-            Bot listener = starter.getListener();
+        for (AbstractBotStarter botStarter : botStarters) {
+            Bot listener = botStarter.getListener();
             listener.addObserver(this);
         }
     }
@@ -129,7 +129,7 @@ public class RandomizerController implements Observer {
         }
     }
 
-    private void startTimeline(Set<Startable> startables) {
+    private void startTimeline(Set<AbstractBotStarter> botStarters) {
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
         final Integer[] time = {selectedItem * 60};
         timeline = new Timeline(
@@ -141,8 +141,8 @@ public class RandomizerController implements Observer {
         timeline.setCycleCount(time[0]);
         timeline.setOnFinished(event -> {
             play.enable();
-            for (Startable startable : startables) {
-                Bot listener = startable.getListener();
+            for (AbstractBotStarter botStarter : botStarters) {
+                Bot listener = botStarter.getListener();
                 listener.removeObserver(this);
             }
         });

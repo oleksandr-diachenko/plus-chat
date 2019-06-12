@@ -1,6 +1,6 @@
 package chat.controller;
 
-import chat.bot.Startable;
+import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
 import chat.component.CustomStage;
 import chat.component.dialog.ChatDialog;
@@ -70,14 +70,14 @@ public class ChatController implements Observer {
     private Paths paths;
     private StyleUtil styleUtil;
     private ChatDialog chatDialog;
-    private Set<Startable> startables;
+    private Set<AbstractBotStarter> botStarters;
 
     @Autowired
     public ChatController(RankRepository rankRepository, UserRepository userRepository, SmileRepository smileRepository,
                           DirectRepository directRepository,
                           @Qualifier("settingsProperties") AppProperty settingsProperties,
                           SettingsDialog settingsDialog, Paths paths, StyleUtil styleUtil, ChatDialog chatDialog,
-                          Set<Startable> startables) {
+                          Set<AbstractBotStarter> botStarters) {
         this.rankRepository = rankRepository;
         this.userRepository = userRepository;
         this.smileRepository = smileRepository;
@@ -87,7 +87,7 @@ public class ChatController implements Observer {
         this.paths = paths;
         this.styleUtil = styleUtil;
         this.chatDialog = chatDialog;
-        this.startables = startables;
+        this.botStarters = botStarters;
     }
 
     @FXML
@@ -114,9 +114,9 @@ public class ChatController implements Observer {
     }
 
     private void startBot() {
-        for (Startable startable : startables) {
-            startable.start();
-            Bot listener = startable.getListener();
+        for (AbstractBotStarter botStarter : botStarters) {
+            botStarter.start();
+            Bot listener = botStarter.getListener();
             listener.addObserver(this);
         }
     }

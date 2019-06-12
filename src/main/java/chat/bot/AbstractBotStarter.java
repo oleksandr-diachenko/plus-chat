@@ -16,7 +16,7 @@ import java.io.IOException;
 @Getter
 @Setter
 @Component
-public abstract class AbstractBotStarter implements Startable {
+public abstract class AbstractBotStarter {
 
     public static PircBotX bot;
     @Autowired
@@ -24,7 +24,6 @@ public abstract class AbstractBotStarter implements Startable {
     @Autowired
     protected Paths paths;
 
-    @Override
     public void start() {
         Thread thread = new Thread(() -> {
             configureBot();
@@ -41,7 +40,6 @@ public abstract class AbstractBotStarter implements Startable {
         thread.start();
     }
 
-    @Override
     public Bot getListener() {
         return listener;
     }

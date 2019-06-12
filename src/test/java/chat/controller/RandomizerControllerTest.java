@@ -1,7 +1,10 @@
 package chat.controller;
 
-import chat.bot.Startable;
-import chat.component.*;
+import chat.bot.AbstractBotStarter;
+import chat.component.CustomButton;
+import chat.component.CustomListView;
+import chat.component.CustomScrollPane;
+import chat.component.CustomVBox;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
 import chat.util.StyleUtil;
@@ -72,11 +75,11 @@ public class RandomizerControllerTest {
     private TextField keyWord;
     @Mock
     private CheckBox caseCheckbox;
-    private Set<Startable> startables = new HashSet<>();
+    private Set<AbstractBotStarter> botStarters = new HashSet<>();
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, userRepository, startables);
+        controller = new RandomizerController(styleUtil, applicationStyle, userRepository, botStarters);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
