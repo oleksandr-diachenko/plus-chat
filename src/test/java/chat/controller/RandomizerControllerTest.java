@@ -13,6 +13,7 @@ import javafx.animation.Timeline;
 import javafx.beans.property.ReadOnlyDoubleProperty;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.MultipleSelectionModel;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import org.apache.commons.lang3.StringUtils;
@@ -76,6 +77,8 @@ public class RandomizerControllerTest {
     @Mock
     private CheckBox caseCheckbox;
     private Set<AbstractBotStarter> botStarters = new HashSet<>();
+    @Mock
+    private MultipleSelectionModel<Integer> selectionModel;
 
     @Before
     public void setup() {
@@ -169,11 +172,20 @@ public class RandomizerControllerTest {
     public void shouldBlinkEmptyNodesWhenPlayActionCalledAndNodesAreEmpty() {
         RandomizerController spy = spy(controller);
         when(keyWord.getText()).thenReturn(StringUtils.EMPTY);
-        when(times.getSelectionModel()).thenReturn(new SimpleMultipleSelectionModel<>());
+        when(selectionModel.isEmpty()).thenReturn(true);
+        when(times.getSelectionModel()).thenReturn(selectionModel);
 
         spy.playAction();
 
         verify(spy).blink(Arrays.asList(keyWord, times));
+    }
+
+    @Test
+    public void shouldStopTimelineAndEnablePlayWhenStopActionCalled() {
+        controller.stopAction();
+
+        verify(timeline).stop();
+        verify(play).disable();
     }
 
     private Set<User> getUsers() {

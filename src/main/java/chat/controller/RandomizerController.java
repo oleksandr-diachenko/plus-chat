@@ -99,7 +99,7 @@ public class RandomizerController implements Observer {
             addSubjects();
             play.disable();
             resetContainerAndUsers();
-            startTimeline(botStarters);
+            startTimeline();
         } else {
             blink(blankNodes);
         }
@@ -129,24 +129,26 @@ public class RandomizerController implements Observer {
         }
     }
 
-    private void startTimeline(Set<AbstractBotStarter> botStarters) {
+    private void startTimeline() {
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
-        final Integer[] time = {selectedItem * 60};
-        timeline = new Timeline(
-                new KeyFrame(Duration.millis(1000), event -> {
-                    time[0]--;
-                    countdown.setText(String.valueOf(time[0]));
-                    countdown.setStyle(styleUtil.getLabelStyle(applicationStyle.getNickColor()));
-                }));
+        Integer[] time = {selectedItem * 60};
+        timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> setCountdownTextAndStyle(time)));
         timeline.setCycleCount(time[0]);
-        timeline.setOnFinished(event -> {
-            play.enable();
-            for (AbstractBotStarter botStarter : botStarters) {
-                Bot listener = botStarter.getListener();
-                listener.removeObserver(this);
-            }
-        });
+        timeline.setOnFinished(event -> afterTimelineFinish());
         timeline.play();
+    }
+
+    private void setCountdownTextAndStyle(Integer[] times) {
+        countdown.setText(String.valueOf(--times[0]));
+        countdown.setStyle(styleUtil.getLabelStyle(applicationStyle.getNickColor()));
+    }
+
+    private void afterTimelineFinish() {
+        play.enable();
+        for (AbstractBotStarter botStarter : botStarters) {
+            Bot listener = botStarter.getListener();
+            listener.removeObserver(this);
+        }
     }
 
     private void blink(Node node) {
@@ -159,7 +161,7 @@ public class RandomizerController implements Observer {
     }
 
     private void resetContainerAndUsers() {
-        container.getChildren().clear();
+        container.clear();
         users = new HashSet<>();
     }
 

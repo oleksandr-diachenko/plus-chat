@@ -21,4 +21,8 @@ public class CustomVBox extends VBox {
     public void addNode(Node node) {
         getChildren().add(node);
     }
+
+    public void clear() {
+        getChildren().clear();
+    }
 }
