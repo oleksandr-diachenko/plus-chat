@@ -2,6 +2,7 @@ package chat.controller;
 
 import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
+import chat.component.CustomScrollPane;
 import chat.component.CustomStage;
 import chat.component.CustomVBox;
 import chat.component.dialog.ChatDialog;
@@ -20,7 +21,6 @@ import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
-import javafx.scene.control.ScrollPane;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.media.Media;
@@ -56,7 +56,7 @@ public class ChatController implements Observer {
     @FXML
     private CustomVBox root;
     @FXML
-    private ScrollPane scrollPane;
+    private CustomScrollPane scrollPane;
     private List<TextFlow> messages = new ArrayList<>();
     private Properties settings;
     private RankRepository rankRepository;
@@ -100,8 +100,8 @@ public class ChatController implements Observer {
         styleUtil.setRootStyle(Collections.singletonList(root), applicationStyle.getBaseColor(),
                 applicationStyle.getBackgroundColor());
         chatDialog.setOpacity(getOpacity());
-        scrollPane.prefHeightProperty().bind(root.heightProperty());
-        scrollPane.vvalueProperty().bind(container.heightProperty());
+        scrollPane.bindPrefHeightProperty(root.heightProperty());
+        scrollPane.bindValueProperty(container.heightProperty());
         startBots();
     }
 
@@ -139,7 +139,7 @@ public class ChatController implements Observer {
         isOnTop = !isOnTop;
     }
 
-    private void setOnTopImage() {
+    protected void setOnTopImage() {
         ImageView imageView = new ImageView(new Image(getOnTopImagePath()));
         imageView.setFitWidth(15);
         imageView.setFitHeight(15);
@@ -318,5 +318,21 @@ public class ChatController implements Observer {
 
     protected void setRoot(CustomVBox root) {
         this.root = root;
+    }
+
+    public CustomVBox getRoot() {
+        return root;
+    }
+
+    protected void setContainer(CustomVBox container) {
+        this.container = container;
+    }
+
+    protected void setScrollPane(CustomScrollPane scrollPane) {
+        this.scrollPane = scrollPane;
+    }
+
+    protected void setOnTop(CustomButton onTop) {
+        this.onTop = onTop;
     }
 }
