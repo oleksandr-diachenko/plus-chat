@@ -15,7 +15,7 @@
         <maven.resources.plugin>3.1.0</maven.resources.plugin>
         <maven.compiler.plugin>3.8.0</maven.compiler.plugin>
         <pircbotx>2.1</pircbotx>
-        <json>20180130</json>
+        <json>20180813</json>
         <jackson.mapper.asl>1.9.13</jackson.mapper.asl>
         <slf4j.simple>1.7.5</slf4j.simple>
         <log4j.api>2.11.0</log4j.api>
