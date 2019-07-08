@@ -1,14 +1,12 @@
 package chat.controller;
 
-import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
-import chat.observer.Observer;
-import chat.sevice.Bot;
+import chat.sevice.MessageEvent;
 import chat.util.StyleUtil;
 import javafx.animation.FadeTransition;
 import javafx.animation.KeyFrame;
@@ -23,6 +21,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.util.Duration;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import java.util.*;
@@ -31,7 +30,7 @@ import java.util.*;
  * @author Oleksandr_Diachenko
  */
 @Controller
-public class RandomizerController implements Observer {
+public class RandomizerController implements ApplicationListener<MessageEvent> {
 
     @FXML
     private CustomVBox container;
@@ -56,18 +55,15 @@ public class RandomizerController implements Observer {
     private StyleUtil styleUtil;
     private ApplicationStyle applicationStyle;
     private UserRepository userRepository;
-    private Set<AbstractBotStarter> botStarters;
     private Random random = new Random();
     private Set<User> users = new HashSet<>();
     private Timeline timeline;
 
     @Autowired
-    public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle,
-                                UserRepository userRepository, Set<AbstractBotStarter> botStarters) {
+    public RandomizerController(StyleUtil styleUtil, ApplicationStyle applicationStyle, UserRepository userRepository) {
         this.styleUtil = styleUtil;
         this.applicationStyle = applicationStyle;
         this.userRepository = userRepository;
-        this.botStarters = botStarters;
     }
 
     @FXML
@@ -96,19 +92,11 @@ public class RandomizerController implements Observer {
     public void playAction() {
         List<Node> blankNodes = getBlankNodes(keyWord, times);
         if (blankNodes.isEmpty()) {
-            addSubjects();
             play.disable();
             resetContainerAndUsers();
             startTimeline();
         } else {
             blink(blankNodes);
-        }
-    }
-
-    private void addSubjects() {
-        for (AbstractBotStarter botStarter : botStarters) {
-            Bot listener = botStarter.getListener();
-            listener.addObserver(this);
         }
     }
 
@@ -134,21 +122,13 @@ public class RandomizerController implements Observer {
         Integer[] time = {selectedItem * 60};
         timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> setCountdownTextAndStyle(time)));
         timeline.setCycleCount(time[0]);
-        timeline.setOnFinished(event -> afterTimelineFinish());
+        timeline.setOnFinished(event -> play.enable());
         timeline.play();
     }
 
     private void setCountdownTextAndStyle(Integer[] times) {
         countdown.setText(String.valueOf(--times[0]));
         countdown.setStyle(styleUtil.getLabelStyle(applicationStyle.getNickColor()));
-    }
-
-    private void afterTimelineFinish() {
-        play.enable();
-        for (AbstractBotStarter botStarter : botStarters) {
-            Bot listener = botStarter.getListener();
-            listener.removeObserver(this);
-        }
     }
 
     private void blink(Node node) {
@@ -163,21 +143,6 @@ public class RandomizerController implements Observer {
     private void resetContainerAndUsers() {
         container.clear();
         users = new HashSet<>();
-    }
-
-    @Override
-    public void update(String nick, String message) {
-        if (isEquals(message, keyWord.getText())) {
-            Optional<User> userByName = userRepository.getUserByName(nick);
-            if (userByName.isPresent()) {
-                User user = userByName.get();
-                if (!users.contains(user)) {
-                    Label userName = getUserName(user.getCustomName());
-                    container.addNode(userName);
-                }
-                users.add(user);
-            }
-        }
     }
 
     protected Label getUserName(String customName) {
@@ -273,5 +238,26 @@ public class RandomizerController implements Observer {
 
     protected Set<User> getUsers() {
         return users;
+    }
+
+    @Override
+    public void onApplicationEvent(MessageEvent messageEvent) {
+        if (play != null && play.isDisable()) {
+            updateContainer(messageEvent);
+        }
+    }
+
+    private void updateContainer(MessageEvent message) {
+        if (isEquals(message.getMessage(), keyWord.getText())) {
+            Optional<User> userByName = userRepository.getUserByName(message.getNick());
+            if (userByName.isPresent()) {
+                User user = userByName.get();
+                if (!users.contains(user)) {
+                    Label userName = getUserName(user.getCustomName());
+                    container.addNode(userName);
+                }
+                users.add(user);
+            }
+        }
     }
 }

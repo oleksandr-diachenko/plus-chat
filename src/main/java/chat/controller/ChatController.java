@@ -15,8 +15,7 @@ import chat.model.repository.DirectRepository;
 import chat.model.repository.RankRepository;
 import chat.model.repository.SmileRepository;
 import chat.model.repository.UserRepository;
-import chat.observer.Observer;
-import chat.sevice.Bot;
+import chat.sevice.MessageEvent;
 import chat.util.*;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -32,6 +31,7 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationListener;
 import org.springframework.stereotype.Controller;
 
 import java.io.File;
@@ -45,7 +45,7 @@ import java.util.*;
 @Controller
 @NoArgsConstructor
 @Log4j2
-public class ChatController implements Observer {
+public class ChatController implements ApplicationListener<MessageEvent> {
 
     @FXML
     private CustomButton onTop;
@@ -116,8 +116,6 @@ public class ChatController implements Observer {
     private void startBots() {
         for (AbstractBotStarter botStarter : botStarters) {
             botStarter.start();
-            Bot listener = botStarter.getListener();
-            listener.addObserver(this);
         }
     }
 
@@ -152,25 +150,6 @@ public class ChatController implements Observer {
             name = paths.getDisabledPin();
         }
         return name;
-    }
-
-    @Override
-    public void update(String nick, String message) {
-        TextFlow messageContainer = new TextFlow();
-        String userName = nick;
-        Optional<User> userByName = userRepository.getUserByName(nick);
-        if (userByName.isPresent()) {
-            User user = userByName.get();
-            userName = user.getCustomName();
-            Label rankImage = getRankImage(user);
-            addNodesToMessageContainer(messageContainer, rankImage);
-        }
-        addUserNameToMessageContainer(messageContainer, userName);
-        addSeparatorToMessageContainer(messageContainer, ": ");
-        addUserMessageToMessageContainer(messageContainer, message);
-        messages.add(messageContainer);
-        addNewMessageToContainer();
-        playSound(message);
     }
 
     private void addNewMessageToContainer() {
@@ -334,5 +313,24 @@ public class ChatController implements Observer {
 
     protected void setOnTop(CustomButton onTop) {
         this.onTop = onTop;
+    }
+
+    @Override
+    public void onApplicationEvent(MessageEvent message) {
+        TextFlow messageContainer = new TextFlow();
+        String userName = message.getNick();
+        Optional<User> userByName = userRepository.getUserByName(message.getNick());
+        if (userByName.isPresent()) {
+            User user = userByName.get();
+            userName = user.getCustomName();
+            Label rankImage = getRankImage(user);
+            addNodesToMessageContainer(messageContainer, rankImage);
+        }
+        addUserNameToMessageContainer(messageContainer, userName);
+        addSeparatorToMessageContainer(messageContainer, ": ");
+        addUserMessageToMessageContainer(messageContainer, message.getMessage());
+        messages.add(messageContainer);
+        addNewMessageToContainer();
+        playSound(message.getMessage());
     }
 }

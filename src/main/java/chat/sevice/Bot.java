@@ -8,8 +8,6 @@ import chat.model.repository.CommandRepository;
 import chat.model.repository.OrderRepository;
 import chat.model.repository.RankRepository;
 import chat.model.repository.UserRepository;
-import chat.observer.Observer;
-import chat.observer.Subject;
 import chat.util.AppProperty;
 import chat.util.TimeUtil;
 import javafx.application.Platform;
@@ -21,26 +19,31 @@ import org.pircbotx.hooks.events.PingEvent;
 import org.pircbotx.hooks.types.GenericMessageEvent;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationEventPublisher;
+import org.springframework.context.ApplicationEventPublisherAware;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.*;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Properties;
+import java.util.Random;
 
 /**
  * @author Alexander Diachenko
  */
 @Service
-public class Bot extends ListenerAdapter implements Subject {
+public class Bot extends ListenerAdapter implements ApplicationEventPublisherAware {
 
     private static final String BOTNAME = "botname";
     private UserRepository userRepository;
     private RankRepository rankRepository;
     private CommandRepository commandRepository;
-    private List<Observer> observers = new ArrayList<>();
     private Properties connectProperty;
     private Properties commandsProperty;
     private LocalDateTime start;
     private OrderRepository orderRepository;
+    private ApplicationEventPublisher applicationEventPublisher;
 
     @Autowired
     public Bot(UserRepository userRepository, RankRepository rankRepository,
@@ -61,14 +64,14 @@ public class Bot extends ListenerAdapter implements Subject {
         start = LocalDateTime.now();
         String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
-        notifyObserver(botName, "Connected!");
+        notifyObservers(botName, "Connected!");
     }
 
     @Override
     public void onDisconnect(DisconnectEvent event) {
         String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
-        notifyObserver(botName, "Disconnected!");
+        notifyObservers(botName, "Disconnected!");
     }
 
     /**
@@ -79,7 +82,7 @@ public class Bot extends ListenerAdapter implements Subject {
         String nick = event.getUser().getNick();
         User user = updateUser(nick);
         String message = event.getMessage();
-        notifyObserver(user.getName(), message);
+        notifyObservers(user.getName(), message);
         if (isCommand(message)) {
             runCommand(event.getUser().getNick(), message);
         }
@@ -141,7 +144,7 @@ public class Bot extends ListenerAdapter implements Subject {
     private void sendMessage(String message) {
         String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
-        notifyObserver(botName, message);
+        notifyObservers(botName, message);
         AbstractBotStarter.bot.sendIRC().message("#" + connectProperty.getProperty("channel"), message);
     }
 
@@ -173,18 +176,12 @@ public class Bot extends ListenerAdapter implements Subject {
         return userRepository.add(user);
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
+    private void notifyObservers(String nick, String message) {
+        Platform.runLater(() -> applicationEventPublisher.publishEvent(new MessageEvent(this, nick, message)));
     }
 
     @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
-
-    @Override
-    public void notifyObserver(String nick, String message) {
-        observers.forEach(observer -> Platform.runLater(() -> observer.update(nick, message)));
+    public void setApplicationEventPublisher(ApplicationEventPublisher applicationEventPublisher) {
+        this.applicationEventPublisher = applicationEventPublisher;
     }
 }

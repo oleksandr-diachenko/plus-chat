@@ -1,12 +1,12 @@
 package chat.controller;
 
-import chat.bot.AbstractBotStarter;
 import chat.component.CustomButton;
 import chat.component.CustomListView;
 import chat.component.CustomScrollPane;
 import chat.component.CustomVBox;
 import chat.model.entity.User;
 import chat.model.repository.UserRepository;
+import chat.sevice.MessageEvent;
 import chat.util.StyleUtil;
 import de.saxsys.javafx.test.JfxRunner;
 import javafx.animation.Timeline;
@@ -76,13 +76,12 @@ public class RandomizerControllerTest {
     private TextField keyWord;
     @Mock
     private CheckBox caseCheckbox;
-    private Set<AbstractBotStarter> botStarters = new HashSet<>();
     @Mock
     private MultipleSelectionModel<Integer> selectionModel;
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, userRepository, botStarters);
+        controller = new RandomizerController(styleUtil, applicationStyle, userRepository);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
@@ -144,8 +143,9 @@ public class RandomizerControllerTest {
         when(keyWord.getText()).thenReturn("!key");
         when(caseCheckbox.isSelected()).thenReturn(true);
         when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
+        when(play.isDisable()).thenReturn(true);
 
-        controller.update("positiv", "!key");
+        controller.onApplicationEvent(new MessageEvent(this, "positiv", "!key"));
 
         Label userName = controller.getUserName(getPositiv().getCustomName());
         assertEquals(LABEL_COLOR_MESSAGE, userName.getStyle());
@@ -160,7 +160,7 @@ public class RandomizerControllerTest {
         when(userRepository.getUserByName("positiv")).thenReturn(Optional.of(getPositiv()));
         controller.setUsers(getUsers());
 
-        controller.update("positiv", "!key");
+        controller.onApplicationEvent(new MessageEvent(this, "positiv", "!key"));
 
         verify(container, never()).addNode(any(Label.class));
     }
