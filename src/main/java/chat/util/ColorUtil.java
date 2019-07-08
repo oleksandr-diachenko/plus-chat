@@ -7,6 +7,10 @@ import javafx.scene.paint.Color;
  */
 public class ColorUtil {
 
+    private ColorUtil() {
+        throw new IllegalStateException("Creating object not allowed!");
+    }
+
     public static String getHexColor(Color color) {
         return String.format("#%02X%02X%02X",
                 (int) (color.getRed() * 255),

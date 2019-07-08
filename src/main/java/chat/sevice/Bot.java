@@ -32,12 +32,13 @@ import java.util.*;
 @Service
 public class Bot extends ListenerAdapter implements Subject {
 
+    private static final String BOTNAME = "botname";
     private UserRepository userRepository;
     private RankRepository rankRepository;
     private CommandRepository commandRepository;
     private List<Observer> observers = new ArrayList<>();
-    private Properties connect;
-    private Properties commands;
+    private Properties connectProperty;
+    private Properties commandsProperty;
     private LocalDateTime start;
     private OrderRepository orderRepository;
 
@@ -48,8 +49,8 @@ public class Bot extends ListenerAdapter implements Subject {
                @Qualifier("twitchProperties") AppProperty twitchProperties,
                @Qualifier("commandsProperties") AppProperty commandsProperties) {
         this.orderRepository = orderRepository;
-        this.connect = twitchProperties.loadProperty();
-        this.commands = commandsProperties.loadProperty();
+        this.connectProperty = twitchProperties.loadProperty();
+        this.commandsProperty = commandsProperties.loadProperty();
         this.userRepository = userRepository;
         this.rankRepository = rankRepository;
         this.commandRepository = commandRepository;
@@ -58,14 +59,14 @@ public class Bot extends ListenerAdapter implements Subject {
     @Override
     public void onConnect(ConnectEvent event) {
         start = LocalDateTime.now();
-        String botName = connect.getProperty("botname");
+        String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
         notifyObserver(botName, "Connected!");
     }
 
     @Override
     public void onDisconnect(DisconnectEvent event) {
-        String botName = connect.getProperty("botname");
+        String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
         notifyObserver(botName, "Disconnected!");
     }
@@ -89,8 +90,7 @@ public class Bot extends ListenerAdapter implements Subject {
     }
 
     private void runCommand(String nick, String command) {
-        List<ICommand> commands = getCommands(nick);
-        for (ICommand comm : commands) {
+        for (ICommand comm : getCommands(nick)) {
             if (comm.canExecute(command)) {
                 sendMessage(comm.execute());
                 break;
@@ -123,7 +123,7 @@ public class Bot extends ListenerAdapter implements Subject {
 
     private boolean isEnabled(String commandName) {
         try {
-            Status status = Status.valueOf(commands.getProperty(commandName));
+            Status status = Status.valueOf(commandsProperty.getProperty(commandName));
             return status == Status.enabled;
         } catch (Exception exception) {
             return true;
@@ -135,14 +135,14 @@ public class Bot extends ListenerAdapter implements Subject {
      */
     @Override
     public void onPing(PingEvent event) {
-        AbstractBotStarter.bot.sendRaw().rawLineNow(String.format("PONG %s\r\n", event.getPingValue()));
+        AbstractBotStarter.bot.sendRaw().rawLineNow(String.format("PONG %s %s", event.getPingValue(), System.lineSeparator()));
     }
 
     private void sendMessage(String message) {
-        String botName = connect.getProperty("botname");
+        String botName = connectProperty.getProperty(BOTNAME);
         updateUser(botName);
         notifyObserver(botName, message);
-        AbstractBotStarter.bot.sendIRC().message("#" + connect.getProperty("channel"), message);
+        AbstractBotStarter.bot.sendIRC().message("#" + connectProperty.getProperty("channel"), message);
     }
 
     private User updateUser(String nick) {

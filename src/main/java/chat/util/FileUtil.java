@@ -16,6 +16,10 @@ import java.util.Set;
 @Log4j2
 public class FileUtil {
 
+    private FileUtil() {
+        throw new IllegalStateException("Creating object not allowed!");
+    }
+
     public static Set<File> getFilesFromFolder(String path) throws FileNotFoundException {
         Set<File> result = new HashSet<>();
         File folder = new File(path);

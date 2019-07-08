@@ -58,7 +58,7 @@ public class OrderCommand implements ICommand {
     public String execute() {
         Optional<User> userByName = userRepository.getUserByName(nick);
         if (userByName.isEmpty()) {
-            return "";
+            return StringUtils.EMPTY;
         }
         User user = userByName.get();
         long userPoints = user.getPoints();

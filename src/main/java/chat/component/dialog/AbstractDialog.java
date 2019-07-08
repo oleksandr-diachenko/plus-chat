@@ -6,6 +6,7 @@ import chat.util.Paths;
 import insidefx.undecorator.UndecoratorScene;
 import javafx.scene.layout.Region;
 import lombok.extern.log4j.Log4j2;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -24,8 +25,7 @@ public abstract class AbstractDialog {
     private Region root;
 
     public void openDialog(CustomStage owner) {
-        CustomStage stage = new CustomStage();
-        this.stage = stage;
+        stage = new CustomStage();
         try {
             showStage(owner, stage);
         } catch (IOException exception) {
@@ -66,7 +66,7 @@ public abstract class AbstractDialog {
     }
 
     protected String getTitleName() {
-        return "";
+        return StringUtils.EMPTY;
     }
 
     protected abstract String getFXMLName();
