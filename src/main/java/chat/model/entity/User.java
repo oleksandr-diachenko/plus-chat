@@ -29,6 +29,10 @@ public class User implements Comparable<User>, Serializable {
         return name;
     }
 
+    public void increaseExp() {
+        exp++;
+    }
+
     @Override
     public int compareTo(User user) {
         return name.compareTo(user.getName());

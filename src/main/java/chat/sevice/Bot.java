@@ -36,6 +36,8 @@ import java.util.Random;
 public class Bot extends ListenerAdapter implements ApplicationEventPublisherAware {
 
     private static final String BOTNAME = "botname";
+    private static final int NEW_MESSAGE_POINTS = 10;
+    private static final int NEW_RANK_POINTS = 500;
     private UserRepository userRepository;
     private RankRepository rankRepository;
     private CommandRepository commandRepository;
@@ -62,16 +64,14 @@ public class Bot extends ListenerAdapter implements ApplicationEventPublisherAwa
     @Override
     public void onConnect(ConnectEvent event) {
         start = LocalDateTime.now();
-        String botName = connectProperty.getProperty(BOTNAME);
-        updateUser(botName);
-        notifyObservers(botName, "Connected!");
+        updateUser(getBotName());
+        notifyObservers(getBotName(), "Connected!");
     }
 
     @Override
     public void onDisconnect(DisconnectEvent event) {
-        String botName = connectProperty.getProperty(BOTNAME);
-        updateUser(botName);
-        notifyObservers(botName, "Disconnected!");
+        updateUser(getBotName());
+        notifyObservers(getBotName(), "Disconnected!");
     }
 
     /**
@@ -142,9 +142,8 @@ public class Bot extends ListenerAdapter implements ApplicationEventPublisherAwa
     }
 
     private void sendMessage(String message) {
-        String botName = connectProperty.getProperty(BOTNAME);
-        updateUser(botName);
-        notifyObservers(botName, message);
+        updateUser(getBotName());
+        notifyObservers(getBotName(), message);
         AbstractBotStarter.bot.sendIRC().message("#" + connectProperty.getProperty("channel"), message);
     }
 
@@ -156,14 +155,21 @@ public class Bot extends ListenerAdapter implements ApplicationEventPublisherAwa
 
     private User updateExistingUser(User user) {
         user.setLastMessageDate(TimeUtil.formatDate(LocalDateTime.now()));
-        long exp = user.getExp() + 1;
-        user.setExp(exp);
-        if (rankRepository.isNewRank(exp)) {
-            user.setPoints(user.getPoints() + 500);
-        } else {
-            user.setPoints(user.getPoints() + 10);
-        }
+        user.increaseExp();
+        addPointsToUser(user);
         return userRepository.update(user);
+    }
+
+    private void addPointsToUser(User user) {
+        long points = user.getPoints() + NEW_MESSAGE_POINTS;
+        if (isNewRank(user)) {
+            points += NEW_RANK_POINTS;
+        }
+        user.setPoints(points);
+    }
+
+    private boolean isNewRank(User user) {
+        return rankRepository.isNewRank(user.getExp());
     }
 
     private User createNewUser(String nick) {
@@ -174,6 +180,10 @@ public class Bot extends ListenerAdapter implements ApplicationEventPublisherAwa
         user.setExp(1);
         user.setPoints(10);
         return userRepository.add(user);
+    }
+
+    private String getBotName() {
+        return connectProperty.getProperty(BOTNAME);
     }
 
     private void notifyObservers(String nick, String message) {
