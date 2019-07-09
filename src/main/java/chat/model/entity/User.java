@@ -33,6 +33,14 @@ public class User implements Comparable<User>, Serializable {
         exp++;
     }
 
+    public void addPoints(long point) {
+        points += point;
+    }
+
+    public void removePoints(long point) {
+        points -= point;
+    }
+
     @Override
     public int compareTo(User user) {
         return name.compareTo(user.getName());

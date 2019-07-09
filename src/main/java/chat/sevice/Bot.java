@@ -161,11 +161,10 @@ public class Bot extends ListenerAdapter implements ApplicationEventPublisherAwa
     }
 
     private void addPointsToUser(User user) {
-        long points = user.getPoints() + NEW_MESSAGE_POINTS;
+        user.addPoints(NEW_MESSAGE_POINTS);
         if (isNewRank(user)) {
-            points += NEW_RANK_POINTS;
+            user.addPoints(NEW_RANK_POINTS);
         }
-        user.setPoints(points);
     }
 
     private boolean isNewRank(User user) {

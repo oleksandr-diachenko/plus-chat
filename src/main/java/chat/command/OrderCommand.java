@@ -66,7 +66,7 @@ public class OrderCommand implements ICommand {
             return user.getCustomName() + ", you don't have enough points! (You have " + userPoints + " points)";
         }
         orderRepository.add(getOrder(user));
-        user.setPoints(userPoints - points);
+        user.removePoints(points);
         userRepository.update(user);
         return user.getCustomName() + ", your order is accepted (" + order + ") (" + points + " points)";
     }

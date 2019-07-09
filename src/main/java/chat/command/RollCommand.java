@@ -82,7 +82,7 @@ public class RollCommand implements ICommand {
     }
 
     private void updateUser(User user, long points) {
-        user.setPoints(points);
+        user.addPoints(points);
         userRepository.update(user);
     }
 }
