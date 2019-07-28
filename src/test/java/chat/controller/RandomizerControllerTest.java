@@ -166,6 +166,20 @@ public class RandomizerControllerTest {
     }
 
     @Test
+    public void shouldSetPlayDisableAndResetContainerAndStartTimelineWhenPlayActionCalled() {
+        RandomizerController spy = spy(controller);
+        when(keyWord.getText()).thenReturn("!key");
+        when(times.getSelectionModel()).thenReturn(selectionModel);
+        when(selectionModel.getSelectedItem()).thenReturn(1);
+
+        spy.playAction();
+
+        verify(play).disable();
+        verify(container).clear();
+        verify(spy).startTimeline();
+    }
+
+    @Test
     public void shouldBlinkEmptyNodesWhenPlayActionCalledAndNodesAreEmpty() {
         RandomizerController spy = spy(controller);
         when(keyWord.getText()).thenReturn(StringUtils.EMPTY);

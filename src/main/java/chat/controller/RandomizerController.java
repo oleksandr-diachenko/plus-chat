@@ -117,7 +117,7 @@ public class RandomizerController implements ApplicationListener<MessageEvent> {
         }
     }
 
-    private void startTimeline() {
+    protected void startTimeline() {
         Integer selectedItem = times.getSelectionModel().getSelectedItem();
         Integer[] time = {selectedItem * 60};
         timeline = new Timeline(new KeyFrame(Duration.millis(1000), event -> setCountdownTextAndStyle(time)));
