@@ -29,4 +29,8 @@ public class UpCommand implements ICommand {
                 between.toMinutes(),
                 between.toSeconds());
     }
+
+    public void setStartTime(LocalDateTime time) {
+        this.start = time;
+    }
 }

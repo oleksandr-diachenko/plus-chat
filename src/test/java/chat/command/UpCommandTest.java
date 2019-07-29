@@ -1,7 +1,10 @@
 package chat.command;
 
-import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.MockitoJUnitRunner;
 
 import java.time.LocalDateTime;
 
@@ -10,14 +13,14 @@ import static org.junit.Assert.*;
 /**
  * @author Oleksandr_Diachenko
  */
+@RunWith(MockitoJUnitRunner.class)
 public class UpCommandTest {
 
-    private ICommand command;
+    @InjectMocks
+    private UpCommand command;
 
-    @Before
-    public void setup() {
-        command = new UpCommand(LocalDateTime.now());
-    }
+    @Mock
+    private LocalDateTime localDateTime;
 
     @Test
     public void shouldExecuteWhenUpCommandCorrect() {

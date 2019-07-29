@@ -30,4 +30,8 @@ public class PointsCommand implements ICommand {
         User user = userByName.get();
         return user.getCustomName() + ", you have " + user.getPoints() + " points.";
     }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 }

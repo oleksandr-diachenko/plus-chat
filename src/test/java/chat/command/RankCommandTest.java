@@ -10,6 +10,7 @@ import chat.model.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -26,7 +27,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RankCommandTest {
 
-    private ICommand command;
+    @InjectMocks
+    private RankCommand command;
 
     @Mock
     private RankRepository rankRepository;
@@ -39,7 +41,7 @@ public class RankCommandTest {
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
         AbstractFactory<Rank> rankFactory = new RankFactory();
         when(rankRepository.getRankByExp(anyLong())).thenReturn(rankFactory.create().get());
-        command = new RankCommand("p0sltlv", userRepository, rankRepository);
+        command.setNick("p0sltlv");
     }
 
     @Test

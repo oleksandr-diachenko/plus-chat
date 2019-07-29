@@ -7,6 +7,7 @@ import chat.model.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -24,7 +25,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class RollCommandTest {
 
-    private ICommand command;
+    @InjectMocks
+    private RollCommand command;
 
     @Mock
     private Random random;
@@ -35,7 +37,7 @@ public class RollCommandTest {
     public void setup() {
         AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
-        command = new RollCommand(userRepository, "p0sltlv", random);
+        command.setNick("p0sltlv");
     }
 
     @Test

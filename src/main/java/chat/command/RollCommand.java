@@ -85,4 +85,8 @@ public class RollCommand implements ICommand {
         user.addPoints(points);
         userRepository.update(user);
     }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 }

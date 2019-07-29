@@ -17,7 +17,7 @@ public class OrderCommand implements ICommand {
     private static final int ORDER_INDEX_FROM = 2;
     private static final String COMMAND_NAME = "!order";
     private final UserRepository userRepository;
-    private final String nick;
+    private String nick;
     private OrderRepository orderRepository;
     private long points;
     private String order;
@@ -83,5 +83,9 @@ public class OrderCommand implements ICommand {
 
     private boolean notEnoughPoints(long userPoints) {
         return userPoints < points;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
     }
 }

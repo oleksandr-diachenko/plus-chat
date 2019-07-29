@@ -40,4 +40,8 @@ public class RankCommand implements ICommand {
         Rank rank = rankRepository.getRankByExp(user.getExp());
         return customName + ", your rank " + rank.getName() + " (" + user.getExp() + " exp)";
     }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
 }

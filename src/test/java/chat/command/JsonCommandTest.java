@@ -7,6 +7,7 @@ import chat.model.repository.CommandRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -22,7 +23,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class JsonCommandTest {
 
-    private ICommand command;
+    @InjectMocks
+    private JSONCommand command;
 
     @Mock
     private CommandRepository commandRepository;
@@ -31,7 +33,6 @@ public class JsonCommandTest {
     public void setup() {
         AbstractFactory<Command> jsonCommandFactory = new JsonCommandFactory();
         when(commandRepository.getCommandByName(anyString())).thenReturn(jsonCommandFactory.create());
-        command = new JSONCommand(commandRepository);
     }
 
     @Test

@@ -7,6 +7,7 @@ import chat.model.repository.UserRepository;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -22,7 +23,8 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class PointsCommandTest {
 
-    private ICommand command;
+    @InjectMocks
+    private PointsCommand command;
 
     @Mock
     private UserRepository userRepository;
@@ -31,7 +33,7 @@ public class PointsCommandTest {
     public void setup() {
         AbstractFactory<User> userFactory = new UserFactory();
         when(userRepository.getUserByName(anyString())).thenReturn(userFactory.create());
-        command = new PointsCommand(userRepository, "p0sltlv");
+        command.setNick("p0sltlv");
     }
 
     @Test
