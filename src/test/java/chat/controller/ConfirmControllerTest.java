@@ -6,6 +6,7 @@ import chat.util.StyleUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -23,6 +24,7 @@ public class ConfirmControllerTest {
     private static final String BACKGROUND_COLOR = "#212121";
     private static final String NICK_COLOR = "#819FF7";
 
+    @InjectMocks
     private ConfirmController controller;
     @Mock
     private StyleUtil styleUtil;
@@ -37,7 +39,6 @@ public class ConfirmControllerTest {
 
     @Before
     public void setup() {
-        controller = new ConfirmController(styleUtil, applicationStyle);
         controller.setRoot(root);
         when(applicationStyle.getBaseColor()).thenReturn(BASE_COLOR);
         when(applicationStyle.getBackgroundColor()).thenReturn(BACKGROUND_COLOR);

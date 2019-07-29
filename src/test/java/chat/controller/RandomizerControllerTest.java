@@ -21,6 +21,7 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnit;
 import org.mockito.junit.MockitoRule;
@@ -45,6 +46,7 @@ public class RandomizerControllerTest {
     @Rule
     public MockitoRule rule = MockitoJUnit.rule();
 
+    @InjectMocks
     private RandomizerController controller;
     @Mock
     private StyleUtil styleUtil;
@@ -81,7 +83,6 @@ public class RandomizerControllerTest {
 
     @Before
     public void setup() {
-        controller = new RandomizerController(styleUtil, applicationStyle, userRepository);
         controller.setRoot(root);
         controller.setTimesView(times);
         controller.setContainer(container);
