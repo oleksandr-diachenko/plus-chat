@@ -1,11 +1,13 @@
 package chat.repository;
 
+import chat.AppConfig;
 import chat.model.entity.Command;
 import chat.model.repository.CommandRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Optional;
@@ -18,7 +20,8 @@ import static org.junit.Assert.assertTrue;
  * @author Alexander Diachenko.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:testApplicationContext.xml"})
+@ContextConfiguration(classes = AppConfig.class)
+@TestPropertySource("classpath:application.properties")
 public class CommandRepositoryTest {
 
     @Autowired
