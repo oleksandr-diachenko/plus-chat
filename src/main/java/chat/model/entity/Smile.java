@@ -1,5 +1,6 @@
 package chat.model.entity;
 
+
 import lombok.*;
 
 import java.io.Serializable;
@@ -7,12 +8,11 @@ import java.io.Serializable;
 /**
  * @author Alexander Diachenko.
  */
-@Getter
-@Setter
-@ToString(exclude = "imagePath")
-@EqualsAndHashCode(of = "name")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString(exclude = "imagePath")
+@EqualsAndHashCode(of = "name")
 public class Smile implements Comparable<Smile>, Serializable {
 
     private String name;

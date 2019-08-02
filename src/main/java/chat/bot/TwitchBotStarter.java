@@ -1,8 +1,7 @@
 package chat.bot;
 
 import chat.util.AppProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.pircbotx.Configuration;
 import org.pircbotx.PircBotX;
@@ -12,8 +11,7 @@ import org.springframework.stereotype.Component;
 import java.util.Properties;
 
 @Log4j2
-@Getter
-@Setter
+@Data
 @Component
 public class TwitchBotStarter extends AbstractBotStarter {
 

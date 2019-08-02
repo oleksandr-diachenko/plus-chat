@@ -1,18 +1,20 @@
 package chat.model.entity;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * @author Alexander Diachenko.
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(exclude = {"finishedDate", "status"})
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(exclude = {"finishedDate", "status"})
 public class Order implements Comparable<Order>, Serializable {
 
     private String user;

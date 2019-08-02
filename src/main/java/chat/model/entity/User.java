@@ -1,18 +1,20 @@
 package chat.model.entity;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * @author Alexander Diachenko.
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(of = "name")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "name")
 public class User implements Comparable<User>, Serializable {
 
     private String name;

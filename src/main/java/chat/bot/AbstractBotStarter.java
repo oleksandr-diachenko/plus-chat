@@ -2,8 +2,7 @@ package chat.bot;
 
 import chat.sevice.Bot;
 import chat.util.Paths;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import lombok.extern.log4j.Log4j2;
 import org.pircbotx.PircBotX;
 import org.pircbotx.exception.IrcException;
@@ -13,8 +12,7 @@ import org.springframework.stereotype.Component;
 import java.io.IOException;
 
 @Log4j2
-@Getter
-@Setter
+@Data
 @Component
 public abstract class AbstractBotStarter {
 

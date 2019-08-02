@@ -1,18 +1,20 @@
 package chat.model.entity;
 
-import lombok.*;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
 /**
  * @author Alexander Diachenko.
  */
-@Getter
-@Setter
-@ToString
-@EqualsAndHashCode(of = "word")
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode(of = "word")
 public class Direct implements Comparable<Direct>, Serializable {
 
     private String word;

@@ -1,11 +1,9 @@
 package chat.sevice;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.context.ApplicationEvent;
 
-@Getter
-@Setter
+@Data
 public class MessageEvent extends ApplicationEvent {
 
     private String nick;

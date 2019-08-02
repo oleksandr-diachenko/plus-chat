@@ -2,9 +2,7 @@ package chat.controller;
 
 import chat.util.AppProperty;
 import chat.util.Settings;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.Data;
 import org.springframework.stereotype.Component;
 
 import java.util.Properties;
@@ -13,9 +11,7 @@ import java.util.Properties;
  * @author Alexander Diachenko.
  */
 @Component
-@Getter
-@Setter
-@NoArgsConstructor
+@Data
 public class ApplicationStyle {
     private String backgroundColor;
     private String baseColor;
