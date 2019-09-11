@@ -24,7 +24,7 @@
         <undecorator>1.0</undecorator>
         <lombok>1.18.8</lombok>
         <commons-lang3>3.9</commons-lang3>
-        <javafx>11</javafx>
+        <javafx>13</javafx>
         <spring>5.1.8.RELEASE</spring>
         <mockito>3.0.0</mockito>
     </properties>
