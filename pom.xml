@@ -19,7 +19,7 @@
         <jackson.mapper.asl>1.9.13</jackson.mapper.asl>
         <slf4j.simple>1.7.26</slf4j.simple>
         <log4j.api>2.12.0</log4j.api>
-        <log4j.core>2.12.0</log4j.core>
+        <log4j.core>2.13.3</log4j.core>
         <junit>4.12</junit>
         <undecorator>1.0</undecorator>
         <lombok>1.18.8</lombok>
