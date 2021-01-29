@@ -22,7 +22,7 @@
         <log4j.core>2.12.0</log4j.core>
         <junit>4.12</junit>
         <undecorator>1.0</undecorator>
-        <lombok>1.18.8</lombok>
+        <lombok>1.18.18</lombok>
         <commons-lang3>3.9</commons-lang3>
         <javafx>11</javafx>
         <spring>5.1.8.RELEASE</spring>
