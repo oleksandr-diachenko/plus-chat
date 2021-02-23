@@ -26,7 +26,7 @@
         <commons-lang3>3.9</commons-lang3>
         <javafx>11</javafx>
         <spring>5.1.8.RELEASE</spring>
-        <mockito>3.0.0</mockito>
+        <mockito>3.8.0</mockito>
     </properties>
 
     <repositories>
